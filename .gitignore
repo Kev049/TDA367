@@ -2,5 +2,5 @@
 .idea/runConfigurations.xml
 .idea
 /.idea/
-.idea/
+.idea/*
 target/
