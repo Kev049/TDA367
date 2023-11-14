@@ -4,24 +4,22 @@ import java.util.List;
 //import java.awt.Color; //Vi använder string sålänge
 
 public class Player {
-
     private String colour;
     private List<Piece> pieces;
 
     public Player (String colour){
         this.colour = colour;
-        pieces.add(new Piece(colour));      //Kan kanske göras finare på 1-2 rader
-        pieces.add(new Piece(colour));
-        pieces.add(new Piece(colour));
-        pieces.add(new Piece(colour));
+        for (int i = 0; i < 4; i++) {
+            pieces.add(new Piece(colour));      //Kan kanske göras finare
+        }
     }
 
-public String get_colour(){
-    return this.colour;
-}
+    public String getColour(){
+        return this.colour;
+    }
 
-public List<Piece> get_pieces(){
-    return this.pieces;
-}
+    public List<Piece> getPieces(){
+        return this.pieces;
+    }
 
 }

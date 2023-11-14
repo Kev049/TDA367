@@ -11,7 +11,6 @@ public class GameWindow extends JFrame{
     private DrawBoard drawBoard; //is this fine from an OOP standpoint?
 
     public GameWindow(String name){
-
         componentSetup(name);
     }
 
