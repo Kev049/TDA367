@@ -5,16 +5,8 @@ import org.group7.view.DrawBoard;
 public class Main {
 
     public static void main(String[] args) {
-        DrawBoard view = new DrawBoard();
-        new GameWindow("TurboFia", view);
-
+        DrawBoard drawBoard = new DrawBoard();
+        new GameWindow("TurboFia", drawBoard);
     }
-
-
-    /*
-ImageIcon icon = new ImageIcon(imgURL);
-JLabel thumb = new JLabel();
-thumb.setIcon(icon);
-     */
 
 }

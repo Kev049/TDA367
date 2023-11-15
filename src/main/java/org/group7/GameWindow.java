@@ -28,30 +28,38 @@ public class GameWindow extends JFrame{
     private void componentSetup(String title){
         setTitle(title);
         setPreferredSize(new Dimension(X,Y));
-        setLayout(null);
 
         /* add components/views here
          */
-        add(drawBoard);
+        //add(drawBoard); //Maybe not needed?
 
-        JLabel contentPane = new JLabel();
-        Icon icon = new ImageIcon("Board.png");
-        contentPane.setIcon(icon);
-        contentPane.setLayout( new BorderLayout() );
-        this.setContentPane( contentPane );
+        initDiceRollComponents();
+        initBoardImg();
 
-        //JPanel imagePanel = new ImagePanel();
+        this.pack();
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        // Centers the frame
+        setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        // Makes the frame visible
+        setVisible(true);
+        // Ensures that the window closes when pressing the 'x' button
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void initDiceRollComponents() {
         JButton rollDiceButton = new JButton();
         rollDiceButton.setText("Roll!");
         rollDiceButton.setFont(new Font("Arial", Font.PLAIN, 40));
-        rollDiceButton.setBounds(1500, 800, 200, 100);
-
-        this.add(rollDiceButton);
+        rollDiceButton.setBounds(1600, 800, 200, 100);
 
         JTextField diceOutput = new JTextField("");
-        diceOutput.setText("You rolled");
+        diceOutput.setEditable(false);
+        diceOutput.setText("");
         diceOutput.setFont(new Font("Arial", Font.PLAIN, 30));
-        diceOutput.setBounds(1500, 700, 200, 80);
+        diceOutput.setBounds(1600, 700, 200, 80);
+
+        this.add(rollDiceButton);
         this.add(diceOutput);
 
         rollDiceButton.addActionListener(new ActionListener() {
@@ -61,18 +69,10 @@ public class GameWindow extends JFrame{
                 diceOutput.setText("You rolled " + diceRoll + "!");
             }
         });
+    }
 
-
-
-
-        pack();
-
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Centers the frame
-        setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        // Makes the frame visible
-        setVisible(true);
-        // Ensures that the window closes when pressing the 'x' button
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void initBoardImg() {
+        ImageIcon image1 = new ImageIcon("C:\\Users\\kevin\\Desktop\\oopp\\TurboFia\\src\\main\\java\\org\\group7\\Board.png");
+        this.add(new JLabel(image1));
     }
 }

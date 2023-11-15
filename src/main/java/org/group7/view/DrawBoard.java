@@ -39,7 +39,7 @@ public class DrawBoard extends JPanel implements Observer {
         g.drawImage(background, 120,0,null);
 
          */
-    }
+    //}
 
     @Override
     public void update() {
