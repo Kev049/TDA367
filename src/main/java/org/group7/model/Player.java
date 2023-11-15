@@ -7,8 +7,11 @@ public class Player {
     private String colour;
     private List<Piece> pieces;
 
-    public Player (String colour){
+    public Player(String colour){
         this.colour = colour;
+        initPieces();
+    }
+    public void initPieces(){
         for (int i = 0; i < 4; i++) {
             pieces.add(new Piece(colour));      //Kan kanske göras finare
         }

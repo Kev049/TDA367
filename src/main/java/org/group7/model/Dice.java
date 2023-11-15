@@ -12,7 +12,7 @@ public class Dice {
     }
 
     public static Dice getInstance() {
-        if (instance == null) {
+        if(instance == null){
             instance = new Dice();
         }
         return instance;

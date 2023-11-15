@@ -29,7 +29,6 @@ public class Piece extends Entity {
                 move_piece(30);
                 break;
         }
-
     }
 
     public int get_pos(){
