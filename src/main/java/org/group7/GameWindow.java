@@ -2,10 +2,14 @@ package org.group7;
 
 import org.group7.model.Game;
 import org.group7.view.DrawBoard;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class GameWindow extends JFrame{
     private static final int X = 1920;
@@ -15,9 +19,9 @@ public class GameWindow extends JFrame{
 
     private DrawBoard drawBoard; //is this fine from an OOP standpoint?
 
-    public GameWindow(String name){//DrawBoard view
+    public GameWindow(String name, DrawBoard view){//DrawBoard view
         this.game = new Game();
-        this.drawBoard = new DrawBoard();
+        drawBoard = view;
         componentSetup(name);
     }
 
@@ -30,6 +34,11 @@ public class GameWindow extends JFrame{
          */
         add(drawBoard);
 
+        JLabel contentPane = new JLabel();
+        Icon icon = new ImageIcon("Board.png");
+        contentPane.setIcon(icon);
+        contentPane.setLayout( new BorderLayout() );
+        this.setContentPane( contentPane );
 
         //JPanel imagePanel = new ImagePanel();
         JButton rollDiceButton = new JButton();
