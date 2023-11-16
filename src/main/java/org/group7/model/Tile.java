@@ -14,4 +14,14 @@ public class Tile {
         return entity;
     }
 
+    public void insertEntity(Entity e) {
+        this.entity = e;
+    }
+
+    public Entity removeEntity() {
+        Entity e = this.entity;
+        this.entity = null;
+        return e;
+    }
+
 }

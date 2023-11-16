@@ -1,8 +1,10 @@
 package org.group7.model;
 
+import org.group7.controllers.Observer;
+
 import java.util.Random;
 
-public class Dice {
+public class Dice implements Observer {
     private static Dice instance;
     private Random generator;
 
@@ -21,4 +23,10 @@ public class Dice {
     public int roll() {
         return this.generator.nextInt(6) + 1;
     }
+
+    @Override
+    public void update(){
+        System.out.println("hi");
+    }
+
 }

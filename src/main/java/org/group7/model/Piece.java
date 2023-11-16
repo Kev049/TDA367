@@ -2,7 +2,7 @@ package org.group7.model;
 
 public class Piece extends Entity {
     private int pos;
-    private String colour;
+    private final String colour;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
 
@@ -36,33 +36,28 @@ public class Piece extends Entity {
         return this.pos;
     }
 
-    public void move_piece(int pos){
+    public void move_piece(int diceRoll){
 
-        this.pos += pos;
+        this.pos += diceRoll;
     }
 
     public String get_colour(){
-
         return this.colour;
     }
 
     public boolean is_home(){
-
         return this.atHome;
     }
 
     public boolean is_goal(){
-
         return this.atGoal;
     }
 
     private void set_home(boolean bol){
-
         this.atHome = bol;
     }
 
     private void set_goal(boolean bol){
-
         this.atGoal = bol;
     }
 
