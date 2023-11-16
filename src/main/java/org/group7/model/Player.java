@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Player{
     private List<Piece> pieces;
-    private String colour;
+    private Colour colour;
 
-    public Player(String colour){
+    public Player(Colour colour){
         this.colour = colour;
         initPieces();
     }
@@ -18,7 +18,7 @@ public class Player{
         }
     }
 
-    public String getColour(){
+    public Colour getColour(){
         return this.colour;
     }
 

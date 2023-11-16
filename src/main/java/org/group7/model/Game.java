@@ -16,10 +16,10 @@ public class Game {
         this.board = new Board();
         this.players = new Player[4];
 
-        this.players[0] = new Player("red");
-        this.players[1] = new Player("blue");
-        this.players[2] = new Player("yellow");
-        this.players[3] = new Player("green");
+        this.players[0] = new Player(Colour.RED);
+        this.players[1] = new Player(Colour.BLUE);
+        this.players[2] = new Player(Colour.YELLOW);
+        this.players[3] = new Player(Colour.GREEN);
 
         this.observers = new HashSet<>();
 //        while(true) {

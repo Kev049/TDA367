@@ -161,8 +161,7 @@ public class GameWindow extends JFrame{
     private void initPieces(){
         //494, 581
         //410
-        int z = 87;
-        int x = 581;
+        int x = 494;
         int y = 410;
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JButton piece = new JButton(icon);
