@@ -13,12 +13,13 @@ public class Game {
         this.board = new Board();
         this.players = new Player[4];
 
-        int i = 0;
-        this.currentPlayer = players[i];
-        int diceRoll = rollDice();
-        List<Piece> currentPieces = players[i].getPieces();
-        Piece movingPiece = players[i].choosePiece();
-        //movingPiece.
+        for (int i = 0; i < 6; i++) {
+            this.currentPlayer = players[i];
+            int diceRoll = rollDice();
+            List<Piece> currentPieces = players[i].getPieces();
+            Piece movingPiece = players[i].choosePiece();
+            movingPiece.move_piece(diceRoll);
+        }
     }
 
     public int rollDice() {

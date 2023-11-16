@@ -25,4 +25,8 @@ public class Player {
         return this.pieces;
     }
 
+    public Piece choosePiece(){
+        return pieces.get(0);
+    }
+
 }

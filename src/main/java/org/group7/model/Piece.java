@@ -32,30 +32,37 @@ public class Piece extends Entity {
     }
 
     public int get_pos(){
+
         return this.pos;
     }
 
-    private void move_piece(int pos){
+    public void move_piece(int pos){
+
         this.pos += pos;
     }
 
     public String get_colour(){
+
         return this.colour;
     }
 
     public boolean is_home(){
+
         return this.atHome;
     }
 
     public boolean is_goal(){
+
         return this.atGoal;
     }
 
     private void set_home(boolean bol){
+
         this.atHome = bol;
     }
 
     private void set_goal(boolean bol){
+
         this.atGoal = bol;
     }
 

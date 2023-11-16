@@ -34,6 +34,7 @@ public class GameWindow extends JFrame{
         //add(drawBoard); //Maybe not needed?
 
         initDiceRollComponents();
+        initNewGameButton();
         initBoardImg();
 
         this.pack();
@@ -71,8 +72,24 @@ public class GameWindow extends JFrame{
         });
     }
 
+    private void initNewGameButton() {
+        JButton newGameBtn = new JButton();
+        newGameBtn.setText("Start New Game");
+        newGameBtn.setFont(new Font("Arial", Font.PLAIN, 30));
+        newGameBtn.setBounds(50, 50, 280, 80);
+
+        this.add(newGameBtn);
+
+        newGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Implement functionality
+            }
+        });
+    }
+
     private void initBoardImg() {
-        ImageIcon image1 = new ImageIcon("C:\\Users\\kevin\\Desktop\\oopp\\TurboFia\\src\\main\\java\\org\\group7\\Board.png");
+        ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");
         this.add(new JLabel(image1));
     }
 }
