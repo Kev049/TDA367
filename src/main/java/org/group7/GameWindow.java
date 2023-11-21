@@ -19,77 +19,65 @@ public class GameWindow extends JFrame{
 
     int diceRoll;
     int currentPos = 0;
-
     private Game game;
-
     private DrawBoard drawBoard; //is this fine from an OOP standpoint?
 
+    private JPanel container;
 
-    private Point[] coordinates = new Point[40];
+    private JPanel leftPanel;
+    private JPanel boardPanel;
+    private JPanel rightPanel;
 
-
-    public GameWindow(String name, DrawBoard view){//DrawBoard view
+    public GameWindow(String name, DrawBoard view){
         this.game = new Game();
         drawBoard = view;
-        initPos();
         componentSetup(name);
     }
 
-    private void initPos(){
-        coordinates[0] = new Point(494,410); //START RÖD
+    private void createPanels(){
+        container = new JPanel();
+        container.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        this.add(container);
 
-        coordinates[1] = new Point(581,410);
-        coordinates[2] = new Point(668,410);
-        coordinates[3] = new Point(755,410);
-        coordinates[4] = new Point(842,410);
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new FlowLayout());
+        c.weightx = 0.45;
+        c.gridy = 0;
+        c.gridx = 0;
+        container.add(leftPanel, c);
+        leftPanel.setBackground(Color.RED);
 
-        coordinates[5] = new Point(842,323);
-        coordinates[6] = new Point(842,236);
-        coordinates[7] = new Point(842,149);
-        coordinates[8] = new Point(842,62);
+        boardPanel = new JPanel();
+        boardPanel.setLayout(new GridBagLayout());
+        boardPanel.setBackground(Color.GRAY);
+        c.weightx = 0.1;
+        c.gridx = 1;
+        container.add(boardPanel, c);
+        drawTiles(boardPanel);
 
-        coordinates[9] = new Point(929,62);
-        coordinates[10] = new Point(1016,62); //START GRÖN
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new FlowLayout());
+        rightPanel.setBackground(Color.BLUE);
+        c.weightx = 0.45;
+        c.gridx = 2;
+        container.add(rightPanel, c);
+    }
 
-        coordinates[11] = new Point(1016,149);
-        coordinates[12] = new Point(1016,236);
-        coordinates[13] = new Point(1016,323);
-        coordinates[14] = new Point(1016,410);
-
-        coordinates[15] = new Point(1103,410);
-        coordinates[16] = new Point(1190,410);
-        coordinates[17] = new Point(1277,410);
-        coordinates[18] = new Point(1364,410);
-
-        coordinates[19] = new Point(1364,497);
-        coordinates[20] = new Point(1364,584); //START BLÅ
-
-        coordinates[21] = new Point(1277,584);
-        coordinates[22] = new Point(1190,584);
-        coordinates[23] = new Point(1103,584);
-        coordinates[24] = new Point(1016,584);
-
-        coordinates[25] = new Point(1016,671);
-        coordinates[26] = new Point(1016,758);
-        coordinates[27] = new Point(1016,845);
-        coordinates[28] = new Point(1016,932);
-
-        coordinates[29] = new Point(929,932); //START GUL
-        coordinates[30] = new Point(842,932);
-
-        coordinates[31] = new Point(842,845);
-        coordinates[32] = new Point(842,758);
-        coordinates[33] = new Point(842,671);
-        coordinates[34] = new Point(842,584);
-
-        coordinates[35] = new Point(755,584);
-        coordinates[36] = new Point(668,584);
-        coordinates[37] = new Point(581,584);
-        coordinates[38] = new Point(494,584);
-
-        coordinates[39] = new Point(494,497);
-
-        //sen nästena, går inte nu ingen märker ingen kommer orka
+    private void drawTiles(JPanel boardPanel){
+        GridBagConstraints c = new GridBagConstraints();
+        for(int x = 0; x < 11; x++){
+            c.fill = GridBagConstraints.BOTH;
+            c.gridy = x;
+            for(int y = 0; y < 11; y++){
+                c.gridx = y;
+                Box box = new Box(Box.HEIGHT);
+                box.setPreferredSize(new Dimension(91, 91));
+                box.setBorder(BorderFactory.createLineBorder(Color.black));
+                boardPanel.add(box, c);
+            }
+        }
     }
 
     private void componentSetup(String title){
@@ -97,14 +85,15 @@ public class GameWindow extends JFrame{
         setPreferredSize(new Dimension(X,Y));
 
         /* add components/views here
-         */
+
         //add(drawBoard); //Maybe not needed?
 
         initDiceRollComponents();
         initNewGameButton();
         initPieces();
         initBoardImg();
-
+        */
+        createPanels();
         this.pack();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -115,6 +104,10 @@ public class GameWindow extends JFrame{
         // Ensures that the window closes when pressing the 'x' button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+
+
+    /*
 
     private void initDiceRollComponents() {
         JButton rollDiceButton = new JButton();
@@ -158,6 +151,7 @@ public class GameWindow extends JFrame{
         });
     }
 
+
     private void initPieces(){
         //494, 581
         //410
@@ -186,14 +180,6 @@ public class GameWindow extends JFrame{
 
         // repaint();
     }
+    */
 
-
-   /* private colour drawPieces{
-
-    }*/
-
-    private void initBoardImg() {
-        ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");
-        this.add(new JLabel(image1));
-    }
 }
