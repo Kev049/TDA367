@@ -2,6 +2,7 @@ package org.group7.model;
 
 public class Piece extends Entity {
     private int pos;
+    private int distFromStart;
     private final Colour colour;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
@@ -40,5 +41,9 @@ public class Piece extends Entity {
 
     private void set_goal(boolean bol){
         this.atGoal = bol;
+    }
+
+    public int getDistFromStart(){
+        return this.distFromStart;
     }
 }
