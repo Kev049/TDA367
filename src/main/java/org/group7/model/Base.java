@@ -11,7 +11,7 @@ public class Base {
         this.pieceAmount = capacity;
         this.pieces = new Entity[capacity];
         for (int i = 0; i < capacity; i++) {
-            this.pieces[capacity] = new Piece(""); //TODO implement Player
+            this.pieces[capacity] = new Piece(Colour.RED); //TODO implement Player
         }
     }
 
