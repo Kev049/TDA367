@@ -2,7 +2,9 @@ package org.group7;
 
 import org.group7.model.Game;
 import org.group7.model.Piece;
+import org.group7.model.Tile;
 import org.group7.view.DrawBoard;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class GameWindow extends JFrame{
     private JPanel boardPanel;
     private JPanel rightPanel;
 
-    public GameWindow(String name, DrawBoard view){
+    public GameWindow(String name, DrawBoard view, List<Tile> tiles){
         this.game = new Game();
         drawBoard = view;
         componentSetup(name);
@@ -150,7 +152,7 @@ public class GameWindow extends JFrame{
     private void initPieces(){
         //494, 581
         //410
-        int x = 494;
+        int x = 475;
         int y = 410;
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JButton piece = new JButton(icon);

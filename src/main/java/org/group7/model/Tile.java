@@ -4,6 +4,7 @@ import org.group7.model.Entity;
 
 public class Tile {
 
+    private int index;
     private Entity entity;
 
     public Tile() {
