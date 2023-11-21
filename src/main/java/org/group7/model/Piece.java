@@ -13,10 +13,10 @@ public class Piece extends Entity {
         this.colour = colour;
     }
 
-    public int get_pos(){
-
-        return this.pos;
-    }
+//    public int get_pos(){
+//
+//        return this.pos;
+//    }
 
     public void move_piece(int diceRoll){
         this.pos += diceRoll;
@@ -41,5 +41,4 @@ public class Piece extends Entity {
     private void set_goal(boolean bol){
         this.atGoal = bol;
     }
-
 }
