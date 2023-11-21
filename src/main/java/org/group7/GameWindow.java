@@ -84,15 +84,13 @@ public class GameWindow extends JFrame{
         setTitle(title);
         setPreferredSize(new Dimension(X,Y));
 
-        /* add components/views here
-
         //add(drawBoard); //Maybe not needed?
 
         initDiceRollComponents();
         initNewGameButton();
         initPieces();
-        initBoardImg();
-        */
+        //initBoardImg();
+
         createPanels();
         this.pack();
 
@@ -105,9 +103,6 @@ public class GameWindow extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-
-
-    /*
 
     private void initDiceRollComponents() {
         JButton rollDiceButton = new JButton();
@@ -167,6 +162,7 @@ public class GameWindow extends JFrame{
         this.add(piece);
 
         //Controller
+        /*
         piece.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -177,9 +173,9 @@ public class GameWindow extends JFrame{
                 System.out.println(newPosX);
             }
         });
+        */
 
         // repaint();
     }
-    */
 
 }

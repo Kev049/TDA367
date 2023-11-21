@@ -1,10 +1,11 @@
 package org.group7.model;
 
 public abstract class Entity{
+    private int pos;
     // Plan to extract some functionality from pieces and place here
 
-public abstract int get_pos();
 
-
-
+    public int get_pos(){
+        return this.pos;
+    }
 }
