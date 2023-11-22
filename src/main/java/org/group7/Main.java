@@ -14,7 +14,7 @@ public class Main {
         DrawBoard drawBoard = new DrawBoard(new HashSet<>());
         //Game.addObserver(drawBoard);
         List<Tile> tiles = initTiles();
-        new GameWindow("TurboFia", drawBoard, tiles);
+        new GameWindow("TurboFia", drawBoard);
     }
 
     public static List<Tile> initTiles(){

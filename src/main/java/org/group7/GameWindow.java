@@ -2,6 +2,7 @@ package org.group7;
 
 import org.group7.model.Game;
 import org.group7.model.Piece;
+import org.group7.model.Tile;
 import org.group7.view.DrawBoard;
 
 import javax.imageio.ImageIO;
@@ -30,7 +31,7 @@ public class GameWindow extends JFrame{
     private JPanel boardPanel;
     private JPanel rightPanel;
 
-    public GameWindow(String name, DrawBoard view, List<Tile> tiles){
+    public GameWindow(String name, DrawBoard view){
         this.game = new Game();
         drawBoard = view;
         componentSetup(name);
