@@ -7,7 +7,7 @@ public class Player{
     private List<Piece> pieces;
     private Colour colour;
 
-    public Player(Colour colour){
+    public Player(Colour colour, Piece[] pieces){
         this.colour = colour;
         initPieces();
     }

@@ -13,6 +13,10 @@ public class Board {
         this.field = new Tile[40];         // Egen klass för mindre krångel?
         this.goal = new Tile[4][4];       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new int[] {0, 10, 20, 30};
+        this.bases[0] = new Base(4, Colour.RED);
+        this.bases[1] = new Base(4, Colour.GREEN);
+        this.bases[2] = new Base(4, Colour.YELLOW);
+        this.bases[3] = new Base(4, Colour.BLUE);
     }
 
     public void addEntityToBase(int playerNr, Entity e){
@@ -42,6 +46,17 @@ public class Board {
         this.field[to].insertEntity(e);
     }
 
+    public Base[] getBases(){
+        return this.bases;
+    }
+
+    public Piece[] getPiecesFromBase(Colour colour){
+        for (Base b: this.bases) {
+            if (b.getColour() == colour)
+                    return b.getPieces();
+        }
+        return null;
+    }
 
 
 

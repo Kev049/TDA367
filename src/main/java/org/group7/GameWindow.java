@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameWindow extends JFrame{
     private static final int X = 1920;
@@ -83,6 +84,21 @@ public class GameWindow extends JFrame{
         }
     }
 
+    private Point[] getListofTileCoordinates(){
+        Point[] tileCoordinates = {new Point(4, 0), new Point(4,1), new Point(4,2),
+                new Point(4,3), new Point(4,4), new Point(3,4), new Point(2,4),
+                new Point(1,4), new Point(0,4), new Point(0,5), new Point(0,6),
+                new Point(1,6), new Point(2,6), new Point(3,6), new Point(4,6),
+                new Point(4,7), new Point(4,8), new Point(4,9), new Point(4, 10),
+                new Point(5,10), new Point(6,10), new Point(6,9), new Point(6, 8),
+                new Point(6,7), new Point(6,6), new Point(7,6), new Point(8,6),
+                new Point(9, 6), new Point(10,6), new Point(10,5), new Point(10,4),
+                new Point(9,4), new Point(8,4), new Point(7,4), new Point(6,4),
+                new Point(6,3), new Point(6,2), new Point(6,1), new Point(6,0),
+                new Point(5, 0)};
+        return tileCoordinates;
+    }
+
     private void componentSetup(String title){
         setTitle(title);
         setPreferredSize(new Dimension(X,Y));
@@ -150,7 +166,7 @@ public class GameWindow extends JFrame{
         });
     }
 
-    /*
+
     private void initHelpButtons() {
         JButton helpButton1 = new JButton();
         JButton helpButton2 = new JButton();
@@ -170,11 +186,9 @@ public class GameWindow extends JFrame{
             }
         });
     }
-    */
+
 
     private void initPieces(){
-        //494, 581
-        //410
         int x = 475;
         int y = 410;
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
@@ -202,12 +216,6 @@ public class GameWindow extends JFrame{
 
         // repaint();
     }
-
-
-   /* private colour drawPieces{
-
-    }*/
-
     private void initBoardImg() {
         ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");
         this.add(new JLabel(image1));

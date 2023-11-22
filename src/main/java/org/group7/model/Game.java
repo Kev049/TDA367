@@ -15,11 +15,21 @@ public class Game {
         this.dice = Dice.getInstance();
         this.board = new Board();
         this.players = new Player[4];
+        this.bases = this.board.getBases();
+        for (int i = 0; i < 4; i++) {
+            Piece[] playerPieceArray = new Piece[4];
+            for (int j = 0; i < 4; i++) {
+                playerPieceArray[j] = this.bases[i].getPieces()[j];
+            }
+            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
+        }
 
-        this.players[0] = new Player(Colour.RED);
-        this.players[1] = new Player(Colour.BLUE);
-        this.players[2] = new Player(Colour.YELLOW);
-        this.players[3] = new Player(Colour.GREEN);
+
+
+        this.players[0] = new Player(Colour.RED, this.pieces[0]);
+        this.players[1] = new Player(Colour.BLUE, this.bases[1]);
+        this.players[2] = new Player(Colour.YELLOW, this.bases[2]);
+        this.players[3] = new Player(Colour.GREEN, this.bases[3]);
 
         this.observers = new HashSet<>();
 //        while(true) {
@@ -42,6 +52,10 @@ public class Game {
 
     public void addObserver(Observer observer) {
         observers.add(observer);
+    }
+
+    public Piece[] getPiecesFromBase(Player player){
+        return this.board.getPiecesFromBase(player.getColour());
     }
 }
 
