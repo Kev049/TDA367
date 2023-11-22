@@ -1,13 +1,13 @@
 package org.group7.model;
 
 public class Piece extends Entity {
-    private int pos;
+    private int distFromStart;
     private final Colour colour;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
 
     public Piece(Colour colour){   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
-
+        super();
         this.atHome = true;
         this.atGoal = false;
         this.colour = colour;
@@ -18,8 +18,11 @@ public class Piece extends Entity {
 //        return this.pos;
 //    }
 
-    public void move_piece(int diceRoll){
-        this.pos += diceRoll;
+    public void move(int diceRoll){
+        for (int i = 0; i < diceRoll; i++ ){
+            this.pos += 1;
+            //check if piece needs to turn in to goal line.
+        }
     }
 
     public Colour get_colour(){
@@ -40,5 +43,9 @@ public class Piece extends Entity {
 
     private void set_goal(boolean bol){
         this.atGoal = bol;
+    }
+
+    public int getDistFromStart(){
+        return this.distFromStart;
     }
 }

@@ -110,22 +110,22 @@ public class DrawBoard extends JPanel implements Observer {
 
     coordinates[39] = new Point(494,497);
 
-    coordinates[40] = new Point(581,497); //Red nest
+    coordinates[40] = new Point(581,497); //Red strip
     coordinates[40] = new Point(668,497);
     coordinates[40] = new Point(755,497);
     coordinates[40] = new Point(842,497);
 
-    coordinates[40] = new Point(929,62); //Green nest
+    coordinates[40] = new Point(929,62); //Green strip
     coordinates[40] = new Point(929,149);
     coordinates[40] = new Point(929,238);
     coordinates[40] = new Point(929,323);
 
-    coordinates[40] = new Point(1277,497); //Blue nest
+    coordinates[40] = new Point(1277,497); //Blue strip
     coordinates[40] = new Point(1190,497);
     coordinates[40] = new Point(1103,497);
     coordinates[40] = new Point(1016,497);
 
-    coordinates[40] = new Point(1016,845); //Yellow nest
+    coordinates[40] = new Point(1016,845); //Yellow strip
     coordinates[40] = new Point(0,0);
     coordinates[40] = new Point(0,0);
     coordinates[40] = new Point(0,0);
