@@ -84,8 +84,8 @@ public class GameWindow extends JFrame{
         }
     }
 
-    private Point[] getListofTileCoordinates(){
-        Point[] tileCoordinates = {new Point(4, 0), new Point(4,1), new Point(4,2),
+    private Point[] getListofGamePathTilesCoordinates(){
+        Point[] GamePathTilesCoordinates = {new Point(4, 0), new Point(4,1), new Point(4,2),
                 new Point(4,3), new Point(4,4), new Point(3,4), new Point(2,4),
                 new Point(1,4), new Point(0,4), new Point(0,5), new Point(0,6),
                 new Point(1,6), new Point(2,6), new Point(3,6), new Point(4,6),
@@ -96,7 +96,7 @@ public class GameWindow extends JFrame{
                 new Point(9,4), new Point(8,4), new Point(7,4), new Point(6,4),
                 new Point(6,3), new Point(6,2), new Point(6,1), new Point(6,0),
                 new Point(5, 0)};
-        return tileCoordinates;
+        return GamePathTilesCoordinates;
     }
 
     private void componentSetup(String title){
