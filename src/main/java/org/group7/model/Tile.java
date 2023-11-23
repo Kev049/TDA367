@@ -7,8 +7,9 @@ public class Tile {
     private int index;
     private Entity entity;
 
-    public Tile() {
+    public Tile(int index) {
         entity = null;
+        this.index = index;
     }
 
     public Entity getEntity() {
@@ -23,6 +24,14 @@ public class Tile {
         Entity e = this.entity;
         this.entity = null;
         return e;
+    }
+
+    public int getIndex() {
+        return this.index;
+    }
+
+    public boolean isEmpty() {
+        return this.entity == null;
     }
 
 }

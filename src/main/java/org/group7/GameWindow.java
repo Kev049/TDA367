@@ -1,9 +1,8 @@
 package org.group7;
 
 import org.group7.model.Game;
-import org.group7.view.DrawBoard;
+import org.group7.view.DrawPanel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +19,7 @@ public class GameWindow extends JFrame{
     int currentPos = 0;
     private Game game;
 
-    private DrawBoard drawBoard; //is this fine from an OOP standpoint?
+    private DrawPanel drawBoard; //is this fine from an OOP standpoint?
 
     private JPanel container;
     private JPanel leftPanel;
@@ -31,7 +30,7 @@ public class GameWindow extends JFrame{
     private List<Point> boardTileCoordinates;
     private HashMap<Point, Box> boxPointHashMap;
 
-    public GameWindow(String name, DrawBoard view){
+    public GameWindow(String name, DrawPanel view){
         this.game = new Game();
         this.boxPointHashMap = new HashMap<>();
         this.boardTileCoordinates = new ArrayList<>(121); //List of coordinates for ALL tiles on board
@@ -56,6 +55,8 @@ public class GameWindow extends JFrame{
         c.gridx = 0;
         container.add(leftPanel, c);
         leftPanel.setBackground(Color.RED);
+
+        
 
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridBagLayout());

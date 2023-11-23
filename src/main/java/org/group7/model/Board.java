@@ -17,8 +17,12 @@ public class Board {
         this.bases[1] = new Base(4, Colour.GREEN);
         this.bases[2] = new Base(4, Colour.YELLOW);
         this.bases[3] = new Base(4, Colour.BLUE);
+        for (int i = 0; i < 40; i++) {
+            this.field[i] = new Tile(i);
+        }
     }
     /*
+
     public void addEntityToBase(int playerNr, Entity e){
         this.bases[playerNr].addEntity(e);
      }

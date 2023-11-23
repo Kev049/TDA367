@@ -17,7 +17,6 @@ public class Base {
             //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
             this.pieces[capacity] = PieceFactory.createPiece(this.colour);
         }
-
          */
     }
 

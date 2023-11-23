@@ -2,19 +2,16 @@ package org.group7.view;
 
 import org.group7.controllers.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Objects;
 import java.util.Set;
 
-public class DrawBoard extends JPanel implements Observer {
+public class DrawPanel extends JPanel implements Observer {
     private Set<PaintablePiece> pieces;
     private Image BackgroundImage;
     //private final
 
-    public DrawBoard(Set<PaintablePiece> pieces) {
+    public DrawPanel(Set<PaintablePiece> pieces) {
         setDoubleBuffered(true);
         setPreferredSize(new Dimension(700, 700));
         setBackground(Color.red);
