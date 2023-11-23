@@ -10,11 +10,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public class DrawBoard extends JPanel implements Observer {
-    private Set<PaintPieces> pieces;
+    private Set<PaintablePiece> pieces;
     private Image BackgroundImage;
     //private final
 
-    public DrawBoard(Set<PaintPieces> pieces) {
+    public DrawBoard(Set<PaintablePiece> pieces) {
         setDoubleBuffered(true);
         setPreferredSize(new Dimension(700, 700));
         setBackground(Color.red);

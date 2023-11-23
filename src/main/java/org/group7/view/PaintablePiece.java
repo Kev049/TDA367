@@ -5,11 +5,11 @@ import org.group7.model.Piece;
 import javax.swing.*;
 import java.awt.*;
 
-public class PaintPieces extends JComponent {
+public class PaintablePiece extends JComponent {
     private Image image;
     private Piece piece;
 
-    public PaintPieces(Image image, Piece piece) {
+    public PaintablePiece(Image image, Piece piece) {
         this.image = image;
         this.piece = piece;
     }

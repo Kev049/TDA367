@@ -1,8 +1,6 @@
 package org.group7;
 
 import org.group7.model.Game;
-import org.group7.model.Piece;
-import org.group7.model.Tile;
 import org.group7.view.DrawBoard;
 
 import javax.imageio.ImageIO;
@@ -10,8 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.util.*;
 import java.util.List;
 
@@ -21,7 +18,6 @@ public class GameWindow extends JFrame{
 
     int diceRoll;
     int currentPos = 0;
-
     private Game game;
 
     private DrawBoard drawBoard; //is this fine from an OOP standpoint?
@@ -79,11 +75,11 @@ public class GameWindow extends JFrame{
 
     private void drawTiles(JPanel boardPanel){
         GridBagConstraints c = new GridBagConstraints();
-        for(int x = 0; x < 11; x++){
+        for(int y = 0; y < 11; y++){
             c.fill = GridBagConstraints.BOTH;
-            c.gridy = x;
-            for(int y = 0; y < 11; y++){
-                c.gridx = y;
+            c.gridy = y;
+            for(int x = 0; x < 11; x++){
+                c.gridx = x;
                 Box box = new Box(Box.HEIGHT);
                 box.setPreferredSize(new Dimension(91, 91));
                 box.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -107,10 +103,10 @@ public class GameWindow extends JFrame{
                 boardTileCoordinates.get(76), boardTileCoordinates.get(75), boardTileCoordinates.get(74),
                 boardTileCoordinates.get(73), boardTileCoordinates.get(72), boardTileCoordinates.get(83),
                 boardTileCoordinates.get(94), boardTileCoordinates.get(105), boardTileCoordinates.get(116),
-                boardTileCoordinates.get(114), boardTileCoordinates.get(103), boardTileCoordinates.get(92),
-                boardTileCoordinates.get(81), boardTileCoordinates.get(70), boardTileCoordinates.get(69),
-                boardTileCoordinates.get(68), boardTileCoordinates.get(67), boardTileCoordinates.get(66),
-                boardTileCoordinates.get(55));
+                boardTileCoordinates.get(115), boardTileCoordinates.get(114), boardTileCoordinates.get(103),
+                boardTileCoordinates.get(92), boardTileCoordinates.get(81), boardTileCoordinates.get(70),
+                boardTileCoordinates.get(69), boardTileCoordinates.get(68), boardTileCoordinates.get(67),
+                boardTileCoordinates.get(66), boardTileCoordinates.get(55));
     }
     private List<Point> getListofgamePathTileCoordinates(){
         return this.gamePathTileCoordinates;
@@ -225,14 +221,12 @@ public class GameWindow extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 currentPos = (currentPos + diceRoll) % 40;
                 currentTile.remove(piece);
-                currentTile.revalidate();
                 currentTile.repaint();
+                currentTile.revalidate();
                 currentTile = boxPointHashMap.get(coordinates.get(currentPos));
                 currentTile.add(piece);
             }
         });
-
-        // repaint();
     }
     private void initBoardImg() {
         ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");
