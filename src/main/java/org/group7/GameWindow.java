@@ -223,7 +223,7 @@ public class GameWindow extends JFrame{
         piece.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentPos += diceRoll;
+                currentPos = (currentPos + diceRoll) % 40;
                 currentTile.remove(piece);
                 currentTile.revalidate();
                 currentTile.repaint();
