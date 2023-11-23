@@ -34,8 +34,8 @@ public class GameWindow extends JFrame{
     public GameWindow(String name, DrawBoard view){
         this.game = new Game();
         this.boxPointHashMap = new HashMap<>();
-        this.boardTileCoordinates = new ArrayList<>(121);
-        this.gamePathTileCoordinates = new ArrayList<>(40);
+        this.boardTileCoordinates = new ArrayList<>(121); //List of coordinates for ALL tiles on board
+        this.gamePathTileCoordinates = new ArrayList<>(40); //Coordinates for tiles that match game path
 
         drawBoard = view;
         componentSetup(name);
@@ -80,19 +80,26 @@ public class GameWindow extends JFrame{
             c.gridy = y;
             for(int x = 0; x < 11; x++){
                 c.gridx = x;
+                /*
+                This will create a 11x11 grid of boxes of equal size.
+                 */
                 Box box = new Box(Box.HEIGHT);
                 box.setPreferredSize(new Dimension(91, 91));
                 box.setBorder(BorderFactory.createLineBorder(Color.black));
 
+                //Save the coordinates for box
                 Point coordinate = new Point(x, y);
                 this.boardTileCoordinates.add(coordinate);
 
+                //Put the box in hashmap with matching coordinates as key for later use
                 boxPointHashMap.put(coordinate, box);
                 boardPanel.add(box, c);
             }
         }
     }
     private void initGamePathTileCoordinates(){
+        //Add all coordinates which match the "Fia med Knuff" game path in grid.
+        //TODO: Find a better solution for this horrible disgusting code
         Collections.addAll(this.gamePathTileCoordinates, boardTileCoordinates.get(44), boardTileCoordinates.get(45),
                 boardTileCoordinates.get(46), boardTileCoordinates.get(47), boardTileCoordinates.get(48),
                 boardTileCoordinates.get(37), boardTileCoordinates.get(26), boardTileCoordinates.get(15),
@@ -126,7 +133,6 @@ public class GameWindow extends JFrame{
         initGamePathTileCoordinates();
         initPieces();
         //initBoardImg();
-
 
         this.pack();
 
