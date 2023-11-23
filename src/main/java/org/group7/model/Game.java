@@ -10,11 +10,14 @@ public class Game {
     private Board board;
     private Player[] players;
     private int currentPlayer;
+    private int turnNumber;
+    private int turnNumberStart = 0;
 
     public Game() {
         this.dice = Dice.getInstance();
         this.board = new Board();
         this.players = new Player[4];
+        this.turnNumber = turnNumberStart;
         /*
         this.bases = this.board.getBases();
         for (int i = 0; i < 4; i++) {
@@ -58,6 +61,11 @@ public class Game {
     public Piece[] getPiecesFromBase(Player player){
         return this.board.getPiecesFromBase(player.getColour());
     }
+
+    /* public void placePowerups() { // Where should this be implemented? Should we create a new class?
+
+    }*/
+
 }
 
 

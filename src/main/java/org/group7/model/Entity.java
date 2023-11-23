@@ -8,8 +8,9 @@ public abstract class Entity{
     }
     // Plan to extract some functionality from pieces and place here
 
-
     public int get_pos(){
         return this.pos;
     }
+
+    public void set_pos(int newPos) { this.pos = pos; }
 }

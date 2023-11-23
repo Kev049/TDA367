@@ -8,7 +8,7 @@ public class Piece extends Entity {
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
 
     public Piece(Colour colour){   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
-        super(10);
+        super(10); //either change entity or switch
         this.atHome = true;
         this.atGoal = false;
         this.colour = colour;
