@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 public class GameWindow extends JFrame{
@@ -27,15 +27,23 @@ public class GameWindow extends JFrame{
     private DrawBoard drawBoard; //is this fine from an OOP standpoint?
 
     private JPanel container;
-
     private JPanel leftPanel;
     private JPanel boardPanel;
     private JPanel rightPanel;
+    private Box currentTile;
+    private List<Point> gamePathTileCoordinates;
+    private List<Point> boardTileCoordinates;
+    private HashMap<Point, Box> boxPointHashMap;
 
     public GameWindow(String name, DrawBoard view){
         this.game = new Game();
+        this.boxPointHashMap = new HashMap<>();
+        this.boardTileCoordinates = new ArrayList<>(121);
+        this.gamePathTileCoordinates = new ArrayList<>(40);
+
         drawBoard = view;
         componentSetup(name);
+
     }
 
     private void createPanels(){
@@ -79,24 +87,33 @@ public class GameWindow extends JFrame{
                 Box box = new Box(Box.HEIGHT);
                 box.setPreferredSize(new Dimension(91, 91));
                 box.setBorder(BorderFactory.createLineBorder(Color.black));
+
+                Point coordinate = new Point(x, y);
+                this.boardTileCoordinates.add(coordinate);
+
+                boxPointHashMap.put(coordinate, box);
                 boardPanel.add(box, c);
             }
         }
     }
-
-    private Point[] getListofGamePathTilesCoordinates(){
-        Point[] GamePathTilesCoordinates = {new Point(4, 0), new Point(4,1), new Point(4,2),
-                new Point(4,3), new Point(4,4), new Point(3,4), new Point(2,4),
-                new Point(1,4), new Point(0,4), new Point(0,5), new Point(0,6),
-                new Point(1,6), new Point(2,6), new Point(3,6), new Point(4,6),
-                new Point(4,7), new Point(4,8), new Point(4,9), new Point(4, 10),
-                new Point(5,10), new Point(6,10), new Point(6,9), new Point(6, 8),
-                new Point(6,7), new Point(6,6), new Point(7,6), new Point(8,6),
-                new Point(9, 6), new Point(10,6), new Point(10,5), new Point(10,4),
-                new Point(9,4), new Point(8,4), new Point(7,4), new Point(6,4),
-                new Point(6,3), new Point(6,2), new Point(6,1), new Point(6,0),
-                new Point(5, 0)};
-        return GamePathTilesCoordinates;
+    private void initGamePathTileCoordinates(){
+        Collections.addAll(this.gamePathTileCoordinates, boardTileCoordinates.get(44), boardTileCoordinates.get(45),
+                boardTileCoordinates.get(46), boardTileCoordinates.get(47), boardTileCoordinates.get(48),
+                boardTileCoordinates.get(37), boardTileCoordinates.get(26), boardTileCoordinates.get(15),
+                boardTileCoordinates.get(4), boardTileCoordinates.get(5), boardTileCoordinates.get(6),
+                boardTileCoordinates.get(17), boardTileCoordinates.get(28), boardTileCoordinates.get(39),
+                boardTileCoordinates.get(50), boardTileCoordinates.get(51), boardTileCoordinates.get(52),
+                boardTileCoordinates.get(53), boardTileCoordinates.get(54), boardTileCoordinates.get(65),
+                boardTileCoordinates.get(76), boardTileCoordinates.get(75), boardTileCoordinates.get(74),
+                boardTileCoordinates.get(73), boardTileCoordinates.get(72), boardTileCoordinates.get(83),
+                boardTileCoordinates.get(94), boardTileCoordinates.get(105), boardTileCoordinates.get(116),
+                boardTileCoordinates.get(114), boardTileCoordinates.get(103), boardTileCoordinates.get(92),
+                boardTileCoordinates.get(81), boardTileCoordinates.get(70), boardTileCoordinates.get(69),
+                boardTileCoordinates.get(68), boardTileCoordinates.get(67), boardTileCoordinates.get(66),
+                boardTileCoordinates.get(55));
+    }
+    private List<Point> getListofgamePathTileCoordinates(){
+        return this.gamePathTileCoordinates;
     }
 
     private void componentSetup(String title){
@@ -109,10 +126,12 @@ public class GameWindow extends JFrame{
 
         initDiceRollComponents();
         initNewGameButton();
-        initPieces();
-        initBoardImg();
-
         createPanels();
+        initGamePathTileCoordinates();
+        initPieces();
+        //initBoardImg();
+
+
         this.pack();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -189,30 +208,29 @@ public class GameWindow extends JFrame{
 
 
     private void initPieces(){
-        int x = 475;
-        int y = 410;
+        List<Point> coordinates = this.gamePathTileCoordinates;
+        System.out.println(boxPointHashMap.get(coordinates.get(0)));
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JButton piece = new JButton(icon);
         piece.setBorderPainted(false);
         piece.setContentAreaFilled(false);
         piece.setFocusPainted(false);
         piece.setOpaque(false);
-        piece.setBounds(x, y, 45, 45);
-        this.add(piece);
-
+        currentPos = 0;
+        currentTile = boxPointHashMap.get(coordinates.get(currentPos));
+        currentTile.add(piece);
         //Controller
-        /*
         piece.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentPos += diceRoll;
-                int newPosX = (int) (coordinates[currentPos]).getX();
-                int newPosY = (int) (coordinates[currentPos]).getY();
-                piece.setBounds(newPosX, newPosY, 45, 45);
-                System.out.println(newPosX);
+                currentTile.remove(piece);
+                currentTile.revalidate();
+                currentTile.repaint();
+                currentTile = boxPointHashMap.get(coordinates.get(currentPos));
+                currentTile.add(piece);
             }
         });
-        */
 
         // repaint();
     }

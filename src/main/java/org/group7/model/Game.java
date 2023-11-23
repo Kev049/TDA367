@@ -15,6 +15,7 @@ public class Game {
         this.dice = Dice.getInstance();
         this.board = new Board();
         this.players = new Player[4];
+        /*
         this.bases = this.board.getBases();
         for (int i = 0; i < 4; i++) {
             Piece[] playerPieceArray = new Piece[4];
@@ -30,7 +31,7 @@ public class Game {
         this.players[1] = new Player(Colour.BLUE, this.bases[1]);
         this.players[2] = new Player(Colour.YELLOW, this.bases[2]);
         this.players[3] = new Player(Colour.GREEN, this.bases[3]);
-
+        */
         this.observers = new HashSet<>();
 //        while(true) {
 //            this.currentPlayer = players[i];

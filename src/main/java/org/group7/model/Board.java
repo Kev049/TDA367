@@ -18,7 +18,7 @@ public class Board {
         this.bases[2] = new Base(4, Colour.YELLOW);
         this.bases[3] = new Base(4, Colour.BLUE);
     }
-
+    /*
     public void addEntityToBase(int playerNr, Entity e){
         this.bases[playerNr].addEntity(e);
      }
@@ -26,7 +26,7 @@ public class Board {
     public Entity removeEntityFromBase(int playerNr) {
         return this.bases[playerNr].removeEntity();
     }
-
+    */
     public void addEntityToField(int playerNr, Entity e) {
         Tile t = this.field[this.playerStartTiles[playerNr]];
         t.insertEntity(e);

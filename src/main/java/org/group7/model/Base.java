@@ -12,10 +12,13 @@ public class Base {
         this.pieceAmount = capacity;
         this.pieces = new Piece[capacity];
         this.colour = colour;
+        /*
         for (int i = 0; i < capacity; i++) {
             //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
             this.pieces[capacity] = PieceFactory.createPiece(this.colour);
         }
+
+         */
     }
 
     public Piece removePiece() {
