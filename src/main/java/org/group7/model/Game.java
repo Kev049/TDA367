@@ -59,7 +59,7 @@ public class Game {
     }
 
     public Piece[] getPiecesFromBase(Player player){
-        return this.board.getPiecesFromBase(player.getColour());
+        return this.board.getPiecesFromBase(player.getColor());
     }
 
     /* public void placePowerups() { // Where should this be implemented? Should we create a new class?

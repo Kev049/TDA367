@@ -19,7 +19,7 @@ public class PieceButton extends JButton{
 
 
     public PieceButton(Piece piece, int x, int y) {
-        super(new ImageIcon("src/main/resources/" + piece.get_colour().toString().toLowerCase() + "_player_circle.png"));
+        super(new ImageIcon("src/main/resources/" + piece.getColor().toString().toLowerCase() + "_player_circle.png"));
         this.setBtnProperties(x, y);
         this.piece = piece;
 

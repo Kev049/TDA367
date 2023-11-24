@@ -1,6 +1,8 @@
 package org.group7.model;
 
 
+import java.awt.*;
+
 public class Board {
 
     private Base[] bases;
@@ -13,10 +15,10 @@ public class Board {
         this.field = new Tile[40];         // Egen klass för mindre krångel?
         this.goal = new Tile[4][4];       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new int[] {0, 10, 20, 30};
-        this.bases[0] = new Base(4, Colour.RED);
-        this.bases[1] = new Base(4, Colour.GREEN);
-        this.bases[2] = new Base(4, Colour.YELLOW);
-        this.bases[3] = new Base(4, Colour.BLUE);
+        this.bases[0] = new Base(4, Color.RED);
+        this.bases[1] = new Base(4, Color.GREEN);
+        this.bases[2] = new Base(4, Color.YELLOW);
+        this.bases[3] = new Base(4, Color.BLUE);
         for (int i = 0; i < 40; i++) {
             this.field[i] = new Tile(i);
         }
@@ -54,9 +56,9 @@ public class Board {
         return this.bases;
     }
 
-    public Piece[] getPiecesFromBase(Colour colour){
+    public Piece[] getPiecesFromBase(Color color){
         for (Base b: this.bases) {
-            if (b.getColour() == colour)
+            if (b.getColor() == color)
                     return b.getPieces();
         }
         return null;

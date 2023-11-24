@@ -1,17 +1,19 @@
 package org.group7.model;
 
+import java.awt.*;
+
 public class Base {
 
     private int capacity;       //Går att ändra om man vill byta antal pjäser (istället för standard som är 4)
     private int pieceAmount;
     private Piece[] pieces;
-    private Colour colour;
+    private Color color;
 
-    public Base(int capacity, Colour colour) {
+    public Base(int capacity, Color color) {
         this.capacity = capacity;
         this.pieceAmount = capacity;
         this.pieces = new Piece[capacity];
-        this.colour = colour;
+        this.color = color;
         /*
         for (int i = 0; i < capacity; i++) {
             //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
@@ -39,7 +41,7 @@ public class Base {
         return this.pieces;
     }
 
-    public Colour getColour(){
-        return this.colour;
+    public Color getColor(){
+        return this.color;
     }
 }
