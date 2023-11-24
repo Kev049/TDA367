@@ -11,13 +11,17 @@ public class Game {
     private Player[] players;
     private int currentPlayer;
     private int turnNumber;
-    private int turnNumberStart = 0;
+    private final int turnNumberStart = 0;
+
+    private int lastDiceRollResult;
 
     public Game() {
         this.dice = Dice.getInstance();
         this.board = new Board();
         this.players = new Player[4];
+        this.currentPlayer = 0;
         this.turnNumber = turnNumberStart;
+        this.lastDiceRollResult = 0;
         /*
         this.bases = this.board.getBases();
         for (int i = 0; i < 4; i++) {
@@ -51,7 +55,18 @@ public class Game {
         for (Observer o : observers){
             o.update();
         }
-        return dice.roll();
+        this.lastDiceRollResult = dice.roll();
+        return this.lastDiceRollResult;
+    }
+
+    public boolean validateMove(Tile t) {
+        //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
+        return true;
+
+    }
+
+    public void movePiece(int index) {
+        this.board.movePiece(index,this.lastDiceRollResult);
     }
 
     public void addObserver(Observer observer) {
@@ -65,6 +80,8 @@ public class Game {
     /* public void placePowerups() { // Where should this be implemented? Should we create a new class?
 
     }*/
+
+
 
 }
 

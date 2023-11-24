@@ -15,6 +15,7 @@ public class Main {
         //Game.addObserver(drawBoard);
         /*List<Tile> tiles = initTiles();*/
         new GameWindow("TurboFia", drawBoard);
+
     }
 
     /*public static List<Tile> initTiles(){
