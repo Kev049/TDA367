@@ -2,6 +2,7 @@ package org.group7;
 
 import org.group7.model.Game;
 import org.group7.view.DrawPanel;
+import org.group7.view.PaintableBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,18 +30,14 @@ public class GameWindow extends JFrame{
     private List<Point> gamePathTileCoordinates;
     private List<Point> boardTileCoordinates;
     private HashMap<Point, Box> boxPointHashMap;
+    private PaintableBoard paintableBoard;
 
-    public GameWindow(String name, DrawPanel view){
+    public GameWindow(String name, DrawPanel view, PaintableBoard paintableBoard){
         this.game = new Game();
-        this.boxPointHashMap = new HashMap<>();
-        this.boardTileCoordinates = new ArrayList<>(121); //List of coordinates for ALL tiles on board
-        this.gamePathTileCoordinates = new ArrayList<>(40); //Coordinates for tiles that match game path
-
+        this.paintableBoard = paintableBoard;
         drawBoard = view;
         componentSetup(name);
-
     }
-
     private void createPanels(){
         container = new JPanel();
         container.setLayout(new GridBagLayout());
@@ -56,15 +53,9 @@ public class GameWindow extends JFrame{
         container.add(leftPanel, c);
         leftPanel.setBackground(Color.RED);
 
-        
-
-        boardPanel = new JPanel();
-        boardPanel.setLayout(new GridBagLayout());
-        boardPanel.setBackground(Color.GRAY);
         c.weightx = 0.1;
         c.gridx = 1;
-        container.add(boardPanel, c);
-        drawTiles(boardPanel);
+        container.add(paintableBoard, c);
 
         rightPanel = new JPanel();
         rightPanel.setLayout(new FlowLayout());
@@ -72,52 +63,6 @@ public class GameWindow extends JFrame{
         c.weightx = 0.45;
         c.gridx = 2;
         container.add(rightPanel, c);
-    }
-
-    private void drawTiles(JPanel boardPanel){
-        GridBagConstraints c = new GridBagConstraints();
-        for(int y = 0; y < 11; y++){
-            c.fill = GridBagConstraints.BOTH;
-            c.gridy = y;
-            for(int x = 0; x < 11; x++){
-                c.gridx = x;
-                /*
-                This will create a 11x11 grid of boxes of equal size.
-                 */
-                Box box = new Box(Box.HEIGHT);
-                box.setPreferredSize(new Dimension(91, 91));
-                box.setBorder(BorderFactory.createLineBorder(Color.black));
-
-                //Save the coordinates for box
-                Point coordinate = new Point(x, y);
-                this.boardTileCoordinates.add(coordinate);
-
-                //Put the box in hashmap with matching coordinates as key for later use
-                boxPointHashMap.put(coordinate, box);
-                boardPanel.add(box, c);
-            }
-        }
-    }
-    private void initGamePathTileCoordinates(){
-        //Add all coordinates which match the "Fia med Knuff" game path in grid.
-        //TODO: Find a better solution for this horrible disgusting code
-        Collections.addAll(this.gamePathTileCoordinates, boardTileCoordinates.get(44), boardTileCoordinates.get(45),
-                boardTileCoordinates.get(46), boardTileCoordinates.get(47), boardTileCoordinates.get(48),
-                boardTileCoordinates.get(37), boardTileCoordinates.get(26), boardTileCoordinates.get(15),
-                boardTileCoordinates.get(4), boardTileCoordinates.get(5), boardTileCoordinates.get(6),
-                boardTileCoordinates.get(17), boardTileCoordinates.get(28), boardTileCoordinates.get(39),
-                boardTileCoordinates.get(50), boardTileCoordinates.get(51), boardTileCoordinates.get(52),
-                boardTileCoordinates.get(53), boardTileCoordinates.get(54), boardTileCoordinates.get(65),
-                boardTileCoordinates.get(76), boardTileCoordinates.get(75), boardTileCoordinates.get(74),
-                boardTileCoordinates.get(73), boardTileCoordinates.get(72), boardTileCoordinates.get(83),
-                boardTileCoordinates.get(94), boardTileCoordinates.get(105), boardTileCoordinates.get(116),
-                boardTileCoordinates.get(115), boardTileCoordinates.get(114), boardTileCoordinates.get(103),
-                boardTileCoordinates.get(92), boardTileCoordinates.get(81), boardTileCoordinates.get(70),
-                boardTileCoordinates.get(69), boardTileCoordinates.get(68), boardTileCoordinates.get(67),
-                boardTileCoordinates.get(66), boardTileCoordinates.get(55));
-    }
-    private List<Point> getListofgamePathTileCoordinates(){
-        return this.gamePathTileCoordinates;
     }
 
     private void componentSetup(String title){
@@ -131,7 +76,7 @@ public class GameWindow extends JFrame{
         initDiceRollComponents();
         initNewGameButton();
         createPanels();
-        initGamePathTileCoordinates();
+        //initGamePathTileCoordinates();
         initPieces();
         //initBoardImg();
 
@@ -209,10 +154,9 @@ public class GameWindow extends JFrame{
         });
     }
 
-
     private void initPieces(){
-        List<Point> coordinates = this.gamePathTileCoordinates;
-        System.out.println(boxPointHashMap.get(coordinates.get(0)));
+        List<Integer> index = paintableBoard.getGamePathTileIndexes();
+        HashMap<Integer, Box> indexBoxHashMap = paintableBoard.getIndexBoxHashMap();
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JButton piece = new JButton(icon);
         piece.setBorderPainted(false);
@@ -220,17 +164,22 @@ public class GameWindow extends JFrame{
         piece.setFocusPainted(false);
         piece.setOpaque(false);
         currentPos = 0;
-        currentTile = boxPointHashMap.get(coordinates.get(currentPos));
+        currentTile = indexBoxHashMap.get(index.get(currentPos));
         currentTile.add(piece);
         //Controller
         piece.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Add result from dice roll to current position and move around without index out of length of array
                 currentPos = (currentPos + diceRoll) % 40;
+
+                //Remove piece from current tile it is on
                 currentTile.remove(piece);
                 currentTile.repaint();
                 currentTile.revalidate();
-                currentTile = boxPointHashMap.get(coordinates.get(currentPos));
+
+                //Get tile from the new Point given and add the piece to the tile it has moved to
+                currentTile = indexBoxHashMap.get(index.get(currentPos));
                 currentTile.add(piece);
             }
         });
