@@ -1,8 +1,8 @@
 package org.group7;
 
 import org.group7.model.Game;
+import org.group7.view.BoardPanel;
 import org.group7.view.DrawPanel;
-import org.group7.view.PaintableBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,17 +24,16 @@ public class GameWindow extends JFrame{
 
     private JPanel container;
     private JPanel leftPanel;
-    private JPanel boardPanel;
     private JPanel rightPanel;
     private Box currentTile;
     private List<Point> gamePathTileCoordinates;
     private List<Point> boardTileCoordinates;
     private HashMap<Point, Box> boxPointHashMap;
-    private PaintableBoard paintableBoard;
+    private BoardPanel boardPanel;
 
-    public GameWindow(String name, DrawPanel view, PaintableBoard paintableBoard){
+    public GameWindow(String name, DrawPanel view, BoardPanel boardPanel){
         this.game = new Game();
-        this.paintableBoard = paintableBoard;
+        this.boardPanel = boardPanel;
         drawBoard = view;
         componentSetup(name);
     }
@@ -55,7 +54,7 @@ public class GameWindow extends JFrame{
 
         c.weightx = 0.1;
         c.gridx = 1;
-        container.add(paintableBoard, c);
+        container.add(boardPanel, c);
 
         rightPanel = new JPanel();
         rightPanel.setLayout(new FlowLayout());
@@ -155,8 +154,8 @@ public class GameWindow extends JFrame{
     }
 
     private void initPieces(){
-        List<Integer> index = paintableBoard.getGamePathTileIndexes();
-        HashMap<Integer, Box> indexBoxHashMap = paintableBoard.getIndexBoxHashMap();
+        List<Integer> index = boardPanel.getGamePathTileIndexes();
+        HashMap<Integer, Box> indexBoxHashMap = boardPanel.getIndexBoxHashMap();
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JButton piece = new JButton(icon);
         piece.setBorderPainted(false);

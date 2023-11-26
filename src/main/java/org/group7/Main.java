@@ -1,24 +1,21 @@
 package org.group7;
 
 import org.group7.model.Board;
-import org.group7.model.Tile;
 import org.group7.view.DrawPanel;
-import org.group7.view.PaintableBoard;
+import org.group7.view.BoardPanel;
 //import controller.Game;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         DrawPanel drawBoard = new DrawPanel(new HashSet<>());
         Board board = new Board();
-        PaintableBoard paintableBoard = new PaintableBoard(board);
+        BoardPanel boardPanel = new BoardPanel(board);
         //Game.addObserver(drawBoard);
         /*List<Tile> tiles = initTiles();*/
-        new GameWindow("TurboFia", drawBoard, paintableBoard);
+        new GameWindow("TurboFia", drawBoard, boardPanel);
 
     }
 
