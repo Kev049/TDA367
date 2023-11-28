@@ -1,4 +1,5 @@
 package org.group7.model;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.group7.controllers.Observer;
@@ -8,7 +9,8 @@ public class Game {
     private final Set<Observer> observers;
     private Dice dice;
     private Board board;
-    private Player[] players;
+    public Player[] players; //TODO:Byt tillbaka till private
+    //private Player[] players;
     private int currentPlayer;
     private int turnNumber;
     private final int turnNumberStart = 0;

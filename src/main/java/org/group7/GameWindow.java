@@ -1,8 +1,12 @@
 package org.group7;
 
+import org.group7.controllers.BoardController;
+import org.group7.controllers.GameController;
+import org.group7.model.Board;
 import org.group7.model.Game;
 import org.group7.view.BoardPanel;
 import org.group7.view.DrawPanel;
+import org.group7.view.PaintableTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,18 +29,23 @@ public class GameWindow extends JFrame{
     private JPanel container;
     private JPanel leftPanel;
     private JPanel rightPanel;
-    private Box currentTile;
+    private PaintableTile currentTile;
     private List<Point> gamePathTileCoordinates;
     private List<Point> boardTileCoordinates;
     private HashMap<Point, Box> boxPointHashMap;
-    private BoardPanel boardPanel;
+    private BoardPanel boardPanel; //TODO:Remove this, gameWindow should only have DrawPanel
+    private BoardController boardController;
+    private Board board;
 
-    public GameWindow(String name, DrawPanel view, BoardPanel boardPanel){
+    public GameWindow(String name, DrawPanel view, Board board){
         this.game = new Game();
-        this.boardPanel = boardPanel;
+        this.board = board;
+        this.boardController = new BoardController(game);
+        this.boardPanel = new BoardPanel(board, boardController);
         drawBoard = view;
         componentSetup(name);
     }
+
     private void createPanels(){
         container = new JPanel();
         container.setLayout(new GridBagLayout());
@@ -73,7 +82,7 @@ public class GameWindow extends JFrame{
         //add(drawBoard); //Maybe not needed?
 
         initDiceRollComponents();
-        initNewGameButton();
+        //initNewGameButton();
         createPanels();
         //initGamePathTileCoordinates();
         initPieces();
@@ -106,9 +115,9 @@ public class GameWindow extends JFrame{
         this.add(diceOutput);
 
         //Flytta till en controller klass
-        rollDiceButton.addActionListener(new ActionListener() {
+        rollDiceButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 diceRoll = game.rollDice();
                 diceOutput.setText("You rolled " + diceRoll + "!");
             }
@@ -132,7 +141,6 @@ public class GameWindow extends JFrame{
         });
     }
 
-
     private void initHelpButtons() {
         JButton helpButton1 = new JButton();
         JButton helpButton2 = new JButton();
@@ -155,33 +163,34 @@ public class GameWindow extends JFrame{
 
     private void initPieces(){
         List<Integer> index = boardPanel.getGamePathTileIndexes();
-        HashMap<Integer, Box> indexBoxHashMap = boardPanel.getIndexBoxHashMap();
+        HashMap<Integer, PaintableTile> indexBoxHashMap = boardPanel.getIndexBoxHashMap();
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
-        JButton piece = new JButton(icon);
-        piece.setBorderPainted(false);
-        piece.setContentAreaFilled(false);
-        piece.setFocusPainted(false);
+        JLabel piece = new JLabel(icon);
+        piece.setPreferredSize(new Dimension());
+//        piece.setBorderPainted(false);
+//        piece.setContentAreaFilled(false);
+//        piece.setFocusPainted(false);
         piece.setOpaque(false);
         currentPos = 0;
         currentTile = indexBoxHashMap.get(index.get(currentPos));
         currentTile.add(piece);
         //Controller
-        piece.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Add result from dice roll to current position and move around without index out of length of array
-                currentPos = (currentPos + diceRoll) % 40;
-
-                //Remove piece from current tile it is on
-                currentTile.remove(piece);
-                currentTile.repaint();
-                currentTile.revalidate();
-
-                //Get tile from the new Point given and add the piece to the tile it has moved to
-                currentTile = indexBoxHashMap.get(index.get(currentPos));
-                currentTile.add(piece);
-            }
-        });
+//        piece.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //Add result from dice roll to current position and move around without index out of length of array
+//                currentPos = (currentPos + diceRoll) % 40;
+//
+//                //Remove piece from current tile it is on
+//                currentTile.remove(piece);
+//                currentTile.repaint();
+//                currentTile.revalidate();
+//
+//                //Get tile from the new Point given and add the piece to the tile it has moved to
+//                currentTile = indexBoxHashMap.get(index.get(currentPos));
+//                currentTile.add(piece);
+//            }
+//        });
     }
     private void initBoardImg() {
         ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");

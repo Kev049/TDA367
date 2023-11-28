@@ -1,9 +1,13 @@
 package org.group7.view;
 
+import org.group7.controllers.BoardController;
 import org.group7.model.Board;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,24 +17,46 @@ public class BoardPanel extends JPanel{
 
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
-    private HashMap<Integer, Box> indexBoxHashMap;
+    private HashMap<Integer, PaintableTile> indexBoxHashMap;
+    private JPanel background;
+    private Image image;
+    private BoardController boardController;
 
-    public BoardPanel(Board board){
+    public BoardPanel(Board board, BoardController boardController){
+        //Image image1 = new Image("src/main/resources/Board.png");
+        //applyImage();
+        this.boardController = boardController;
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.GRAY);
+        //this.setBackground(Color.GRAY);
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
         this.indexBoxHashMap = new HashMap<>(); //Hashmap that matches tile with index
+        //drawPieces();
         drawBoardTiles();
         storeBoardTileIndex();
         initGamePathTileIndex();
     }
 
+    private void applyImage(){
+        try{
+            this.image = ImageIO.read(new File("src/main/resources/Board.png"));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(this.image, 0, 0, null); // see javadoc for more info on the parameters
+    }
+
     private void storeBoardTileIndex(){
         int tileIndex = 0;
         for(Component component : this.getComponents()){
-            if(component instanceof Box){
+            if(component instanceof PaintableTile){
                 //Put the box in hashmap with matching index as key for later use
-                indexBoxHashMap.put(tileIndex, (Box) component);
+                indexBoxHashMap.put(tileIndex, (PaintableTile) component);
                 tileIndex++;
             }
         }
@@ -42,12 +68,17 @@ public class BoardPanel extends JPanel{
             c.gridy = y;
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
-                //This will create an 11x11 grid of boxes of equal size.
-                Box box = new Box(Box.HEIGHT);
-                box.setPreferredSize(new Dimension(91, 91));
-                box.setBorder(BorderFactory.createLineBorder(Color.black));
+                //This will create a 11x11 grid of boxes of equal size.
+                //Box box = new Box(Box.HEIGHT);
+                PaintableTile tile = new PaintableTile();
+                tile.addActionListener(boardController);
+                tile.setPreferredSize(new Dimension(91, 91));
+//              tile.setOpaque(false);
+                tile.setContentAreaFilled(false);
+                tile.setBorderPainted(false);
+                //box.setBorder(BorderFactory.createLineBorder(Color.black));
                 //Add to panel
-                this.add(box, c);
+                this.add(tile, c);
             }
         }
     }
@@ -61,7 +92,7 @@ public class BoardPanel extends JPanel{
         return this.gamePathTileIndex;
     }
 
-    public HashMap<Integer, Box> getIndexBoxHashMap(){
+    public HashMap<Integer, PaintableTile> getIndexBoxHashMap(){
         return this.indexBoxHashMap;
     }
 

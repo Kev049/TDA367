@@ -6,8 +6,9 @@ import org.group7.model.Game;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BoardController implements ActionListener {
 
+//Borde kanske nämna om till BoardListener
+public class BoardController implements ActionListener {
     private Game game;
 
     public BoardController(Game game) {
@@ -26,10 +27,14 @@ public class BoardController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Tile t = (Tile)e.getSource();
+        //Tile t = (Tile)e.getSource();
+        System.out.println(e.getSource());
+        /*
         if (!t.isEmpty()) {             //Temorärt
             if (game.validateMove(t))    //TODO måste veta color för att göra flytten
             game.movePiece(t.getIndex());
         }
+
+         */
     }
 }
