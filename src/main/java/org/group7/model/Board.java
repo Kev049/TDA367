@@ -8,7 +8,7 @@ public class Board {
 
     private Base[] bases;
     private Tile[] field;
-    private Tile[][] goal;
+    private Tile[][] goals;
     private HashMap<Color,Integer> playerStartTiles;
     private HashMap<Color, Tile[]> goalsHashMap;
     private HashMap<Color,Base> colorBaseMap;
@@ -16,7 +16,7 @@ public class Board {
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];         // Egen klass för mindre krångel?
-        this.goal = new Tile[4][4];       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
+        this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
         initBases();
@@ -84,14 +84,24 @@ public class Board {
         return field[index].removeEntity();
     }
 
-    public void movePiece(int from, int offset, Color color) {
-        Entity e = this.field[from].removeEntity();
-        Color c =
+    public void movePiece(int from, int offset) {
+        Tile t = this.field[from];
+        Entity e = t.removeEntity();
+        Color c = this.field[from].getEntityColor();
+        int tileIndex = playerStartTiles.get(c);
+
+        int current = from;
         for (int i = 0; i < offset; i++){
-            if
+            if ((current+1) == tileIndex){
+                //TODO flytta till mål
+                current += 1;
+            }
+            else {
+                current += 1;
+            }
         }
+        this.field[current].insertEntity(e);
         // TODO handle collisions
-        this.field[to].insertEntity(e);
     }
 
     public Base[] getBases(){
