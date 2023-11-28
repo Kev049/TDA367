@@ -23,6 +23,8 @@ public class Board {
         initBases();
         initStartTileIndices();
         initColorBaseMap();
+        initGoals();
+        initGoalsHashMap();
         for (int i = 0; i < 40; i++) {
             this.field[i] = new Tile(i);
         }
@@ -52,7 +54,7 @@ public class Board {
     private void initGoals(){
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; i++){
-                
+                this.goals[i][j] = new Tile(j);
             }
         }
 
@@ -60,7 +62,10 @@ public class Board {
     }
 
     private void initGoalsHashMap(){
-        this.goals.put(Color.RED, )
+        this.goalsHashMap.put(Color.RED, goals[0]);
+        this.goalsHashMap.put(Color.GREEN, goals[1]);
+        this.goalsHashMap.put(Color.YELLOW, goals[2]);
+        this.goalsHashMap.put(Color.BLUE, goals[3]);
     }
 
     public void addPieceToBase(Color baseColor, Piece p){
@@ -96,12 +101,16 @@ public class Board {
         Entity e = t.removeEntity();
         Color c = this.field[from].getEntityColor();
         int tileIndex = playerStartTiles.get(c);
-
         int current = from;
+        Tile[] goal = goalsHashMap.get(c);
+        int goalIndex = 0;
+
         for (int i = 0; i < offset; i++){
-            if ((current+1) == tileIndex){
-                //TODO flytta till mål
-                current += 1;
+            if ((current+1) == tileIndex){        //TODO handle when piece is already in goal
+                for (int j = 0; j < (offset - i); j ++){
+                    goalIndex += 1;
+                }
+            goal[goalIndex].insertEntity(e);
             }
             else {
                 current += 1;
