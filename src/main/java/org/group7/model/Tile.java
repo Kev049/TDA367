@@ -2,6 +2,8 @@ package org.group7.model;
 
 import java.awt.Color;
 
+import java.awt.*;
+
 public class Tile {
 
     private int index;

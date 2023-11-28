@@ -10,14 +10,18 @@ public class Board {
     private Tile[] field;
     private Tile[][] goal;
     private HashMap<Color,Integer> playerStartTiles;
+    private HashMap<Color, Tile[]> goalsHashMap;
+    private HashMap<Color,Base> colorBaseMap;
 
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];         // Egen klass för mindre krångel?
         this.goal = new Tile[4][4];       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
+        this.colorBaseMap = new HashMap<>();
         initBases();
         initStartTileIndices();
+        initColorBaseMap();
         for (int i = 0; i < 40; i++) {
             this.field[i] = new Tile(i);
         }
@@ -36,27 +40,48 @@ public class Board {
         this.playerStartTiles.put(Color.YELLOW,20);
         this.playerStartTiles.put(Color.BLUE,30);
     }
-    /*
 
-    public void addEntityToBase(int playerNr, Entity e){
-        this.bases[playerNr].addEntity(e);
+    private void initColorBaseMap() {
+        this.colorBaseMap.put(Color.RED,bases[0]);
+        this.colorBaseMap.put(Color.RED,bases[1]);
+        this.colorBaseMap.put(Color.RED,bases[2]);
+        this.colorBaseMap.put(Color.RED,bases[3]);
+    }
+
+    private void initGoals(){
+        this.goals = New Tile
+    }
+
+    private void initGoalsHashMap(){
+        this.goals.put(Color.RED, )
+    }
+
+    public void addPieceToBase(Color baseColor, Piece p){
+        Base b = this.colorBaseMap.get(baseColor);
+        b.addPiece(p);
      }
 
-    public Entity removeEntityFromBase(int playerNr) {
-        return this.bases[playerNr].removeEntity();
+    public Entity removePieceFromBase(Color baseColor) {
+        Base b = this.colorBaseMap.get(baseColor);
+        return b.removePiece();
     }
-    */
-    public void addEntityToField(int playerNr, Entity e) {
-        Tile t = this.field[this.playerStartTiles[playerNr]];
+
+    public void addEntityToField(Entity e, int index) {
+        Tile t = this.field[index];         //TODO kanske kan komma att ändras
         t.insertEntity(e);
     }
 
+    /*          Antagligen onödigt komplicerat
     public void removeEntityFromField(Entity e) {
         for (int i = 0; i < field.length; i++) {
             if (e == field[i].getEntity()) {
                 field[i].removeEntity();
             }
         }
+    }*/
+
+    public Entity removeEntityFromField(int index) {
+        return field[index].removeEntity();
     }
 
     public void movePiece(int from, int offset, Color color) {

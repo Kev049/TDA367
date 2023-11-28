@@ -67,7 +67,7 @@ public class Game {
 
     public void movePiece(int index) {
 
-        this.board.movePiece(index,this.lastDiceRollResult, this.players[currentPlayer].getColor());
+        this.board.movePiece(index,this.lastDiceRollResult);
     }
 
     public void addObserver(Observer observer) {
