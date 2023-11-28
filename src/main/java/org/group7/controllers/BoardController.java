@@ -28,8 +28,9 @@ public class BoardController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Tile t = (Tile)e.getSource();
         if (!t.isEmpty()) {             //Temorärt
-            if (game.validateMove(t))    //TODO måste veta color för att göra flytten
-            game.movePiece(t.getIndex());
+            if (game.validateMove(t)) {     //TODO måste veta color för att göra flytten
+                game.movePiece(t.getIndex());
+            }
         }
     }
 }

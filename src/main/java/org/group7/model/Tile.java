@@ -1,6 +1,6 @@
 package org.group7.model;
 
-import org.group7.model.Entity;
+import java.awt.Color;
 
 public class Tile {
 
@@ -32,6 +32,13 @@ public class Tile {
 
     public boolean isEmpty() {
         return this.entity == null;
+    }
+
+    public Color getEntityColor() {
+        if (this.entity instanceof Piece) {
+            return ((Piece) this.entity).getColor();
+        }
+        return null;
     }
 
 }

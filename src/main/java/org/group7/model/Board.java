@@ -2,26 +2,39 @@ package org.group7.model;
 
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class Board {
 
     private Base[] bases;
     private Tile[] field;
     private Tile[][] goal;
-    private int[] playerStartTiles;
+    private HashMap<Color,Integer> playerStartTiles;
 
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];         // Egen klass för mindre krångel?
         this.goal = new Tile[4][4];       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
-        this.playerStartTiles = new int[] {0, 10, 20, 30};
+        this.playerStartTiles = new HashMap<>();
+        initBases();
+        initStartTileIndices();
+        for (int i = 0; i < 40; i++) {
+            this.field[i] = new Tile(i);
+        }
+    }
+
+    private void initBases() {
         this.bases[0] = new Base(4, Color.RED);
         this.bases[1] = new Base(4, Color.GREEN);
         this.bases[2] = new Base(4, Color.YELLOW);
         this.bases[3] = new Base(4, Color.BLUE);
-        for (int i = 0; i < 40; i++) {
-            this.field[i] = new Tile(i);
-        }
+    }
+
+    private void initStartTileIndices() {
+        this.playerStartTiles.put(Color.RED,0);
+        this.playerStartTiles.put(Color.GREEN,10);
+        this.playerStartTiles.put(Color.YELLOW,20);
+        this.playerStartTiles.put(Color.BLUE,30);
     }
     /*
 
@@ -46,8 +59,12 @@ public class Board {
         }
     }
 
-    public void movePiece(int from, int to) {
+    public void movePiece(int from, int offset, Color color) {
         Entity e = this.field[from].removeEntity();
+        Color c =
+        for (int i = 0; i < offset; i++){
+            if
+        }
         // TODO handle collisions
         this.field[to].insertEntity(e);
     }

@@ -61,12 +61,13 @@ public class Game {
 
     public boolean validateMove(Tile t) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return true;
+        return (t.getEntityColor().equals(players[currentPlayer].getColor()));
 
     }
 
     public void movePiece(int index) {
-        this.board.movePiece(index,this.lastDiceRollResult);
+
+        this.board.movePiece(index,this.lastDiceRollResult, this.players[currentPlayer].getColor());
     }
 
     public void addObserver(Observer observer) {

@@ -20,7 +20,8 @@ public class Main {
     }
 
     /*public static List<Tile> initTiles(){
-        List<Tile> tiles = new ArrayList<>(40);
+
+         List<Tile> tiles = new ArrayList<>(40);
         for(int i = 0; i < 40; i++){
             tiles.add(new Tile(i));
         }
