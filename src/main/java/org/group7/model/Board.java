@@ -15,7 +15,8 @@ public class Board {
 
     public Board() {
         this.bases = new Base[4];
-        this.field = new Tile[40];         // Egen klass för mindre krångel?
+        this.field = new Tile[40];
+        this.goals = new Tile[4][4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
@@ -49,7 +50,13 @@ public class Board {
     }
 
     private void initGoals(){
-        this.goals = New Tile
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; i++){
+                
+            }
+        }
+
+
     }
 
     private void initGoalsHashMap(){

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel{
+public class PaintableBoard extends JPanel{
 
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
@@ -19,14 +19,14 @@ public class BoardPanel extends JPanel{
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
 
-    public BoardPanel(Board board){
+    public PaintableBoard(Board board){
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GRAY);
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
-        this.redGoalPathTileIndex = new ArrayList<>(5);
-        this.greenGoalPathTileIndex = new ArrayList<>(5);
-        this.yellowGoalPathTileIndex = new ArrayList<>(5);
-        this.blueGoalPathTileIndex = new ArrayList<>(5);
+        this.redGoalPathTileIndex = new ArrayList<>(4);
+        this.greenGoalPathTileIndex = new ArrayList<>(4);
+        this.yellowGoalPathTileIndex = new ArrayList<>(4);
+        this.blueGoalPathTileIndex = new ArrayList<>(4);
         this.indexBoxHashMap = new HashMap<>(); //Hashmap that matches tile with index
         drawBoardTiles();
         storeBoardTileIndex();
@@ -71,19 +71,19 @@ public class BoardPanel extends JPanel{
     }
 
     private void initRedGoalPathTileIndex(){
-        Collections.addAll(this.redGoalPathTileIndex, 55, 56, 57, 58, 59);
+        Collections.addAll(this.redGoalPathTileIndex, 56, 57, 58, 59);
     }
 
     private void initGreenGoalPathTileIndex(){
-        Collections.addAll(this.greenGoalPathTileIndex, 5, 16, 27, 38, 59);
+        Collections.addAll(this.greenGoalPathTileIndex, 16, 27, 38, 59);
     }
 
     private void initYellowGoalPathTileIndex(){
-        Collections.addAll(this.yellowGoalPathTileIndex, 65, 64, 63, 62, 61);
+        Collections.addAll(this.yellowGoalPathTileIndex, 64, 63, 62, 61);
     }
 
     private void initBlueGoalPathTileIndex(){
-        Collections.addAll(this.blueGoalPathTileIndex, 115, 104, 93, 82, 71);
+        Collections.addAll(this.blueGoalPathTileIndex, 104, 93, 82, 71);
     }
 
 
