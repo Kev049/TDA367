@@ -9,9 +9,12 @@ public class Tile {
     private int index;
     private Entity entity;
 
+    private List<Observer> observers;
+
     public Tile(int index) {
         entity = null;
         this.index = index;
+        this.observers = new ArrayList<>();
     }
 
     public Entity getEntity() {
@@ -43,4 +46,15 @@ public class Tile {
         return null;
     }
 
+    @Override
+    public void addObserver(Observer o) {
+        this.observers.add(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : this.observers) {
+            o.update(this.index);
+        }
+    }
 }

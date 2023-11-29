@@ -29,4 +29,9 @@ public class Dice implements Observer {
         System.out.println("hi");
     }
 
+    @Override
+    public void update(int i) {
+        // Empty
+    }
+
 }

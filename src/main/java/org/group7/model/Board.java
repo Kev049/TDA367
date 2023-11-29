@@ -31,7 +31,7 @@ public class Board {
     }
 
     private void initBases() {
-        this.bases[0] = new Base(4, Color.RED);
+        this.bases[0] = new Base(4, Color.RED);     //TODO remove?
         this.bases[1] = new Base(4, Color.GREEN);
         this.bases[2] = new Base(4, Color.YELLOW);
         this.bases[3] = new Base(4, Color.BLUE);
@@ -45,7 +45,7 @@ public class Board {
     }
 
     private void initColorBaseMap() {
-        this.colorBaseMap.put(Color.RED,bases[0]);
+        this.colorBaseMap.put(Color.RED,bases[0]);  //TODO bases används inte ksk? Skapa basen.
         this.colorBaseMap.put(Color.RED,bases[1]);
         this.colorBaseMap.put(Color.RED,bases[2]);
         this.colorBaseMap.put(Color.RED,bases[3]);
@@ -132,6 +132,15 @@ public class Board {
         return null;
     }
 
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void update(int index){
+        handleCollision(index);
+    }
 
 
 
