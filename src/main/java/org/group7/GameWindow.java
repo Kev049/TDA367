@@ -1,12 +1,13 @@
 package org.group7;
 
-import org.group7.controllers.BoardController;
-import org.group7.controllers.GameController;
+import org.group7.controllers.BoardListener;
 import org.group7.model.Board;
 import org.group7.model.Game;
+import org.group7.model.Tile;
 import org.group7.view.BoardPanel;
 import org.group7.view.DrawPanel;
 import org.group7.view.PaintableTile;
+import org.group7.view.TileFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,67 +24,30 @@ public class GameWindow extends JFrame{
     int diceRoll;
     int currentPos = 0;
     private Game game;
-
-    private DrawPanel drawBoard; //is this fine from an OOP standpoint?
-
-    private JPanel container;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
-    private PaintableTile currentTile;
-    private List<Point> gamePathTileCoordinates;
-    private List<Point> boardTileCoordinates;
-    private HashMap<Point, Box> boxPointHashMap;
+    private DrawPanel drawPanel;
+    private PaintableTile currentTile; //TODO: Remove this
     private BoardPanel boardPanel; //TODO:Remove this, gameWindow should only have DrawPanel
-    private BoardController boardController;
+    private BoardListener boardListener;
     private Board board;
+    private List<PaintableTile> paintableTiles = new ArrayList<>();
 
-    public GameWindow(String name, DrawPanel view, Board board){
+
+    public GameWindow(String name, Board board){
         this.game = new Game();
         this.board = board;
-        this.boardController = new BoardController(game);
-        this.boardPanel = new BoardPanel(board, boardController);
-        drawBoard = view;
+        this.boardListener = new BoardListener(game);
+        this.boardPanel = new BoardPanel(board, boardListener, paintableTiles);
+        this.drawPanel = new DrawPanel(boardPanel);
         componentSetup(name);
-    }
-
-    private void createPanels(){
-        container = new JPanel();
-        container.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        this.add(container);
-
-        leftPanel = new JPanel();
-        leftPanel.setLayout(new FlowLayout());
-        c.weightx = 0.45;
-        c.gridy = 0;
-        c.gridx = 0;
-        container.add(leftPanel, c);
-        leftPanel.setBackground(Color.RED);
-
-        c.weightx = 0.1;
-        c.gridx = 1;
-        container.add(boardPanel, c);
-
-        rightPanel = new JPanel();
-        rightPanel.setLayout(new FlowLayout());
-        rightPanel.setBackground(Color.BLUE);
-        c.weightx = 0.45;
-        c.gridx = 2;
-        container.add(rightPanel, c);
     }
 
     private void componentSetup(String title){
         setTitle(title);
         setPreferredSize(new Dimension(X,Y));
 
-        /* add components/views here
-         */
-        //add(drawBoard); //Maybe not needed?
-
         initDiceRollComponents();
         //initNewGameButton();
-        createPanels();
+        this.add(drawPanel);
         //initGamePathTileCoordinates();
         initPieces();
         //initBoardImg();

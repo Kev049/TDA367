@@ -2,20 +2,26 @@ package org.group7.view;
 
 import javax.swing.*;
 
-import org.group7.controllers.BoardController;
+import org.group7.controllers.BoardListener;
 import org.group7.model.Tile;
+
+import java.awt.*;
 
 public class PaintableTile extends JButton {
 
     private Tile tile = null;
-    private BoardController boardController;
+    private BoardListener boardController;
 
 //    public PaintableTile(Tile tile, BoardController c){
 //        this.tile = tile;
 //        addActionListener(c);
 //    }
 
-    public PaintableTile(){
+    public PaintableTile(Tile tile, BoardListener boardController){
+        this.setPreferredSize(new Dimension(91, 91));
+        this.setContentAreaFilled(false);
+        this.setBorderPainted(false);
+        this.addActionListener(boardController);
     }
 
 }

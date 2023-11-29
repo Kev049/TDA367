@@ -4,7 +4,7 @@ import org.group7.model.Piece;
 import javax.swing.*;
 import java.awt.*;
 
-public class PaintablePiece extends JButton{
+public class PaintablePiece extends JLabel{
     private Image image;
     private ImageIcon icon;
     private Piece piece;
@@ -17,9 +17,6 @@ public class PaintablePiece extends JButton{
     }
     private void initPaintablePiece(){
         this.setIcon(this.icon);
-        this.setBorderPainted(false);
-        this.setContentAreaFilled(false);
-        this.setFocusPainted(false);
         this.setOpaque(false);
     }
     @Override

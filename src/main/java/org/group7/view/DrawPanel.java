@@ -9,36 +9,44 @@ import java.util.Set;
 public class DrawPanel extends JPanel implements Observer {
     private Set<PaintablePiece> pieces;
     private Image BackgroundImage;
+    private JPanel boardPanel;
+    private JPanel container;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
     //private final
 
-    public DrawPanel(Set<PaintablePiece> pieces) {
-        setDoubleBuffered(true);
-        setPreferredSize(new Dimension(700, 700));
-        setBackground(Color.red);
+    public DrawPanel(BoardPanel boardPanel) {
+        this.boardPanel = boardPanel;
+        this.setLayout(new GridBagLayout());
+        //setDoubleBuffered(true);
+        setPreferredSize(new Dimension(1920, 1080));
+        //setBackground(Color.red);
+        createPanels();
     }
 
-//    @Override
-//    public void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        try {
-//            Image i = ImageIO.read(
-//                    Objects.requireNonNull(
-//                            DrawBoard.class.getResourceAsStream("group7/Board.png")
-//                    )
-//            );
-//        } catch (Exception e) {
-//            System.out.println("jjj");
-//        }
-//
-//        g.drawImage(i, 100, 100, null);
+    private void createPanels(){
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
 
-        /*
-        Toolkit t = Toolkit.getDefaultToolkit();
-        Image background = t.getImage("Board.png");
-        g.drawImage(background, 120,0,null);
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new FlowLayout());
+        c.weightx = 0.45;
+        c.gridy = 0;
+        c.gridx = 0;
+        this.add(leftPanel, c);
+        leftPanel.setBackground(Color.RED);
 
-         */
-    //}
+        c.weightx = 0.1;
+        c.gridx = 1;
+        this.add(boardPanel, c);
+
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new FlowLayout());
+        rightPanel.setBackground(Color.BLUE);
+        c.weightx = 0.45;
+        c.gridx = 2;
+        this.add(rightPanel, c);
+    }
 
     @Override
     public void update() {
