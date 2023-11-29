@@ -3,8 +3,12 @@ package org.group7.model;
 import java.awt.Color;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.group7.controllers.Observer;
+import org.group7.controllers.Observable;
 
-public class Tile {
+public class Tile implements Observable {
 
     private int index;
     private Entity entity;
@@ -22,6 +26,9 @@ public class Tile {
     }
 
     public void insertEntity(Entity e) {
+        if (this.entity != null){
+            notifyObservers();
+        }
         this.entity = e;
     }
 

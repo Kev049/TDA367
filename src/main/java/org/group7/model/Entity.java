@@ -16,4 +16,5 @@ public abstract class Entity{
 
     public void set_pos(int newPos) { this.pos = pos; }
 
+
 }

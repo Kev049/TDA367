@@ -1,10 +1,12 @@
 package org.group7.model;
 
 
+import org.group7.controllers.Observer;
+
 import java.awt.*;
 import java.util.HashMap;
 
-public class Board {
+public class Board implements Observer {
 
     private Base[] bases;
     private Tile[] field;
@@ -142,6 +144,15 @@ public class Board {
         handleCollision(index);
     }
 
+    public void handleCollision(int index){
+        Entity entity = this.field[index].getEntity();
+        if (entity instanceof Piece){
+            this.field[index].removeEntity();
+        }
+        else if (entity instanceof PowerUp){
+            //TODO Code to handle collision with powerup
+        }
 
+    }
 
 }
