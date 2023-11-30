@@ -10,15 +10,15 @@ public class Board implements Observer {
 
     private Base[] bases;
     private Tile[] field;
-    private Tile[][] goals;
+    private GoalStrech[] goals;
     private HashMap<Color,Integer> playerStartTiles;
-    private HashMap<Color, Tile[]> goalsHashMap;
+    private HashMap<Color, GoalStrech> goalsHashMap;
     private HashMap<Color,Base> colorBaseMap;
 
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];
-        this.goals = new Tile[4][4];
+        this.goals = new GoalStrech[4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
@@ -54,14 +54,14 @@ public class Board implements Observer {
     }
 
     private void initGoals(){
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; i++){
-                this.goals[i][j] = new Tile(j);
-            }
+        this.goals[0] = new GoalStrech(Color.RED);
+        this.goals[1] = new GoalStrech(Color.GREEN);
+        this.goals[2] = new GoalStrech(Color.YELLOW);
+        this.goals[3] = new GoalStrech(Color.BLUE);
         }
 
 
-    }
+    
 
     private void initGoalsHashMap(){
         this.goalsHashMap.put(Color.RED, goals[0]);
@@ -98,13 +98,23 @@ public class Board implements Observer {
         return field[index].removeEntity();
     }
 
+    public void addEntityToGoalStretch(Color goalColor, Piece p) {
+        GoalStrech goalStrech = this.goalsHashMap.get(goalColor);
+        goalStrech.addPiece(p, 0);
+    }
+
+    public void removeEntityFromGoalStretch(Color goalColor, int index)  {
+        GoalStrech goalStrech = this.goalsHashMap.get(goalColor);
+        goalStrech.removePiece(index);
+    }
+
     public void movePiece(int from, int offset) {
         Tile t = this.field[from];
         Entity e = t.removeEntity();
         Color c = this.field[from].getEntityColor();
         int tileIndex = playerStartTiles.get(c);
         int current = from;
-        Tile[] goal = goalsHashMap.get(c);
+        GoalStrech goalStretch = goalsHashMap.get(c);
         int goalIndex = 0;
 
         for (int i = 0; i < offset; i++){
@@ -112,7 +122,7 @@ public class Board implements Observer {
                 for (int j = 0; j < (offset - i); j ++){
                     goalIndex += 1;
                 }
-            goal[goalIndex].insertEntity(e);
+            goalStretch.addPiece(e, goalIndex);
             }
             else {
                 current += 1;
