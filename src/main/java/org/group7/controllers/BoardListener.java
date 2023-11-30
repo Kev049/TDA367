@@ -7,8 +7,6 @@ import org.group7.view.PaintableTile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-//Borde kanske nämna om till BoardListener
 public class BoardListener implements ActionListener {
     private Game game;
 
@@ -30,7 +28,7 @@ public class BoardListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         PaintableTile paintableTile = (PaintableTile) e.getSource();
         Tile tile = paintableTile.getTile();
-        /*  TODO: Fix model to move pieces
+        /*  TODO: Gör klart modellen så vi kan implementera det här
         if (!tile.isEmpty()) {             //Temorärt
             if (game.validateMove(tile))    //TODO måste veta color för att göra flytten
             game.movePiece(tile.getIndex());
