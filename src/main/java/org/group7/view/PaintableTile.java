@@ -10,18 +10,16 @@ import java.awt.*;
 public class PaintableTile extends JButton {
 
     private Tile tile = null;
-    private BoardListener boardController;
 
-//    public PaintableTile(Tile tile, BoardController c){
-//        this.tile = tile;
-//        addActionListener(c);
-//    }
-
-    public PaintableTile(Tile tile, BoardListener boardController){
+    public PaintableTile(Tile tile, BoardListener boardListener){
+        this.tile = tile;
         this.setPreferredSize(new Dimension(91, 91));
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
-        this.addActionListener(boardController);
+        this.addActionListener(boardListener);
     }
 
+    public Tile getTile(){
+        return this.tile;
+    }
 }

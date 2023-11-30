@@ -18,18 +18,17 @@ public class BoardPanel extends JPanel{
 
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
-    private HashMap<Integer, PaintableTile> indexBoxHashMap;
-    private JPanel background;
+    private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int totalAmountTiles = 121;
     private BoardListener boardListener;
     private Image image;
     public BoardPanel(Board board, BoardListener boardListener ,List<PaintableTile> paintableTiles){
         this.paintableTiles = paintableTiles;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
-        this.indexBoxHashMap = new HashMap<>(); //Hashmap that matches tile with index
+        this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
         this.boardListener = boardListener;
         this.setLayout(new GridBagLayout());
-        //applyImage();
+        applyImage();
         //drawPieces();
         initListOfPaintableTiles();
         drawBoardTiles();
@@ -38,7 +37,6 @@ public class BoardPanel extends JPanel{
     }
 
     private void initListOfPaintableTiles() {
-        //Get list of model tiles from Board. TODO: Implement get method
         Tile tile = null;
         PaintableTile paintableTile = null;
         for (int i = 0; i < totalAmountTiles; i++) {
@@ -67,7 +65,7 @@ public class BoardPanel extends JPanel{
         for(Component component : this.getComponents()){
             if(component instanceof PaintableTile){
                 //Put the box in hashmap with matching index as key for later use
-                indexBoxHashMap.put(tileIndex, (PaintableTile) component);
+                indexTileHashMap.put(tileIndex, (PaintableTile) component);
                 tileIndex++;
             }
         }
@@ -99,8 +97,8 @@ public class BoardPanel extends JPanel{
         return this.gamePathTileIndex;
     }
 
-    public HashMap<Integer, PaintableTile> getIndexBoxHashMap(){
-        return this.indexBoxHashMap;
+    public HashMap<Integer, PaintableTile> getindexTileHashMap(){
+        return this.indexTileHashMap;
     }
 
     public List<PaintableTile> getPaintableTiles() {

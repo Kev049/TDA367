@@ -1,6 +1,7 @@
 package org.group7;
 
 import org.group7.controllers.BoardListener;
+import org.group7.controllers.GameController;
 import org.group7.model.Board;
 import org.group7.model.Game;
 import org.group7.model.Tile;
@@ -28,29 +29,26 @@ public class GameWindow extends JFrame{
     private PaintableTile currentTile; //TODO: Remove this
     private BoardPanel boardPanel; //TODO:Remove this, gameWindow should only have DrawPanel
     private BoardListener boardListener;
+    private GameController gameController;
     private Board board;
     private List<PaintableTile> paintableTiles = new ArrayList<>();
 
 
-    public GameWindow(String name, Board board){
+    public GameWindow(String name, Board board, GameController gameController){
         this.game = new Game();
         this.board = board;
+        this.gameController = gameController;
         this.boardListener = new BoardListener(game);
         this.boardPanel = new BoardPanel(board, boardListener, paintableTiles);
-        this.drawPanel = new DrawPanel(boardPanel);
+        this.drawPanel = new DrawPanel(boardPanel, gameController);
         componentSetup(name);
     }
 
     private void componentSetup(String title){
-        setTitle(title);
-        setPreferredSize(new Dimension(X,Y));
-
-        initDiceRollComponents();
-        //initNewGameButton();
+        this.setTitle(title);
+        this.setPreferredSize(new Dimension(X,Y));
         this.add(drawPanel);
-        //initGamePathTileCoordinates();
         initPieces();
-        //initBoardImg();
 
         this.pack();
 
@@ -89,45 +87,25 @@ public class GameWindow extends JFrame{
     }
 
     //Flytta till en controller klass
-    private void initNewGameButton() {
-        JButton newGameBtn = new JButton();
-        newGameBtn.setText("Start New Game");
-        newGameBtn.setFont(new Font("Arial", Font.PLAIN, 30));
-        newGameBtn.setBounds(50, 50, 280, 80);
-
-        this.add(newGameBtn);
-
-        newGameBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Implement functionality
-            }
-        });
-    }
-
-    private void initHelpButtons() {
-        JButton helpButton1 = new JButton();
-        JButton helpButton2 = new JButton();
-        JButton helpButton3 = new JButton();
-        JButton helpButton4 = new JButton();
-        JButton helpButton5 = new JButton();
-        helpButton1.setText("Start New Game");
-        helpButton1.setFont(new Font("Arial", Font.PLAIN, 30));
-        helpButton1.setBounds(50, 50, 280, 80);
-
-        this.add(helpButton1);
-
-        helpButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Implement functionality
-            }
-        });
-    }
+//    private void initNewGameButton() {
+//        JButton newGameBtn = new JButton();
+//        newGameBtn.setText("Start New Game");
+//        newGameBtn.setFont(new Font("Arial", Font.PLAIN, 30));
+//        newGameBtn.setBounds(50, 50, 280, 80);
+//
+//        this.add(newGameBtn);
+//
+//        newGameBtn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //Implement functionality
+//            }
+//        });
+//    }
 
     private void initPieces(){
         List<Integer> index = boardPanel.getGamePathTileIndexes();
-        HashMap<Integer, PaintableTile> indexBoxHashMap = boardPanel.getIndexBoxHashMap();
+        HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
         Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
         JLabel piece = new JLabel(icon);
         piece.setPreferredSize(new Dimension());
@@ -136,7 +114,7 @@ public class GameWindow extends JFrame{
 //        piece.setFocusPainted(false);
         piece.setOpaque(false);
         currentPos = 0;
-        currentTile = indexBoxHashMap.get(index.get(currentPos));
+        currentTile = indexTileHashMap.get(index.get(currentPos));
         currentTile.add(piece);
         //Controller
 //        piece.addActionListener(new ActionListener() {
@@ -151,13 +129,9 @@ public class GameWindow extends JFrame{
 //                currentTile.revalidate();
 //
 //                //Get tile from the new Point given and add the piece to the tile it has moved to
-//                currentTile = indexBoxHashMap.get(index.get(currentPos));
+//                currentTile = indexTileHashMap.get(index.get(currentPos));
 //                currentTile.add(piece);
 //            }
 //        });
-    }
-    private void initBoardImg() {
-        ImageIcon image1 = new ImageIcon("src/main/resources/Board.png");
-        this.add(new JLabel(image1));
     }
 }

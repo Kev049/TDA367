@@ -1,6 +1,8 @@
 package org.group7;
 
+import org.group7.controllers.GameController;
 import org.group7.model.Board;
+import org.group7.model.Game;
 import org.group7.view.DrawPanel;
 import org.group7.view.BoardPanel;
 //import controller.Game;
@@ -11,17 +13,9 @@ public class Main {
 
     public static void main(String[] args) {
         Board board = new Board();
+        Game game = new Game();
+        GameController gameController = new GameController(game);
         //Game.addObserver(drawBoard);
-        /*List<Tile> tiles = initTiles();*/
-        new GameWindow("TurboFia", board);
-
+        new GameWindow("TurboFia", board, gameController);
     }
-
-    /*public static List<Tile> initTiles(){
-        List<Tile> tiles = new ArrayList<>(40);
-        for(int i = 0; i < 40; i++){
-            tiles.add(new Tile(i));
-        }
-        return tiles;
-    }*/
 }

@@ -1,13 +1,15 @@
 package org.group7.view;
 
+import org.group7.controllers.GameController;
 import org.group7.controllers.Observer;
+import org.group7.model.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
 
 public class DrawPanel extends JPanel implements Observer {
-    private Set<PaintablePiece> pieces;
+    private Set<PaintablePiece> pieces; //TODO: Fixa så att vi tar denna data antingen från board eller tiles och sätt ut dem.
     private Image BackgroundImage;
     private JPanel boardPanel;
     private JPanel container;
@@ -15,8 +17,10 @@ public class DrawPanel extends JPanel implements Observer {
     private JPanel rightPanel;
     //private final
 
-    public DrawPanel(BoardPanel boardPanel) {
+    public DrawPanel(BoardPanel boardPanel, GameController gameController) {
         this.boardPanel = boardPanel;
+        this.leftPanel = new LeftPanel();
+        this.rightPanel = new RightPanel(gameController);
         this.setLayout(new GridBagLayout());
         //setDoubleBuffered(true);
         setPreferredSize(new Dimension(1920, 1080));
@@ -28,21 +32,18 @@ public class DrawPanel extends JPanel implements Observer {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-        leftPanel = new JPanel();
-        leftPanel.setLayout(new FlowLayout());
+        //leftpanel
         c.weightx = 0.45;
         c.gridy = 0;
         c.gridx = 0;
         this.add(leftPanel, c);
-        leftPanel.setBackground(Color.RED);
 
+        //boardpanel
         c.weightx = 0.1;
         c.gridx = 1;
         this.add(boardPanel, c);
 
-        rightPanel = new JPanel();
-        rightPanel.setLayout(new FlowLayout());
-        rightPanel.setBackground(Color.BLUE);
+        //rightpanel
         c.weightx = 0.45;
         c.gridx = 2;
         this.add(rightPanel, c);
