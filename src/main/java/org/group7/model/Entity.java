@@ -1,5 +1,7 @@
 package org.group7.model;
 
+import java.awt.Color;
+
 public abstract class Entity{
     protected int pos;
 
@@ -13,4 +15,8 @@ public abstract class Entity{
     }
 
     public void set_pos(int newPos) { this.pos = pos; }
+
+    public abstract void handleCollision(Piece e); //TODO kolla om detta är ok, ska det vara Piece?
+
+
 }
