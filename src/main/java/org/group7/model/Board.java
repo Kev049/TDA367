@@ -6,7 +6,7 @@ import org.group7.controllers.Observer;
 import java.awt.*;
 import java.util.HashMap;
 
-public class Board implements Observer {
+public class Board implements Observer, MoveHandler {
 
     private Base[] bases;
     private Tile[] field;
@@ -165,4 +165,8 @@ public class Board implements Observer {
 
     }
 
+    @Override
+    public void movePiece(Piece piece) {
+        //TODO implement
+    }
 }
