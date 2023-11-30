@@ -5,24 +5,25 @@ import java.awt.*;
 public class GoalStrech {
 
     private Tile[] tiles;
+    private Color color;
 
-    public GoalStrech() {
-        for (int i = 0; i < 5; i++) {
-            this.tiles[i] = new Tile();
+    public GoalStrech(Color color) {
+        this.color = color;
+        for (int i = 0; i < 4; i++) {
+            this.tiles[i] = new Tile(i);
         }
     }
 
-    public void addPiece(Piece p) {
-        if (this.pieceAmount < this.capacity) {
-            this.pieces[this.pieceAmount++] = p;
-        }
+    public void addPiece(Entity e, int index) {
+        this.tiles[index].insertEntity(e);
     }
 
-    public Piece[] getPieces(){
-        return this.pieces;
+    public void removePiece(int index){
+        this.tiles[index].removeEntity();
     }
 
     public Color getColor(){
         return this.color;
     }
+
 }
