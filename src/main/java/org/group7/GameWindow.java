@@ -65,14 +65,14 @@ public class GameWindow extends JFrame{
     private void initPieces(){
         List<Integer> index = boardPanel.getGamePathTileIndexes();
         HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
-        Icon icon = new ImageIcon("src/main/resources/red_player_circle.png");
+        Icon icon = new ImageIcon("src/main/resources/green_player_circle.png");
         JLabel piece = new JLabel(icon);
         piece.setPreferredSize(new Dimension());
 //      piece.setBorderPainted(false);
 //        piece.setContentAreaFilled(false);
 //        piece.setFocusPainted(false);
         piece.setOpaque(false);
-        currentPos = 18;
+        currentPos = 0;
         currentTile = indexTileHashMap.get(index.get(currentPos));
         currentTile.add(piece);
         //Controller
