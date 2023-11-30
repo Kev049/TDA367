@@ -51,4 +51,11 @@ public class Piece extends Entity {
     public int getDistFromStart(){
         return this.distFromStart;
     }
+
+    @Override
+    public void handleCollision(Piece p) {
+        if (p.getColor() != this.color) {
+
+        }
+    }
 }

@@ -16,5 +16,7 @@ public abstract class Entity{
 
     public void set_pos(int newPos) { this.pos = pos; }
 
+    public abstract void handleCollision(Piece e); //TODO kolla om detta är ok, ska det vara Piece?
+
 
 }
