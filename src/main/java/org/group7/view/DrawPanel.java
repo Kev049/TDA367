@@ -6,7 +6,9 @@ import java.awt.*;
 import java.util.Set;
 import java.util.List;
 
-public class DrawPanel extends JPanel implements Observer {
+
+//public class DrawPanel extends JPanel implements Observer {
+public class DrawPanel extends JPanel{
     private Set<PaintablePiece> pieces; //TODO: Fixa så att vi tar denna data antingen från board eller tiles och sätt ut dem.
     private JPanel boardPanel;
     private JPanel leftPanel;
@@ -44,10 +46,11 @@ public class DrawPanel extends JPanel implements Observer {
         c.gridx = 2;
         this.add(rightPanel, c);
     }
-
+    /*
     @Override
     public void update() {
         repaint();
     }
+     */
 }
 

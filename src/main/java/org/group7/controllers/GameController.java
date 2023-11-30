@@ -34,16 +34,17 @@ public class GameController{
     }
 
     private void initDiceImageCoordinates(){
-        Collections.addAll(imageCoordinates, new Point(100, 95), new Point(340, 95),
-                new Point(590, 95), new Point(100, 380), new Point(340, 380),
-                new Point(590, 380));
+        Collections.addAll(imageCoordinates, new Point(0, 0), new Point(205, 0),
+                new Point(408, 0), new Point(0, 203), new Point(205, 203),
+                new Point(408, 203));
     }
 
     private void rollDice(){
         int diceRollResult = game.rollDice() - 1;
-        BufferedImage image = new BufferedImage(210, 210, BufferedImage.TYPE_INT_RGB);
+        System.out.println(diceRollResult);
+        BufferedImage image = new BufferedImage(205, 205, BufferedImage.TYPE_INT_RGB);
         try{
-            image = ImageIO.read(new File("src/main/resources/dices.png"));
+            image = ImageIO.read(new File("src/main/resources/dices2.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +53,7 @@ public class GameController{
         Icon icon = new ImageIcon(image.getSubimage(
                 (int) imageCoordinates.get(diceRollResult).getX(),
                 (int) imageCoordinates.get(diceRollResult).getY(),
-                210, 210));
+                205, 205));
         rollDiceButton.setIcon(icon);
     }
     public void addButtonsToListOfButtons(){

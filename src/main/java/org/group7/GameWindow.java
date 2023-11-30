@@ -72,7 +72,7 @@ public class GameWindow extends JFrame{
 //        piece.setContentAreaFilled(false);
 //        piece.setFocusPainted(false);
         piece.setOpaque(false);
-        currentPos = 0;
+        currentPos = 18;
         currentTile = indexTileHashMap.get(index.get(currentPos));
         currentTile.add(piece);
         //Controller

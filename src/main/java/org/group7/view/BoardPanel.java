@@ -18,19 +18,16 @@ public class BoardPanel extends JPanel{
 
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
-    private HashMap<Integer, Box> indexBoxHashMap;
     private List<Integer> redGoalPathTileIndex;
     private List<Integer> greenGoalPathTileIndex;
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
 
-    public PaintableBoard(Board board){
-        this.setLayout(new GridBagLayout());
-        this.setBackground(Color.GRAY);
     private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int totalAmountTiles = 121;
     private BoardListener boardListener;
     private Image image;
+
     public BoardPanel(Board board, BoardListener boardListener ,List<PaintableTile> paintableTiles){
         this.paintableTiles = paintableTiles;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
@@ -38,7 +35,6 @@ public class BoardPanel extends JPanel{
         this.greenGoalPathTileIndex = new ArrayList<>(4);
         this.yellowGoalPathTileIndex = new ArrayList<>(4);
         this.blueGoalPathTileIndex = new ArrayList<>(4);
-        this.indexBoxHashMap = new HashMap<>(); //Hashmap that matches tile with index
         this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
         this.boardListener = boardListener;
         this.setLayout(new GridBagLayout());
@@ -62,7 +58,7 @@ public class BoardPanel extends JPanel{
 
     private void applyImage(){
         try{
-            this.image = ImageIO.read(new File("src/main/resources/Board.png"));
+            this.image = ImageIO.read(new File("src/main/resources/board2.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -79,7 +75,7 @@ public class BoardPanel extends JPanel{
         int tileIndex = 0;
         for(Component component : this.getComponents()){
             if(component instanceof PaintableTile){
-                //Put the box in hashmap with matching index as key for later use
+                //Put the tile in hashmap with matching index as key for later use
                 indexTileHashMap.put(tileIndex, (PaintableTile) component);
                 tileIndex++;
             }
@@ -127,8 +123,6 @@ public class BoardPanel extends JPanel{
     private void initBlueGoalPathTileIndex(){
         Collections.addAll(this.blueGoalPathTileIndex, 104, 93, 82, 71);
     }
-
-
 
     public List<Integer> getGamePathTileIndexes(){
         return this.gamePathTileIndex;

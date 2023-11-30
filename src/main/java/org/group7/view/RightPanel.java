@@ -40,13 +40,13 @@ public class RightPanel extends JPanel{
         c.gridy = 2;
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         try{
-            image = ImageIO.read(new File("src/main/resources/dices.png"));
+            image = ImageIO.read(new File("src/main/resources/dices2.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-        Icon icon = new ImageIcon(image.getSubimage(100, 95, 210, 210));
+        Icon icon = new ImageIcon(image.getSubimage(0, 0, 205, 205));
         rollDiceButton.setIcon(icon);
         rollDiceButton.setFont(new Font("Arial", Font.PLAIN, 40));
         rollDiceButton.setContentAreaFilled(false);

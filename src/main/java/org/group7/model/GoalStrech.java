@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GoalStrech {
 
-    private Tile[] tiles;
+    private Tile[] tiles = new Tile[4];
     private Color color;
 
     public GoalStrech(Color color) {
