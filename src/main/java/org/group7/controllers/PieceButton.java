@@ -14,9 +14,7 @@ import java.util.ArrayList;
 
 
 public class PieceButton extends JButton{
-
     private Piece piece;
-
 
     public PieceButton(Piece piece, int x, int y) {
         super(new ImageIcon("src/main/resources/" + piece.getColor().toString().toLowerCase() + "_player_circle.png"));

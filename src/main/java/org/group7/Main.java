@@ -1,8 +1,10 @@
 package org.group7;
 
+import org.group7.controllers.GameController;
 import org.group7.model.Board;
+import org.group7.model.Game;
 import org.group7.view.DrawPanel;
-import org.group7.view.PaintableBoard;
+import org.group7.view.BoardPanel;
 //import controller.Game;
 
 import java.util.HashSet;
@@ -10,21 +12,10 @@ import java.util.HashSet;
 public class Main {
 
     public static void main(String[] args) {
-        DrawPanel drawBoard = new DrawPanel(new HashSet<>());
         Board board = new Board();
-        PaintableBoard paintableBoard = new PaintableBoard(board);
+        Game game = new Game();
+        GameController gameController = new GameController(game);
         //Game.addObserver(drawBoard);
-        /*List<Tile> tiles = initTiles();*/
-        new GameWindow("TurboFia", drawBoard, paintableBoard);
-
+        new GameWindow("TurboFia", board, gameController);
     }
-
-    /*public static List<Tile> initTiles(){
-
-         List<Tile> tiles = new ArrayList<>(40);
-        for(int i = 0; i < 40; i++){
-            tiles.add(new Tile(i));
-        }
-        return tiles;
-    }*/
 }
