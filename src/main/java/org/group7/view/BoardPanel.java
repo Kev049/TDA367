@@ -24,7 +24,8 @@ public class BoardPanel extends JPanel{
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
 
-
+    private List<Integer> baseTileIndex;
+    private List<Integer> goalTileIndex;
     private HashMap<Integer, Box> indexBoxHashMap;
     private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
@@ -37,6 +38,7 @@ public class BoardPanel extends JPanel{
         this.paintableBaseTiles = paintableBaseTiles;
         this.paintablePieces = paintablePieces;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
+        this.baseTileIndex = new ArrayList<>(16);
         this.redGoalPathTileIndex = new ArrayList<>(4);
         this.greenGoalPathTileIndex = new ArrayList<>(4);
         this.yellowGoalPathTileIndex = new ArrayList<>(4);
@@ -44,13 +46,15 @@ public class BoardPanel extends JPanel{
         this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
+        initGamePathTileIndex();
+        initBaseTileIndex();
+        initAllGoals();
         applyImage();
         drawPieces();
         addPanelBoxes();
-        addBoardTiles();
         storeBoardTileIndex();
-        initGamePathTileIndex();
-        initAllGoals();
+        addBoardPathTiles();
+        addBoardBaseTiles();
     }
 
     private void drawPieces(){
@@ -90,8 +94,9 @@ public class BoardPanel extends JPanel{
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
-                Box box = new Box(Box.HEIGHT);
+                Box box = new Box(BoxLayout.PAGE_AXIS);
                 box.setPreferredSize(new Dimension(91, 91));
+                box.setBorder(BorderFactory.createLineBorder(Color.black));
                 index++;
                 //Add to panel
                 this.add(box, c);
@@ -99,7 +104,7 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    private void addBoardTiles(){
+    private void addBoardPathTiles(){
         int i = 0;
         for(int index : gamePathTileIndex){
             Box box = indexBoxHashMap.get(index);
@@ -108,9 +113,23 @@ public class BoardPanel extends JPanel{
         }
     }
 
+    private void addBoardBaseTiles(){
+        int i = 0;
+        for(int index : baseTileIndex){
+            Box box = indexBoxHashMap.get(index);
+            box.add(paintableBaseTiles.get(i));
+            i++;
+        }
+    }
+
     private void initGamePathTileIndex(){
         Collections.addAll(this.gamePathTileIndex, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,
         51, 52, 53, 54, 65, 76, 75, 74, 73, 72, 83, 94, 105, 116, 115, 114, 103, 92, 81, 70, 69, 68, 67, 66, 55);
+    }
+
+    private void initBaseTileIndex(){
+        Collections.addAll(this.baseTileIndex, 12, 13, 23, 24, 19, 20, 30, 31, 89,
+                90, 100, 101, 96, 97, 107, 108);
     }
 
     private void initAllGoals(){

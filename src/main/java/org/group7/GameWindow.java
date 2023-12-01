@@ -55,6 +55,7 @@ public class GameWindow extends JFrame{
         piece.setContentAreaFilled(false);
         piece.setFocusPainted(false);
         piece.setOpaque(false);
+        /*
         List<Integer> index = boardPanel.getGamePathTileIndexes();
         HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
         PaintableTile currentTile = indexTileHashMap.get(index.get(0));
@@ -80,5 +81,7 @@ public class GameWindow extends JFrame{
                 currentTile.add(piece);
             }
         });
+
+         */
     }
 }

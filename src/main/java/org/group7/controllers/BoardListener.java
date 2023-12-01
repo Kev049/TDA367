@@ -28,6 +28,7 @@ public class BoardListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         PaintableTile paintableTile = (PaintableTile) e.getSource();
         Tile tile = paintableTile.getTile();
+        System.out.println(e.getSource());
         game.movePiece(tile);
         /*  TODO: Gör klart modellen så vi kan implementera det här
         if (!tile.isEmpty()) {             //Temorärt

@@ -4,6 +4,7 @@ package org.group7.model;
 import org.group7.controllers.Observer;
 
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -201,7 +202,7 @@ public class Board implements Observer, ICollisionHandler {
 
         int result = field.length + (bases.length*4) + goals.length;//+1 är för målet också?
         //field + goals
-        ArrayList<Tile> allTiles = new ArrayList<Tile>(result);
+        ArrayList<Tile> allTiles = new ArrayList<>(result);
 
         for(int j = 0; j < field.length; j++){
             allTiles.add(field[j]);
@@ -217,6 +218,8 @@ public class Board implements Observer, ICollisionHandler {
 
         return allTiles;
     }
+
+
 
     //--------------------------------------------------------
 

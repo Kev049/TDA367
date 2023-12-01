@@ -17,11 +17,17 @@ import java.util.List;
 import java.awt.Color;
 
 public class Main {
-    private static final int TOTAL_AMOUNT_TILES = 121;
+
+    private static final int TOTAL_AMOUNT_TILES = 56;
+    private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
+    private static final int TOTAL_AMOUNT_BASE_TILES = 16;
+    private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
     private static final int TOTAL_AMOUNT_PIECES = 16;
     private static BoardPanel boardPanel;
     private static DrawPanel drawPanel;
-    private static List<PaintableTile> paintableTiles = new ArrayList<>(TOTAL_AMOUNT_TILES);
+    private static List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
+    private static List<PaintableTile> paintableBaseTiles = new ArrayList<>(TOTAL_AMOUNT_BASE_TILES);
+    private static List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
     private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
 
     public static void main(String[] args) {
@@ -30,13 +36,24 @@ public class Main {
         Game game = new Game();
 
         //View instances
-        Tile tile = null;
         ArrayList<Tile> tiles = board.getAllTiles();
         ArrayList<Piece> pieces = board.getAllPieces();
 
+        //Det här kan def. förbättras, TODO: Kalla på separata metoder för varje lista istället för en gemensam
+
         for (int i = 0; i < TOTAL_AMOUNT_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(tile);
-            paintableTiles.add(paintableTile);
+            if(i < TOTAL_AMOUNT_FIELD_TILES){
+                PaintableTile paintableTile = TileFactory.createTile(tiles.get(i));
+                paintableFieldTiles.add(paintableTile);
+            }
+            else if(TOTAL_AMOUNT_FIELD_TILES < i || i < TOTAL_AMOUNT_FIELD_TILES + TOTAL_AMOUNT_BASE_TILES){
+                PaintableTile paintableTile = TileFactory.createTile(tiles.get(i));
+                paintableBaseTiles.add(paintableTile);
+            }
+            else{
+                PaintableTile paintableTile = TileFactory.createTile(tiles.get(i));
+                paintableGoalTiles.add(paintableTile);
+            }
         }
 
         for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
@@ -45,12 +62,12 @@ public class Main {
         }
 
         //Controller
-        BoardController boardController = new BoardController(paintableTiles, game);
+        BoardController boardController = new BoardController(paintableFieldTiles, game);
         GameController gameController = new GameController(game);
         List< JButton> buttons = gameController.getListOfButtons();
 
 
-        boardPanel = new BoardPanel(paintableTiles, paintablePieces);
+        boardPanel = new BoardPanel(paintableFieldTiles, paintableBaseTiles, paintablePieces);
         drawPanel = new DrawPanel(boardPanel, buttons);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
