@@ -15,31 +15,39 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPanel extends JPanel{
-    private List<PaintableTile> paintableTiles;
+    private List<PaintableTile> paintableFieldTiles;
+    private List<PaintableTile> paintableBaseTiles;
+    private List<PaintablePiece> paintablePieces;
     private List<Integer> gamePathTileIndex;
     private List<Integer> redGoalPathTileIndex;     //TODO använd Map istället för 4 separate listor (skicka färg, få lista)
     private List<Integer> greenGoalPathTileIndex;
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
-    private List<PaintablePiece> paintablePieces;
 
+
+    private HashMap<Integer, Box> indexBoxHashMap;
     private HashMap<Integer, PaintableTile> indexTileHashMap;
-    private final int totalAmountTiles = 121;
+    private final int TOTAL_AMOUNT_TILES = 121;
     private Image image;
 
-    public BoardPanel(List<PaintableTile> paintableTiles, List<PaintablePiece> paintablePieces){
-        this.paintableTiles = paintableTiles;
+    public BoardPanel(List<PaintableTile> paintableFieldTiles,
+                      List<PaintableTile> paintableBaseTiles,
+                      List<PaintablePiece> paintablePieces){
+        this.paintableFieldTiles = paintableFieldTiles;
+        this.paintableBaseTiles = paintableBaseTiles;
         this.paintablePieces = paintablePieces;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
         this.redGoalPathTileIndex = new ArrayList<>(4);
         this.greenGoalPathTileIndex = new ArrayList<>(4);
         this.yellowGoalPathTileIndex = new ArrayList<>(4);
         this.blueGoalPathTileIndex = new ArrayList<>(4);
-        this.indexTileHashMap = new HashMap<>(totalAmountTiles); //Hashmap that matches tile with index
+        this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
+        this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
         applyImage();
         drawPieces();
-        drawBoardTiles();
+        addPanelBoxes();
+        addBoardTiles();
         storeBoardTileIndex();
         initGamePathTileIndex();
         initAllGoals();
@@ -66,15 +74,14 @@ public class BoardPanel extends JPanel{
     private void storeBoardTileIndex(){
         int tileIndex = 0;
         for(Component component : this.getComponents()){
-            if(component instanceof PaintableTile){
+            if(component instanceof Box){
                 //Put the tile in hashmap with matching index as key for later use
-                indexTileHashMap.put(tileIndex, (PaintableTile) component);
+                indexBoxHashMap.put(tileIndex, (Box) component);
                 tileIndex++;
             }
         }
     }
-
-    private void drawBoardTiles(){
+    private void addPanelBoxes(){
         GridBagConstraints c = new GridBagConstraints();
         int index = 0;
         for(int y = 0; y < 11; y++) {
@@ -83,11 +90,21 @@ public class BoardPanel extends JPanel{
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
-                PaintableTile tile = paintableTiles.get(index);
+                Box box = new Box(Box.HEIGHT);
+                box.setPreferredSize(new Dimension(91, 91));
                 index++;
                 //Add to panel
-                this.add(tile, c);
+                this.add(box, c);
             }
+        }
+    }
+
+    private void addBoardTiles(){
+        int i = 0;
+        for(int index : gamePathTileIndex){
+            Box box = indexBoxHashMap.get(index);
+            box.add(paintableFieldTiles.get(i));
+            i++;
         }
     }
 
