@@ -12,6 +12,10 @@ public class GoalStretch {
 
     public GoalStretch(Color color) {
         this.color = color;
+        initTiles();
+    }
+
+    private void initTiles(){
         for (int i = 0; i < 4; i++) {
             this.tiles[i] = new Tile(i);
         }
@@ -29,8 +33,8 @@ public class GoalStretch {
         return this.color;
     }
 
-    public List<Tile> getTiles(){
-        return Arrays.asList(tiles);
+    public Tile[] getTiles(){
+        return this.tiles;
     }
 
 }

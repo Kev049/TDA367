@@ -198,9 +198,8 @@ public class Board implements Observer, ICollisionHandler {
     }
 
     public ArrayList<Tile> getAllTiles() {
-        //int result = field.length + goals.length + bases.length + 1;
 
-        int result = field.length + (bases.length*4);//+1 är för målet
+        int result = field.length + (bases.length*4) + goals.length;//+1 är för målet också?
         //field + goals
         ArrayList<Tile> allTiles = new ArrayList<Tile>(result);
 
@@ -212,14 +211,10 @@ public class Board implements Observer, ICollisionHandler {
             allTiles.addAll(Arrays.asList(bases[i].getTiles()));
         }
 
+        for(int i = 0; i < goals.length; i++){
+            allTiles.addAll(Arrays.asList(goals[i].getTiles()));
+        }
 
-
-//        for(int i = 0; i < goals.length; i++){
-//            allTiles.add(goals[i]);
-//        }
-//            for(int j = 0; j < bases.length; j++){
-//                allTiles.add(bases[j]);
-//            }
         return allTiles;
     }
 

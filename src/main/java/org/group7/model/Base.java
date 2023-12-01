@@ -16,16 +16,26 @@ public class Base {
         this.pieces = new Piece[capacity];
         this.color = color;
         this.tiles = new Tile[4];
+        initTilesAndPieces();
 
-        for (int i = 0; i < 4; i++) {
-            this.tiles[i] = new Tile(i);
-        }
         /*
         for (int i = 0; i < capacity; i++) {
             //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
             this.pieces[capacity] = PieceFactory.createPiece(this.colour);
         }
          */
+    }
+
+    private void initTilesAndPieces(){ //Kan nog delas upp till 2 metoder
+        for (int i = 0; i < 4; i++) {
+
+            Tile tile = new Tile(i);
+            Piece piece = new Piece(this.color);
+            tile.insertEntity(piece);
+
+            this.pieces[i] = piece;
+            this.tiles[i] = tile;
+        }
     }
 
     public Piece removePiece() {
