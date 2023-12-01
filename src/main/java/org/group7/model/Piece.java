@@ -16,10 +16,10 @@ public class Piece extends Entity {
         this.color = color;
     }
 
-//    public int get_pos(){
-//
-//        return this.pos;
-//    }
+    public int get_pos(){
+
+        return this.pos;
+    }
 
     public void move(int diceRoll){
         for (int i = 0; i < diceRoll; i++ ){

@@ -94,6 +94,9 @@ public class BoardPanel extends JPanel{
 
     private void initAllGoals(){
         initRedGoalPathTileIndex();
+        initGreenGoalPathTileIndex();
+        initYellowGoalPathTileIndex();
+        initBlueGoalPathTileIndex();
     }
 
     private void initRedGoalPathTileIndex(){

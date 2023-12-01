@@ -17,7 +17,7 @@ public class Board implements Observer, MoveHandler {
 
     public Board() {
         this.bases = new Base[4];
-        this.field = new Tile[40];
+        this.field = new Tile[40];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
         this.goals = new GoalStrech[4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
@@ -168,5 +168,16 @@ public class Board implements Observer, MoveHandler {
     @Override
     public void movePiece(Piece piece) {
         //TODO implement
+    }
+
+    public Entity nextPiece(Piece piece) {
+        int startPos = piece.get_pos();
+        for (int i = 0; i < 40; i++){
+            Entity e = this.field[i+startPos].getEntity();
+            if (e instanceof Piece){
+                return e;
+            }
+        }
+        return null;
     }
 }
