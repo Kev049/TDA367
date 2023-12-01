@@ -31,7 +31,7 @@ public class Base {
     public Piece removePiece() {
         if (this.pieceAmount > 0) {
             Piece p = this.pieces[--this.pieceAmount];
-            this.pieces[this.pieceAmount] = null;
+            this.pieces[this.pieceAmount] = new Piece(color);
             return p;
         }
         return null;
