@@ -66,9 +66,14 @@ public class Game {
     }
 
     public void movePiece(Tile tile) {
-        if (validateMove(tile)) {
+        if(validateMove(tile)) {
             this.board.movePiece(tile.getIndex(),this.lastDiceRollResult);
         }
+    }
+
+    //TODO: Validate that it is player's turn
+    public void movePieceOutOfBase(){
+
     }
 
     public void addObserver(Observer observer) {

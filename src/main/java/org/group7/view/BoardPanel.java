@@ -18,23 +18,19 @@ public class BoardPanel extends JPanel{
     private List<PaintableTile> paintableFieldTiles;
     private List<PaintableTile> paintableBaseTiles;
     private List<PaintableTile> paintableGoalTiles;
-    private List<PaintablePiece> paintablePieces;
     private List<Integer> fieldTileIndices;
     private List<Integer> baseTileIndices;
     private List<Integer> goalTileIndices;
     private HashMap<Integer, Box> indexBoxHashMap;
-    private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
     private Image image;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableTile> paintableBaseTiles,
-                      List<PaintableTile> paintableGoalTiles,
-                      List<PaintablePiece> paintablePieces){
+                      List<PaintableTile> paintableGoalTiles){
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBaseTiles = paintableBaseTiles;
         this.paintableGoalTiles = paintableGoalTiles;
-        this.paintablePieces = paintablePieces;
         this.fieldTileIndices = new ArrayList<>(40); //Index for paintableTiles that match game path
         this.baseTileIndices = new ArrayList<>(16);
         this.goalTileIndices = new ArrayList<>(16);
@@ -43,14 +39,8 @@ public class BoardPanel extends JPanel{
         applyImage();
         addPanelBoxes();
         storeBoardTileIndex();
-        initFieldTileIndex();
-        initBaseTileIndex();
-        initGoalTileIndex();
+        initTileIndices();
         addBoardTiles();
-        drawPieces();
-    }
-
-    private void drawPieces(){
     }
 
     private void applyImage(){
@@ -108,17 +98,23 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    private void initFieldTileIndex(){
+    private void initTileIndices(){
+        initFieldTileIndices();
+        initBaseTileIndices();
+        initGoalTileIndices();
+    }
+
+    private void initFieldTileIndices(){
         Collections.addAll(this.fieldTileIndices, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,
         51, 52, 53, 54, 65, 76, 75, 74, 73, 72, 83, 94, 105, 116, 115, 114, 103, 92, 81, 70, 69, 68, 67, 66, 55);
     }
 
-    private void initBaseTileIndex(){
+    private void initBaseTileIndices(){
         Collections.addAll(this.baseTileIndices, 12, 13, 23, 24, 19, 20, 30, 31, 89,
                 90, 100, 101, 96, 97, 107, 108);
     }
 
-    private void initGoalTileIndex(){
+    private void initGoalTileIndices(){
         Collections.addAll(this.goalTileIndices, 56, 57, 58, 59, 16, 27, 38, 49, 64, 63, 62, 61, 104, 93,
                 82, 71);
     }

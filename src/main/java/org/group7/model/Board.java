@@ -10,11 +10,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Board implements Observer, ICollisionHandler {
-
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goals;
-
     private Color[] colors;
     private HashMap<Color,Integer> playerStartTiles;
     private HashMap<Color, GoalStretch> goalsHashMap;
@@ -188,11 +186,9 @@ public class Board implements Observer, ICollisionHandler {
     }
 
     public ArrayList<Piece> getAllPieces(){
-        ArrayList<Piece> pieceList = new ArrayList<Piece>();
+        ArrayList<Piece> pieceList = new ArrayList<>();
         for (Color c : colors) {
-            for (Piece piece : this.piecesHashMap.get(c)) {
-                pieceList.add(piece);
-            }
+            pieceList.addAll(Arrays.asList(this.piecesHashMap.get(c)));
         }
         return pieceList;
     }
@@ -218,7 +214,23 @@ public class Board implements Observer, ICollisionHandler {
         return allTiles;
     }
 
-
+    public List<Tile> getFieldTiles(){
+        return Arrays.asList(field);
+    }
+    public List<Tile> getBaseTiles(){
+        List<Tile> baseTiles = new ArrayList<>(16);
+        for (Base base : bases) {
+            baseTiles.addAll(Arrays.asList(base.getTiles()));
+        }
+        return baseTiles;
+    }
+    public List<Tile> getGoalTiles(){
+        List<Tile> goalTiles = new ArrayList<>(16);
+        for (GoalStretch goal : goals) {
+            goalTiles.addAll(Arrays.asList(goal.getTiles()));
+        }
+        return goalTiles;
+    }
 
     //--------------------------------------------------------
 
