@@ -18,17 +18,19 @@ public class BoardPanel extends JPanel{
 
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
-    private List<Integer> redGoalPathTileIndex;
+    private List<Integer> redGoalPathTileIndex;     //TODO använd Map istället för 4 separate listor (skicka färg, få lista)
     private List<Integer> greenGoalPathTileIndex;
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
+    private List<PaintablePiece> paintablePieces;
 
     private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int totalAmountTiles = 121;
     private Image image;
 
-    public BoardPanel(List<PaintableTile> paintableTiles){
+    public BoardPanel(List<PaintableTile> paintableTiles, List<PaintablePiece> paintablePieces){
         this.paintableTiles = paintableTiles;
+        this.paintablePieces = paintablePieces;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
         this.redGoalPathTileIndex = new ArrayList<>(4);
         this.greenGoalPathTileIndex = new ArrayList<>(4);
@@ -37,11 +39,14 @@ public class BoardPanel extends JPanel{
         this.indexTileHashMap = new HashMap<>(totalAmountTiles); //Hashmap that matches tile with index
         this.setLayout(new GridBagLayout());
         applyImage();
-        //drawPieces();
+        drawPieces();
         drawBoardTiles();
         storeBoardTileIndex();
         initGamePathTileIndex();
         initAllGoals();
+    }
+
+    private void drawPieces() {
     }
 
     private void applyImage(){

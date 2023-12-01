@@ -24,8 +24,8 @@ public class GameWindow extends JFrame{
     private DrawPanel drawPanel;
     private BoardPanel boardPanel; //TODO:Remove this when pieces are fixed, gameWindow should only have DrawPanel
 
-    public GameWindow(String name, DrawPanel drawPanel, BoardPanel boardPanel){
-        this.game = new Game();
+    public GameWindow(String name, DrawPanel drawPanel, BoardPanel boardPanel, Game game){
+        this.game = game;
         this.drawPanel = drawPanel;
         this.boardPanel = boardPanel;
         componentSetup(name);
@@ -66,7 +66,7 @@ public class GameWindow extends JFrame{
             PaintableTile currentTile = indexTileHashMap.get(index.get(0));
             @Override
             public void actionPerformed(ActionEvent e) {
-                int diceRoll = 1;
+                int diceRoll = game.getLastDiceRollResult();
                 //Add result from dice roll to current position and move around without index out of length of array
                 currentPos = (currentPos + diceRoll) % 40;
 

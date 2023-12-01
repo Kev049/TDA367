@@ -16,6 +16,7 @@ public class PaintablePiece extends JLabel{
         this.setIcon(icon);
         this.setOpaque(false);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -23,4 +24,6 @@ public class PaintablePiece extends JLabel{
         int y = 0;
         g.drawImage(image, x, y, null); // see javadoc for more info on the parameters
     }
+
+
 }

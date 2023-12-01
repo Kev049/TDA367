@@ -17,15 +17,7 @@ public class Piece extends Entity {
     }
 
     public int get_pos(){
-
         return this.pos;
-    }
-
-    public void move(int diceRoll){
-        for (int i = 0; i < diceRoll; i++ ){
-            this.pos += 1;
-            //check if piece needs to turn in to goal line.
-        }
     }
 
     public Color getColor(){

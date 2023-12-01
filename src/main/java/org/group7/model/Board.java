@@ -4,24 +4,32 @@ package org.group7.model;
 import org.group7.controllers.Observer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Board implements Observer, MoveHandler {
+public class Board implements Observer, ICollisionHandler {
 
     private Base[] bases;
     private Tile[] field;
     private GoalStrech[] goals;
+
+    private Color[] colors;
     private HashMap<Color,Integer> playerStartTiles;
     private HashMap<Color, GoalStrech> goalsHashMap;
     private HashMap<Color,Base> colorBaseMap;
+    private HashMap<Color, Piece[]> piecesHashMap;
 
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
         this.goals = new GoalStrech[4];
+        this.colors = new Color[4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
+        this.piecesHashMap = new HashMap<>();
+        initColors();
+        initPieces();
         initBases();
         initStartTileIndices();
         initColorBaseMap();
@@ -32,42 +40,57 @@ public class Board implements Observer, MoveHandler {
         }
     }
 
+    private void initColors() {
+        this.colors[0] = Color.RED;
+        this.colors[1] = Color.GREEN;
+        this.colors[2] = Color.YELLOW;
+        this.colors[3] = Color.BLUE;
+    }
+
+    private void initPieces() {
+        for(Color c : this.colors) {
+            Piece[] piecesArray = new Piece[4];
+            for (int i = 0; i < 4; i++) {
+                piecesArray[i] = PieceFactory.createPiece(c);
+            }
+            piecesHashMap.put(c, piecesArray);
+        }
+    }
+
     private void initBases() {
-        this.bases[0] = new Base(4, Color.RED);     //TODO remove?
-        this.bases[1] = new Base(4, Color.GREEN);
-        this.bases[2] = new Base(4, Color.YELLOW);
-        this.bases[3] = new Base(4, Color.BLUE);
+        int i = 0;
+        for (Color c : this.colors){
+            this.bases[i] = new Base(4, c);
+            i++;
+        }
+
     }
 
     private void initStartTileIndices() {
-        this.playerStartTiles.put(Color.RED,0);
-        this.playerStartTiles.put(Color.GREEN,10);
-        this.playerStartTiles.put(Color.YELLOW,20);
-        this.playerStartTiles.put(Color.BLUE,30);
+        for (int i = 0; i < 4; i++) {
+            this.playerStartTiles.put(this.colors[i], i*10);
+        }
     }
 
     private void initColorBaseMap() {
-        this.colorBaseMap.put(Color.RED,bases[0]);  //TODO bases används inte ksk? Skapa basen.
-        this.colorBaseMap.put(Color.RED,bases[1]);
-        this.colorBaseMap.put(Color.RED,bases[2]);
-        this.colorBaseMap.put(Color.RED,bases[3]);
+        for (int i = 0; i < 4; i++) {
+            this.colorBaseMap.put(this.colors[i], bases[i]);
+        }
     }
 
-    private void initGoals(){
-        this.goals[0] = new GoalStrech(Color.RED);
-        this.goals[1] = new GoalStrech(Color.GREEN);
-        this.goals[2] = new GoalStrech(Color.YELLOW);
-        this.goals[3] = new GoalStrech(Color.BLUE);
+    private void initGoals() {
+        int i = 0;
+        for (Color c : this.colors) {
+            this.goals[i] = new GoalStrech(c);
+            i++;
         }
-
-
+    }
     
 
     private void initGoalsHashMap(){
-        this.goalsHashMap.put(Color.RED, goals[0]);
-        this.goalsHashMap.put(Color.GREEN, goals[1]);
-        this.goalsHashMap.put(Color.YELLOW, goals[2]);
-        this.goalsHashMap.put(Color.BLUE, goals[3]);
+        for (int i = 0; i < 4; i++){
+            this.goalsHashMap.put(this.colors[i], goals[i]);
+        }
     }
 
     public void addPieceToBase(Color baseColor, Piece p){
@@ -132,6 +155,20 @@ public class Board implements Observer, MoveHandler {
         // TODO handle collisions
     }
 
+
+    public Entity nextPiece(Piece piece) {
+        int startPos = piece.get_pos();
+        for (int i = 0; i < 40; i++){
+            Entity e = this.field[i+startPos].getEntity();
+            if (e instanceof Piece){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    //Getters
+
     public Base[] getBases(){
         return this.bases;
     }
@@ -143,6 +180,30 @@ public class Board implements Observer, MoveHandler {
         }
         return null;
     }
+
+    public ArrayList<Piece> getAllPieces(){
+        ArrayList<Piece> pieceList = new ArrayList<Piece>();
+        for (Color c : colors) {
+            for (Piece piece : this.piecesHashMap.get(c)) {
+                pieceList.add(piece);
+            }
+        }
+        return pieceList;
+    }
+
+    public ArrayList<Tile> getAllTiles() {
+        int result = field.length + goals.length + bases.length + 1; //+1 är för målet
+        //field + goals
+        ArrayList<Tile> allTiles = new ArrayList<Tile>(result);
+        allTiles.addAll(field);
+        Collections.addAll(allTiles)
+        //allTiles[0] = Tile1;
+
+
+        return allTiles;
+    }
+
+    //--------------------------------------------------------
 
     @Override
     public void update() {
@@ -170,14 +231,4 @@ public class Board implements Observer, MoveHandler {
         //TODO implement
     }
 
-    public Entity nextPiece(Piece piece) {
-        int startPos = piece.get_pos();
-        for (int i = 0; i < 40; i++){
-            Entity e = this.field[i+startPos].getEntity();
-            if (e instanceof Piece){
-                return e;
-            }
-        }
-        return null;
-    }
 }

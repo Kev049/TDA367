@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class PaintableEntityFactory{
+public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna klassen
     private static Image image;
     public static PaintableEntity makePieceImage(Entity entity) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
         return makePaintedPiece("../../resources/PieceColour.png", entity);

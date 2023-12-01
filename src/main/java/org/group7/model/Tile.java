@@ -25,7 +25,7 @@ public class Tile implements Observable {
         return entity;
     }
 
-    public void insertEntity(Entity e) {
+    public void insertEntity(Entity e) {    //TODO inte observer, låt Entity hantera kollision
         if (this.entity != null){
             notifyObservers();
         }

@@ -14,7 +14,6 @@ public class DrawPanel extends JPanel{
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JButton rollDiceButton;
-    //private final
 
     public DrawPanel(BoardPanel boardPanel, List<JButton> buttons) {
         this.boardPanel = boardPanel;
