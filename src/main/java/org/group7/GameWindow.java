@@ -20,28 +20,14 @@ import java.util.List;
 public class GameWindow extends JFrame{
     private static final int X = 1920;
     private static final int Y = 1080;
-
-    int diceRoll;
-    int currentPos = 0;
-    private Game game;
+    private Game game;  //TODO: Should probably remove this, unless it will serve a purpose in the future
     private DrawPanel drawPanel;
-    private PaintableTile currentTile; //TODO: Remove this
-    private BoardPanel boardPanel; //TODO:Remove this, gameWindow should only have DrawPanel
-    private BoardListener boardListener;
-    private GameController gameController;
-    private Board board;
-    private List<JButton> buttons = new ArrayList<>();
-    private List<PaintableTile> paintableTiles = new ArrayList<>();
+    private BoardPanel boardPanel; //TODO:Remove this when pieces are fixed, gameWindow should only have DrawPanel
 
-
-    public GameWindow(String name, Board board, GameController gameController){
+    public GameWindow(String name, DrawPanel drawPanel, BoardPanel boardPanel){
         this.game = new Game();
-        this.board = board;
-        this.gameController = gameController;
-        this.buttons = gameController.getListOfButtons();
-        this.boardListener = new BoardListener(game);
-        this.boardPanel = new BoardPanel(board, boardListener, paintableTiles);
-        this.drawPanel = new DrawPanel(boardPanel, buttons);
+        this.drawPanel = drawPanel;
+        this.boardPanel = boardPanel;
         componentSetup(name);
     }
 
@@ -50,7 +36,6 @@ public class GameWindow extends JFrame{
         this.setPreferredSize(new Dimension(X,Y));
         this.add(drawPanel);
         initPieces();
-
         this.pack();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -63,34 +48,37 @@ public class GameWindow extends JFrame{
     }
 
     private void initPieces(){
+        Icon icon = new ImageIcon("src/main/resources/green_player_circle.png");
+        JButton piece = new JButton(icon);
+        piece.setPreferredSize(new Dimension());
+        piece.setBorderPainted(false);
+        piece.setContentAreaFilled(false);
+        piece.setFocusPainted(false);
+        piece.setOpaque(false);
         List<Integer> index = boardPanel.getGamePathTileIndexes();
         HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
-        Icon icon = new ImageIcon("src/main/resources/green_player_circle.png");
-        JLabel piece = new JLabel(icon);
-        piece.setPreferredSize(new Dimension());
-//      piece.setBorderPainted(false);
-//        piece.setContentAreaFilled(false);
-//        piece.setFocusPainted(false);
-        piece.setOpaque(false);
-        currentPos = 0;
-        currentTile = indexTileHashMap.get(index.get(currentPos));
+        PaintableTile currentTile = indexTileHashMap.get(index.get(0));
         currentTile.add(piece);
-        //Controller
-//        piece.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                //Add result from dice roll to current position and move around without index out of length of array
-//                currentPos = (currentPos + diceRoll) % 40;
-//
-//                //Remove piece from current tile it is on
-//                currentTile.remove(piece);
-//                currentTile.repaint();
-//                currentTile.revalidate();
-//
-//                //Get tile from the new Point given and add the piece to the tile it has moved to
-//                currentTile = indexTileHashMap.get(index.get(currentPos));
-//                currentTile.add(piece);
-//            }
-//        });
+        piece.addActionListener(new ActionListener() {
+            int currentPos = 0;
+            List<Integer> index = boardPanel.getGamePathTileIndexes();
+            HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
+            PaintableTile currentTile = indexTileHashMap.get(index.get(0));
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int diceRoll = 1;
+                //Add result from dice roll to current position and move around without index out of length of array
+                currentPos = (currentPos + diceRoll) % 40;
+
+                //Remove piece from current tile it is on
+                currentTile.remove(piece);
+                currentTile.repaint();
+                currentTile.revalidate();
+
+                //Get tile from the new Point given and add the piece to the tile it has moved to
+                currentTile = indexTileHashMap.get(index.get(currentPos));
+                currentTile.add(piece);
+            }
+        });
     }
 }

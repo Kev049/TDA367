@@ -3,6 +3,8 @@ package org.group7.controllers;
 import org.group7.model.Game;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,12 @@ public class GameController{
     public void addListeners(){
         Timer timer = new Timer(80, rollDiceListener);
         rollDiceButton.addActionListener(e -> rollDice(timer));
+        rollDiceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rollDice(timer);
+            }
+        });
     }
 
     private void rollDice(Timer timer){

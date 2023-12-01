@@ -11,13 +11,12 @@ public class PaintableTile extends JButton {
 
     private Tile tile = null;
 
-    public PaintableTile(Tile tile, BoardListener boardListener){
+    public PaintableTile(Tile tile){
         this.tile = tile;
         this.setPreferredSize(new Dimension(91, 91));
         this.setLayout(new GridLayout());
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
-        this.addActionListener(boardListener);
     }
 
     public Tile getTile(){

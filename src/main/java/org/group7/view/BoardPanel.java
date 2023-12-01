@@ -25,35 +25,23 @@ public class BoardPanel extends JPanel{
 
     private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int totalAmountTiles = 121;
-    private BoardListener boardListener;
     private Image image;
 
-    public BoardPanel(Board board, BoardListener boardListener ,List<PaintableTile> paintableTiles){
+    public BoardPanel(List<PaintableTile> paintableTiles){
         this.paintableTiles = paintableTiles;
         this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
         this.redGoalPathTileIndex = new ArrayList<>(4);
         this.greenGoalPathTileIndex = new ArrayList<>(4);
         this.yellowGoalPathTileIndex = new ArrayList<>(4);
         this.blueGoalPathTileIndex = new ArrayList<>(4);
-        this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
-        this.boardListener = boardListener;
+        this.indexTileHashMap = new HashMap<>(totalAmountTiles); //Hashmap that matches tile with index
         this.setLayout(new GridBagLayout());
         applyImage();
         //drawPieces();
-        initListOfPaintableTiles();
         drawBoardTiles();
         storeBoardTileIndex();
         initGamePathTileIndex();
         initAllGoals();
-    }
-
-    private void initListOfPaintableTiles() {
-        Tile tile = null;
-        PaintableTile paintableTile = null;
-        for (int i = 0; i < totalAmountTiles; i++) {
-            paintableTile = TileFactory.createTile(tile, boardListener);
-            this.paintableTiles.add(paintableTile);
-        }
     }
 
     private void applyImage(){
@@ -101,7 +89,7 @@ public class BoardPanel extends JPanel{
 
     private void initGamePathTileIndex(){
         Collections.addAll(this.gamePathTileIndex, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,
-        51, 52, 53, 54, 65, 76, 75, 74, 73, 72, 83, 94, 105, 116, 115, 114, 102, 92, 81, 70, 69, 68, 67, 66, 55);
+        51, 52, 53, 54, 65, 76, 75, 74, 73, 72, 83, 94, 105, 116, 115, 114, 103, 92, 81, 70, 69, 68, 67, 66, 55);
     }
 
     private void initAllGoals(){
@@ -123,16 +111,11 @@ public class BoardPanel extends JPanel{
     private void initBlueGoalPathTileIndex(){
         Collections.addAll(this.blueGoalPathTileIndex, 104, 93, 82, 71);
     }
-
     public List<Integer> getGamePathTileIndexes(){
         return this.gamePathTileIndex;
     }
 
     public HashMap<Integer, PaintableTile> getindexTileHashMap(){
         return this.indexTileHashMap;
-    }
-
-    public List<PaintableTile> getPaintableTiles() {
-        return paintableTiles;
     }
 }

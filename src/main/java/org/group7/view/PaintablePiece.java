@@ -13,10 +13,7 @@ public class PaintablePiece extends JLabel{
         this.image = image;
         this.piece = piece;
         this.icon = new ImageIcon(image);
-        initPaintablePiece(); //Behövs bättre namngivning än init, men jag är för trög för att komma på bättre
-    }
-    private void initPaintablePiece(){
-        this.setIcon(this.icon);
+        this.setIcon(icon);
         this.setOpaque(false);
     }
     @Override
