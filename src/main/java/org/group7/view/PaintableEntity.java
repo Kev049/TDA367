@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class PaintableEntity extends JComponent{
+public abstract class PaintableEntity extends JComponent{
     private Entity entity;
     private Image image;
 

@@ -12,14 +12,22 @@ import java.io.IOException;
 
 public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna klassen
     private static Image image;
-    public static PaintableEntity makePieceImage(Entity entity) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
-        return makePaintedPiece("../../resources/PieceColour.png", entity);
+    public static PaintablePiece makePieceImage(Piece piece) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
+        return makePaintedPiece("../../resources/" + piece.getColor().toString() + ".png", piece);
     }
-    private static PaintableEntity makePaintedPiece(String s, Entity entity) {
-        return null;
+
+    private static PaintablePiece makePaintedPiece(String s, Piece piece) {
+        try{
+            image = ImageIO.read(new File(s));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return new PaintablePiece(image, piece);
     }
 
     public static PaintableEntity createPaintableEntity(){
         return null;
     }
 }
+

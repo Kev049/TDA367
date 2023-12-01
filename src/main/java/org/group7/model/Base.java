@@ -7,6 +7,7 @@ public class Base {
     private int capacity;       //Går att ändra om man vill byta antal pjäser (istället för standard som är 4)
     private int pieceAmount;
     private Piece[] pieces;
+    private Tile[] tiles;
     private Color color;
 
     public Base(int capacity, Color color) {
@@ -14,6 +15,11 @@ public class Base {
         this.pieceAmount = capacity;
         this.pieces = new Piece[capacity];
         this.color = color;
+        this.tiles = new Tile[4];
+
+        for (int i = 0; i < 4; i++) {
+            this.tiles[i] = new Tile(i);
+        }
         /*
         for (int i = 0; i < capacity; i++) {
             //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
@@ -32,8 +38,11 @@ public class Base {
     }
 
     public void addPiece(Piece p) {
-        if (this.pieceAmount < this.capacity) {
-            this.pieces[this.pieceAmount++] = p;
+        for (Tile t : this.tiles){ //TODO Change to while loop, tempfix
+            if (t.getEntity() == null){
+                t.insertEntity(p);
+                break;
+            }
         }
     }
 
@@ -44,4 +53,6 @@ public class Base {
     public Color getColor(){
         return this.color;
     }
+
+    public Tile[] getTiles(){return this.tiles;}
 }
