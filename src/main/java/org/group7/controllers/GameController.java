@@ -22,9 +22,7 @@ public class GameController{
 
     public void addListeners(){
         Timer timer = new Timer(80, rollDiceListener);
-        rollDiceButton.addActionListener(e -> {
-            rollDice(timer);
-        });
+        rollDiceButton.addActionListener(e -> rollDice(timer));
     }
 
     private void rollDice(Timer timer){

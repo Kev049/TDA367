@@ -58,6 +58,7 @@ public class RollDiceListener implements ActionListener {
         rollDiceButton.setIcon(icon);
         rollDiceButton.setEnabled(true);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(++frames >= totalAmountFrames){
