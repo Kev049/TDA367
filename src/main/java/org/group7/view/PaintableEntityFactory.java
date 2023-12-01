@@ -13,7 +13,7 @@ import java.io.IOException;
 public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna klassen
     private static Image image;
     public static PaintablePiece makePieceImage(Piece piece) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
-        return makePaintedPiece("../../resources/" + piece.getColor().toString() + ".png", piece);
+        return makePaintedPiece("src/main/resources/blue_player_circle.png", piece);
     }
 
     private static PaintablePiece makePaintedPiece(String s, Piece piece) {

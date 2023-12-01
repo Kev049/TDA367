@@ -15,14 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPanel extends JPanel{
-
     private List<PaintableTile> paintableTiles;
     private List<Integer> gamePathTileIndex;
     private List<Integer> redGoalPathTileIndex;     //TODO använd Map istället för 4 separate listor (skicka färg, få lista)
     private List<Integer> greenGoalPathTileIndex;
     private List<Integer> yellowGoalPathTileIndex;
     private List<Integer> blueGoalPathTileIndex;
-    private List<Integer> baseBoxIndex;
     private List<PaintablePiece> paintablePieces;
 
     private HashMap<Integer, PaintableTile> indexTileHashMap;
@@ -41,13 +39,13 @@ public class BoardPanel extends JPanel{
         this.setLayout(new GridBagLayout());
         applyImage();
         drawPieces();
-        addPanelBoxes();
+        drawBoardTiles();
         storeBoardTileIndex();
         initGamePathTileIndex();
         initAllGoals();
     }
 
-    private void drawPieces() {
+    private void drawPieces(){
     }
 
     private void applyImage(){
@@ -76,7 +74,7 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    private void addPanelBoxes(){
+    private void drawBoardTiles(){
         GridBagConstraints c = new GridBagConstraints();
         int index = 0;
         for(int y = 0; y < 11; y++) {
@@ -86,30 +84,12 @@ public class BoardPanel extends JPanel{
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
                 PaintableTile tile = paintableTiles.get(index);
-                /*
-                Box box = new Box(Box.HEIGHT);
-                box.setPreferredSize(new Dimension(91, 91));*/
                 index++;
                 //Add to panel
                 this.add(tile, c);
             }
         }
     }
-
-    /*
-    private void drawBoardTiles(){
-            for(int index : gamePathTileIndex){
-                Box box = indexTileHashMap.get(index);
-                box.add(paintableTiles.get(index));
-            }
-    }
-     */
-
-    /*
-    private void initBaseBoxIndex(){
-        Collections.addAll(this.)
-    }
-    */
 
     private void initGamePathTileIndex(){
         Collections.addAll(this.gamePathTileIndex, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,

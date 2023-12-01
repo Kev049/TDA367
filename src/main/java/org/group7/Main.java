@@ -35,51 +35,8 @@ public class Main {
         ArrayList<Piece> pieces = board.getAllPieces();
 
         for (int i = 0; i < TOTAL_AMOUNT_TILES; i++){
-            int baseIndex = 40;
-            if(i < 4) tile = null;
-
-            //RED BASE
-            else if(i > 11 && i < 14){
-                tile = tiles.get(baseIndex);
-                baseIndex ++;
-            }
-
-            else if(i > 22 && i < 25) tile = tiles.get(baseIndex);
-
-            //BLUE BASE
-            else if(i > 18 && i < 21) tile = tiles.get(baseIndex);
-            else if(i > 29 && i < 32) tile = tiles.get(baseIndex);
-
-            //YELLOW BASE
-            else if(i > 88 && i < 91) tile = tiles.get(baseIndex);
-            else if(i > 99 && i < 102) tile = tiles.get(baseIndex);
-
-            //GREEN BASE
-            else if(i > 95 && i < 98) tile = tiles.get(baseIndex);
-            else if(i > 106 && i < 109) tile = tiles.get(baseIndex);
-
-
-            //Common path
-
-            if(i > 43 && i < 49) tiles.get(p);
-            else if(i == 37) tiles.get()
-
-
-            else if (i > 3 && i < 7) tiles.get(i);
-            else if (i == 15 || i = 17) tiles.get(i);
-            else if (i == 26 || i = 28) tiles.get(i);
-            else if (i == 37 || i = 39) tiles.get(i);
-            else if (i > 44 && i < 55 && i!= 49) tiles.get(i);
-            else if (i > 49 && i < ) tiles.get(i);
-            else if (i == 15 || i = 17) tiles.get(i);
-            else if (i == 26 || i = 28) tiles.get(i);
-            else if (i == 26 || i = 28) tiles.get(i);
-            else if (i > 3 && i < 7) tiles.get(i);
-
-            else if (i>116) tile = null;
             PaintableTile paintableTile = TileFactory.createTile(tile);
             paintableTiles.add(paintableTile);
-
         }
 
         for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
