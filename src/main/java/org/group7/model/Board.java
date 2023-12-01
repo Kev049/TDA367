@@ -91,7 +91,6 @@ public class Board implements Observer, ICollisionHandler {
             i++;
         }
     }
-    
 
     private void initGoalsHashMap(){
         for (int i = 0; i < 4; i++){

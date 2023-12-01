@@ -13,7 +13,6 @@ public class PaintableTile extends JButton {
 
     public PaintableTile(Tile tile){
         this.tile = tile;
-        //this.setPreferredSize(new Dimension(90, 90));
         this.setPreferredSize(new Dimension(91, 91));
         this.setMaximumSize(new Dimension(91, 91));
         this.setLayout(new GridLayout());

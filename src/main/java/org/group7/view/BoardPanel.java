@@ -17,15 +17,11 @@ import java.util.List;
 public class BoardPanel extends JPanel{
     private List<PaintableTile> paintableFieldTiles;
     private List<PaintableTile> paintableBaseTiles;
+    private List<PaintableTile> paintableGoalTiles;
     private List<PaintablePiece> paintablePieces;
-    private List<Integer> gamePathTileIndex;
-    private List<Integer> redGoalPathTileIndex;     //TODO använd Map istället för 4 separate listor (skicka färg, få lista)
-    private List<Integer> greenGoalPathTileIndex;
-    private List<Integer> yellowGoalPathTileIndex;
-    private List<Integer> blueGoalPathTileIndex;
-
-    private List<Integer> baseTileIndex;
-    private List<Integer> goalTileIndex;
+    private List<Integer> fieldTileIndices;
+    private List<Integer> baseTileIndices;
+    private List<Integer> goalTileIndices;
     private HashMap<Integer, Box> indexBoxHashMap;
     private HashMap<Integer, PaintableTile> indexTileHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
@@ -33,28 +29,25 @@ public class BoardPanel extends JPanel{
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableTile> paintableBaseTiles,
+                      List<PaintableTile> paintableGoalTiles,
                       List<PaintablePiece> paintablePieces){
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBaseTiles = paintableBaseTiles;
+        this.paintableGoalTiles = paintableGoalTiles;
         this.paintablePieces = paintablePieces;
-        this.gamePathTileIndex = new ArrayList<>(40); //Index for tiles that match game path
-        this.baseTileIndex = new ArrayList<>(16);
-        this.redGoalPathTileIndex = new ArrayList<>(4);
-        this.greenGoalPathTileIndex = new ArrayList<>(4);
-        this.yellowGoalPathTileIndex = new ArrayList<>(4);
-        this.blueGoalPathTileIndex = new ArrayList<>(4);
-        this.indexTileHashMap = new HashMap<>(); //Hashmap that matches tile with index
+        this.fieldTileIndices = new ArrayList<>(40); //Index for paintableTiles that match game path
+        this.baseTileIndices = new ArrayList<>(16);
+        this.goalTileIndices = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
-        initGamePathTileIndex();
-        initBaseTileIndex();
-        initAllGoals();
         applyImage();
-        drawPieces();
         addPanelBoxes();
         storeBoardTileIndex();
-        addBoardPathTiles();
-        addBoardBaseTiles();
+        initFieldTileIndex();
+        initBaseTileIndex();
+        initGoalTileIndex();
+        addBoardTiles();
+        drawPieces();
     }
 
     private void drawPieces(){
@@ -87,7 +80,6 @@ public class BoardPanel extends JPanel{
     }
     private void addPanelBoxes(){
         GridBagConstraints c = new GridBagConstraints();
-        int index = 0;
         for(int y = 0; y < 11; y++) {
             c.fill = GridBagConstraints.BOTH;
             c.gridy = y;
@@ -95,70 +87,39 @@ public class BoardPanel extends JPanel{
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
                 Box box = new Box(BoxLayout.PAGE_AXIS);
-                box.setPreferredSize(new Dimension(91, 91));
-                box.setBorder(BorderFactory.createLineBorder(Color.black));
-                index++;
                 //Add to panel
                 this.add(box, c);
             }
         }
     }
 
-    private void addBoardPathTiles(){
+    private void addBoardTiles(){
+        addTilesToBox(fieldTileIndices, paintableFieldTiles);
+        addTilesToBox(baseTileIndices, paintableBaseTiles);
+        addTilesToBox(goalTileIndices, paintableGoalTiles);
+    }
+
+    private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles){
         int i = 0;
-        for(int index : gamePathTileIndex){
+        for(int index : tileIndices){
             Box box = indexBoxHashMap.get(index);
-            box.add(paintableFieldTiles.get(i));
+            box.add(paintableTiles.get(i));
             i++;
         }
     }
 
-    private void addBoardBaseTiles(){
-        int i = 0;
-        for(int index : baseTileIndex){
-            Box box = indexBoxHashMap.get(index);
-            box.add(paintableBaseTiles.get(i));
-            i++;
-        }
-    }
-
-    private void initGamePathTileIndex(){
-        Collections.addAll(this.gamePathTileIndex, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,
+    private void initFieldTileIndex(){
+        Collections.addAll(this.fieldTileIndices, 44, 45, 46, 47, 48, 37, 26, 15, 4, 5, 6, 17, 28, 39, 50,
         51, 52, 53, 54, 65, 76, 75, 74, 73, 72, 83, 94, 105, 116, 115, 114, 103, 92, 81, 70, 69, 68, 67, 66, 55);
     }
 
     private void initBaseTileIndex(){
-        Collections.addAll(this.baseTileIndex, 12, 13, 23, 24, 19, 20, 30, 31, 89,
+        Collections.addAll(this.baseTileIndices, 12, 13, 23, 24, 19, 20, 30, 31, 89,
                 90, 100, 101, 96, 97, 107, 108);
     }
 
-    private void initAllGoals(){
-        initRedGoalPathTileIndex();
-        initGreenGoalPathTileIndex();
-        initYellowGoalPathTileIndex();
-        initBlueGoalPathTileIndex();
-    }
-
-    private void initRedGoalPathTileIndex(){
-        Collections.addAll(this.redGoalPathTileIndex, 56, 57, 58, 59);
-    }
-
-    private void initGreenGoalPathTileIndex(){
-        Collections.addAll(this.greenGoalPathTileIndex, 16, 27, 38, 59);
-    }
-
-    private void initYellowGoalPathTileIndex(){
-        Collections.addAll(this.yellowGoalPathTileIndex, 64, 63, 62, 61);
-    }
-
-    private void initBlueGoalPathTileIndex(){
-        Collections.addAll(this.blueGoalPathTileIndex, 104, 93, 82, 71);
-    }
-    public List<Integer> getGamePathTileIndexes(){
-        return this.gamePathTileIndex;
-    }
-
-    public HashMap<Integer, PaintableTile> getindexTileHashMap(){
-        return this.indexTileHashMap;
+    private void initGoalTileIndex(){
+        Collections.addAll(this.goalTileIndices, 56, 57, 58, 59, 16, 27, 38, 49, 64, 63, 62, 61, 104, 93,
+                82, 71);
     }
 }

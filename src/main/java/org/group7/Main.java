@@ -18,7 +18,7 @@ import java.awt.Color;
 
 public class Main {
 
-    private static final int TOTAL_AMOUNT_TILES = 56;
+    private static final int TOTAL_AMOUNT_TILES = 72;
     private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
     private static final int TOTAL_AMOUNT_BASE_TILES = 16;
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
@@ -46,7 +46,7 @@ public class Main {
                 PaintableTile paintableTile = TileFactory.createTile(tiles.get(i));
                 paintableFieldTiles.add(paintableTile);
             }
-            else if(TOTAL_AMOUNT_FIELD_TILES < i || i < TOTAL_AMOUNT_FIELD_TILES + TOTAL_AMOUNT_BASE_TILES){
+            else if(i < TOTAL_AMOUNT_FIELD_TILES + TOTAL_AMOUNT_BASE_TILES){
                 PaintableTile paintableTile = TileFactory.createTile(tiles.get(i));
                 paintableBaseTiles.add(paintableTile);
             }
@@ -67,7 +67,7 @@ public class Main {
         List< JButton> buttons = gameController.getListOfButtons();
 
 
-        boardPanel = new BoardPanel(paintableFieldTiles, paintableBaseTiles, paintablePieces);
+        boardPanel = new BoardPanel(paintableFieldTiles, paintableBaseTiles, paintableGoalTiles, paintablePieces);
         drawPanel = new DrawPanel(boardPanel, buttons);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);

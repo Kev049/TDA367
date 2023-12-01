@@ -29,7 +29,7 @@ public class Base {
     private void initTilesAndPieces(){ //Kan nog delas upp till 2 metoder
         for (int i = 0; i < 4; i++) {
 
-            Tile tile = new Tile(i);
+            Tile tile = new Tile(100 + i);
             Piece piece = new Piece(this.color);
             tile.insertEntity(piece);
 
