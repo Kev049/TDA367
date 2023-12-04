@@ -37,6 +37,7 @@ public class RightPanel extends JPanel{
         diceOutput.setFont(new Font("Arial", Font.PLAIN, 30));
         this.add(diceOutput, c);
 
+
         c.gridy = 2;
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         try{

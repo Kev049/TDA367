@@ -173,8 +173,8 @@ public class Board implements Observer, ICollisionHandler {
 
     //Getters
 
-    public Base[] getBases(){
-        return this.bases;
+    public List<Base> getBases(){
+        return Arrays.asList(this.bases);
     }
 
     public Piece[] getPiecesFromBase(Color color){

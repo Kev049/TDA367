@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BoardPanel extends JPanel{
     private List<PaintableTile> paintableFieldTiles;
-    private List<PaintableTile> paintableBaseTiles;
+    private List<PaintableBase> paintableBases;
     private List<PaintableTile> paintableGoalTiles;
     private List<Integer> fieldTileIndices;
     private List<Integer> baseTileIndices;
@@ -26,17 +26,17 @@ public class BoardPanel extends JPanel{
     private Image image;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
-                      List<PaintableTile> paintableBaseTiles,
+                      List<PaintableBase> paintableBases,
                       List<PaintableTile> paintableGoalTiles){
         this.paintableFieldTiles = paintableFieldTiles;
-        this.paintableBaseTiles = paintableBaseTiles;
+        this.paintableBases = paintableBases;
         this.paintableGoalTiles = paintableGoalTiles;
         this.fieldTileIndices = new ArrayList<>(40); //Index for paintableTiles that match game path
         this.baseTileIndices = new ArrayList<>(16);
         this.goalTileIndices = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
-        applyImage();
+        //applyImage();
         addPanelBoxes();
         storeBoardTileIndex();
         initTileIndices();
@@ -76,17 +76,45 @@ public class BoardPanel extends JPanel{
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
-                Box box = new Box(BoxLayout.PAGE_AXIS);
+                Box box = new Box(BoxLayout.LINE_AXIS);
+                box.setBorder(BorderFactory.createLineBorder(Color.black));
+                box.setOpaque(true);
+                box.setPreferredSize(new Dimension(91, 91));
+                if(y == 1){
+                    if(x == 1 || x == 8){
+                        box.setBackground(Color.RED);
+                        c.gridheight = 2;
+                        c.gridwidth = 2;
+                        this.add(box, c);
+                    }
+                    else if(x != 2 && x != 9){
+                        c.gridwidth = 1;
+                        c.gridheight = 1;
+                        this.add(box, c);
+                    }
+                }
+                if(y == 2){
+                    if(x != 1 && x != 2 && x != 8  && x != 9){
+                        c.gridwidth = 1;
+                        c.gridheight = 1;
+                        this.add(box, c);
+                    }
+                }
+                else{
+                    c.gridwidth = 1;
+                    c.gridheight = 1;
+                    this.add(box, c);
+                }
                 //Add to panel
-                this.add(box, c);
+
             }
         }
     }
 
     private void addBoardTiles(){
-        addTilesToBox(fieldTileIndices, paintableFieldTiles);
-        addTilesToBox(baseTileIndices, paintableBaseTiles);
-        addTilesToBox(goalTileIndices, paintableGoalTiles);
+        //addTilesToBox(fieldTileIndices, paintableFieldTiles);
+        //addTilesToBox(baseTileIndices, paintableBases);
+        //addTilesToBox(goalTileIndices, paintableGoalTiles);
     }
 
     private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles){
