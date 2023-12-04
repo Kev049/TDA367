@@ -59,7 +59,6 @@ public class Main {
             paintableGoalTiles.add(paintableTile);
         }
 
-
         //Controller
         BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game);
         GameController gameController = new GameController(game);

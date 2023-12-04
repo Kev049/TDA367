@@ -36,7 +36,7 @@ public class BoardPanel extends JPanel{
         this.goalTileIndices = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
-        //applyImage();
+        applyImage();
         addPanelBoxes();
         storeBoardTileIndex();
         initTileIndices();
@@ -77,44 +77,40 @@ public class BoardPanel extends JPanel{
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
                 Box box = new Box(BoxLayout.LINE_AXIS);
-                box.setBorder(BorderFactory.createLineBorder(Color.black));
-                box.setOpaque(true);
                 box.setPreferredSize(new Dimension(91, 91));
                 if(y == 1){
-                    if(x == 1 || x == 8){
-                        box.setBackground(Color.RED);
-                        c.gridheight = 2;
-                        c.gridwidth = 2;
-                        this.add(box, c);
-                    }
-                    else if(x != 2 && x != 9){
-                        c.gridwidth = 1;
-                        c.gridheight = 1;
-                        this.add(box, c);
-                    }
+                    isBaseBox(c, x, box);
                 }
-                if(y == 2){
-                    if(x != 1 && x != 2 && x != 8  && x != 9){
-                        c.gridwidth = 1;
-                        c.gridheight = 1;
-                        this.add(box, c);
-                    }
+                else if(y == 8){
+                    isBaseBox(c, x, box);
                 }
                 else{
                     c.gridwidth = 1;
                     c.gridheight = 1;
                     this.add(box, c);
                 }
-                //Add to panel
-
             }
         }
     }
 
+    private void isBaseBox(GridBagConstraints c, int x, Box box) {
+        if(x == 1 || x == 8){
+            box.setBackground(Color.RED);
+            c.gridheight = 2;
+            c.gridwidth = 2;
+            this.add(box, c);
+        }
+        else if(x != 2 && x != 9){
+            c.gridwidth = 1;
+            c.gridheight = 1;
+            this.add(box, c);
+        }
+    }
+
     private void addBoardTiles(){
-        //addTilesToBox(fieldTileIndices, paintableFieldTiles);
-        //addTilesToBox(baseTileIndices, paintableBases);
-        //addTilesToBox(goalTileIndices, paintableGoalTiles);
+        addTilesToBox(fieldTileIndices, paintableFieldTiles);
+        addBaseTilesToBox(baseTileIndices, paintableBases);
+        addTilesToBox(goalTileIndices, paintableGoalTiles);
     }
 
     private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles){
@@ -122,6 +118,15 @@ public class BoardPanel extends JPanel{
         for(int index : tileIndices){
             Box box = indexBoxHashMap.get(index);
             box.add(paintableTiles.get(i));
+            i++;
+        }
+    }
+
+    private void addBaseTilesToBox(List<Integer> tileIndices, List<PaintableBase> paintableBase){
+        int i = 0;
+        for(int index : tileIndices){
+            Box box = indexBoxHashMap.get(index);
+            box.add(paintableBase.get(i));
             i++;
         }
     }
@@ -138,8 +143,7 @@ public class BoardPanel extends JPanel{
     }
 
     private void initBaseTileIndices(){
-        Collections.addAll(this.baseTileIndices, 12, 13, 23, 24, 19, 20, 30, 31, 89,
-                90, 100, 101, 96, 97, 107, 108);
+        Collections.addAll(this.baseTileIndices, 12, 19, 89, 96);
     }
 
     private void initGoalTileIndices(){
