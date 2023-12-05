@@ -31,7 +31,6 @@ public class RollDiceButton extends JButton {
         diceOutput.setFont(new Font("Arial", Font.PLAIN, 30));
         diceOutput.setBounds(1600, 700, 200, 80);
 
-
         this.add(rollDiceButton);
         this.add(diceOutput);
 

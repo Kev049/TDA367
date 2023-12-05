@@ -1,14 +1,17 @@
 package org.group7.model;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.group7.controllers.Observer;
+import java.awt.Color;
 
 public class Game {
 
     private final Set<Observer> observers;
     private Dice dice;
     private Board board;
-    private Player[] players;
+    public Player[] players; //TODO:Byt tillbaka till private
+    //private Player[] players;
     private int currentPlayer;
     private int turnNumber;
     private final int turnNumberStart = 0;
@@ -22,23 +25,21 @@ public class Game {
         this.currentPlayer = 0;
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
-        /*
-        this.bases = this.board.getBases();
-        for (int i = 0; i < 4; i++) {
-            Piece[] playerPieceArray = new Piece[4];
-            for (int j = 0; i < 4; i++) {
-                playerPieceArray[j] = this.bases[i].getPieces()[j];
-            }
-            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
-        }
+
+        this.players[0] = PlayerFactory.createPlayer(Color.RED);
+        this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
+        this.players[2] = PlayerFactory.createPlayer(Color.YELLOW);
+        this.players[3] = PlayerFactory.createPlayer(Color.BLUE);
+
+//        for (int i = 0; i < 4; i++) {
+//            Piece[] playerPieceArray = new Piece[4];
+//            for (int j = 0; i < 4; i++) {
+//                playerPieceArray[j] = this.bases[i].getPieces()[j];
+//            }
+//            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
+//        }
 
 
-
-        this.players[0] = new Player(Colour.RED, this.pieces[0]);
-        this.players[1] = new Player(Colour.BLUE, this.bases[1]);
-        this.players[2] = new Player(Colour.YELLOW, this.bases[2]);
-        this.players[3] = new Player(Colour.GREEN, this.bases[3]);
-        */
         this.observers = new HashSet<>();
 //        while(true) {
 //            this.currentPlayer = players[i];
@@ -59,15 +60,20 @@ public class Game {
         return this.lastDiceRollResult;
     }
 
-    public boolean validateMove(Tile t) {
+    public boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return (t.getEntityColor().equals(players[currentPlayer].getColor()));
-
+        return ((!tile.isEmpty()) && tile.getEntityColor().equals(players[currentPlayer].getColor()));
     }
 
-    public void movePiece(int index) {
+    public void movePiece(Tile tile) {
+        if(validateMove(tile)) {
+            this.board.movePiece(tile.getIndex(),this.lastDiceRollResult);
+        }
+    }
 
-        this.board.movePiece(index,this.lastDiceRollResult);
+    //TODO: Validate that it is player's turn
+    public void movePieceOutOfBase(){
+
     }
 
     public void addObserver(Observer observer) {
@@ -81,6 +87,10 @@ public class Game {
     /* public void placePowerups() { // Where should this be implemented? Should we create a new class?
 
     }*/
+
+    public int getLastDiceRollResult() {
+        return lastDiceRollResult;
+    }
 
 
 

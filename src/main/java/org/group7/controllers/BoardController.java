@@ -1,36 +1,38 @@
 package org.group7.controllers;
 
-import org.group7.model.Tile;
+import org.group7.model.Base;
 import org.group7.model.Game;
+import org.group7.model.Tile;
+import org.group7.view.PaintableBase;
+import org.group7.view.PaintableTile;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BoardController implements ActionListener {
-
-    private Game game;
-
-    public BoardController(Game game) {
+public class BoardController{
+    List<PaintableTile> paintableFieldTiles;
+    List<PaintableBase> paintableBases;
+    Game game;
+    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableBase> paintableBases, Game game){
+        this.paintableFieldTiles = paintableFieldTiles;
+        this.paintableBases = paintableBases;
         this.game = game;
-        /*List<PaintableTile> tiles = paintableBoard.getPaintableTiles();
-        for (PaintableTile tile : tiles) {
-            tile.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    //board move here
-                }
-            });
-        }*/
+        addListeners();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Tile t = (Tile)e.getSource();
-        if (!t.isEmpty()) {             //Temorärt
-            if (game.validateMove(t)) {     //TODO måste veta color för att göra flytten
-                game.movePiece(t.getIndex());
-            }
+    private void addListeners(){
+        for(PaintableTile paintableTile : paintableFieldTiles){
+            paintableTile.addActionListener(e ->{
+                PaintableTile fieldTile = (PaintableTile) e.getSource();
+                Tile tile = fieldTile.getTile();
+                game.movePiece(tile);
+            });
+        }
+        for(PaintableBase paintableBase : paintableBases){
+            paintableBase.addActionListener(e -> {
+                PaintableBase baseGUI = (PaintableBase) e.getSource();
+                Base base = baseGUI.getBase();
+            });
         }
     }
 }

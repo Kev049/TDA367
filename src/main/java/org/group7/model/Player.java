@@ -8,14 +8,15 @@ public class Player{
     private List<Piece> pieces;
     private Color color;
 
-    public Player(Color color, Piece[] pieces){
+    public Player(Color color){
         this.color = color;
         initPieces();
     }
     public void initPieces(){
         this.pieces = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            pieces.add(new Piece(color));      //Kan kanske göras finare
+            //pieces.add(new Piece(color));      //Kan kanske göras finare
+            pieces.add(PieceFactory.createPiece(color));
         }
     }
 

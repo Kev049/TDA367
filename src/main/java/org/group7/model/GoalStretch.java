@@ -1,14 +1,21 @@
 package org.group7.model;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class GoalStrech {
+public class GoalStretch {
 
-    private Tile[] tiles;
+    private Tile[] tiles = new Tile[4];
     private Color color;
 
-    public GoalStrech(Color color) {
+    public GoalStretch(Color color) {
         this.color = color;
+        initTiles();
+    }
+
+    private void initTiles(){
         for (int i = 0; i < 4; i++) {
             this.tiles[i] = new Tile(i);
         }
@@ -24,6 +31,10 @@ public class GoalStrech {
 
     public Color getColor(){
         return this.color;
+    }
+
+    public Tile[] getTiles(){
+        return this.tiles;
     }
 
 }

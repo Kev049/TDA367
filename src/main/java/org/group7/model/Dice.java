@@ -4,8 +4,8 @@ import org.group7.controllers.Observer;
 
 import java.util.Random;
 
-public class Dice implements Observer {
-    private static Dice instance;
+public class Dice implements Observer { // Implementerar Singleton pattern så att ingen klass ska kunna skapa sin egen tärning
+    private static Dice instance;       // Detta kan potentiellt leda till problem i genereringen av tal då tärningarna har olika seeds.
     private Random generator;
 
     private Dice() {
