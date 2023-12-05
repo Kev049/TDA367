@@ -16,4 +16,8 @@ public class PaintablePiece extends JLabel{
         this.setIcon(icon);
         this.setOpaque(false);
     }
+
+    public Piece getPiece(){
+        return piece;
+    }
 }

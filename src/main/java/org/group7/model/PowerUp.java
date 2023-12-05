@@ -10,8 +10,9 @@ public class PowerUp extends Entity{ //borde väl vara en abstrakt klass?
     public void handleCollision(Piece piece){
         System.out.println("hi");
     }
+
     @Override
-    public int get_pos() {
+    public int getPos() {
         return 0;
     }
 }

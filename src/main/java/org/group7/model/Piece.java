@@ -3,21 +3,18 @@ package org.group7.model;
 import java.awt.*;
 
 public class Piece extends Entity {
-    private int pos;
+    private IMoveHandler handler;
     private int distFromStart;
     private final Color color;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
 
-    public Piece(Color color){   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
+    public Piece(Color color, IMoveHandler handler) {   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
         super(10); //either change entity or switch
+        this.handler = handler;
         this.atHome = true;
         this.atGoal = false;
         this.color = color;
-    }
-
-    public int get_pos(){
-        return this.pos;
     }
 
     public Color getColor(){
@@ -46,8 +43,12 @@ public class Piece extends Entity {
 
     @Override
     public void handleCollision(Piece p) {
-        if (p.getColor() != this.color) {
-
+        if (this.color.equals(p.getColor())) {
+            // Same Color
+            this.handler.movePiece(p, 1);
+        } else {
+            this.handler.movePiece(p, 0);//vill ta bort piecen som låg underst
+            this.handler.addPieceToBase(this);
         }
     }
 }

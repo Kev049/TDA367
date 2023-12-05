@@ -4,17 +4,12 @@ import org.group7.controllers.BoardController;
 import org.group7.controllers.GameController;
 import org.group7.model.*;
 import org.group7.view.*;
-//import controller.Game;
 
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.awt.Color;
 
 public class Main {
-    private static final int TOTAL_AMOUNT_TILES = 72;
     private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
     private static final int TOTAL_AMOUNT_BASES = 4;
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
@@ -38,11 +33,12 @@ public class Main {
         fieldTiles = board.getFieldTiles();
         bases = board.getBases();
         goalTiles = board.getGoalTiles();
-        List<Piece> pieces = board.getAllPieces();
+        /*
         for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
             PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces.get(i));
             paintablePieces.add(paintablePiece);
         }
+         */
 
         for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
             PaintableTile paintableTile = TileFactory.createTile(fieldTiles.get(i), null);
@@ -60,7 +56,7 @@ public class Main {
         }
 
         //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game);
+        BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board);
         GameController gameController = new GameController(game);
         List<JButton> buttons = gameController.getListOfButtons();
 

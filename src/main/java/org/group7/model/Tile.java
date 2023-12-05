@@ -2,7 +2,6 @@ package org.group7.model;
 
 import java.awt.Color;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.group7.controllers.Observer;
@@ -25,17 +24,23 @@ public class Tile implements Observable {
         return entity;
     }
 
-    public void insertEntity(Entity e) {    //TODO inte observer, låt Entity hantera kollision
+    public void insertEntity(Piece p) {
         if (this.entity != null){
-            notifyObservers();
+            this.entity.handleCollision(p);
         }
-        this.entity = e;
+        this.entity = p;
     }
 
-    public Entity removeEntity() {
-        Entity e = this.entity;
+    /* TODO när vi implementerat powerups
+    public void insertEntity(PowerUp p) {
+        if (this.entity != null){
+            //this.entity.handleCollision(p);
+        }
+        this.entity = p;
+    }*/
+
+    public void removeEntity() {
         this.entity = null;
-        return e;
     }
 
     public int getIndex() {
