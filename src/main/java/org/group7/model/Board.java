@@ -137,9 +137,7 @@ public class Board implements Observer, IMoveHandler {
     public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
         int from = piece.getPos();
         Tile t = this.field[from];
-        System.out.println(this.field[from]);
         Color c = this.field[from].getEntityColor();
-        System.out.println(c);
         int tileIndex = playerStartTiles.get(c);
         t.removeEntity();
         int current = from;
@@ -220,17 +218,5 @@ public class Board implements Observer, IMoveHandler {
     public void update(int index){
         //handleCollision(index);
     }
-
-//    public void handleCollision(int index){
-//        Entity entity = this.field[index].getEntity();
-//        if (entity instanceof Piece){
-//            Piece p = (Piece) this.field[index].removeEntity(); //Added these temporarily for testing LV5
-//            addPieceToBase(p);                                  //TODO change piece collision implementation
-//        }
-//        else if (entity instanceof PowerUp){
-//            //TODO Code to handle collision with powerup
-//        }
-//
-//    }
 
 }

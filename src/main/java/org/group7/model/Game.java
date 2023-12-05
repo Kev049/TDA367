@@ -97,9 +97,7 @@ public class Game {
     public int getLastDiceRollResult() {
         return lastDiceRollResult;
     }
-
-
-
+    
 }
 
 

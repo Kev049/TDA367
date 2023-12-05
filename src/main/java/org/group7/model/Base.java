@@ -38,7 +38,6 @@ public class Base {
         if (this.pieceAmount > 0) {
             Piece p = this.pieces[--this.pieceAmount];
             this.pieces[this.pieceAmount] = null;
-            System.out.println(Arrays.toString(pieces));
             return p;
         }
         return null;
