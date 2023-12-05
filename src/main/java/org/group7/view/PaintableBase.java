@@ -4,6 +4,7 @@ import org.group7.model.Base;
 import org.group7.model.Piece;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ public class PaintableBase extends JButton{
     List<PaintablePiece> paintablePieces = new ArrayList<>();
     public PaintableBase(Base base){
         this.base = base;
-        this.setPreferredSize(new Dimension(91, 91));
-        this.setMaximumSize(new Dimension(91, 91));
         this.setLayout(new GridBagLayout());
+        this.setContentAreaFilled(false);
+        this.setBorderPainted(false);
         createPaintablePieces();
         drawBoxes();
         drawPieces();
@@ -29,8 +30,11 @@ public class PaintableBase extends JButton{
             for (int x = 0; x < 2; x++) {
                 c.gridx = x;
                 //This will create a 11x11 grid of boxes of equal size.
-                Box box = new Box(BoxLayout.PAGE_AXIS);
-                box.setPreferredSize(new Dimension(91, 91));
+                JPanel box = new JPanel();
+                box.setLayout(new GridBagLayout());
+                box.setPreferredSize(new Dimension(74, 74));
+                box.setOpaque(false);
+
                 //Add to panel
                 this.add(box, c);
             }
@@ -40,9 +44,9 @@ public class PaintableBase extends JButton{
     private void drawPieces(){
         int i = 0;
         for(Component component : this.getComponents()){
-            if (component instanceof Box){
-                ((Box) component).add(paintablePieces.get(i));
-                i++;
+            if (component instanceof JPanel){
+                PaintablePiece paintablePiece = paintablePieces.get(i++);
+                ((JPanel) component).add(paintablePiece);
             }
         }
     }
