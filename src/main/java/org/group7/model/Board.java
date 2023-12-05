@@ -96,10 +96,9 @@ public class Board implements Observer, IMoveHandler {
         return b.removePiece();
     }
 
-    public Piece pieceFromBaseToField(Base b){
+    public void pieceFromBaseToField(Base b){
         Piece p = extractPieceFromBase(b.getColor());
         addPieceToField(p, playerStartTiles.get(p.getColor()));
-        return p;
     }
 
     public void addPieceToField(Piece p, int index) {

@@ -55,14 +55,18 @@ public class Main {
             paintableGoalTiles.add(paintableTile);
         }
 
-        //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board);
         GameController gameController = new GameController(game);
         List<JButton> buttons = gameController.getListOfButtons();
 
-
         boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles);
         drawPanel = new DrawPanel(boardPanel, buttons);
+
+        //Controller
+        BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board, boardPanel);
+
+
+
+
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }

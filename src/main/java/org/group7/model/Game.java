@@ -51,7 +51,7 @@ public class Game {
             List<Piece> currentPlayerPieces = this.currentPlayer.getPieces();
             i++;
             i = (i % 4);
-            if (i == 2){ //byt ut mot if (!currentPlayerPieces).isEmpty())
+            if (i == 2){ //TODO: byt ut mot if (!currentPlayerPieces).isEmpty())
                 System.out.println("yeet");
             }
             else {
@@ -97,7 +97,7 @@ public class Game {
     public int getLastDiceRollResult() {
         return lastDiceRollResult;
     }
-    
+
 }
 
 

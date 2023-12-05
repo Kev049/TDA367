@@ -63,10 +63,11 @@ public class PaintableBase extends JButton{
         }
     }
 
-    public void removePaintablePiece(Piece p){
+    public PaintablePiece removePaintablePiece(Piece p){
         PaintablePiece paintablePiece = paintablePiecesHash.get(p);
         JPanel box = paintablePieceBoxHash.get(paintablePiece);
         box.remove(paintablePiece);
+        return paintablePiece;
     }
 
     public Base getBase(){

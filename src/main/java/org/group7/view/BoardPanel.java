@@ -52,6 +52,11 @@ public class BoardPanel extends JPanel{
         }
     }
 
+    public void addPieceToStartTile(PaintablePiece paintablePiece){
+        PaintableTile paintableTile = paintableFieldTiles.get(0);
+        paintableTile.add(paintablePiece);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
