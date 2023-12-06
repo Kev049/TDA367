@@ -14,7 +14,6 @@ public class PaintableBase extends JButton{
     private Base base;
     List<PaintablePiece> paintablePieces = new ArrayList<>();
     HashMap<Piece, PaintablePiece> paintablePiecesHash = new HashMap<>();
-    HashMap<PaintablePiece, JPanel> paintablePieceBoxHash = new HashMap<>();
     public PaintableBase(Base base){
         this.base = base;
         this.setLayout(new GridBagLayout());
@@ -50,7 +49,6 @@ public class PaintableBase extends JButton{
             if (component instanceof JPanel){
                 PaintablePiece paintablePiece = paintablePieces.get(i++);
                 ((JPanel) component).add(paintablePiece);
-                paintablePieceBoxHash.put(paintablePiece, ((JPanel) component));
             }
         }
     }

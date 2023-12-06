@@ -2,7 +2,8 @@ package org.group7.model;
 
 import java.awt.*;
 
-public class Piece extends Entity {
+public class Piece implements IEntity {
+    private int pos;
     private IMoveHandler handler;
     private int distFromStart;
     private final Color color;
@@ -10,7 +11,6 @@ public class Piece extends Entity {
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
 
     public Piece(Color color, IMoveHandler handler) {   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
-        super(10); //either change entity or switch
         this.handler = handler;
         this.atHome = true;
         this.atGoal = false;
@@ -41,14 +41,23 @@ public class Piece extends Entity {
         return this.distFromStart;
     }
 
-    @Override
+    public int getPos(){
+        return this.pos;
+    }
+
     public void handleCollision(Piece p) {
         if (this.color.equals(p.getColor())) {
-            // Same Color
-            this.handler.movePiece(p, 1);
+            // Same Color, skip one tile
+            this.handler.addPieceToField(p, this.pos + 1);
         } else {
-            this.handler.movePiece(p, 0);//vill ta bort piecen som låg underst
-            this.handler.addPieceToBase(this);
+            // Different color, send other to base and take its place
+            int position = this.pos;
+            this.handler.returnPieceToBase(this);
+            this.handler.addPieceToField(p, position);
         }
+    }
+
+    public void setPos(int index){
+        this.pos = index;
     }
 }

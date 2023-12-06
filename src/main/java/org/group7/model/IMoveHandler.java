@@ -1,6 +1,7 @@
 package org.group7.model;
 
-public interface IMoveHandler {
-    public void movePiece(Piece piece, int offset);
-    public void addPieceToBase(Piece piece);
+public interface IMoveHandler { //Borde kanske heta CollisionHandler trots allt?
+    //public void movePiece(Piece piece, int offset);
+    void addPieceToField(Piece p, int index);
+    void returnPieceToBase(Piece piece);
 }

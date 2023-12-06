@@ -19,19 +19,19 @@ public class Game {
 
     private int lastDiceRollResult;
 
-    public Game() {
+    public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
-        this.board = new Board();
+        this.board = board;
         this.players = new Player[4];
         this.currentPlayer = players[0];
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
 
-
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
         this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
         this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
+
 
 //        for (int i = 0; i < 4; i++) {
 //            Piece[] playerPieceArray = new Piece[4];
@@ -41,8 +41,8 @@ public class Game {
 //            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
 //        }
 
-
         this.observers = new HashSet<>();
+
         //gameloop
         int i = 0;
         while(true) {
@@ -51,7 +51,7 @@ public class Game {
             List<Piece> currentPlayerPieces = this.currentPlayer.getPieces();
             i++;
             i = (i % 4);
-            if (i == 2){ //TODO: byt ut mot if (!currentPlayerPieces).isEmpty())
+            if (i == 2){
                 System.out.println("yeet");
             }
             else{
@@ -59,7 +59,8 @@ public class Game {
             }
         }
     }
-    public int rollDice() {
+
+    public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
         for (Observer o : observers){
             o.update();
         }
@@ -69,12 +70,13 @@ public class Game {
 
     public boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return ((!tile.isEmpty()) && tile.getEntityColor().equals(currentPlayer.getColor()));
+        return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
     }
 
-    public void movePiece(Tile tile) {
+    public void movePiece(Tile tile){
         if(validateMove(tile)) {
-            this.board.movePiece2(tile, this.lastDiceRollResult);
+            Piece p = tile.getPiece();
+            this.board.movePiece(p, this.lastDiceRollResult);
         }
     }
 
@@ -93,9 +95,13 @@ public class Game {
     /* public void placePowerups() { // Where should this be implemented? Should we create a new class?
 
     }*/
-
     public int getLastDiceRollResult() {
         return lastDiceRollResult;
+    }
+
+    private void spawnPowerups(){
+        //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
+        this.board.spawnPowerUp();
     }
 
 }

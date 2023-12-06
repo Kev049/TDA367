@@ -75,14 +75,14 @@ public class BoardPanel extends JPanel{
     public void refreshPaintableTiles(){
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.removeAll();
-        }
-        for(PaintableTile paintableTile : paintableFieldTiles){
             Tile tile = paintableTile.getTile();
             if(!tile.isEmpty()){
                 //TODO: Kom på ett sätt att getta paintablePiece motsvarande piece på rutan
-                System.out.println(tile.getEntity());
-                paintableTile.add(PaintableEntityFactory.makePieceImage((Piece) tile.getEntity()));
+                paintableTile.add(PaintableEntityFactory.makePieceImage(tile.getPiece()));
             }
+        }
+        for(PaintableBase paintableBase : paintableBases){
+            paintableBase.redrawPieces();
         }
         this.repaint();
         this.revalidate();

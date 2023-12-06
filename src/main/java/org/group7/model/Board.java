@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements Observer, IMoveHandler {
+public class Board implements IMoveHandler {
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goals;
@@ -84,12 +84,18 @@ public class Board implements Observer, IMoveHandler {
         }
     }
 
-    @Override
-    public void addPieceToBase(Piece p){
+
+    private void addPieceToBase(Piece p){   //Private ksk??
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
         b.addPiece(p);
      }
+
+    public void returnPieceToBase(Piece p) {
+        int index = p.getPos();
+        field[index].removePiece();
+        addPieceToBase(p);
+    }
 
     public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
@@ -98,12 +104,14 @@ public class Board implements Observer, IMoveHandler {
 
     public void pieceFromBaseToField(Base b){
         Piece p = extractPieceFromBase(b.getColor());
-        addPieceToField(p, playerStartTiles.get(p.getColor()));
+        if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
+            addPieceToField(p, playerStartTiles.get(p.getColor()));
+        }
     }
 
     public void addPieceToField(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        t.insertEntity(p);
+        t.insertPiece(p);
     }
 
     /*          Antagligen onödigt komplicerat
@@ -122,9 +130,11 @@ public class Board implements Observer, IMoveHandler {
 
      */
 
-    public void addEntityToGoalStretch(Color goalColor, Piece p) {
-        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
-        goalStretch.addPiece(p, 0);
+
+
+    public void addEntityToGoalStretch(Piece p) { //Color behövs inte explicit då player har den??
+        GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
+        goalStretch.addPiece(p);
     }
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
@@ -132,51 +142,60 @@ public class Board implements Observer, IMoveHandler {
         goalStretch.removePiece(index);
     }
 
-    public void movePiece2(Tile t, int offset){
-        int from = t.getIndex();
-        int current = (from + offset) % 40;
-        this.field[current].insertEntity((Piece) t.getEntity());
-        t.removeEntity();
+    private boolean completedLap(int from, int to, int start) { //Verkar fungera, testa? allt behövs kanske inte
+        if (from < to) {
+            return (from < start && to >= start);
+        } else {
+            return (from < start || to >= start);
+        }
     }
 
-    @Override
-    public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
+    public void movePiece(Piece piece, int offset) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
-        Tile t = this.field[from];
-        System.out.println(t);
-        Color c = t.getEntityColor();
-        System.out.println(t.getEntity());
+        Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        t.removeEntity();
+        this.field[from].removePiece();
+        int to = (from + offset) % 40;
+
+        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+            addEntityToGoalStretch(piece);
+        } else {                                    // still on first lap
+            this.field[to].insertPiece(piece);
+        }
+
+        //Unused below
+        /*
         int current = from;
         GoalStretch goalStretch = goalsHashMap.get(c);
-        int goalIndex = 0;
-        //kan finnas bug att om piece är ett steg ifrån att gå på goalstrectch
-        // och landade där via  så går
+        int goalIndex = 0; //TODO should decide how far into goal it moves?
 
         for (int i = 0; i < offset; i++){
             if ((current+1) == tileIndex){        //TODO handle when piece is already in goal
                 for (int j = 0; j < (offset - i); j ++){
                     goalIndex += 1;
                 }
-                goalStretch.addPiece(piece, goalIndex);
+                goalStretch.addPiece(piece);    //TODO add
             }
             else {
                 current += 1;
             }
-        }
-        this.field[current].insertEntity(piece);
+        }*/
+        //this.field[from + offset].insertPiece(piece);
     }
 
-    public Entity nextPiece(Piece piece) { //TODO Fix this nasty method
-        int startPos = piece.getPos();
+    public Piece nextPiece(Tile tile) { //TODO Fix this nasty method
+        int startPos = tile.getIndex();
         for (int i = 0; i < 40; i++){
-            Entity e = this.field[i+startPos].getEntity();
-            if (e instanceof Piece){
-                return e;
+            Piece p = this.field[i+startPos].getPiece();
+            if (p != null){
+                return p;
             }
         }
         return null;
+    }
+
+    public void spawnPowerUp(){
+
     }
 
     //Getters
@@ -204,8 +223,8 @@ public class Board implements Observer, IMoveHandler {
 
      */
 
-    public List<Tile> getFieldTiles(){
-        return Arrays.asList(field);
+    public Tile[] getFieldTiles(){
+        return this.field;
     }
     public List<Tile> getGoalTiles(){
         List<Tile> goalTiles = new ArrayList<>(16);
@@ -216,15 +235,5 @@ public class Board implements Observer, IMoveHandler {
     }
 
     //--------------------------------------------------------
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void update(int index){
-        //handleCollision(index);
-    }
 
 }

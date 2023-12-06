@@ -2,33 +2,27 @@ package org.group7.model;
 
 import java.awt.Color;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.group7.controllers.Observer;
-import org.group7.controllers.Observable;
+public class Tile {
 
-public class Tile implements Observable {
-
-    private int index;
-    private Entity entity;
-
-    private List<Observer> observers;
+    private final int index;
+    private Piece piece;
 
     public Tile(int index) {
-        entity = null;
+        this.piece = null;
         this.index = index;
-        this.observers = new ArrayList<>();
     }
 
-    public Entity getEntity() {
-        return entity;
+    public Piece getPiece() {
+        return piece;
     }
 
-    public void insertEntity(Piece p) {
-        if (this.entity != null){
-            this.entity.handleCollision(p);
+    public void insertPiece(Piece p) {
+        if(this.piece != null){     // if collision
+            this.piece.handleCollision(p);
+        } else {                    // else
+            this.piece = p;
+            this.piece.setPos(index);
         }
-        this.entity = p;
     }
 
     /* TODO när vi implementerat powerups
@@ -39,8 +33,9 @@ public class Tile implements Observable {
         this.entity = p;
     }*/
 
-    public void removeEntity() {
-        this.entity = null;
+    public void removePiece() {
+        this.piece.setPos(-1);
+        this.piece = null;
     }
 
     public int getIndex() {
@@ -48,25 +43,10 @@ public class Tile implements Observable {
     }
 
     public boolean isEmpty() {
-        return this.entity == null;
+        return this.piece == null;
     }
 
-    public Color getEntityColor() {
-        if (this.entity instanceof Piece) {
-            return ((Piece) this.entity).getColor();
-        }
-        return null;
-    }
-
-    @Override
-    public void addObserver(Observer o) {
-        this.observers.add(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer o : this.observers) {
-            o.update(this.index);
-        }
+    public Color getPieceColor() {
+        return this.piece.getColor();
     }
 }

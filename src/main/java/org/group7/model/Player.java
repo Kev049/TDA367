@@ -23,5 +23,6 @@ public class Player{
     public Piece choosePiece(){ //väljer automatiskt piece 0,
         return pieces.get(0);
     }
+    //public void removePiece(Piece p);
 
 }
