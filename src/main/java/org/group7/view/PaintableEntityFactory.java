@@ -26,6 +26,7 @@ public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna
             image = ImageIO.read(new File(s));
         }
         catch (IOException ex){
+            System.out.println(s); //TODO Remove
             ex.printStackTrace();
         }
         return new PaintablePiece(image, piece);
