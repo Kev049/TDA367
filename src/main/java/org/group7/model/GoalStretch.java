@@ -42,9 +42,11 @@ public class GoalStretch {
         return this.tiles;
     }
 
-    private Boolean checkIfFull(){
-
-        return finishedPieces == capacity;
+    private void checkIfFull(){
+        if (finishedPieces == capacity) {
+            //Notify game/observer
+            System.out.println("Somebody Won!");
+        }
     }
 
 }

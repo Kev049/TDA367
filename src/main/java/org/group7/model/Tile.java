@@ -2,22 +2,14 @@ package org.group7.model;
 
 import java.awt.Color;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.group7.controllers.Observer;
-import org.group7.controllers.Observable;
-
-public class Tile implements Observable {
+public class Tile {
 
     private final int index;
     private Piece piece;
 
-    private List<Observer> observers;
-
     public Tile(int index) {
         this.piece = null;
         this.index = index;
-        this.observers = new ArrayList<>();
     }
 
     public Piece getPiece() {
@@ -25,11 +17,12 @@ public class Tile implements Observable {
     }
 
     public void insertPiece(Piece p) {
-        if(this.piece != null){
+        if(this.piece != null){     // if collision
             this.piece.handleCollision(p);
+        } else {                    // else
+            this.piece = p;
+            this.piece.setPos(index);
         }
-        this.piece = p;
-        this.piece.setPos(index);
     }
 
     /* TODO när vi implementerat powerups
@@ -55,17 +48,5 @@ public class Tile implements Observable {
 
     public Color getPieceColor() {
         return this.piece.getColor();
-    }
-
-    @Override
-    public void addObserver(Observer o) {
-        this.observers.add(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer o : this.observers) {
-            o.update(this.index);
-        }
     }
 }

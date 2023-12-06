@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements Observer, IMoveHandler {
+public class Board implements IMoveHandler {
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goals;
@@ -84,12 +84,18 @@ public class Board implements Observer, IMoveHandler {
         }
     }
 
-    @Override
-    public void addPieceToBase(Piece p){
+
+    private void addPieceToBase(Piece p){   //Private ksk??
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
         b.addPiece(p);
      }
+
+    public void returnPieceToBase(Piece p) {
+        int index = p.getPos();
+        field[index].removePiece();
+        addPieceToBase(p);
+    }
 
     public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
@@ -98,15 +104,13 @@ public class Board implements Observer, IMoveHandler {
 
     public void pieceFromBaseToField(Base b){
         Piece p = extractPieceFromBase(b.getColor());
-        addPieceToField(p, playerStartTiles.get(p.getColor()));
+        if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
+            addPieceToField(p, playerStartTiles.get(p.getColor()));
+        }
     }
 
     public void addPieceToField(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        System.out.println(this.field);
-        System.out.println(index);
-        System.out.println(t);
-        System.out.println(this.field[0]);
         t.insertPiece(p);
     }
 
@@ -127,27 +131,40 @@ public class Board implements Observer, IMoveHandler {
      */
 
 
-    /*
-    public void addEntityToGoalStretch(Color goalColor, Piece p) {
-        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
-        goalStretch.addPiece(p, 0);
-    }*/
+
+    public void addEntityToGoalStretch(Piece p) { //Color behövs inte explicit då player har den??
+        GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
+        goalStretch.addPiece(p);
+    }
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.removePiece(index);
     }
 
-    public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
+    private boolean completedLap(int from, int to, int start) { //Verkar fungera, testa? allt behövs kanske inte
+        if (from < to) {
+            return (from < start && to >= start);
+        } else {
+            return (from < start || to >= start);
+        }
+    }
+
+    public void movePiece(Piece piece, int offset) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
-        System.out.println(from);
-        System.out.println(this.field);
-        System.out.println(this.field[from]);
-        System.out.println(this.field[0]);
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         this.field[from].removePiece();
+        int to = (from + offset) % 40;
 
+        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+            addEntityToGoalStretch(piece);
+        } else {                                    // still on first lap
+            this.field[to].insertPiece(piece);
+        }
+
+        //Unused below
+        /*
         int current = from;
         GoalStretch goalStretch = goalsHashMap.get(c);
         int goalIndex = 0; //TODO should decide how far into goal it moves?
@@ -162,8 +179,8 @@ public class Board implements Observer, IMoveHandler {
             else {
                 current += 1;
             }
-        }
-        this.field[current].insertPiece(piece);
+        }*/
+        //this.field[from + offset].insertPiece(piece);
     }
 
     public Piece nextPiece(Tile tile) { //TODO Fix this nasty method
@@ -218,15 +235,5 @@ public class Board implements Observer, IMoveHandler {
     }
 
     //--------------------------------------------------------
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void update(int index){
-        //handleCollision(index);
-    }
 
 }

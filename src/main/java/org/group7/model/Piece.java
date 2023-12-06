@@ -47,11 +47,13 @@ public class Piece implements IEntity {
 
     public void handleCollision(Piece p) {
         if (this.color.equals(p.getColor())) {
-            // Same Color
-            this.handler.movePiece(p, 1);
+            // Same Color, skip one tile
+            this.handler.addPieceToField(p, this.pos + 1);
         } else {
-            //this.handler.movePiece(p, 0);//Blir rundgång av denna.
-            this.handler.addPieceToBase(this);
+            // Different color, send other to base and take its place
+            int position = this.pos;
+            this.handler.returnPieceToBase(this);
+            this.handler.addPieceToField(p, position);
         }
     }
 

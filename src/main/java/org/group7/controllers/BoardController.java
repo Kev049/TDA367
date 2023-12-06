@@ -34,7 +34,7 @@ public class BoardController{
             });
         }
         for(PaintableBase paintableBase : paintableBases){
-            paintableBase.addActionListener(e -> {
+            paintableBase.addActionListener(e -> { // TODO säg åt game att byta spelare
                 Base base = paintableBase.getBase();
                 board.pieceFromBaseToField(base);
                 paintableBase.redrawPieces();

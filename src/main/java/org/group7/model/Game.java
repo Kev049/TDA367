@@ -27,11 +27,11 @@ public class Game {
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
 
-
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
         this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
         this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
+
 
 //        for (int i = 0; i < 4; i++) {
 //            Piece[] playerPieceArray = new Piece[4];
@@ -42,6 +42,7 @@ public class Game {
 //        }
 
         this.observers = new HashSet<>();
+
         //gameloop
         int i = 0;
         while(true) {
@@ -58,7 +59,8 @@ public class Game {
             }
         }
     }
-    public int rollDice() {
+
+    public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
         for (Observer o : observers){
             o.update();
         }
