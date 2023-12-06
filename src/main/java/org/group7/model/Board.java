@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements Observer, ICollisionHandler {
+public class Board implements Observer, IMoveHandler {
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goals;
@@ -29,7 +29,6 @@ public class Board implements Observer, ICollisionHandler {
         this.colorBaseMap = new HashMap<>();
         this.piecesHashMap = new HashMap<>();
         initColors();
-        initPieces();
         initBases();
         initStartTileIndices();
         initColorBaseMap();
@@ -47,27 +46,16 @@ public class Board implements Observer, ICollisionHandler {
     private void initColors() {
         this.colors[0] = Color.RED;
         this.colors[1] = Color.GREEN;
-        this.colors[2] = Color.YELLOW;
-        this.colors[3] = Color.BLUE;
-    }
-
-    private void initPieces() {
-        for(Color c : this.colors) {
-            Piece[] piecesArray = new Piece[4];
-            for (int i = 0; i < 4; i++) {
-                piecesArray[i] = PieceFactory.createPiece(c);
-            }
-            piecesHashMap.put(c, piecesArray);
-        }
+        this.colors[2] = Color.BLUE;
+        this.colors[3] = Color.YELLOW;
     }
 
     private void initBases() {
         int i = 0;
         for (Color c : this.colors){
-            this.bases[i] = new Base(4, c);
+            this.bases[i] = new Base(4, c, this);
             i++;
         }
-
     }
 
     private void initStartTileIndices() {
@@ -96,20 +84,26 @@ public class Board implements Observer, ICollisionHandler {
         }
     }
 
+    @Override
     public void addPieceToBase(Piece p){
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
         b.addPiece(p);
      }
 
-    public Entity removePieceFromBase(Color baseColor) {
+    public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
 
-    public void addEntityToField(Entity e, int index) {
+    public void pieceFromBaseToField(Base b){
+        Piece p = extractPieceFromBase(b.getColor());
+        addPieceToField(p, playerStartTiles.get(p.getColor()));
+    }
+
+    public void addPieceToField(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        t.insertEntity(e);
+        t.insertEntity(p);
     }
 
     /*          Antagligen onödigt komplicerat
@@ -121,47 +115,61 @@ public class Board implements Observer, ICollisionHandler {
         }
     }*/
 
+    /*
     public Entity removeEntityFromField(int index) {
         return field[index].removeEntity();
     }
 
+     */
+
     public void addEntityToGoalStretch(Color goalColor, Piece p) {
-        GoalStretch goalStrech = this.goalsHashMap.get(goalColor);
-        goalStrech.addPiece(p, 0);
+        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
+        goalStretch.addPiece(p, 0);
     }
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
-        GoalStretch goalStrech = this.goalsHashMap.get(goalColor);
-        goalStrech.removePiece(index);
+        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
+        goalStretch.removePiece(index);
     }
 
-    public void movePiece(int from, int offset) {
+    public void movePiece2(Tile t, int offset){
+        int from = t.getIndex();
+        int current = (from + offset) % 40;
+        this.field[current].insertEntity((Piece) t.getEntity());
+        t.removeEntity();
+    }
+
+    @Override
+    public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
+        int from = piece.getPos();
         Tile t = this.field[from];
-        Entity e = t.removeEntity();
-        Color c = this.field[from].getEntityColor();
+        System.out.println(t);
+        Color c = t.getEntityColor();
+        System.out.println(t.getEntity());
         int tileIndex = playerStartTiles.get(c);
+        t.removeEntity();
         int current = from;
         GoalStretch goalStretch = goalsHashMap.get(c);
         int goalIndex = 0;
+        //kan finnas bug att om piece är ett steg ifrån att gå på goalstrectch
+        // och landade där via  så går
 
         for (int i = 0; i < offset; i++){
             if ((current+1) == tileIndex){        //TODO handle when piece is already in goal
                 for (int j = 0; j < (offset - i); j ++){
                     goalIndex += 1;
                 }
-            goalStretch.addPiece(e, goalIndex);
+                goalStretch.addPiece(piece, goalIndex);
             }
             else {
                 current += 1;
             }
         }
-        this.field[current].insertEntity(e);
-        // TODO handle collisions
+        this.field[current].insertEntity(piece);
     }
 
-
     public Entity nextPiece(Piece piece) { //TODO Fix this nasty method
-        int startPos = piece.get_pos();
+        int startPos = piece.getPos();
         for (int i = 0; i < 40; i++){
             Entity e = this.field[i+startPos].getEntity();
             if (e instanceof Piece){
@@ -185,6 +193,7 @@ public class Board implements Observer, ICollisionHandler {
         return null;
     }
 
+    /*
     public ArrayList<Piece> getAllPieces(){
         ArrayList<Piece> pieceList = new ArrayList<>();
         for (Color c : colors) {
@@ -193,36 +202,10 @@ public class Board implements Observer, ICollisionHandler {
         return pieceList;
     }
 
-    public ArrayList<Tile> getAllTiles() {
-
-        int result = field.length + (bases.length*4) + goals.length;//+1 är för målet också?
-        //field + goals
-        ArrayList<Tile> allTiles = new ArrayList<>(result);
-
-        for(int j = 0; j < field.length; j++){
-            allTiles.add(field[j]);
-        }
-
-        for(int i = 0; i < bases.length; i++){
-            allTiles.addAll(Arrays.asList(bases[i].getTiles()));
-        }
-
-        for(int i = 0; i < goals.length; i++){
-            allTiles.addAll(Arrays.asList(goals[i].getTiles()));
-        }
-
-        return allTiles;
-    }
+     */
 
     public List<Tile> getFieldTiles(){
         return Arrays.asList(field);
-    }
-    public List<Tile> getBaseTiles(){
-        List<Tile> baseTiles = new ArrayList<>(16);
-        for (Base base : bases) {
-            baseTiles.addAll(Arrays.asList(base.getTiles()));
-        }
-        return baseTiles;
     }
     public List<Tile> getGoalTiles(){
         List<Tile> goalTiles = new ArrayList<>(16);
@@ -241,24 +224,7 @@ public class Board implements Observer, ICollisionHandler {
 
     @Override
     public void update(int index){
-        handleCollision(index);
-    }
-
-    public void handleCollision(int index){
-        Entity entity = this.field[index].getEntity();
-        if (entity instanceof Piece){
-            Piece p = (Piece) this.field[index].removeEntity(); //Added these temporarily for testing LV5
-            addPieceToBase(p);                                  //TODO change piece collision implementation
-        }
-        else if (entity instanceof PowerUp){
-            //TODO Code to handle collision with powerup
-        }
-
-    }
-
-    @Override
-    public void movePiece(Piece piece) {
-        //TODO implement
+        //handleCollision(index);
     }
 
 }

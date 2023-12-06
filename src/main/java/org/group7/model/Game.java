@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.group7.controllers.Observer;
 import java.awt.Color;
+import java.util.List;
 
 public class Game {
 
@@ -12,7 +13,7 @@ public class Game {
     private Board board;
     public Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
-    private int currentPlayer;
+    private Player currentPlayer;
     private int turnNumber;
     private final int turnNumberStart = 0;
 
@@ -22,14 +23,15 @@ public class Game {
         this.dice = Dice.getInstance();
         this.board = new Board();
         this.players = new Player[4];
-        this.currentPlayer = 0;
+        this.currentPlayer = players[0];
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
 
+
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
-        this.players[2] = PlayerFactory.createPlayer(Color.YELLOW);
-        this.players[3] = PlayerFactory.createPlayer(Color.BLUE);
+        this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
+        this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
 
 //        for (int i = 0; i < 4; i++) {
 //            Piece[] playerPieceArray = new Piece[4];
@@ -41,17 +43,22 @@ public class Game {
 
 
         this.observers = new HashSet<>();
-//        while(true) {
-//            this.currentPlayer = players[i];
-//            int diceRoll = rollDice();
-//            List<Piece> currentPieces = players[i].getPieces();
-//            Piece movingPiece = players[i].choosePiece();
-//            movingPiece.move_piece(diceRoll);
-//            i++;
-//            i = (i % 4);
-//        }
+        //gameloop
+        int i = 0;
+        while(true) {
+            this.currentPlayer = players[i];
+            int diceRoll = rollDice();
+            List<Piece> currentPlayerPieces = this.currentPlayer.getPieces();
+            i++;
+            i = (i % 4);
+            if (i == 2){ //TODO: byt ut mot if (!currentPlayerPieces).isEmpty())
+                System.out.println("yeet");
+            }
+            else{
+                break;
+            }
+        }
     }
-
     public int rollDice() {
         for (Observer o : observers){
             o.update();
@@ -62,18 +69,17 @@ public class Game {
 
     public boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return ((!tile.isEmpty()) && tile.getEntityColor().equals(players[currentPlayer].getColor()));
+        return ((!tile.isEmpty()) && tile.getEntityColor().equals(currentPlayer.getColor()));
     }
 
     public void movePiece(Tile tile) {
         if(validateMove(tile)) {
-            this.board.movePiece(tile.getIndex(),this.lastDiceRollResult);
+            this.board.movePiece2(tile, this.lastDiceRollResult);
         }
     }
 
     //TODO: Validate that it is player's turn
     public void movePieceOutOfBase(){
-
     }
 
     public void addObserver(Observer observer) {
@@ -91,8 +97,6 @@ public class Game {
     public int getLastDiceRollResult() {
         return lastDiceRollResult;
     }
-
-
 
 }
 

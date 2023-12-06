@@ -10,14 +10,6 @@ public class Player{
 
     public Player(Color color){
         this.color = color;
-        initPieces();
-    }
-    public void initPieces(){
-        this.pieces = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            //pieces.add(new Piece(color));      //Kan kanske göras finare
-            pieces.add(PieceFactory.createPiece(color));
-        }
     }
 
     public Color getColor(){

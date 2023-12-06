@@ -21,11 +21,11 @@ public class GoalStretch {
         }
     }
 
-    public void addPiece(Entity e, int index) {
-        this.tiles[index].insertEntity(e);
+    public void addPiece(Piece p, int index) {
+        this.tiles[index].insertEntity(p);
     }
 
-    public void removePiece(int index){
+    public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
         this.tiles[index].removeEntity();
     }
 

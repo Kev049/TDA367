@@ -3,20 +3,20 @@ package org.group7.model;
 import java.awt.Color;
 
 public abstract class Entity{
-    protected int pos;
+    private int pos;
 
     public Entity(int pos){
         this.pos = pos;
     }
     // Plan to extract some functionality from pieces and place here
 
-    public int get_pos(){
+    public int getPos(){
         return this.pos;
     }
 
-    public void set_pos(int newPos) { this.pos = pos; }
+    public void setPos(int newPos) { this.pos = pos; }
 
-    public abstract void handleCollision(Piece e); //TODO kolla om detta är ok, ska det vara Piece?
+    public abstract void handleCollision(Piece p); //TODO kolla om detta är ok, ska det vara Piece?
 
 
 }

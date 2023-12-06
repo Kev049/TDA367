@@ -1,9 +1,9 @@
 package org.group7.controllers;
 
-import org.group7.model.Base;
-import org.group7.model.Game;
-import org.group7.model.Tile;
+import org.group7.model.*;
+import org.group7.view.BoardPanel;
 import org.group7.view.PaintableBase;
+import org.group7.view.PaintablePiece;
 import org.group7.view.PaintableTile;
 
 import java.util.ArrayList;
@@ -13,7 +13,12 @@ public class BoardController{
     List<PaintableTile> paintableFieldTiles;
     List<PaintableBase> paintableBases;
     Game game;
-    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableBase> paintableBases, Game game){
+    Board board;
+    BoardPanel boardPanel;
+    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableBase> paintableBases,
+                           Game game, Board board, BoardPanel boardPanel){
+        this.board = board;
+        this.boardPanel = boardPanel;
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
         this.game = game;
@@ -23,15 +28,18 @@ public class BoardController{
     private void addListeners(){
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.addActionListener(e ->{
-                PaintableTile fieldTile = (PaintableTile) e.getSource();
-                Tile tile = fieldTile.getTile();
+                PaintableTile eventPaintableTile = (PaintableTile) e.getSource();
+                Tile tile = eventPaintableTile.getTile();
                 game.movePiece(tile);
+                boardPanel.refreshPaintableTiles();
             });
         }
         for(PaintableBase paintableBase : paintableBases){
             paintableBase.addActionListener(e -> {
-                PaintableBase baseGUI = (PaintableBase) e.getSource();
-                Base base = baseGUI.getBase();
+                Base base = paintableBase.getBase();
+                board.pieceFromBaseToField(base);
+                paintableBase.redrawPieces();
+                boardPanel.refreshPaintableTiles();
             });
         }
     }

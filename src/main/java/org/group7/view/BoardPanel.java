@@ -1,7 +1,6 @@
 package org.group7.view;
 
-import org.group7.controllers.BoardListener;
-import org.group7.model.Board;
+import org.group7.model.Piece;
 import org.group7.model.Tile;
 
 import javax.imageio.ImageIO;
@@ -21,6 +20,7 @@ public class BoardPanel extends JPanel{
     private List<Integer> fieldTileIndices;
     private List<Integer> baseTileIndices;
     private List<Integer> goalTileIndices;
+    private List<Point> baseBoxPoints;
     private HashMap<Integer, Box> indexBoxHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
     private Image image;
@@ -34,13 +34,16 @@ public class BoardPanel extends JPanel{
         this.fieldTileIndices = new ArrayList<>(40); //Index for paintableTiles that match game path
         this.baseTileIndices = new ArrayList<>(16);
         this.goalTileIndices = new ArrayList<>(16);
+        this.baseBoxPoints = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.setLayout(new GridBagLayout());
         applyImage();
-        addPanelBoxes();
+        initBaseBoxPoints();
+        addFieldBoxes();
+        addBaseBoxes();
         storeBoardTileIndex();
         initTileIndices();
-        addBoardTiles();
+        addBoardComponents();
     }
 
     private void applyImage(){
@@ -68,53 +71,79 @@ public class BoardPanel extends JPanel{
             }
         }
     }
-    private void addPanelBoxes(){
+
+    public void refreshPaintableTiles(){
+        for(PaintableTile paintableTile : paintableFieldTiles){
+            paintableTile.removeAll();
+        }
+        for(PaintableTile paintableTile : paintableFieldTiles){
+            Tile tile = paintableTile.getTile();
+            if(!tile.isEmpty()){
+                //TODO: Kom på ett sätt att getta paintablePiece motsvarande piece på rutan
+                System.out.println(tile.getEntity());
+                paintableTile.add(PaintableEntityFactory.makePieceImage((Piece) tile.getEntity()));
+            }
+        }
+        this.repaint();
+        this.revalidate();
+    }
+
+    private void addFieldBoxes(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         for(int y = 0; y < 11; y++) {
             c.gridy = y;
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
+                c.gridwidth = 1;
+                c.gridheight = 1;
                 Box box = new Box(BoxLayout.LINE_AXIS);
                 box.setPreferredSize(new Dimension(91, 91));
-                if(y == 1 || y == 8){
-                    isBaseBox(c, x, box);
-                }
-                else if(y == 2 || y == 9){
-                    belongsToBaseBox(c, x, box);
-                }
-                else{
-                    c.gridwidth = 1;
-                    c.gridheight = 1;
-                    this.add(box, c);
-                }
+                box.setBorder(BorderFactory.createLineBorder(Color.black));
+                this.add(box, c);
             }
         }
     }
 
-    private void belongsToBaseBox(GridBagConstraints c, int x, Box box) {
-        if(x != 1 && x != 2 && x != 8 && x != 9){
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            this.add(box, c);
-        }
+    private void addBaseBoxes(){
+        remove1x1Boxes();
+        addBaseBox(1,1);
+        addBaseBox(1, 8);
+        addBaseBox(8,1);
+        addBaseBox(8,8);
     }
-    private void isBaseBox(GridBagConstraints c, int x, Box box) {
-        if(x == 1 || x == 8){
-            c.gridheight = 2;
-            c.gridwidth = 2;
-            this.add(box, c);
-        }
-        else if(x != 2 && x != 9){
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            this.add(box, c);
+
+    private void addBaseBox(int row, int col) {
+        Box box = new Box(BoxLayout.LINE_AXIS);
+        box.setBackground(Color.black);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = col;
+        c.gridy = row;
+        c.gridwidth = 2;
+        c.gridheight = 2;
+        this.add(box, c);
+    }
+
+    private void remove1x1Boxes() {
+        Component[] components = this.getComponents();
+        int index = 0;
+        for (Component component : components){
+            if(index == 16){
+                break; //"you're breaking my heart" - Padmé Amidala in ROTS
+                        //"the women and the children too" - Anakin Skywalker (Gigachad) in the same trilogy
+            }
+            Point basePoint = baseBoxPoints.get(index);
+            GridBagConstraints gbc = ((GridBagLayout) this.getLayout()).getConstraints(component);
+            if (gbc.gridx == basePoint.getY() && gbc.gridy == basePoint.getX()) {
+                this.remove(component);
+                index++;
+            }
         }
     }
 
-    private void addBoardTiles(){
+    private void addBoardComponents(){
         addTilesToBox(fieldTileIndices, paintableFieldTiles);
-        addBaseTilesToBox(baseTileIndices, paintableBases);
+        addBaseToBox(baseTileIndices, paintableBases);
         addTilesToBox(goalTileIndices, paintableGoalTiles);
     }
 
@@ -127,7 +156,7 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    private void addBaseTilesToBox(List<Integer> tileIndices, List<PaintableBase> paintableBase){
+    private void addBaseToBox(List<Integer> tileIndices, List<PaintableBase> paintableBase){
         int i = 0;
         for(int index : tileIndices){
             Box box = indexBoxHashMap.get(index);
@@ -143,16 +172,24 @@ public class BoardPanel extends JPanel{
     }
 
     private void initFieldTileIndices(){
-        Collections.addAll(this.fieldTileIndices, 38, 39, 40, 41, 42, 31, 22, 14, 4, 5, 6, 16, 24, 33, 44,
-                45, 46, 47, 48, 59, 70, 69, 68, 67, 66, 77, 87, 95, 104, 103, 102, 93, 85, 75, 64, 63, 62, 61, 60, 49);
+        Collections.addAll(this.fieldTileIndices, 36, 37, 38, 39, 40, 29, 20, 13, 4, 5, 6, 15, 22, 31, 42,
+                43, 44, 45, 46, 57, 68, 67, 66, 65, 64, 75, 84, 91, 100, 99, 98, 89, 82, 73, 62, 61, 60, 59, 58, 47);
     }
 
     private void initBaseTileIndices(){
-        Collections.addAll(this.baseTileIndices, 12, 18, 83, 89);
+        Collections.addAll(this.baseTileIndices, 105, 106, 108, 107);
     }
 
     private void initGoalTileIndices(){
-        Collections.addAll(this.goalTileIndices, 50, 51, 52, 53, 15, 23, 32, 43, 58, 57, 56, 55,
-                94, 86, 76, 65);
+        Collections.addAll(this.goalTileIndices, 48, 49, 50, 51, 14, 21, 30, 41, 56, 55, 54, 53,
+                90, 83, 74, 63);
+    }
+
+    private void initBaseBoxPoints(){
+        Collections.addAll(baseBoxPoints, new Point(1, 1), new Point(1, 2), new Point(1, 8),
+                new Point(1, 9), new Point(2, 1), new Point(2, 2), new Point(2, 8),
+                new Point(2,9), new Point(8, 1), new Point(8, 2), new Point(8,8),
+                new Point(8, 9), new Point(9,1), new Point(9,2), new Point(9,8),
+                new Point(9,9));
     }
 }
