@@ -1,5 +1,8 @@
 package org.group7.view;
 
+import org.group7.model.Piece;
+import org.group7.model.Tile;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +43,7 @@ public class BoardPanel extends JPanel{
         addBaseBoxes();
         storeBoardTileIndex();
         initTileIndices();
-        addBoardTiles();
+        addBoardComponents();
     }
 
     private void applyImage(){
@@ -50,11 +53,6 @@ public class BoardPanel extends JPanel{
         catch (IOException ex){
             ex.printStackTrace();
         }
-    }
-
-    public void addPieceToStartTile(PaintablePiece paintablePiece){
-        PaintableTile paintableTile = paintableFieldTiles.get(0);
-        paintableTile.add(paintablePiece);
     }
 
     @Override
@@ -72,6 +70,22 @@ public class BoardPanel extends JPanel{
                 tileIndex++;
             }
         }
+    }
+
+    public void refreshPaintableTiles(){
+        for(PaintableTile paintableTile : paintableFieldTiles){
+            paintableTile.removeAll();
+        }
+        for(PaintableTile paintableTile : paintableFieldTiles){
+            Tile tile = paintableTile.getTile();
+            if(!tile.isEmpty()){
+                //TODO: Kom på ett sätt att getta paintablePiece motsvarande piece på rutan
+                System.out.println(tile.getEntity());
+                paintableTile.add(PaintableEntityFactory.makePieceImage((Piece) tile.getEntity()));
+            }
+        }
+        this.repaint();
+        this.revalidate();
     }
 
     private void addFieldBoxes(){
@@ -127,7 +141,7 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    private void addBoardTiles(){
+    private void addBoardComponents(){
         addTilesToBox(fieldTileIndices, paintableFieldTiles);
         addBaseToBox(baseTileIndices, paintableBases);
         addTilesToBox(goalTileIndices, paintableGoalTiles);
@@ -163,7 +177,7 @@ public class BoardPanel extends JPanel{
     }
 
     private void initBaseTileIndices(){
-        Collections.addAll(this.baseTileIndices, 105, 106, 107, 108);
+        Collections.addAll(this.baseTileIndices, 105, 106, 108, 107);
     }
 
     private void initGoalTileIndices(){

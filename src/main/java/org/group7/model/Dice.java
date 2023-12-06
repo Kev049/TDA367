@@ -29,7 +29,7 @@ public class Dice implements Observer { // Implementerar Singleton pattern så a
             return this.generator.nextInt(6) + 1;
         }
         else{
-            return 0;
+            return 5;
         }
     }
 

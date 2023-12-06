@@ -46,8 +46,8 @@ public class Board implements Observer, IMoveHandler {
     private void initColors() {
         this.colors[0] = Color.RED;
         this.colors[1] = Color.GREEN;
-        this.colors[2] = Color.YELLOW;
-        this.colors[3] = Color.BLUE;
+        this.colors[2] = Color.BLUE;
+        this.colors[3] = Color.YELLOW;
     }
 
     private void initBases() {
@@ -128,15 +128,24 @@ public class Board implements Observer, IMoveHandler {
     }
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
-        GoalStretch goalStrech = this.goalsHashMap.get(goalColor);
-        goalStrech.removePiece(index);
+        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
+        goalStretch.removePiece(index);
+    }
+
+    public void movePiece2(Tile t, int offset){
+        int from = t.getIndex();
+        int current = (from + offset) % 40;
+        this.field[current].insertEntity((Piece) t.getEntity());
+        t.removeEntity();
     }
 
     @Override
     public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
         int from = piece.getPos();
         Tile t = this.field[from];
-        Color c = this.field[from].getEntityColor();
+        System.out.println(t);
+        Color c = t.getEntityColor();
+        System.out.println(t.getEntity());
         int tileIndex = playerStartTiles.get(c);
         t.removeEntity();
         int current = from;

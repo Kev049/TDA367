@@ -30,8 +30,8 @@ public class Game {
 
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
-        this.players[2] = PlayerFactory.createPlayer(Color.YELLOW);
-        this.players[3] = PlayerFactory.createPlayer(Color.BLUE);
+        this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
+        this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
 
 //        for (int i = 0; i < 4; i++) {
 //            Piece[] playerPieceArray = new Piece[4];
@@ -54,7 +54,7 @@ public class Game {
             if (i == 2){ //TODO: byt ut mot if (!currentPlayerPieces).isEmpty())
                 System.out.println("yeet");
             }
-            else {
+            else{
                 break;
             }
         }
@@ -74,7 +74,7 @@ public class Game {
 
     public void movePiece(Tile tile) {
         if(validateMove(tile)) {
-            this.board.movePiece((Piece) tile.getEntity(), this.lastDiceRollResult);
+            this.board.movePiece2(tile, this.lastDiceRollResult);
         }
     }
 

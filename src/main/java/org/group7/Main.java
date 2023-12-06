@@ -41,7 +41,7 @@ public class Main {
          */
 
         for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(fieldTiles.get(i), null);
+            PaintableTile paintableTile = TileFactory.createTile(fieldTiles.get(i));
             paintableFieldTiles.add(paintableTile);
         }
 
@@ -51,7 +51,7 @@ public class Main {
         }
 
         for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(goalTiles.get(i), null);
+            PaintableTile paintableTile = TileFactory.createTile(goalTiles.get(i));
             paintableGoalTiles.add(paintableTile);
         }
 
@@ -63,10 +63,6 @@ public class Main {
 
         //Controller
         BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board, boardPanel);
-
-
-
-
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }

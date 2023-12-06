@@ -31,17 +31,15 @@ public class BoardController{
                 PaintableTile eventPaintableTile = (PaintableTile) e.getSource();
                 Tile tile = eventPaintableTile.getTile();
                 game.movePiece(tile);
+                boardPanel.refreshPaintableTiles();
             });
         }
         for(PaintableBase paintableBase : paintableBases){
             paintableBase.addActionListener(e -> {
-                PaintableBase eventPaintableBase = (PaintableBase) e.getSource();
-                Base base = eventPaintableBase.getBase();
+                Base base = paintableBase.getBase();
                 board.pieceFromBaseToField(base);
-                //PaintablePiece paintablePiece = eventPaintableBase.removePaintablePiece(p);
-                //boardPanel.addPieceToStartTile(paintablePiece);
-                boardPanel.repaint();
-                boardPanel.revalidate();
+                paintableBase.redrawPieces();
+                boardPanel.refreshPaintableTiles();
             });
         }
     }
