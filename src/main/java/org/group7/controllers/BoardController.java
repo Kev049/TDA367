@@ -28,8 +28,7 @@ public class BoardController{
     private void addListeners(){
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.addActionListener(e ->{
-                PaintableTile eventPaintableTile = (PaintableTile) e.getSource();
-                Tile tile = eventPaintableTile.getTile();
+                Tile tile = paintableTile.getTile();
                 game.movePiece(tile);
                 boardPanel.refreshPaintableTiles();
             });

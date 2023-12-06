@@ -1,9 +1,9 @@
 package org.group7.model;
 
 import java.awt.Color;
-
+//deprecated
 public abstract class Entity{
-    private int pos;
+private int pos;
 
     public Entity(int pos){
         this.pos = pos;

@@ -9,26 +9,27 @@ import org.group7.controllers.Observable;
 
 public class Tile implements Observable {
 
-    private int index;
-    private Entity entity;
+    private final int index;
+    private Piece piece;
 
     private List<Observer> observers;
 
     public Tile(int index) {
-        entity = null;
+        this.piece = null;
         this.index = index;
         this.observers = new ArrayList<>();
     }
 
-    public Entity getEntity() {
-        return entity;
+    public Piece getPiece() {
+        return piece;
     }
 
-    public void insertEntity(Piece p) {
-        if (this.entity != null){
-            this.entity.handleCollision(p);
+    public void insertPiece(Piece p) {
+        if(this.piece != null){
+            this.piece.handleCollision(p);
         }
-        this.entity = p;
+        this.piece = p;
+        this.piece.setPos(index);
     }
 
     /* TODO när vi implementerat powerups
@@ -39,8 +40,9 @@ public class Tile implements Observable {
         this.entity = p;
     }*/
 
-    public void removeEntity() {
-        this.entity = null;
+    public void removePiece() {
+        this.piece.setPos(-1);
+        this.piece = null;
     }
 
     public int getIndex() {
@@ -48,14 +50,11 @@ public class Tile implements Observable {
     }
 
     public boolean isEmpty() {
-        return this.entity == null;
+        return this.piece == null;
     }
 
-    public Color getEntityColor() {
-        if (this.entity instanceof Piece) {
-            return ((Piece) this.entity).getColor();
-        }
-        return null;
+    public Color getPieceColor() {
+        return this.piece.getColor();
     }
 
     @Override

@@ -8,7 +8,6 @@ public class Base {
     private final int capacity;       //Går att ändra om man vill byta antal pjäser (istället för standard som är 4)
     private int pieceAmount;
     private Piece[] pieces;
-    private Tile[] tiles;
     private Color color;
 
     public Base(int capacity, Color color, IMoveHandler handler) {
@@ -16,7 +15,6 @@ public class Base {
         this.pieceAmount = capacity;
         this.pieces = new Piece[capacity];
         this.color = color;
-        this.tiles = new Tile[4];
         initPieces(handler);
 
         /*
@@ -44,11 +42,8 @@ public class Base {
     }
 
     public void addPiece(Piece p) {
-        for (Tile t : this.tiles){ //TODO Change to while loop, tempfix
-            if (t.getEntity() == null){
-                t.insertEntity(p);
-                break;
-            }
+        if (this.pieceAmount < capacity) {
+            pieces[pieceAmount++] = p;
         }
     }
 
@@ -60,5 +55,4 @@ public class Base {
         return this.color;
     }
 
-    public Tile[] getTiles(){return this.tiles;}
 }

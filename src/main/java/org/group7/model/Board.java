@@ -103,7 +103,11 @@ public class Board implements Observer, IMoveHandler {
 
     public void addPieceToField(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        t.insertEntity(p);
+        System.out.println(this.field);
+        System.out.println(index);
+        System.out.println(t);
+        System.out.println(this.field[0]);
+        t.insertPiece(p);
     }
 
     /*          Antagligen onödigt komplicerat
@@ -122,61 +126,59 @@ public class Board implements Observer, IMoveHandler {
 
      */
 
+
+    /*
     public void addEntityToGoalStretch(Color goalColor, Piece p) {
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.addPiece(p, 0);
-    }
+    }*/
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.removePiece(index);
     }
 
-    public void movePiece2(Tile t, int offset){
-        int from = t.getIndex();
-        int current = (from + offset) % 40;
-        this.field[current].insertEntity((Piece) t.getEntity());
-        t.removeEntity();
-    }
-
-    @Override
     public void movePiece(Piece piece, int offset) {  //TODO functional breakdown
         int from = piece.getPos();
-        Tile t = this.field[from];
-        System.out.println(t);
-        Color c = t.getEntityColor();
-        System.out.println(t.getEntity());
+        System.out.println(from);
+        System.out.println(this.field);
+        System.out.println(this.field[from]);
+        System.out.println(this.field[0]);
+        Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        t.removeEntity();
+        this.field[from].removePiece();
+
         int current = from;
         GoalStretch goalStretch = goalsHashMap.get(c);
-        int goalIndex = 0;
-        //kan finnas bug att om piece är ett steg ifrån att gå på goalstrectch
-        // och landade där via  så går
+        int goalIndex = 0; //TODO should decide how far into goal it moves?
 
         for (int i = 0; i < offset; i++){
             if ((current+1) == tileIndex){        //TODO handle when piece is already in goal
                 for (int j = 0; j < (offset - i); j ++){
                     goalIndex += 1;
                 }
-                goalStretch.addPiece(piece, goalIndex);
+                goalStretch.addPiece(piece);    //TODO add
             }
             else {
                 current += 1;
             }
         }
-        this.field[current].insertEntity(piece);
+        this.field[current].insertPiece(piece);
     }
 
-    public Entity nextPiece(Piece piece) { //TODO Fix this nasty method
-        int startPos = piece.getPos();
+    public Piece nextPiece(Tile tile) { //TODO Fix this nasty method
+        int startPos = tile.getIndex();
         for (int i = 0; i < 40; i++){
-            Entity e = this.field[i+startPos].getEntity();
-            if (e instanceof Piece){
-                return e;
+            Piece p = this.field[i+startPos].getPiece();
+            if (p != null){
+                return p;
             }
         }
         return null;
+    }
+
+    public void spawnPowerUp(){
+
     }
 
     //Getters
@@ -204,8 +206,8 @@ public class Board implements Observer, IMoveHandler {
 
      */
 
-    public List<Tile> getFieldTiles(){
-        return Arrays.asList(field);
+    public Tile[] getFieldTiles(){
+        return this.field;
     }
     public List<Tile> getGoalTiles(){
         List<Tile> goalTiles = new ArrayList<>(16);

@@ -7,26 +7,31 @@ import java.util.Arrays;
 
 public class GoalStretch {
 
-    private Tile[] tiles = new Tile[4];
+    private final int capacity = 4;
+    private Tile[] tiles = new Tile[capacity];
     private Color color;
+    private int finishedPieces;
 
     public GoalStretch(Color color) {
         this.color = color;
         initTiles();
+        this.finishedPieces = 0;
     }
 
     private void initTiles(){
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < capacity; i++) {
             this.tiles[i] = new Tile(i);
         }
     }
 
-    public void addPiece(Piece p, int index) {
-        this.tiles[index].insertEntity(p);
+    public void addPiece(Piece p) {
+        this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
+        this.finishedPieces += 1;
+        checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
-        this.tiles[index].removeEntity();
+        this.tiles[index].removePiece();
     }
 
     public Color getColor(){
@@ -35,6 +40,11 @@ public class GoalStretch {
 
     public Tile[] getTiles(){
         return this.tiles;
+    }
+
+    private Boolean checkIfFull(){
+
+        return finishedPieces == capacity;
     }
 
 }
