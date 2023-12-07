@@ -6,7 +6,6 @@ public class MoveState extends GameState {
 
     public MoveState(Game g) {
         super(g);
-        System.out.println("Now in Move state");
     }
 
     @Override

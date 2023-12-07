@@ -1,6 +1,6 @@
 package org.group7.view;
 
-import org.group7.controllers.Observer;
+import org.group7.controllers.StringObserver;
 import org.group7.model.Game;
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class DrawPanel extends JPanel{
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         addPanels();
-        game.addObserver((Observer)rightPanel); //Snyggt
+        game.addObserver((StringObserver)rightPanel); //TODO bort med denna
     }
 
     private void addPanels(){

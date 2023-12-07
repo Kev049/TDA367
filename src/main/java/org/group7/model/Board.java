@@ -78,6 +78,12 @@ public class Board implements IMoveHandler {
         }
     }
 
+    public void addGoalObserver(Observer o) {
+        for (GoalStretch gs: this.goals) {
+            gs.addObserver(o);
+        }
+    }
+
     private void initGoalsHashMap(){
         for (int i = 0; i < 4; i++){
             this.goalsHashMap.put(this.colors[i], goals[i]);

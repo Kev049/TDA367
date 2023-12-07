@@ -1,7 +1,5 @@
 package org.group7.model;
 
-import org.group7.controllers.Observer;
-
 import java.util.Random;
 
 public class Dice { // Implementerar Singleton pattern så att ingen klass ska kunna skapa sin egen tärning

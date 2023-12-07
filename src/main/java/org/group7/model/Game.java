@@ -1,16 +1,15 @@
 package org.group7.model;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.group7.controllers.Observable;
 import org.group7.controllers.Observer;
+import org.group7.controllers.StringObservable;
+import org.group7.controllers.StringObserver;
 import java.awt.Color;
-import java.util.List;
 
 public class Game implements Observable {
 
-    private final Set<Observer> observers;
+    private final Set<StringObserver> stringObservers;
     private Dice dice;
     private Board board;
     public Player[] players; //TODO:Byt tillbaka till private
@@ -27,6 +26,7 @@ public class Game implements Observable {
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
         this.board = board;
+        this.board.addGoalObserver(this);
         this.players = new Player[4];
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
@@ -37,7 +37,7 @@ public class Game implements Observable {
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
-        this.observers = new HashSet<>();
+        this.stringObservers = new HashSet<>();
 
     }
 
@@ -85,13 +85,13 @@ public class Game implements Observable {
     }
 
     @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public void addObserver(StringObserver stringObserver) {
+        stringObservers.add(stringObserver);
     }
 
     @Override
     public void notifyObservers(String playerColor) {
-        for (Observer o: this.observers) {
+        for (StringObserver o: this.stringObservers) {
             o.update(playerColor);
         }
     }

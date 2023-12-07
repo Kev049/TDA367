@@ -1,9 +1,11 @@
 package org.group7.model;
 
+import org.group7.controllers.Observable;
+import org.group7.controllers.Observer;
+
 import java.awt.Color;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class GoalStretch {
 
@@ -12,10 +14,13 @@ public class GoalStretch {
     private Color color;
     private int finishedPieces;
 
+    private List<Observer> observers;
+
     public GoalStretch(Color color) {
         this.color = color;
         initTiles();
         this.finishedPieces = 0;
+        this.observers = new ArrayList<>();
     }
 
     private void initTiles(){

@@ -1,7 +1,6 @@
 package org.group7.view;
 
-import org.group7.controllers.GameController;
-import org.group7.controllers.Observer;
+import org.group7.controllers.StringObserver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class RightPanel extends JPanel implements Observer {
+public class RightPanel extends JPanel implements StringObserver {
     JButton rollDiceButton;
     JLabel playerTurnOutput;
     public RightPanel(JButton rollDiceButton){
