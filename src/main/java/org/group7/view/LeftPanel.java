@@ -1,7 +1,11 @@
 package org.group7.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.List;
 
 public class LeftPanel extends JPanel {
 
-    JFrame powerUpFrame;
+    JPanel powerUpFrame;
     List<JButton> powerUpButtons;
 
     //PowerUp buttons
@@ -24,10 +28,10 @@ public class LeftPanel extends JPanel {
     JButton newGameButton;
 
     public LeftPanel(){
-        this.setLayout(new FlowLayout());
+        this.setLayout(new GridBagLayout());
         this.setBackground(Color.RED);
         this.powerUpButtons = new ArrayList<>();
-        this.powerUpFrame = new JFrame();
+        this.powerUpFrame = new JPanel();
         this.basePowerUp = new JButton();
         this.catapultPowerUp = new JButton();
         this.laserPowerUp = new JButton();
@@ -39,9 +43,20 @@ public class LeftPanel extends JPanel {
     }
 
     private void initComponents(){
-        initHelpButtons();
+        initPowerUpButtons();
         initNewGameButton();
-        this.add(newGameButton);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 350, 0);
+        this.add(newGameButton, c);
+
+        c.insets = new Insets(0,0, 50, 0);
+        c.gridy = 1;
+        this.add(powerUpFrame, c);
+
     }
 
     public void initNewGameButton(){
@@ -49,14 +64,25 @@ public class LeftPanel extends JPanel {
         newGameButton.setFont(new Font("Monospaced", Font.PLAIN, 30));
     }
 
-    private void initHelpButtons(){
+    private void initPowerUpButtons(){
         for(JButton powerUpButton : powerUpButtons){
-
+            powerUpButton.setContentAreaFilled(false);
+            powerUpButton.setBorderPainted(false);
+            powerUpButton.setFocusPainted(false);
+            powerUpFrame.add(powerUpButton);
         }
-        powerUpFrame.add(basePowerUp);
-        powerUpFrame.add(catapultPowerUp);
-        powerUpFrame.add(laserPowerUp);
-        powerUpFrame.add(lightningPowerUp);
-        powerUpFrame.add(switchPowerUp);
+        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/catapult.png")));
+
+    }
+
+    private Image getImage(String path){
+        BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+        try{
+            image = ImageIO.read(new File(path));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 }
