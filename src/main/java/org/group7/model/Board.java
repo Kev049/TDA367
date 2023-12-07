@@ -102,8 +102,8 @@ public class Board implements IMoveHandler {
         return b.removePiece();
     }
 
-    public void pieceFromBaseToField(Base b){
-        Piece p = extractPieceFromBase(b.getColor());
+    public void pieceFromBaseToField(Color c){
+        Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
             addPieceToField(p, playerStartTiles.get(p.getColor()));
         }

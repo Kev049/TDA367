@@ -35,21 +35,7 @@ public class Game {
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
-
-
-
-
-
-//        for (int i = 0; i < 4; i++) {
-//            Piece[] playerPieceArray = new Piece[4];
-//            for (int j = 0; i < 4; i++) {
-//                playerPieceArray[j] = this.bases[i].getPieces()[j];
-//            }
-//            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
-//        }
-
         this.observers = new HashSet<>();
-
 
     }
 
@@ -66,7 +52,7 @@ public class Game {
         return this.lastDiceRollResult;
     }
 
-    public boolean validateMove(Tile tile) {
+    protected boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
         return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
     }
@@ -84,7 +70,16 @@ public class Game {
     }
 
     //TODO: Validate that it is player's turn
-    public void movePieceOutOfBase(){
+
+    protected boolean validateBaseMove(Color color){
+        return (this.currentPlayer.getColor().equals(color));
+    }
+    public void moveBasePiece(Color color){
+            this.gameState.pieceFromBaseToField(color);
+    }
+
+    public void movePieceOutOfBase(Color color){
+        board.pieceFromBaseToField(color);
     }
 
     public void addObserver(Observer observer) {

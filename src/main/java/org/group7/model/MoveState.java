@@ -19,6 +19,16 @@ public class MoveState extends GameState {
     }
 
     @Override
+    public void pieceFromBaseToField(Color color){
+        if (game.validateBaseMove(color)){
+            game.movePieceOutOfBase(color);
+            game.setState(new RollState(game));
+            game.nextPlayer();
+        }
+    }
+
+
+    @Override
     public void roll(){
 
     }

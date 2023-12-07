@@ -36,7 +36,7 @@ public class BoardController{
         for(PaintableBase paintableBase : paintableBases){
             paintableBase.addActionListener(e -> { // TODO säg åt game att byta spelare
                 Base base = paintableBase.getBase();
-                board.pieceFromBaseToField(base);
+                game.moveBasePiece(base.getColor());
                 paintableBase.redrawPieces();
                 boardPanel.refreshPaintableTiles();
             });
