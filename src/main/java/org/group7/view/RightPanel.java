@@ -1,6 +1,7 @@
 package org.group7.view;
 
 import org.group7.controllers.GameController;
+import org.group7.controllers.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class RightPanel extends JPanel{
+public class RightPanel extends JPanel implements Observer {
     JButton rollDiceButton;
     JLabel playerTurnOutput;
     public RightPanel(JButton rollDiceButton){
@@ -54,5 +55,22 @@ public class RightPanel extends JPanel{
         rollDiceButton.setContentAreaFilled(false);
         rollDiceButton.setBorderPainted(false);
         rollDiceButton.setFocusPainted(false);
+    }
+
+    @Override
+    public void update(String s) {
+        if (s.equals(Color.RED.toString())) {
+            this.playerTurnOutput.setText("Red player's turn");
+        }
+        else if (s.equals(Color.GREEN.toString())) {
+            this.playerTurnOutput.setText("Green player's turn");
+        }
+        else if(s.equals(Color.BLUE.toString())) {
+        this.playerTurnOutput.setText("Blue player's turn");
+        }
+        else if(s.equals(Color.YELLOW.toString())) {
+        this.playerTurnOutput.setText("Yellow player's turn");
+        }
+
     }
 }

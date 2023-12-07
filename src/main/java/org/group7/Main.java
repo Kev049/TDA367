@@ -59,7 +59,7 @@ public class Main {
         List<JButton> buttons = gameController.getListOfButtons();
 
         boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles);
-        drawPanel = new DrawPanel(boardPanel, buttons);
+        drawPanel = new DrawPanel(boardPanel, buttons, game);
 
         //Controller
         BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board, boardPanel);

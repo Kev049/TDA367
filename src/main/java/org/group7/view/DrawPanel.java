@@ -1,6 +1,8 @@
 package org.group7.view;
 
 import org.group7.controllers.Observer;
+import org.group7.model.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
@@ -15,7 +17,7 @@ public class DrawPanel extends JPanel{
     private JPanel rightPanel;
     private JButton rollDiceButton;
 
-    public DrawPanel(BoardPanel boardPanel, List<JButton> buttons) {
+    public DrawPanel(BoardPanel boardPanel, List<JButton> buttons, Game game) {
         this.boardPanel = boardPanel;
         this.rollDiceButton = buttons.get(0);
         this.leftPanel = new LeftPanel();
@@ -23,6 +25,7 @@ public class DrawPanel extends JPanel{
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         addPanels();
+        game.addObserver((Observer)rightPanel); //Snyggt
     }
 
     private void addPanels(){

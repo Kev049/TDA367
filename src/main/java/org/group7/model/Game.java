@@ -2,11 +2,13 @@ package org.group7.model;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.group7.controllers.Observable;
 import org.group7.controllers.Observer;
 import java.awt.Color;
 import java.util.List;
 
-public class Game {
+public class Game implements Observable {
 
     private final Set<Observer> observers;
     private Dice dice;
@@ -40,9 +42,9 @@ public class Game {
     }
 
     public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
-        for (Observer o : observers){
-            o.update();
-        }
+        //for (Observer o : observers){
+        //    o.update();           //TODO ksks lägga till igen
+        //}
         this.lastDiceRollResult = dice.roll();
         return this.lastDiceRollResult;
     }
@@ -82,8 +84,16 @@ public class Game {
         board.pieceFromBaseToField(color);
     }
 
+    @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers(String playerColor) {
+        for (Observer o: this.observers) {
+            o.update(playerColor);
+        }
     }
 
     public Piece[] getPiecesFromBase(Player player){
@@ -112,6 +122,7 @@ public class Game {
         this.currentPlayer = this.players[currentPlayerNumber];
 
     }
+
 
 }
 
