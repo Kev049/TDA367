@@ -29,7 +29,7 @@ public class BoardController{
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.addActionListener(e ->{
                 Tile tile = paintableTile.getTile();
-                game.movePiece(tile);
+                game.move(tile);
                 boardPanel.refreshPaintableTiles();
             });
         }

@@ -11,34 +11,35 @@ import java.io.IOException;
 
 public class RightPanel extends JPanel{
     JButton rollDiceButton;
+    JLabel playerTurnOutput;
     public RightPanel(JButton rollDiceButton){
         this.rollDiceButton = rollDiceButton;
+        this.playerTurnOutput = new JLabel("Red player's turn");
         this.setLayout(new GridBagLayout());
         initDiceComponents();
     }
 
     private void initDiceComponents(){
+        initTurnComponent();
+        initDiceComponent();
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
 
         c.gridy = 0;
-        c.insets = new Insets(0, 0, 560, 0);
-        JLabel playerTurnOutput = new JLabel("Red player's turn");
-        playerTurnOutput.setFont(new Font("Arial", Font.PLAIN, 32));
+        c.insets = new Insets(0, 0, 550, 0);
         this.add(playerTurnOutput, c);
 
         c.insets = new Insets(0,0, 50, 0);
         c.gridy = 1;
-        JTextField diceOutput = new JTextField("");
-        diceOutput.setEditable(false);
-        diceOutput.setPreferredSize(new Dimension(200, 100));
-        diceOutput.setText("");
-        diceOutput.setFont(new Font("Arial", Font.PLAIN, 30));
-        this.add(diceOutput, c);
+        this.add(rollDiceButton, c);
+    }
 
+    private void initTurnComponent(){
+        playerTurnOutput.setFont(new Font("Arial", Font.PLAIN, 32));
+    }
 
-        c.gridy = 2;
+    private void initDiceComponent(){
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         try{
             image = ImageIO.read(new File("src/main/resources/dices2.png"));
@@ -53,6 +54,5 @@ public class RightPanel extends JPanel{
         rollDiceButton.setContentAreaFilled(false);
         rollDiceButton.setBorderPainted(false);
         rollDiceButton.setFocusPainted(false);
-        this.add(rollDiceButton, c);
     }
 }

@@ -23,7 +23,7 @@ public class RollDiceListener implements ActionListener {
         private BufferedImage image;
         private List<Point> imageCoordinates = new ArrayList<>();
         private Game game;
-        private final int totalAmountFrames = 12;
+        private final int totalAmountFrames = 6;
     public RollDiceListener(JButton rollDiceButton, Game game){
         this.game = game;
         this.image = new BufferedImage(205, 205, BufferedImage.TYPE_INT_RGB);
@@ -50,7 +50,7 @@ public class RollDiceListener implements ActionListener {
     }
 
     private void timerDone(){
-        int diceRollResult = game.rollDice() - 1;
+        int diceRollResult = game.roll() - 1;
         Icon icon = new ImageIcon(image.getSubimage(
                 (int) imageCoordinates.get(diceRollResult).getX(),
                 (int) imageCoordinates.get(diceRollResult).getY(),

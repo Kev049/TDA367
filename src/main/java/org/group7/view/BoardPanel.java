@@ -73,6 +73,13 @@ public class BoardPanel extends JPanel{
     }
 
     public void refreshPaintableTiles(){
+        for(PaintableTile paintableTile : paintableGoalTiles){
+            paintableTile.removeAll();
+            Tile tile = paintableTile.getTile();
+            if(!tile.isEmpty()){
+                paintableTile.add(PaintableEntityFactory.makePieceImage(tile.getPiece()));
+            }
+        }
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.removeAll();
             Tile tile = paintableTile.getTile();

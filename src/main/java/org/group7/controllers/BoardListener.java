@@ -18,6 +18,6 @@ public class BoardListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         PaintableTile paintableTile = (PaintableTile) e.getSource();
         Tile tile = paintableTile.getTile();
-        game.movePiece(tile);
+        //game.movePiece(tile);
     }
 }

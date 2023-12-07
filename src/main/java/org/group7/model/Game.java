@@ -14,8 +14,11 @@ public class Game {
     public Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
     private Player currentPlayer;
+    private int currentPlayerNumber;
     private int turnNumber;
     private final int turnNumberStart = 0;
+    private GameState gameState;
+
 
     private int lastDiceRollResult;
 
@@ -23,14 +26,18 @@ public class Game {
         this.dice = Dice.getInstance();
         this.board = board;
         this.players = new Player[4];
-        this.currentPlayer = players[0];
-        this.turnNumber = turnNumberStart;
-        this.lastDiceRollResult = 0;
-
         this.players[0] = PlayerFactory.createPlayer(Color.RED);
         this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
         this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
         this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
+        this.currentPlayerNumber = 0;
+        this.currentPlayer = players[currentPlayerNumber];
+        this.turnNumber = turnNumberStart;
+        this.lastDiceRollResult = 0;
+        this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
+
+
+
 
 
 //        for (int i = 0; i < 4; i++) {
@@ -43,21 +50,7 @@ public class Game {
 
         this.observers = new HashSet<>();
 
-        //gameloop
-        int i = 0;
-        while(true) {
-            this.currentPlayer = players[i];
-            int diceRoll = rollDice();
-            List<Piece> currentPlayerPieces = this.currentPlayer.getPieces();
-            i++;
-            i = (i % 4);
-            if (i == 2){
-                System.out.println("yeet");
-            }
-            else{
-                break;
-            }
-        }
+
     }
 
     public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
@@ -68,16 +61,26 @@ public class Game {
         return this.lastDiceRollResult;
     }
 
+    public int roll(){
+        gameState.roll();
+        return this.lastDiceRollResult;
+    }
+
     public boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
         return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
     }
 
-    public void movePiece(Tile tile){
-        if(validateMove(tile)) {
-            Piece p = tile.getPiece();
-            this.board.movePiece(p, this.lastDiceRollResult);
-        }
+    public void move(Tile tile) {
+        gameState.move(tile);
+    }
+
+    protected void movePiece(Tile tile) {
+        //if(validateMove(tile)) {
+        Piece p = tile.getPiece();
+        this.board.movePiece(p, this.lastDiceRollResult);
+        setState(this.gameState);
+        //}
     }
 
     //TODO: Validate that it is player's turn
@@ -102,6 +105,17 @@ public class Game {
     private void spawnPowerups(){
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUp();
+    }
+
+    public void setState(GameState gamestate){
+        this.gameState = gamestate;
+    }
+
+    public void nextPlayer(){
+        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
+        System.out.println(String.valueOf(this.currentPlayerNumber) + this.currentPlayer);
+        this.currentPlayer = this.players[currentPlayerNumber];
+
     }
 
 }
