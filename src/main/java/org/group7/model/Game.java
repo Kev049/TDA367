@@ -118,9 +118,9 @@ public class Game implements Observable {
 
     public void nextPlayer(){
         this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
-        System.out.println(String.valueOf(this.currentPlayerNumber) + this.currentPlayer);
         this.currentPlayer = this.players[currentPlayerNumber];
-
+        String playerColor = this.currentPlayer.getColor().toString();
+        notifyObservers(playerColor);
     }
 
 
