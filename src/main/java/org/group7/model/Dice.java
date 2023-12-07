@@ -8,12 +8,10 @@ public class Dice implements Observer { // Implementerar Singleton pattern så a
     private static Dice instance;       // Detta kan potentiellt leda till problem i genereringen av tal då tärningarna har olika seeds.
     private Random generator;
     //private DiceState state = new OrderedState();
-    private Boolean interactable;
 
     private Dice() {
         long seed = System.currentTimeMillis();     //kanske kan implementera detta som en time klass???
         this.generator = new Random(seed);
-        this.interactable = true;
     }
 
     public static Dice getInstance() {
@@ -24,13 +22,7 @@ public class Dice implements Observer { // Implementerar Singleton pattern så a
     }
 
     public int roll() {
-        if (this.interactable) {
-            this.interactable = false;
-            return this.generator.nextInt(6) + 1;
-        }
-        else{
-            return 1;
-        }
+        return this.generator.nextInt(6) + 1;
     }
 
     @Override
@@ -43,15 +35,5 @@ public class Dice implements Observer { // Implementerar Singleton pattern så a
         // Empty
     }
 
-    /*
-    public void previousState(){
-    state.prev(this);
-    }
-
-    public void nextState(){
-    state.next(this);
-
-
-     */
 
 }
