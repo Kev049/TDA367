@@ -11,6 +11,8 @@ assignees: ''
 
 US
 
-## Acceptance criteria:
+## Acceptance Criteria:
 
-AC
+Given ... When ... Then ...
+
+---
