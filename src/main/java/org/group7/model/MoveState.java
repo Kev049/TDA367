@@ -1,5 +1,7 @@
 package org.group7.model;
 
+import java.awt.Color;
+
 public class MoveState extends GameState {
 
     public MoveState(Game g) {
@@ -14,7 +16,6 @@ public class MoveState extends GameState {
             game.setState(new RollState(game));
             game.nextPlayer();
         }
-
     }
 
     @Override
