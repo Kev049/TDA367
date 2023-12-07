@@ -35,19 +35,6 @@ public class Game {
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
-
-
-
-
-
-//        for (int i = 0; i < 4; i++) {
-//            Piece[] playerPieceArray = new Piece[4];
-//            for (int j = 0; i < 4; i++) {
-//                playerPieceArray[j] = this.bases[i].getPieces()[j];
-//            }
-//            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
-//        }
-
         this.observers = new HashSet<>();
 
 
