@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoalStretch {
+public class GoalStretch implements Observable {
 
     private final int capacity = 4;
     private Tile[] tiles = new Tile[capacity];
@@ -49,9 +49,21 @@ public class GoalStretch {
 
     private void checkIfFull(){
         if (finishedPieces == capacity) {
-            //Notify game/observer
-            System.out.println("Somebody Won!");
+            notifyObservers();
         }
     }
+
+    @Override
+    public void notifyObservers(){
+        for (Observer o: this.observers){
+            o.update();
+        }
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        this.observers.add(o);
+    }
+
 
 }

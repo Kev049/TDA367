@@ -7,7 +7,7 @@ import org.group7.controllers.StringObservable;
 import org.group7.controllers.StringObserver;
 import java.awt.Color;
 
-public class Game implements Observable {
+public class Game implements StringObservable, Observer {
 
     private final Set<StringObserver> stringObservers;
     private Dice dice;
@@ -123,6 +123,10 @@ public class Game implements Observable {
         notifyObservers(playerColor);
     }
 
+    @Override
+    public void update(){
+        System.out.println(this.currentPlayer.getColor() + "won!");
+    }
 
 }
 
