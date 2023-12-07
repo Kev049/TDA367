@@ -1,4 +1,4 @@
-package org.group7Test;
+package org.group7.model;
 //import org.junit.Test;>
 import org.group7.model.Board;
 import org.group7.model.IMoveHandler;
@@ -20,6 +20,8 @@ public class TileTest {
 
     int someNumber;
     Tile tile;
+
+    //TODO: Check that InsertEntity can't insert an entity if tile already has entity
 
     @BeforeEach
     void setupBeforeEach(){
