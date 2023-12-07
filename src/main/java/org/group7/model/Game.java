@@ -14,31 +14,38 @@ public class Game implements StringObservable, Observer {
     private Board board;
     public Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
+    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
     private int currentPlayerNumber;
     private int turnNumber;
     private final int turnNumberStart = 0;
     private GameState gameState;
-
-
+    private Color[] colorArray;
     private int lastDiceRollResult;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
         this.board = board;
         this.board.addGoalObserver(this);
-        this.players = new Player[4];
-        this.players[0] = PlayerFactory.createPlayer(Color.RED);
-        this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
-        this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
-        this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
-        this.currentPlayerNumber = 0;
-        this.currentPlayer = players[currentPlayerNumber];
+        this.colorArray = new Color[amountOfPlayers];
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
+        initPlayers();
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
+    }
 
+    private void initPlayers(){
+        this.players = new Player[amountOfPlayers];
+        for( int i = 0; i < this.amountOfPlayers; i++) {
+            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
+        }
+        this.currentPlayerNumber = 0;
+        this.currentPlayer = players[currentPlayerNumber];
     }
 
     public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
