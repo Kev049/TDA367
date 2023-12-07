@@ -34,6 +34,10 @@ public class Game {
         this.colorArray[1] = Color.GREEN;
         this.colorArray[2] = Color.BLUE;
         this.colorArray[3] = Color.YELLOW;
+        //Om vi har tid kan vi implementera en metod för att välja antalet spelare och
+        //vilka som skall initieras. Isf, 3 spelare funkar precis som 4 fast loopa en gång mindre.
+        //2 spelare: Välj mod 2 (i) av colors i colorArray när vi initierar spelare, kom ihåg att
+        //se till att player 1 platsen inte sätts ut, blir nog jobbigt.
         initPlayers();
 
 //        for (int i = 0; i < 4; i++) {
