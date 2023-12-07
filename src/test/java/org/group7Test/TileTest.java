@@ -4,6 +4,9 @@ import org.group7.model.Board;
 import org.group7.model.IMoveHandler;
 import org.group7.model.Piece;
 import org.group7.model.Tile;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -15,19 +18,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
 
+    int someNumber;
+    Tile tile;
+
+    @BeforeEach
+    void setupBeforeEach(){
+        someNumber = 0;
+        tile = new Tile(someNumber);
+    }
+
+    @AfterEach
+    void tearDownAfterEach(){
+        tile = null;
+    }
+
     @Test
     void propertiesOfTileInitialized() {
-        int someNumber = 0;
-        Tile tile = new Tile(someNumber);
         assertEquals(tile.getIndex(), someNumber);
         assertTrue(tile.isEmpty());
     }
 
     @Test
     void insertPieceMakesTileNotEmpty() {
-        int someNumber = 0;
         IMoveHandler handler = new Board();
-        Tile tile = new Tile(someNumber);
         assertTrue(tile.isEmpty());
         tile.insertPiece(new Piece(Color.red, handler));
         assertFalse(tile.isEmpty());
@@ -35,9 +48,7 @@ public class TileTest {
 
     @Test
     void getPieceReturnsSamePieceInsertedPiece() {
-        int someNumber = 0;
         IMoveHandler handler = new Board();
-        Tile tile = new Tile(someNumber);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
         assertEquals(tile.getPiece(), piece);
@@ -45,9 +56,7 @@ public class TileTest {
 
     @Test
     void removePieceWillRemovePiece() {
-        int someNumber = 0;
         IMoveHandler handler = new Board();
-        Tile tile = new Tile(someNumber);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
         assertFalse(tile.isEmpty());
@@ -61,19 +70,16 @@ public class TileTest {
     }
     @Test
     void getPieceColorReturnsSameColorAsPieceColor() {
-        int someNumber = 0;
         Color red = Color.red;
         IMoveHandler handler = new Board();
-        Tile tile = new Tile(someNumber);
         Piece redPiece = new Piece(red, handler);
+        tile.insertPiece(redPiece);
         assertEquals(tile.getPieceColor(), redPiece.getColor());
     }
 
     @Test
     void getPieceColorWorksForAllOurColors() {
-        int someNumber = 0;
         List<Color> colorList = Arrays.asList(Color.red, Color.blue, Color.green, Color.yellow);
-        Tile tile = new Tile(someNumber);
 
         for(Color c : colorList) {
             tile.insertPiece(new Piece(c, new Board()));
