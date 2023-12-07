@@ -48,7 +48,7 @@ public class BoardPanel extends JPanel{
 
     private void applyImage(){
         try{
-            this.image = ImageIO.read(new File("src/main/resources/board4.png"));
+            this.image = ImageIO.read(new File("src/main/resources/board5.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -106,7 +106,6 @@ public class BoardPanel extends JPanel{
                 c.gridheight = 1;
                 Box box = new Box(BoxLayout.LINE_AXIS);
                 box.setPreferredSize(new Dimension(91, 91));
-                box.setBorder(BorderFactory.createLineBorder(Color.black));
                 this.add(box, c);
             }
         }

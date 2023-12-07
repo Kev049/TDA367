@@ -45,9 +45,9 @@ public class LeftPanel extends JPanel {
     private void initComponents(){
         initPowerUpButtons();
         initNewGameButton();
+
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.fill = GridBagConstraints.HORIZONTAL;
 
         c.gridy = 0;
         c.insets = new Insets(0, 0, 350, 0);
@@ -65,14 +65,28 @@ public class LeftPanel extends JPanel {
     }
 
     private void initPowerUpButtons(){
+        powerUpFrame.setLayout(new GridBagLayout());
+        powerUpFrame.setOpaque(false);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        int i = 0;
         for(JButton powerUpButton : powerUpButtons){
+            c.gridy = i;
+            c.insets = new Insets(0, 0, 25, 0);
             powerUpButton.setContentAreaFilled(false);
             powerUpButton.setBorderPainted(false);
             powerUpButton.setFocusPainted(false);
-            powerUpFrame.add(powerUpButton);
+            powerUpFrame.add(powerUpButton, c);
+            i++;
         }
-        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/catapult.png")));
 
+        basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/exit_base_icon.png")));
+        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/catapult_icon.png")));
+        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/laser_gun_icon.png")));
+        lightningPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/lightning_icon.png")));
+        switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/switch_icon.png")));
     }
 
     private Image getImage(String path){
