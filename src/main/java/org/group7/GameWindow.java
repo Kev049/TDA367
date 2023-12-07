@@ -35,7 +35,6 @@ public class GameWindow extends JFrame{
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.add(drawPanel);
-        initPieces();
         this.pack();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -45,43 +44,5 @@ public class GameWindow extends JFrame{
         setVisible(true);
         // Ensures that the window closes when pressing the 'x' button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private void initPieces(){
-        Icon icon = new ImageIcon("src/main/resources/green_player_circle.png");
-        JButton piece = new JButton(icon);
-        piece.setPreferredSize(new Dimension());
-        piece.setBorderPainted(false);
-        piece.setContentAreaFilled(false);
-        piece.setFocusPainted(false);
-        piece.setOpaque(false);
-        /*
-        List<Integer> index = boardPanel.getGamePathTileIndexes();
-        HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
-        PaintableTile currentTile = indexTileHashMap.get(index.get(0));
-        currentTile.add(piece);
-        piece.addActionListener(new ActionListener() {
-            int currentPos = 0;
-            List<Integer> index = boardPanel.getGamePathTileIndexes();
-            HashMap<Integer, PaintableTile> indexTileHashMap = boardPanel.getindexTileHashMap();
-            PaintableTile currentTile = indexTileHashMap.get(index.get(0));
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int diceRoll = game.getLastDiceRollResult();
-                //Add result from dice roll to current position and move around without index out of length of array
-                currentPos = (currentPos + diceRoll) % 40;
-
-                //Remove piece from current tile it is on
-                currentTile.remove(piece);
-                currentTile.repaint();
-                currentTile.revalidate();
-
-                //Get tile from the new Point given and add the piece to the tile it has moved to
-                currentTile = indexTileHashMap.get(index.get(currentPos));
-                currentTile.add(piece);
-            }
-        });
-
-         */
     }
 }
