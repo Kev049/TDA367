@@ -15,23 +15,26 @@ public class Game {
     //private Player[] players;
     private Player currentPlayer;
     private int turnNumber;
+    private int amountOfPlayers; //TODO:Ändra så att mängden players ställs in på ett annat ställe
     private final int turnNumberStart = 0;
+
+    private Color[] colorArray;
 
     private int lastDiceRollResult;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
         this.board = board;
-        this.players = new Player[4];
+        this.players = new Player[amountOfPlayers];
         this.currentPlayer = players[0];
         this.turnNumber = turnNumberStart;
         this.lastDiceRollResult = 0;
-
-        this.players[0] = PlayerFactory.createPlayer(Color.RED);
-        this.players[1] = PlayerFactory.createPlayer(Color.GREEN);
-        this.players[2] = PlayerFactory.createPlayer(Color.BLUE);
-        this.players[3] = PlayerFactory.createPlayer(Color.YELLOW);
-
+        this.colorArray = new Color[amountOfPlayers];
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
+        initPlayers();
 
 //        for (int i = 0; i < 4; i++) {
 //            Piece[] playerPieceArray = new Piece[4];
@@ -57,6 +60,12 @@ public class Game {
             else{
                 break;
             }
+        }
+    }
+
+    private void initPlayers(){
+        for( int i = 0; i < this.amountOfPlayers - 1; i++){
+            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
         }
     }
 
