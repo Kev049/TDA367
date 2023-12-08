@@ -36,7 +36,7 @@ public class GoalStretch implements Observable {
 
     public void addPiece(Piece p, int steps) {
         p.setPos(0);
-        //this.tiles[0].insertPiece(p);
+        //this.tiles[0].insertPiece(p); med nuvarande stilen behövs denna men eeh
         p.addToGoalStretch();
         goalStretchMove(p, steps);
 
@@ -48,22 +48,19 @@ public class GoalStretch implements Observable {
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int pos = p.getPos();  // där den står
         int oldPos = pos;
+        Boolean isNewToGoalStretch = this.tiles[oldPos].isEmpty();
         pos += steps;  // där den ska
         if (pos > (4 + oldPos)){ //kollar om den kommer åka ut
             this.handler.yeetPieceFromGoal(p);
-            this.tiles[oldPos].removePiece();
+            if(!isNewToGoalStretch){ this.tiles[oldPos].removePiece();}
             p.removeFromGoalStretch();
         } else {
             if (pos > 4){ pos = -pos;} //så att den ska studsa
-            pos = pos % 4;
-            this.tiles[oldPos].removePiece(); //görs här i fall att oldPos == pos, skulle kunna bytas mot if check
+            pos = pos % 4; //ksk mod 5 istället?
+            if(!isNewToGoalStretch){ this.tiles[oldPos].removePiece();} //görs här i fall att oldPos == pos, skulle kunna bytas mot if check, då skulle rad ovan kunna vara på slutet
             this.tiles[abs(pos)].insertPiece(p);
         }
             p.setPos(pos);
-    }
-
-    private void bounce(Piece p){
-
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
