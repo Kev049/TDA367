@@ -73,7 +73,7 @@ public class Board implements IMoveHandler {
     private void initGoals() {
         int i = 0;
         for (Color c : this.colors) {
-            this.goals[i] = new GoalStretch(c);
+            this.goals[i] = new GoalStretch(c, this);
             i++;
         }
     }
@@ -118,6 +118,13 @@ public class Board implements IMoveHandler {
 
     public void addPieceToField(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
+        t.insertPiece(p);
+    }
+
+    public void yeetPieceFromGoal(Piece p){
+        Color c = p.getColor();
+        int tileIndex = playerStartTiles.get(c);
+        Tile t = field[tileIndex];
         t.insertPiece(p);
     }
 

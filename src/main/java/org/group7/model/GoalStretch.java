@@ -14,13 +14,16 @@ public class GoalStretch implements Observable {
     private Color color;
     private int finishedPieces;
 
+    private IMoveHandler handler;
+
     private List<Observer> observers;
 
-    public GoalStretch(Color color) {
+    public GoalStretch(Color color, IMoveHandler handler) {
         this.color = color;
         initTiles();
         this.finishedPieces = 0;
         this.observers = new ArrayList<>();
+        this.handler = handler;
     }
 
     private void initTiles(){
@@ -50,23 +53,26 @@ public class GoalStretch implements Observable {
             System.out.println(finishedPieces);
             checkIfFull();      // kolla om alla är klara
         }
-        else if (current < 0){
-            //TODO Move out to field again, possibly with a handler?
-            //this.handler.movePieceToField(p)
-            //this.tiles[from].removePiece();
-            //this.handler.movePieceToField(p)
-            //p.removeFromGoalStretch();
-        }
-        else {
+        else {                  // Om inte i målet
             if (current > 4){
-                current = (8-current); //Bounce logic
+                current = (8 - current); //Bounce logic
             }
-            this.tiles[current].insertPiece(p);
+            if (current < 0) {
+                //TODO Move out to field again, possibly with a handler?
+                this.handler.yeetPieceFromGoal(p);
+                this.tiles[from].removePiece();
+                p.removeFromGoalStretch();
+            }
+            else if (current != from){
+                this.tiles[current].insertPiece(p);
+                this.tiles[from].removePiece();
+            }
+            else if (current == from) {
+                this.tiles[current].insertPiece(p);
+            }
             p.setPos(current);
         }
-        if (current != from){
-            this.tiles[from].removePiece();
-        }
+
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
