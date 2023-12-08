@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class GoalStretch implements Observable {
 
     private final int capacity = 4;
@@ -34,7 +36,7 @@ public class GoalStretch implements Observable {
 
     public void addPiece(Piece p, int steps) {
         p.setPos(0);
-        this.tiles[0].insertPiece(p);
+        //this.tiles[0].insertPiece(p);
         p.addToGoalStretch();
         goalStretchMove(p, steps);
 
@@ -44,41 +46,24 @@ public class GoalStretch implements Observable {
     }
 
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
-        int current = p.getPos();
-        int from = current;     // där den står
-        System.out.println(current);
-        current += steps;       // där den ska
-        System.out.println(current);
-        if(current == 4) {      // Om i målet
-            this.finishedPieces++;  // lägg till att en är klar
-            System.out.println(finishedPieces);
-            checkIfFull();      // kolla om alla är klara
+        int pos = p.getPos();  // där den står
+        int oldPos = pos;
+        pos += steps;  // där den ska
+        if (pos > (4 + oldPos)){ //kollar om den kommer åka ut
+            this.handler.yeetPieceFromGoal(p);
+            this.tiles[oldPos].removePiece();
+            p.removeFromGoalStretch();
+        } else {
+            if (pos > 4){ pos = -pos;} //så att den ska studsa
+            pos = pos % 4;
+            this.tiles[oldPos].removePiece(); //görs här i fall att oldPos == pos, skulle kunna bytas mot if check
+            this.tiles[abs(pos)].insertPiece(p);
         }
-        else {                  // Om inte i målet
-            if (current != from){ //remove funkar inte eftersom att den kom utifrån och inte fanns på en tile innan
-                this.tiles[current].insertPiece(p);
-//                try {
-                    System.out.println(this.tiles[from].getPiece());
-                    this.tiles[from].removePiece();
-//                } catch (NullPointerException e){
-//                    System.out.println("caught it");
-//                }
+            p.setPos(pos);
+    }
 
-            }
-            if (current > 4){
-                current = (8 - current); //Bounce logic
-            }
-            if (current < 0) {
-                //TODO Move out to field again, possibly with a handler?
-                this.handler.yeetPieceFromGoal(p);
-                this.tiles[from].removePiece();
-                p.removeFromGoalStretch();
-            }
-            else if (current == from) {
-                this.tiles[current].insertPiece(p);
-            }
-            p.setPos(current);
-        }
+    private void bounce(Piece p){
+
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
