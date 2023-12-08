@@ -1,17 +1,21 @@
 package org.group7.model;
 
-public class PowerUp implements IEntity{ //borde väl vara en abstrakt klass?
+public abstract class PowerUp implements IEntity { //borde väl vara en abstrakt klass?
+    private int pos;
+    protected IMoveHandler handler;
 
-    public PowerUp(){
-           //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
-
+    public PowerUp(IMoveHandler handler) {
+        this.handler = handler;
     }
 
-    public void handleCollision(Piece piece){
-        System.out.println("hi");
-    }
+    public abstract void handleCollision(Piece piece);
 
     public int getPos() {
-        return 0;
+        return pos;
+    }
+
+    public void setPos(int pos){
+        this.pos = pos;
     }
 }
+

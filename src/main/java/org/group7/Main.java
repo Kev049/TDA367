@@ -13,7 +13,6 @@ public class Main {
     private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
     private static final int TOTAL_AMOUNT_BASES = 4;
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
-    private static final int TOTAL_AMOUNT_PIECES = 16;
     private static BoardPanel boardPanel;
     private static DrawPanel drawPanel;
     private static List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
@@ -22,7 +21,6 @@ public class Main {
     private static Tile fieldTiles[];
     private static List<Base> bases = new ArrayList<>(TOTAL_AMOUNT_BASES);
     private static List<Tile> goalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
-    private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
 
     public static void main(String[] args) {
         //Model instances
@@ -33,15 +31,9 @@ public class Main {
         fieldTiles = board.getFieldTiles();
         bases = board.getBases();
         goalTiles = board.getGoalTiles();
-        /*
-        for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
-            PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces.get(i));
-            paintablePieces.add(paintablePiece);
-        }
-         */
 
         for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(fieldTiles[i]);
+            PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTiles[i]);
             paintableFieldTiles.add(paintableTile);
         }
 
@@ -51,7 +43,7 @@ public class Main {
         }
 
         for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(goalTiles.get(i));
+            PaintableTile paintableTile = PaintableTileFactory.createTile(goalTiles.get(i));
             paintableGoalTiles.add(paintableTile);
         }
 
