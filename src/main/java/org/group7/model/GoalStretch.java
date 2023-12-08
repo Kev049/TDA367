@@ -54,18 +54,18 @@ public class GoalStretch implements Observable {
             checkIfFull();      // kolla om alla är klara
         }
         else {                  // Om inte i målet
-            if (current > 4){
-                current = (8 - current); //Bounce logic
-            }
-            if (current < 0) {
-                //TODO Move out to field again, possibly with a handler?
-                this.handler.yeetPieceFromGoal(p);
-                this.tiles[from].removePiece();
-                p.removeFromGoalStretch();
-            }
-            else if (current != from){
+            if (current != from){
                 this.tiles[current].insertPiece(p);
                 this.tiles[from].removePiece();
+            }
+            if (current > 4){
+                current = (8 - current); //Bounce logic
+                if (current < 0) {
+                //TODO Move out to field again, possibly with a handler?
+                    this.handler.yeetPieceFromGoal(p);
+                    this.tiles[from].removePiece();
+                    p.removeFromGoalStretch();
+                }
             }
             else if (current == from) {
                 this.tiles[current].insertPiece(p);
