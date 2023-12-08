@@ -7,7 +7,7 @@ import org.group7.model.Tile;
 
 import java.awt.*;
 
-public class PaintableTile extends JButton {
+public class PaintableTile extends JButton{
 
     private Tile tile = null;
 
@@ -21,10 +21,6 @@ public class PaintableTile extends JButton {
     }
     public Tile getTile(){
         return this.tile;
-    }
-
-    public Boolean isEmpty(){
-        return this.getComponents() == null;
     }
 
 }

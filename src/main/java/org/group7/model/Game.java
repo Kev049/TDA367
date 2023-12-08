@@ -62,21 +62,18 @@ public class Game implements StringObservable, Observer {
         return this.lastDiceRollResult;
     }
 
-    protected boolean validateMove(Tile tile) {
+    protected boolean validateMove(Piece piece) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
+        return (piece.getColor().equals(currentPlayer.getColor()));
     }
 
-    public void move(Tile tile) {
-        gameState.move(tile);
+    public void move(Piece piece) {
+        gameState.move(piece);
     }
 
-    protected void movePiece(Tile tile) {
-        //if(validateMove(tile)) {
-        Piece p = tile.getPiece();
-        this.board.movePiece(p, this.lastDiceRollResult);
+    protected void movePiece(Piece piece) {
+        this.board.movePiece(piece, this.lastDiceRollResult);
         setState(this.gameState);
-        //}
     }
 
     //TODO: Validate that it is player's turn

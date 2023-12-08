@@ -33,12 +33,7 @@ public class Main {
         fieldTiles = board.getFieldTiles();
         bases = board.getBases();
         goalTiles = board.getGoalTiles();
-        /*
-        for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
-            PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces.get(i));
-            paintablePieces.add(paintablePiece);
-        }
-         */
+
 
         for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
             PaintableTile paintableTile = TileFactory.createTile(fieldTiles[i]);
@@ -46,9 +41,18 @@ public class Main {
         }
 
         for(Base base : bases){
-            PaintableBase paintableBase = new PaintableBase(base);
+            Piece[] pieces = base.getPieces();
+            List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
+            coloredPaintablePieces.clear();
+            for(int i = 0; i < pieces.length; i++){
+                PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces[i]);
+                coloredPaintablePieces.add(paintablePiece);
+                paintablePieces.add(paintablePiece);
+            }
+            PaintableBase paintableBase = new PaintableBase(base, coloredPaintablePieces);
             paintableBases.add(paintableBase);
         }
+
 
         for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
             PaintableTile paintableTile = TileFactory.createTile(goalTiles.get(i));
@@ -58,11 +62,11 @@ public class Main {
         GameController gameController = new GameController(game);
         List<JButton> buttons = gameController.getListOfButtons();
 
-        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles);
+        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
         drawPanel = new DrawPanel(boardPanel, buttons, game);
 
         //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableGoalTiles, paintableBases, game, board, boardPanel);
+        BoardController boardController = new BoardController(paintablePieces, paintableBases, game, board, boardPanel);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }

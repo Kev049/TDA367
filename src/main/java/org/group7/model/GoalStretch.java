@@ -60,12 +60,12 @@ public class GoalStretch implements Observable {
             if (current < 0) {
                 //TODO Move out to field again, possibly with a handler?
                 this.handler.yeetPieceFromGoal(p);
-                this.tiles[from].removePiece();
+                this.tiles[from].removeEntity();
                 p.removeFromGoalStretch();
             }
             else if (current != from){
                 this.tiles[current].insertPiece(p);
-                this.tiles[from].removePiece();
+                this.tiles[from].removeEntity();
             }
             else if (current == from) {
                 this.tiles[current].insertPiece(p);
@@ -76,7 +76,7 @@ public class GoalStretch implements Observable {
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
-        this.tiles[index].removePiece();
+        this.tiles[index].removeEntity();
     }
 
     public Color getColor(){
