@@ -18,7 +18,6 @@ public class Game implements StringObservable, Observer {
     private Player currentPlayer;
     private int currentPlayerNumber;
     private int turnNumber;
-    private int amountOfPlayers; //TODO:Ändra så att mängden players ställs in på ett annat ställe
     private final int turnNumberStart = 0;
 
     private GameState gameState;
@@ -48,12 +47,6 @@ public class Game implements StringObservable, Observer {
         }
         this.currentPlayerNumber = 0;
         this.currentPlayer = players[currentPlayerNumber];
-    }
-
-    private void initPlayers(){
-        for( int i = 0; i < this.amountOfPlayers - 1; i++){
-            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
-        }
     }
 
     public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
