@@ -20,7 +20,7 @@ class PieceTest {
     void setUp() {
         IMoveHandler handler = new Board();
         color = Color.RED;
-        piece = new Piece(color ,handler);
+        piece = new Piece(color, handler);
     }
 
     @AfterEach
@@ -30,9 +30,7 @@ class PieceTest {
     }
 
     @Test
-    void getColorReturnsTheCorrectColor() {
-        assertEquals(piece.getColor(), color);
-    }
+    void getColorReturnsTheCorrectColor() {assertEquals(piece.getColor(), color);}
 
     @Test
     void getColorWorksForAllOurColors() {
@@ -53,8 +51,23 @@ class PieceTest {
     }
 
     @Test
-    void handleCollision() {
+    void pieceBeingPushedIsSentBackToBase() {
+        System.out.println(handler);
+        handler = new Board();
+        piece = new Piece(Color.RED, handler);
+        Piece luigi = new Piece(Color.GREEN, handler);
+        handler.addPieceToField(piece,0);
+        piece.handleCollision(luigi);
+        assertEquals(piece.getPos(), -1);
+    }
 
+    @Test
+    void piecePushesOtherPiece() { //TODO:Get Kevin on the case
+//        handler = new Board();
+//        piece = new Piece(Color.RED, handler);
+        Piece goomba = new Piece(Color.BLUE, handler);
+        goomba.handleCollision(piece);
+        assertEquals(goomba.getPos(), -1);
     }
 
     @Test
