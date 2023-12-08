@@ -51,6 +51,10 @@ public class Base {
         return this.pieces;
     }
 
+    public boolean isEmpty() {
+        return (this.pieceAmount == 0);
+    }
+
     public Color getColor(){
         return this.color;
     }

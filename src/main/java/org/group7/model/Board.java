@@ -222,6 +222,10 @@ public class Board implements IMoveHandler {
         return Arrays.asList(this.bases);
     }
 
+    public Base getBaseFromColor(Color color) {
+        return this.colorBaseMap.get(color);
+    }
+
     public Piece[] getPiecesFromBase(Color color){
         for (Base b: this.bases) {
             if (b.getColor() == color)

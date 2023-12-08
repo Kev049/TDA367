@@ -41,12 +41,14 @@ public class GoalStretch implements Observable {
 
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int current = p.getPos();
-        int from = current;
-        current += steps;
-        if(current == 4) {
-            this.finishedPieces++;
+        int from = current;     // där den står
+        System.out.println(current);
+        current += steps;       // där den ska
+        System.out.println(current);
+        if(current == 4) {      // Om i målet
+            this.finishedPieces++;  // lägg till att en är klar
             System.out.println(finishedPieces);
-            checkIfFull();
+            checkIfFull();      // kolla om alla är klara
         }
         else if (current < 0){
             //TODO Move out to field again, possibly with a handler?

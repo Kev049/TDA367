@@ -82,8 +82,7 @@ public class Game implements StringObservable, Observer {
     //TODO: Validate that it is player's turn
 
     protected boolean validateBaseMove(Color color){
-        System.out.println(board.getPiecesFromBase(color).toString());
-        return (this.currentPlayer.getColor().equals(color) && (board.getPiecesFromBase(color) != null));
+        return (this.currentPlayer.getColor().equals(color) && !(board.getBaseFromColor(color).isEmpty()));
     }
     public void moveBasePiece(Color color){
             this.gameState.pieceFromBaseToField(color);
