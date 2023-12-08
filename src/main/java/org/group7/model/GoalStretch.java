@@ -29,10 +29,27 @@ public class GoalStretch implements Observable {
         }
     }
 
-    public void addPiece(Piece p) {
+    public void addPiece(Piece p, int steps) {
+
+        this.tiles
+
         this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
         this.finishedPieces += 1;
         checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
+    }
+
+    public void goalStrechMove(Piece p, int steps) {
+        int current = p.getPos();
+        for (int i = steps; i > 0; i--) {
+            current++;
+        }
+        if (current == 4) {
+            this.tiles[current].removePiece();
+            this.finishedPieces++;
+        }
+        else {
+            this.tiles[current].insertPiece(p);
+        }
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
