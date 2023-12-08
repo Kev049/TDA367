@@ -23,6 +23,7 @@ public class BoardPanel extends JPanel{
     private List<Point> baseBoxPoints;
     private HashMap<Integer, Box> indexBoxHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
+    private final int fieldStartCapacity = 40;
     private Image image;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
@@ -31,7 +32,7 @@ public class BoardPanel extends JPanel{
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
         this.paintableGoalTiles = paintableGoalTiles;
-        this.fieldTileIndices = new ArrayList<>(40); //Index for paintableTiles that match game path
+        this.fieldTileIndices = new ArrayList<>(fieldStartCapacity); //Index for paintableTiles that match game path
         this.baseTileIndices = new ArrayList<>(16);
         this.goalTileIndices = new ArrayList<>(16);
         this.baseBoxPoints = new ArrayList<>(16);
