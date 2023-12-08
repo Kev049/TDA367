@@ -1,51 +1,55 @@
 package org.group7.model;
 
-public class Piece extends Entity {
-    private int distFromStart;
-    private final Colour colour;
+import java.awt.*;
+
+public class Piece implements IEntity {
+    private int pos;
+    private IMoveHandler handler;
+    private final Color color;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
+    private boolean atGoalStretch;
 
-    public Piece(Colour colour){   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
-        super();
+    public Piece(Color color, IMoveHandler handler) {   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
+        this.handler = handler;
         this.atHome = true;
         this.atGoal = false;
-        this.colour = colour;
+        this.color = color;
     }
 
-//    public int get_pos(){
-//
-//        return this.pos;
-//    }
+    public Color getColor(){
+        return this.color;
+    }
 
-    public void move(int diceRoll){
-        for (int i = 0; i < diceRoll; i++ ){
-            this.pos += 1;
-            //check if piece needs to turn in to goal line.
+    public int getPos(){
+        return this.pos;
+    }
+
+    public void handleCollision(Piece p) {
+        if (this.color.equals(p.getColor())) {
+            // Same Color, skip one tile
+            this.handler.addPieceToField(p, this.pos + 1);
+        } else {
+            // Different color, send other to base and take its place
+            int position = this.pos;
+            this.handler.returnPieceToBase(this);
+            this.handler.addPieceToField(p, position);
         }
     }
 
-    public Colour get_colour(){
-        return this.colour;
+    public void addToGoalStretch(){
+        this.atGoalStretch = true;
     }
 
-    public boolean is_home(){
-        return this.atHome;
+    public void removeFromGoalStretch(){
+        this.atGoalStretch = false;
     }
 
-    public boolean is_goal(){
-        return this.atGoal;
+    public boolean isAtGoalStretch(){
+        return this.atGoalStretch;
     }
 
-    private void set_home(boolean bol){
-        this.atHome = bol;
-    }
-
-    private void set_goal(boolean bol){
-        this.atGoal = bol;
-    }
-
-    public int getDistFromStart(){
-        return this.distFromStart;
+    public void setPos(int index){
+        this.pos = index;
     }
 }

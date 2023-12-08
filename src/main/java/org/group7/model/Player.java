@@ -1,25 +1,19 @@
 package org.group7.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player{
     private List<Piece> pieces;
-    private Colour colour;
+    private Color color;
 
-    public Player(Colour colour){
-        this.colour = colour;
-        initPieces();
-    }
-    public void initPieces(){
-        this.pieces = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            pieces.add(new Piece(colour));      //Kan kanske göras finare
-        }
+    public Player(Color color){
+        this.color = color;
     }
 
-    public Colour getColour(){
-        return this.colour;
+    public Color getColor(){
+        return this.color;
     }
 
     public List<Piece> getPieces(){
@@ -29,5 +23,6 @@ public class Player{
     public Piece choosePiece(){ //väljer automatiskt piece 0,
         return pieces.get(0);
     }
+    //public void removePiece(Piece p);
 
 }
