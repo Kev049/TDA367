@@ -34,8 +34,9 @@ public class GoalStretch implements Observable {
 
     public void addPiece(Piece p, int steps) {
         p.setPos(0);
-        goalStretchMove(p, steps);
+        this.tiles[0].insertPiece(p);
         p.addToGoalStretch();
+        goalStretchMove(p, steps);
 
         //this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
         //this.finishedPieces += 1;
@@ -54,25 +55,30 @@ public class GoalStretch implements Observable {
             checkIfFull();      // kolla om alla är klara
         }
         else {                  // Om inte i målet
-            if (current != from){
+            if (current != from){ //remove funkar inte eftersom att den kom utifrån och inte fanns på en tile innan
                 this.tiles[current].insertPiece(p);
-                this.tiles[from].removePiece();
+//                try {
+                    System.out.println(this.tiles[from].getPiece());
+                    this.tiles[from].removePiece();
+//                } catch (NullPointerException e){
+//                    System.out.println("caught it");
+//                }
+
             }
             if (current > 4){
                 current = (8 - current); //Bounce logic
-                if (current < 0) {
+            }
+            if (current < 0) {
                 //TODO Move out to field again, possibly with a handler?
-                    this.handler.yeetPieceFromGoal(p);
-                    this.tiles[from].removePiece();
-                    p.removeFromGoalStretch();
-                }
+                this.handler.yeetPieceFromGoal(p);
+                this.tiles[from].removePiece();
+                p.removeFromGoalStretch();
             }
             else if (current == from) {
                 this.tiles[current].insertPiece(p);
             }
             p.setPos(current);
         }
-
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
