@@ -78,6 +78,12 @@ public class Board implements IMoveHandler {
         }
     }
 
+    public void addGoalObserver(Observer o) {
+        for (GoalStretch gs: this.goals) {
+            gs.addObserver(o);
+        }
+    }
+
     private void initGoalsHashMap(){
         for (int i = 0; i < 4; i++){
             this.goalsHashMap.put(this.colors[i], goals[i]);
@@ -98,12 +104,13 @@ public class Board implements IMoveHandler {
     }
 
     public Piece extractPieceFromBase(Color baseColor) {
+
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
 
-    public void pieceFromBaseToField(Base b){
-        Piece p = extractPieceFromBase(b.getColor());
+    public void pieceFromBaseToField(Color c){
+        Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
             addPieceToField(p, playerStartTiles.get(p.getColor()));
         }
@@ -132,9 +139,15 @@ public class Board implements IMoveHandler {
 
 
 
-    public void addEntityToGoalStretch(Piece p) { //Color behövs inte explicit då player har den??
+    public void addPieceToGoalStretch(Piece p, int steps) { //Color behövs inte explicit då player har den??
         GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
-        goalStretch.addPiece(p);
+        goalStretch.addPiece(p, steps);
+    }
+
+    public void movePieceInGoalStretch(Piece piece, int steps){
+        Color c = piece.getColor();
+        GoalStretch goalStretch = goalsHashMap.get(c);
+        goalStretch.goalStretchMove(piece, steps);
     }
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
@@ -144,7 +157,7 @@ public class Board implements IMoveHandler {
 
     private boolean completedLap(int from, int to, int start) { //Verkar fungera, testa? allt behövs kanske inte
         if (from < to) {
-            return (from < start && to >= start);
+            return (from < start && to >= start);       //TODO Add explanation perhaps, currently hard to read
         } else {
             return (from < start || to >= start);
         }
@@ -154,13 +167,18 @@ public class Board implements IMoveHandler {
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        this.field[from].removePiece();
         int to = (from + offset) % 40;
-
-        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
-            addEntityToGoalStretch(piece);
-        } else {                                    // still on first lap
-            this.field[to].insertPiece(piece);
+        int stepsLeft = (to - tileIndex);
+        if (piece.isAtGoalStretch()){        //TODO Refactor this if/else statement
+            movePieceInGoalStretch(piece, stepsLeft);
+        }
+        else {
+            this.field[from].removePiece();
+            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+                addPieceToGoalStretch(piece, stepsLeft);
+            } else {                                    // still on first lap
+                this.field[to].insertPiece(piece);
+            }
         }
 
         //Unused below

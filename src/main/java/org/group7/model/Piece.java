@@ -5,10 +5,10 @@ import java.awt.*;
 public class Piece implements IEntity {
     private int pos;
     private IMoveHandler handler;
-    private int distFromStart;
     private final Color color;
     private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
     private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
+    private boolean atGoalStretch;
 
     public Piece(Color color, IMoveHandler handler) {   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
         this.handler = handler;
@@ -19,26 +19,6 @@ public class Piece implements IEntity {
 
     public Color getColor(){
         return this.color;
-    }
-
-    public boolean is_home(){
-        return this.atHome;
-    }
-
-    public boolean is_goal(){
-        return this.atGoal;
-    }
-
-    private void set_home(boolean bol){
-        this.atHome = bol;
-    }
-
-    private void set_goal(boolean bol){
-        this.atGoal = bol;
-    }
-
-    public int getDistFromStart(){
-        return this.distFromStart;
     }
 
     public int getPos(){
@@ -55,6 +35,18 @@ public class Piece implements IEntity {
             this.handler.returnPieceToBase(this);
             this.handler.addPieceToField(p, position);
         }
+    }
+
+    public void addToGoalStretch(){
+        this.atGoalStretch = true;
+    }
+
+    public void removeFromGoalStretch(){
+        this.atGoalStretch = false;
+    }
+
+    public boolean isAtGoalStretch(){
+        return this.atGoalStretch;
     }
 
     public void setPos(int index){

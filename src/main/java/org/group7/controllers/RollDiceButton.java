@@ -38,7 +38,7 @@ public class RollDiceButton extends JButton {
         rollDiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                diceRoll = game.rollDice();
+                diceRoll = game.roll();
                 diceOutput.setText("You rolled " + diceRoll + "!");
             }
         });
@@ -62,7 +62,7 @@ public class RollDiceButton extends JButton {
         rollDiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                diceRoll = game.rollDice();
+                diceRoll = game.roll();
                 diceOutput.setText("You rolled " + diceRoll + "!");
             }
         });

@@ -1,70 +1,53 @@
 package org.group7.model;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.group7.controllers.Observer;
+import org.group7.controllers.StringObservable;
+import org.group7.controllers.StringObserver;
 import java.awt.Color;
-import java.util.List;
 
-public class Game {
+public class Game implements StringObservable, Observer {
 
-    private final Set<Observer> observers;
+    private final Set<StringObserver> stringObservers;
     private Dice dice;
     private Board board;
     public Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
+    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
+    private int currentPlayerNumber;
     private int turnNumber;
     private int amountOfPlayers; //TODO:Ändra så att mängden players ställs in på ett annat ställe
     private final int turnNumberStart = 0;
 
+    private GameState gameState;
     private Color[] colorArray;
-
     private int lastDiceRollResult;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
         this.board = board;
-        this.players = new Player[amountOfPlayers];
-        this.currentPlayer = players[0];
-        this.turnNumber = turnNumberStart;
-        this.lastDiceRollResult = 0;
+        this.board.addGoalObserver(this);
         this.colorArray = new Color[amountOfPlayers];
         this.colorArray[0] = Color.RED;
         this.colorArray[1] = Color.GREEN;
         this.colorArray[2] = Color.BLUE;
         this.colorArray[3] = Color.YELLOW;
-        //Om vi har tid kan vi implementera en metod för att välja antalet spelare och
-        //vilka som skall initieras. Isf, 3 spelare funkar precis som 4 fast loopa en gång mindre.
-        //2 spelare: Välj mod 2 (i) av colors i colorArray när vi initierar spelare, kom ihåg att
-        //se till att player 1 platsen inte sätts ut, blir nog jobbigt.
         initPlayers();
+        this.turnNumber = turnNumberStart;
+        this.lastDiceRollResult = 0;
+        this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
+        this.stringObservers = new HashSet<>();
+    }
 
-//        for (int i = 0; i < 4; i++) {
-//            Piece[] playerPieceArray = new Piece[4];
-//            for (int j = 0; i < 4; i++) {
-//                playerPieceArray[j] = this.bases[i].getPieces()[j];
-//            }
-//            this.players[i] = new Player(this.bases[i].getColour(), playerPieceArray);
-//        }
-
-        this.observers = new HashSet<>();
-
-        //gameloop
-        int i = 0;
-        while(true) {
-            this.currentPlayer = players[i];
-            int diceRoll = rollDice();
-            List<Piece> currentPlayerPieces = this.currentPlayer.getPieces();
-            i++;
-            i = (i % 4);
-            if (i == 2){
-                System.out.println("yeet");
-            }
-            else{
-                break;
-            }
+    private void initPlayers(){
+        this.players = new Player[amountOfPlayers];
+        for( int i = 0; i < this.amountOfPlayers; i++) {
+            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
         }
+        this.currentPlayerNumber = 0;
+        this.currentPlayer = players[currentPlayerNumber];
     }
 
     private void initPlayers(){
@@ -74,31 +57,59 @@ public class Game {
     }
 
     public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
-        for (Observer o : observers){
-            o.update();
-        }
+        //for (Observer o : observers){
+        //    o.update();           //TODO ksks lägga till igen
+        //}
         this.lastDiceRollResult = dice.roll();
         return this.lastDiceRollResult;
     }
 
-    public boolean validateMove(Tile tile) {
+    public int roll(){
+        gameState.roll();
+        return this.lastDiceRollResult;
+    }
+
+    protected boolean validateMove(Tile tile) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
         return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
     }
 
-    public void movePiece(Tile tile){
-        if(validateMove(tile)) {
-            Piece p = tile.getPiece();
-            this.board.movePiece(p, this.lastDiceRollResult);
-        }
+    public void move(Tile tile) {
+        gameState.move(tile);
+    }
+
+    protected void movePiece(Tile tile) {
+        //if(validateMove(tile)) {
+        Piece p = tile.getPiece();
+        this.board.movePiece(p, this.lastDiceRollResult);
+        setState(this.gameState);
+        //}
     }
 
     //TODO: Validate that it is player's turn
-    public void movePieceOutOfBase(){
+
+    protected boolean validateBaseMove(Color color){
+        System.out.println(board.getPiecesFromBase(color).toString());
+        return (this.currentPlayer.getColor().equals(color) && (board.getPiecesFromBase(color) != null));
+    }
+    public void moveBasePiece(Color color){
+            this.gameState.pieceFromBaseToField(color);
     }
 
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public void movePieceOutOfBase(Color color){
+        board.pieceFromBaseToField(color);
+    }
+
+    @Override
+    public void addObserver(StringObserver stringObserver) {
+        stringObservers.add(stringObserver);
+    }
+
+    @Override
+    public void notifyObservers(String playerColor) {
+        for (StringObserver o: this.stringObservers) {
+            o.update(playerColor);
+        }
     }
 
     public Piece[] getPiecesFromBase(Player player){
@@ -115,6 +126,22 @@ public class Game {
     private void spawnPowerups(){
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUp();
+    }
+
+    public void setState(GameState gamestate){
+        this.gameState = gamestate;
+    }
+
+    public void nextPlayer(){
+        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
+        this.currentPlayer = this.players[currentPlayerNumber];
+        String playerColor = this.currentPlayer.getColor().toString();
+        notifyObservers(playerColor);
+    }
+
+    @Override
+    public void update(){
+        System.out.println(this.currentPlayer.getColor() + "won!");
     }
 
 }
