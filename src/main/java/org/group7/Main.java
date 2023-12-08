@@ -62,7 +62,7 @@ public class Main {
         drawPanel = new DrawPanel(boardPanel, buttons, game);
 
         //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableBases, game, board, boardPanel);
+        BoardController boardController = new BoardController(paintableFieldTiles, paintableGoalTiles, paintableBases, game, board, boardPanel);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }

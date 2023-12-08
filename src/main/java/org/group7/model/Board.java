@@ -104,6 +104,7 @@ public class Board implements IMoveHandler {
     }
 
     public Piece extractPieceFromBase(Color baseColor) {
+
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
@@ -143,6 +144,12 @@ public class Board implements IMoveHandler {
         goalStretch.addPiece(p, steps);
     }
 
+    public void movePieceInGoalStretch(Piece piece, int steps){
+        Color c = piece.getColor();
+        GoalStretch goalStretch = goalsHashMap.get(c);
+        goalStretch.goalStretchMove(piece, steps);
+    }
+
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.removePiece(index);
@@ -160,14 +167,18 @@ public class Board implements IMoveHandler {
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        this.field[from].removePiece();
         int to = (from + offset) % 40;
-
-        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
-            int stepsLeft = (tileIndex - (from+offset));
-            addPieceToGoalStretch(piece, stepsLeft);
-        } else {                                    // still on first lap
-            this.field[to].insertPiece(piece);
+        int stepsLeft = (to - tileIndex);
+        if (piece.isAtGoalStretch()){        //TODO Refactor this if/else statement
+            movePieceInGoalStretch(piece, stepsLeft);
+        }
+        else {
+            this.field[from].removePiece();
+            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+                addPieceToGoalStretch(piece, stepsLeft);
+            } else {                                    // still on first lap
+                this.field[to].insertPiece(piece);
+            }
         }
 
         //Unused below

@@ -11,21 +11,30 @@ import java.util.List;
 
 public class BoardController{
     List<PaintableTile> paintableFieldTiles;
+    List<PaintableTile> paintableGoalTiles;
     List<PaintableBase> paintableBases;
     Game game;
     Board board;
     BoardPanel boardPanel;
-    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableBase> paintableBases,
+    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableTile> paintableGoalTiles ,List<PaintableBase> paintableBases,
                            Game game, Board board, BoardPanel boardPanel){
         this.board = board;
         this.boardPanel = boardPanel;
         this.paintableFieldTiles = paintableFieldTiles;
+        this.paintableGoalTiles = paintableGoalTiles;
         this.paintableBases = paintableBases;
         this.game = game;
         addListeners();
     }
 
     private void addListeners(){
+        for(PaintableTile paintableTile : paintableGoalTiles){
+            paintableTile.addActionListener(e ->{
+                Tile tile = paintableTile.getTile();
+                game.move(tile);
+                boardPanel.refreshPaintableTiles();
+            });
+        }
         for(PaintableTile paintableTile : paintableFieldTiles){
             paintableTile.addActionListener(e ->{
                 Tile tile = paintableTile.getTile();

@@ -30,25 +30,40 @@ public class GoalStretch implements Observable {
     }
 
     public void addPiece(Piece p, int steps) {
+        p.setPos(0);
+        goalStretchMove(p, steps);
+        p.addToGoalStretch();
 
-        this.tiles
-
-        this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
-        this.finishedPieces += 1;
-        checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
+        //this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
+        //this.finishedPieces += 1;
+        //checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
     }
 
-    public void goalStrechMove(Piece p, int steps) {
+    public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int current = p.getPos();
-        for (int i = steps; i > 0; i--) {
-            current++;
-        }
-        if (current == 4) {
-            this.tiles[current].removePiece();
+        int from = current;
+        current += steps;
+        if(current == 4) {
             this.finishedPieces++;
+            System.out.println(finishedPieces);
+            checkIfFull();
+        }
+        else if (current < 0){
+            //TODO Move out to field again, possibly with a handler?
+            //this.handler.movePieceToField(p)
+            //this.tiles[from].removePiece();
+            //this.handler.movePieceToField(p)
+            //p.removeFromGoalStretch();
         }
         else {
+            if (current > 4){
+                current = (8-current); //Bounce logic
+            }
             this.tiles[current].insertPiece(p);
+            p.setPos(current);
+        }
+        if (current != from){
+            this.tiles[from].removePiece();
         }
     }
 
