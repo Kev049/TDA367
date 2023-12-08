@@ -75,7 +75,7 @@ public class Game implements StringObservable, Observer {
         //if(validateMove(tile)) {
         Piece p = tile.getPiece();
         this.board.movePiece(p, this.lastDiceRollResult);
-        setState(this.gameState);
+        //setState(this.gameState); //varför fanns denna?
         //}
     }
 
