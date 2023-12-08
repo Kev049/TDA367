@@ -1,41 +1,38 @@
 package org.group7.model;
 
-import java.awt.Color;
-
 public class Tile {
 
     private final int index;
-    private Piece piece;
+    private IEntity entity;
 
     public Tile(int index) {
-        this.piece = null;
+        this.entity = null;
         this.index = index;
     }
 
-    public Piece getPiece() {
-        return piece;
-    }
-
     public void insertPiece(Piece p) {
-        if(this.piece != null){     // if collision
-            this.piece.handleCollision(p);
+        if(this.entity != null){     // if collision
+            this.entity.handleCollision(p);
         } else {                    // else
-            this.piece = p;
-            this.piece.setPos(index);
+            this.entity = p;
+            this.entity.setPos(index);
         }
     }
 
-    /* TODO när vi implementerat powerups
-    public void insertEntity(PowerUp p) {
-        if (this.entity != null){
-            //this.entity.handleCollision(p);
+    public void insertPowerUp(PowerUp powerUp){
+        if(this.entity == null){
+            this.entity = powerUp;
+            this.entity.setPos(index);
         }
-        this.entity = p;
-    }*/
+    }
 
-    public void removePiece() {
-        this.piece.setPos(-1);
-        this.piece = null;
+    public IEntity getEntity(){
+        return this.entity;
+    }
+
+    public void removeEntity() {
+        this.entity.setPos(-1);
+        this.entity = null;
     }
 
     public int getIndex() {
@@ -43,10 +40,7 @@ public class Tile {
     }
 
     public boolean isEmpty() {
-        return this.piece == null;
+        return this.entity == null;
     }
 
-    public Color getPieceColor() {
-        return this.piece.getColor();
-    }
 }

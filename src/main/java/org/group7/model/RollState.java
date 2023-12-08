@@ -9,7 +9,7 @@ public class RollState extends GameState {
     }
 
     @Override
-    public void move(Tile t) {
+    public void move(Piece piece) {
 
     }
 

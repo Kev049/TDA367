@@ -1,5 +1,5 @@
 package org.group7.model;
-
+S
 public abstract class PowerUp implements IEntity { //borde väl vara en abstrakt klass?
     private int pos;
     protected IMoveHandler handler;

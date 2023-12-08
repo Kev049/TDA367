@@ -99,12 +99,11 @@ public class Board implements IMoveHandler {
 
     public void returnPieceToBase(Piece p) {
         int index = p.getPos();
-        field[index].removePiece();
+        field[index].removeEntity();
         addPieceToBase(p);
     }
 
     public Piece extractPieceFromBase(Color baseColor) {
-
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
@@ -180,7 +179,7 @@ public class Board implements IMoveHandler {
             movePieceInGoalStretch(piece, stepsLeft);
         }
         else {
-            this.field[from].removePiece();
+            this.field[from].removeEntity();
             if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
@@ -208,6 +207,7 @@ public class Board implements IMoveHandler {
         //this.field[from + offset].insertPiece(piece);
     }
 
+    /*
     public Piece nextPiece(Tile tile) { //TODO Fix this nasty method
         int startPos = tile.getIndex();
         for (int i = 0; i < 40; i++){
@@ -218,6 +218,8 @@ public class Board implements IMoveHandler {
         }
         return null;
     }
+    */
+
 
     public void spawnPowerUp(){
 
@@ -241,16 +243,14 @@ public class Board implements IMoveHandler {
         return null;
     }
 
-    /*
-    public ArrayList<Piece> getAllPieces(){
+    public List<Piece> getAllPieces(){
         ArrayList<Piece> pieceList = new ArrayList<>();
-        for (Color c : colors) {
-            pieceList.addAll(Arrays.asList(this.piecesHashMap.get(c)));
+        for(Base base : bases){
+            pieceList.addAll(Arrays.asList(base.getPieces()));
         }
         return pieceList;
     }
 
-     */
 
     public Tile[] getFieldTiles(){
         return this.field;

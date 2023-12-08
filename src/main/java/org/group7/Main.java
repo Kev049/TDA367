@@ -38,9 +38,18 @@ public class Main {
         }
 
         for(Base base : bases){
-            PaintableBase paintableBase = new PaintableBase(base);
+            Piece[] pieces = base.getPieces();
+            List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
+            coloredPaintablePieces.clear();
+            for(int i = 0; i < pieces.length; i++){
+                PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces[i]);
+                coloredPaintablePieces.add(paintablePiece);
+                paintablePieces.add(paintablePiece);
+            }
+            PaintableBase paintableBase = new PaintableBase(base, coloredPaintablePieces);
             paintableBases.add(paintableBase);
         }
+
 
         for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTiles.get(i));
@@ -50,11 +59,11 @@ public class Main {
         GameController gameController = new GameController(game);
         List<JButton> buttons = gameController.getListOfButtons();
 
-        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles);
+        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
         drawPanel = new DrawPanel(boardPanel, buttons, game);
 
         //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableGoalTiles, paintableBases, game, board, boardPanel);
+        BoardController boardController = new BoardController(paintablePieces, paintableBases, game, board, boardPanel);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }
