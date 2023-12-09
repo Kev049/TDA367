@@ -21,7 +21,7 @@ public class Tile {
             this.piece.handleCollision(p);
         } else {                    // else
             this.piece = p;
-            this.piece.setPos(index);
+            this.piece.setPos(index); //alias problem här ksk? pjäsen här i får rätt pos men inte utanför
             if(this.piece.getColor() == Color.GREEN){
                 System.out.println(this.piece.getPos() + "getPos");
             }

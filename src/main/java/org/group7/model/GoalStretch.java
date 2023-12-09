@@ -71,8 +71,9 @@ public class GoalStretch implements Observable {
             System.out.println(oldPos + " oldpos");
             System.out.println(pos + "pos");
             System.out.println(steps + "steps goin out");
+            //this.handler.yeetPieceFromGoal(p);
+            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();} //denna removePiece gör så att piece får -1 i pos tror jag
             this.handler.yeetPieceFromGoal(p);
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
             p.removeFromGoalStretch();
         } else {
             System.out.println(p.getColor());
