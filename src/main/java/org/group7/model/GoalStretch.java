@@ -37,53 +37,32 @@ public class GoalStretch implements Observable {
 
     public void addPiece(Piece p, int steps) {
         p.setPos(0);
-        //this.tiles[0].insertPiece(p); med nuvarande stilen behövs denna men eeh
-        //p.addToGoalStretch();
         goalStretchMove(p, steps);
         p.addToGoalStretch();
-
-        //this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
-        //this.finishedPieces += 1;
-        //checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
     }
 
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int pos = p.getPos();  // där den står
         int oldPos = pos;
-        //oldPos == pos efter att pos += steps så
-        //Boolean isNewToGoalStretch = this.tiles[oldPos].isEmpty(); //Används för att kolla om piecen är ny till raksträckan, dock kommer det bli fel om det fanns en annan pjäs där
         boolean isNotNewToGoalStretch = p.isAtGoalStretch();
         pos += steps;  // där den ska
+        pos = 4 - abs((pos - 4));
         if (pos == 4) { //om/när den går i mål
             this.finishedPieces++;
             if(isNotNewToGoalStretch){
                 p.removeFromGoalStretch();
                 this.tiles[oldPos].removePiece();
             }
-            p.setPos(-1);
+            p.setPos(pos); //kan bytas ut mot p.setPos(-1) beroende på om "speedboosts" inne i rakstreckan ska finnas (om pos kan bli mer än 10)
             p = null; //tar bort pjäsen
             System.out.println("goal!");
         }
-        //den under funkar inte helt just nu(exempelvis när pjäsen står på pos 2[allstå index 2 av tilesen])
-        else if (pos > (8 - oldPos)){ //kollar om den kommer åka ut, om man kommer utifrån med 10 i steps funkar den inte som den ska
-            System.out.println("he gonna bounce");
-            System.out.println(p.getColor());
-            System.out.println(oldPos + " oldpos");
-            System.out.println(pos + "pos");
-            System.out.println(steps + "steps goin out");
-            //this.handler.yeetPieceFromGoal(p);
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();} //denna removePiece gör så att piece får -1 i pos tror jag
+        else if (pos < 0){
+            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
         } else {
-            System.out.println(p.getColor());
-            System.out.println(oldPos + " oldpos");
-            System.out.println(pos + "pos");
-            System.out.println(steps + "steps");
-            //if (pos > 4){ pos = -pos;} //så att den ska studsa
-            pos = pos % 4; //funkar inte om pjäsen börjar på platsen utanför goalStretch
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();} //görs här i fall att oldPos == pos, skulle kunna bytas mot if check, då skulle rad ovan kunna vara på slutet
-            pos = abs(pos);
+            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
             this.tiles[pos].insertPiece(p);
             p.setPos(pos);
         }
@@ -119,6 +98,5 @@ public class GoalStretch implements Observable {
     public void addObserver(Observer o) {
         this.observers.add(o);
     }
-
 
 }

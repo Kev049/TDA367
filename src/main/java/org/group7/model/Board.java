@@ -61,9 +61,6 @@ public class Board implements IMoveHandler {
     private void initStartTileIndices() {
         for (int i = 0; i < 4; i++) {
             this.playerStartTiles.put(this.colors[i], i*10);
-            if(this.colors[i] == Color.GREEN){
-                System.out.println(this.playerStartTiles.get(this.colors[i]) + "green"); //TODO gå tillbaka hit simon
-            }
         }
     }
 
@@ -127,14 +124,10 @@ public class Board implements IMoveHandler {
     public void yeetPieceFromGoal(Piece p){
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        System.out.println(playerStartTiles.get(c)+"pSTyeet");
         Tile t;
         if(tileIndex == 0) {
            t = field[39];
-        } else {
-            t = field[tileIndex - 1];
-        }
-        System.out.println(p.getPos() + "b4 insert");
+        } else {  t = field[tileIndex - 1];}
         t.insertPiece(p);
     }
 
@@ -172,17 +165,16 @@ public class Board implements IMoveHandler {
         goalStretch.removePiece(index);
     }
 
-    private boolean completedLap(int from, int to, int start) { //Verkar fungera, testa? allt behövs kanske inte
-        if (from < to) {
-            return (from < start && to >= start);       //TODO Add explanation perhaps, currently hard to read
+    private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
+        if (prevPos < nextPos) { //if next pos is larger than pos, which will not happen if nextPos is >40
+            return (prevPos < start && nextPos >= start);       //TODO Add explanation perhaps, currently hard to read
         } else {
-            return (from < start || to >= start);
+            return (prevPos < start || nextPos >= start);
         }
     }
 
     public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
-        System.out.println(from);
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
@@ -191,7 +183,7 @@ public class Board implements IMoveHandler {
         }
         else {
             this.field[from].removePiece();
-            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
                 int stepsLeft = (to - tileIndex);
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
