@@ -15,6 +15,7 @@ public class Piece implements IEntity {
         this.atHome = true;
         this.atGoal = false;
         this.color = color;
+        this.atGoalStretch = false;
     }
 
     public Color getColor(){

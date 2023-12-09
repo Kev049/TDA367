@@ -61,6 +61,9 @@ public class Board implements IMoveHandler {
     private void initStartTileIndices() {
         for (int i = 0; i < 4; i++) {
             this.playerStartTiles.put(this.colors[i], i*10);
+            if(this.colors[i] == Color.GREEN){
+                System.out.println(this.playerStartTiles.get(this.colors[i]) + "green"); //TODO gå tillbaka hit simon
+            }
         }
     }
 
@@ -124,12 +127,14 @@ public class Board implements IMoveHandler {
     public void yeetPieceFromGoal(Piece p){
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
+        System.out.println(playerStartTiles.get(c)+"pSTyeet");
         Tile t;
         if(tileIndex == 0) {
            t = field[39];
         } else {
             t = field[tileIndex - 1];
         }
+        System.out.println(p.getPos() + "b4 insert");
         t.insertPiece(p);
     }
 
@@ -177,16 +182,17 @@ public class Board implements IMoveHandler {
 
     public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
+        System.out.println(from);
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
-        int stepsLeft = (to - tileIndex);
         if (piece.isAtGoalStretch()){        //TODO Refactor this if/else statement
-            movePieceInGoalStretch(piece, stepsLeft);
+            movePieceInGoalStretch(piece, diceRoll);
         }
         else {
             this.field[from].removePiece();
             if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+                int stepsLeft = (to - tileIndex);
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
                 this.field[to].insertPiece(piece);

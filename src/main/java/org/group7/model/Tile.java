@@ -22,6 +22,9 @@ public class Tile {
         } else {                    // else
             this.piece = p;
             this.piece.setPos(index);
+            if(this.piece.getColor() == Color.GREEN){
+                System.out.println(this.piece.getPos() + "getPos");
+            }
         }
     }
 
