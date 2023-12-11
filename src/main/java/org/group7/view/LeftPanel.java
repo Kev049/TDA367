@@ -82,11 +82,11 @@ public class LeftPanel extends JPanel {
             i++;
         }
 
-        basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/exit_base_icon.png")));
+        basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Base_icon.png")));
         catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/catapult_icon.png")));
-        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/laser_gun_icon.png")));
-        lightningPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/lightning_icon.png")));
-        switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/switch_icon.png")));
+        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/LaserGun_icon.png")));
+        lightningPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Lightning_icon.png")));
+        switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Switch_icon.png")));
     }
 
     private Image getImage(String path){

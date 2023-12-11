@@ -38,6 +38,7 @@ public class Game implements StringObservable, Observer {
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
+        spawnPowerups();
     }
 
     private void initPlayers(){
@@ -115,6 +116,7 @@ public class Game implements StringObservable, Observer {
     private void spawnPowerups(){
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUp();
+
     }
 
     public void setState(GameState gamestate){

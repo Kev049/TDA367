@@ -108,9 +108,13 @@ public class Board implements IMoveHandler {
         return b.removePiece();
     }
 
+    public void activateBasePowerUp(){
+
+    }
+
     public void pieceFromBaseToField(Color c){
         Piece p = extractPieceFromBase(c);
-        if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
+        if (p != null) {
             addPieceToField(p, playerStartTiles.get(p.getColor()));
         }
     }
@@ -222,7 +226,8 @@ public class Board implements IMoveHandler {
 
 
     public void spawnPowerUp(){
-
+        BasePowerUp basePowerUp = new BasePowerUp(this);
+        this.field[1].insertPowerUp(basePowerUp);
     }
 
     //Getters

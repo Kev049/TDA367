@@ -13,9 +13,11 @@ public class Main {
     private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
     private static final int TOTAL_AMOUNT_BASES = 4;
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
+    private static final int TOTAL_AMOUNT_PIECES = 16;
     private static BoardPanel boardPanel;
-    private static DrawPanel drawPanel;
+    private static DrawPanels drawPanel;
     private static List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
+    private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
     private static List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
     private static List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
     private static Tile fieldTiles[];
@@ -60,7 +62,7 @@ public class Main {
         List<JButton> buttons = gameController.getListOfButtons();
 
         boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
-        drawPanel = new DrawPanel(boardPanel, buttons, game);
+        drawPanel = new DrawPanels(boardPanel, buttons, game);
 
         //Controller
         BoardController boardController = new BoardController(paintablePieces, paintableBases, game, board, boardPanel);

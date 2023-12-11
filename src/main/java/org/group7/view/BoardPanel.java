@@ -1,6 +1,7 @@
 package org.group7.view;
 
 import org.group7.model.Piece;
+import org.group7.model.PowerUp;
 import org.group7.model.Tile;
 
 import javax.imageio.ImageIO;
@@ -51,6 +52,7 @@ public class BoardPanel extends JPanel{
         addBaseBoxes();
         storeBoardTileIndex();
         addBoardComponents();
+        redrawBoard();
     }
 
     private void applyImage(){
@@ -82,6 +84,7 @@ public class BoardPanel extends JPanel{
     public void redrawBoard(){
         redrawPaintableTiles(paintableGoalTiles);
         redrawPaintableTiles(paintableFieldTiles);
+        redrawPaintableBases(paintableBases);
         this.repaint();
         this.revalidate();
     }
@@ -95,7 +98,17 @@ public class BoardPanel extends JPanel{
                     PaintablePiece paintablePiece = piecePaintablePieceHashMap.get((Piece) tile.getEntity());
                     paintableTile.add(paintablePiece);
                 }
+                else{
+                    PaintablePowerUp paintablePowerUp = PaintableEntityFactory.makePaintedPowerUp((PowerUp) tile.getEntity());
+                    paintableTile.add(paintablePowerUp);
+                }
             }
+        }
+    }
+
+    private void redrawPaintableBases(List<PaintableBase> paintableBases){
+        for(PaintableBase paintableBase : paintableBases){
+            paintableBase.redrawPieces();
         }
     }
 

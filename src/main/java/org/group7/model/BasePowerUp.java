@@ -2,15 +2,15 @@ package org.group7.model;
 
 public class BasePowerUp extends PowerUp{
     public BasePowerUp(IMoveHandler handler){
-        super(handler);
+        super(handler, "Base");
     }
 
     @Override
     public void handleCollision(Piece piece) {
-        extractBasePiece(piece);
+        pieceFromBaseToField(piece);
     }
 
-    public void extractBasePiece(Piece piece){
-        this.handler.extractPieceFromBase(piece.getColor());
+    public void pieceFromBaseToField(Piece piece){
+        this.handler.pieceFromBaseToField(piece.getColor());
     }
 }

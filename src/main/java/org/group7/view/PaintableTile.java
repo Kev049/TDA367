@@ -16,6 +16,7 @@ public class PaintableTile extends JButton{
         this.setPreferredSize(new Dimension(91, 91));
         this.setMaximumSize(new Dimension(91, 91));
         this.setLayout(new GridBagLayout());
+        this.setFocusPainted(false);
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
     }

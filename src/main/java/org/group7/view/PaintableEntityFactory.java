@@ -3,6 +3,7 @@ package org.group7.view;
 
 import org.group7.model.Entity;
 import org.group7.model.Piece;
+import org.group7.model.PowerUp;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,14 +27,24 @@ public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna
             image = ImageIO.read(new File(s));
         }
         catch (IOException ex){
-            System.out.println(s); //TODO Remove
             ex.printStackTrace();
         }
         return new PaintablePiece(image, piece);
     }
 
-    public static PaintableEntity createPaintableEntity(){
-        return null;
+    private static Image getPowerUpImage(PowerUp powerUp){
+        String powerUpImagePath = ("src/main/resources/" + powerUp.getPowerUpName() + "_icon.png");
+        try{
+            image = ImageIO.read(new File(powerUpImagePath));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return image;
+    }
+
+    public static PaintablePowerUp makePaintedPowerUp(PowerUp powerUp){
+        return new PaintablePowerUp(getPowerUpImage(powerUp), powerUp);
     }
 }
 

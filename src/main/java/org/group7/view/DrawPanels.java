@@ -10,25 +10,25 @@ import java.util.List;
 
 
 //public class DrawPanel extends JPanel implements Observer {
-public class DrawPanel extends JPanel{
+public class DrawPanels extends JPanel{
     private Set<PaintablePiece> pieces; //TODO: Fixa så att vi tar denna data antingen från board eller tiles och sätt ut dem.
     private JPanel boardPanel;
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JButton rollDiceButton;
 
-    public DrawPanel(BoardPanel boardPanel, List<JButton> buttons, Game game) {
+    public DrawPanels(BoardPanel boardPanel, List<JButton> buttons, Game game) {
         this.boardPanel = boardPanel;
         this.rollDiceButton = buttons.get(0);
         this.leftPanel = new LeftPanel();
         this.rightPanel = new RightPanel(rollDiceButton);
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
-        addPanels();
+        drawPanels();
         game.addObserver((StringObserver)rightPanel); //TODO bort med denna
     }
 
-    private void addPanels(){
+    private void drawPanels(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
