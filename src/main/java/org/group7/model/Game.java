@@ -120,11 +120,11 @@ public class Game implements StringObservable, Observer {
         this.board.spawnPowerUp();
     }
 
-    public void setState(GameState gamestate){
+    protected void setState(GameState gamestate){
         this.gameState = gamestate;
     }
 
-    public void nextPlayer(){
+    protected void nextPlayer(){
         this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
         this.currentPlayer = this.players[currentPlayerNumber];
         String playerColor = this.currentPlayer.getColor().toString();

@@ -4,18 +4,17 @@ import java.awt.*;
 
 public class Piece implements IEntity {
     private int pos;
-    private IMoveHandler handler;
+    public IMoveHandler handler;
     private final Color color;
-    private boolean atHome; //Behövs dessa? Kanske är smidigt, annars tar vi bort
-    private boolean atGoal; //Kanske helt onödigt, då man kan ha en plats i arrayen som representerar om den är hemma/i mål, dock lättare att förstå koden såhär.
     private boolean atGoalStretch;
 
-    public Piece(Color color, IMoveHandler handler) {   //konstruktor för Piece, offset beroende på färg för var de startar (utgår från att brädet är en array, justera offset om inre "målvägar" är del av den).
+    private PieceState state;
+
+    public Piece(Color color, IMoveHandler handler) {
         this.handler = handler;
-        this.atHome = true;
-        this.atGoal = false;
         this.color = color;
         this.atGoalStretch = false;
+        this.state = new FieldState(this);
     }
 
     public Color getColor(){
@@ -27,15 +26,20 @@ public class Piece implements IEntity {
     }
 
     public void handleCollision(Piece p) {
-        if (this.color.equals(p.getColor())) {
-            // Same Color, skip one tile
-            this.handler.addPieceToField(p, this.pos + 1);
-        } else {
-            // Different color, send other to base and take its place
-            int position = this.pos;
-            this.handler.returnPieceToBase(this);
-            this.handler.addPieceToField(p, position);
-        }
+        state.handleCollision(p,handler);
+    }
+
+    public void enableGoalState() {
+        this.state = new GoalState(this);
+    }
+
+    public void enableFieldState() {
+        this.state = new FieldState(this);
+    }
+
+    public void setHandler(IMoveHandler handler) {
+        System.out.println("Changed handler!!!");
+        this.handler = handler;
     }
 
     public void addToGoalStretch(){

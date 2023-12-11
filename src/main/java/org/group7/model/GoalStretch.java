@@ -9,19 +9,18 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
-public class GoalStretch implements Observable {
+public class GoalStretch implements Observable, IMoveHandler {
 
     private final int capacity = 4;
-    //private final int capacity = 5;
     private Tile[] tiles = new Tile[capacity];
     private Color color;
     private int finishedPieces;
 
-    private IMoveHandler handler;
+    private PieceExtractor handler;
 
     private List<Observer> observers;
 
-    public GoalStretch(Color color, IMoveHandler handler) {
+    public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
         initTiles();
         this.finishedPieces = 0;
@@ -35,9 +34,10 @@ public class GoalStretch implements Observable {
         }
     }
 
-    public void addPiece(Piece p, int steps) {
-        p.setPos(0);
-        goalStretchMove(p, steps);
+    @Override
+    public void addPiece(Piece p, int index) {
+        int entryTileIndex = 4 - abs(index - 4);
+        p.setPos(entryTileIndex);
         p.addToGoalStretch();
     }
 
@@ -59,7 +59,7 @@ public class GoalStretch implements Observable {
         }
         else if (pos < 0){
             if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
-            this.handler.yeetPieceFromGoal(p);
+            this.handler.yeetPieceFromGoal(p);      //Antagligen inte optimalt
             p.removeFromGoalStretch();
         } else {
             if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
@@ -98,5 +98,11 @@ public class GoalStretch implements Observable {
     public void addObserver(Observer o) {
         this.observers.add(o);
     }
+
+    @Override
+    public void returnPieceToBase(Piece p) {
+        //VERY TEMPORARY
+    }
+
 
 }

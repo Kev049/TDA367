@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements IMoveHandler {
+public class Board implements IMoveHandler, PieceExtractor {
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goals;
@@ -112,11 +112,11 @@ public class Board implements IMoveHandler {
     public void pieceFromBaseToField(Color c){
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
-            addPieceToField(p, playerStartTiles.get(p.getColor()));
+            addPiece(p, playerStartTiles.get(p.getColor()));
         }
     }
 
-    public void addPieceToField(Piece p, int index) {
+    public void addPiece(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
         t.insertPiece(p);
     }
@@ -129,6 +129,8 @@ public class Board implements IMoveHandler {
            t = field[39];
         } else {  t = field[tileIndex - 1];}
         t.insertPiece(p);
+        p.setHandler(this);
+        p.enableFieldState();
     }
 
     /*          Antagligen onödigt komplicerat
@@ -151,6 +153,8 @@ public class Board implements IMoveHandler {
 
     public void addPieceToGoalStretch(Piece p, int steps) { //Color behövs inte explicit då player har den??
         GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
+        p.setHandler(goalStretch);
+        p.enableGoalState();
         goalStretch.addPiece(p, steps);
     }
 
