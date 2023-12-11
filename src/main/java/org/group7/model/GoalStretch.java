@@ -39,6 +39,16 @@ public class GoalStretch implements Observable, IMoveHandler {
         int entryTileIndex = 4 - abs(index - 4);
         p.setPos(entryTileIndex);
         p.addToGoalStretch();
+        if (entryTileIndex < 4) {
+            this.tiles[entryTileIndex].insertPiece(p);
+            goalStretchMove(p, 0);
+        } else {
+            System.out.println("GOAAGALGLAGLALLLLLL");
+        }
+
+        //this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
+        //this.finishedPieces += 1;
+        //checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
     }
 
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
