@@ -12,8 +12,9 @@ import static java.lang.Math.abs;
 public class GoalStretch implements Observable {
 
     private final int capacity = 4;
-    //private final int capacity = 5;
+    private final int insertCapacity = 5;
     private Tile[] tiles = new Tile[capacity];
+    private IInsertable[] insertables = new IInsertable[insertCapacity];
     private Color color;
     private int finishedPieces;
 
@@ -24,9 +25,17 @@ public class GoalStretch implements Observable {
     public GoalStretch(Color color, IMoveHandler handler) {
         this.color = color;
         initTiles();
+        initInsertables();
         this.finishedPieces = 0;
         this.observers = new ArrayList<>();
         this.handler = handler;
+    }
+
+    private void initInsertables(){
+        for (int j=0; j < capacity; j++){
+            insertables[j] = tiles[j];
+        }
+        insertables[4] = new Goal();
     }
 
     private void initTiles(){
@@ -47,30 +56,28 @@ public class GoalStretch implements Observable {
         boolean isNotNewToGoalStretch = p.isAtGoalStretch();
         pos += steps;  // där den ska
         pos = 4 - abs((pos - 4));
-        if (pos == 4) { //om/när den går i mål
-            this.finishedPieces++;
-            if(isNotNewToGoalStretch){
-                p.removeFromGoalStretch();
-                this.tiles[oldPos].removePiece();
-            }
-            p.setPos(pos); //kan bytas ut mot p.setPos(-1) beroende på om "speedboosts" inne i rakstreckan ska finnas (om pos kan bli mer än 10)
-            p = null; //tar bort pjäsen
-            System.out.println("goal!");
-        }
-        else if (pos < 0){
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
+        if(isNotNewToGoalStretch){ removePiece(oldPos);}
+//        if (pos == 4) { //om/när den går i mål
+//            this.finishedPieces++;
+//            if(isNotNewToGoalStretch){
+//                p.removeFromGoalStretch();
+//                removePiece(oldPos);
+//            }
+//            p.setPos(pos); //kan bytas ut mot p.setPos(-1) beroende på om "speedboosts" inne i rakstreckan ska finnas (om pos kan bli mer än 10)
+//            p = null; //tar bort pjäsen
+//            System.out.println("goal!");
+//        }
+        /*else*/ if (pos < 0){
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
         } else {
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
-            this.tiles[pos].insertPiece(p);
             p.setPos(pos);
+            this.tiles[pos].insertPiece(p);
         }
-
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
-        this.tiles[index].removePiece();
+        this.insertables[index].removePiece();
     }
 
     public Color getColor(){
@@ -86,7 +93,6 @@ public class GoalStretch implements Observable {
             notifyObservers();
         }
     }
-
     @Override
     public void notifyObservers(){
         for (Observer o: this.observers){
