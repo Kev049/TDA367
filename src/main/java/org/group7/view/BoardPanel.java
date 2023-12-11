@@ -52,7 +52,7 @@ public class BoardPanel extends JPanel{
         addBaseBoxes();
         storeBoardTileIndex();
         addBoardComponents();
-        redrawBoard();
+        drawBoard();
     }
 
     private void applyImage(){
@@ -81,7 +81,7 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    public void redrawBoard(){
+    public void drawBoard(){
         redrawPaintableTiles(paintableGoalTiles);
         redrawPaintableTiles(paintableFieldTiles);
         redrawPaintableBases(paintableBases);

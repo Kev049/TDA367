@@ -18,6 +18,7 @@ public class Board implements IMoveHandler {
     private HashMap<Color, GoalStretch> goalsHashMap;
     private HashMap<Color,Base> colorBaseMap;
     private HashMap<Color, Piece[]> piecesHashMap;
+    private EntityVisitor visitor;
 
     public Board() {
         this.bases = new Base[4];
@@ -28,6 +29,7 @@ public class Board implements IMoveHandler {
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
         this.piecesHashMap = new HashMap<>();
+        this.visitor = new RemoveEntityVisitor(this);
         initColors();
         initBases();
         initStartTileIndices();
@@ -103,14 +105,21 @@ public class Board implements IMoveHandler {
         addPieceToBase(p);
     }
 
+    public void removeFromField(int pos){
+        for(int i = 1; i < 9; i++){
+            if(!field[pos + i].isEmpty()){
+                field[pos + i].getEntity().accept(visitor);
+            }
+        }
+    }
+
     public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
 
-    public void activateBasePowerUp(Piece piece){
-        this.field[piece.getPos()].removeEntity();
-        pieceFromBaseToField(piece.getColor());
+    public void removePowerUpFromField(PowerUp powerUp){
+        this.field[powerUp.getPos()].removeEntity();
     }
 
     public void pieceFromBaseToField(Color c){
@@ -227,8 +236,12 @@ public class Board implements IMoveHandler {
 
 
     public void spawnPowerUp(){
+        LightningPowerUp lightningPowerUp = new LightningPowerUp(this);
         BasePowerUp basePowerUp = new BasePowerUp(this);
-        this.field[1].insertPowerUp(basePowerUp);
+        LaserPowerUp laserPowerUp = new LaserPowerUp(this);
+        //this.field[8].insertPowerUp(lightningPowerUp);
+        this.field[24].insertPowerUp(basePowerUp);
+        this.field[8].insertPowerUp(laserPowerUp);
     }
 
     //Getters

@@ -28,7 +28,7 @@ public class BoardController{
             paintablePiece.addActionListener(e -> {
                 Piece piece = paintablePiece.getPiece();
                 game.move(piece);
-                boardPanel.redrawBoard();
+                boardPanel.drawBoard();
             });
         }
         for(PaintableBase paintableBase : paintableBases){
@@ -36,7 +36,7 @@ public class BoardController{
                 Base base = paintableBase.getBase();
                 game.moveBasePiece(base.getColor());
                 paintableBase.redrawPieces();
-                boardPanel.redrawBoard();
+                boardPanel.drawBoard();
             });
         }
     }

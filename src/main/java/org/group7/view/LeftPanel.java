@@ -83,8 +83,8 @@ public class LeftPanel extends JPanel {
         }
 
         basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Base_icon.png")));
-        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/catapult_icon.png")));
-        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/LaserGun_icon.png")));
+        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Catapult_icon.png")));
+        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Laser_icon.png")));
         lightningPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Lightning_icon.png")));
         switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Switch_icon.png")));
     }

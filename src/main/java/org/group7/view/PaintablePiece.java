@@ -14,6 +14,7 @@ public class PaintablePiece extends JButton{
         this.piece = piece;
         this.icon = new ImageIcon(image);
         this.setIcon(icon);
+        this.setFocusPainted(false);
         this.setOpaque(false);
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);

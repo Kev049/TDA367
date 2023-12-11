@@ -34,14 +34,14 @@ public class Main {
         bases = board.getBases();
         goalTiles = board.getGoalTiles();
 
-        for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
-            PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTiles[i]);
+        for (Tile fieldTile : fieldTiles) {
+            PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTile);
             paintableFieldTiles.add(paintableTile);
         }
 
+        List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
         for(Base base : bases){
             Piece[] pieces = base.getPieces();
-            List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
             coloredPaintablePieces.clear();
             for(int i = 0; i < pieces.length; i++){
                 PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces[i]);
@@ -53,8 +53,8 @@ public class Main {
         }
 
 
-        for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
-            PaintableTile paintableTile = PaintableTileFactory.createTile(goalTiles.get(i));
+        for (Tile goalTile : goalTiles) {
+            PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalTiles.add(paintableTile);
         }
 

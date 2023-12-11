@@ -17,6 +17,9 @@ public class Piece implements IEntity {
         this.color = color;
     }
 
+    public void accept(EntityVisitor visitor){
+        visitor.visit(this);
+    }
     public Color getColor(){
         return this.color;
     }
@@ -29,7 +32,8 @@ public class Piece implements IEntity {
         if (this.color.equals(p.getColor())) {
             // Same Color, skip one tile
             this.handler.addPieceToField(p, this.pos + 1);
-        } else {
+        }
+        else {
             // Different color, send other to base and take its place
             int position = this.pos;
             this.handler.returnPieceToBase(this);

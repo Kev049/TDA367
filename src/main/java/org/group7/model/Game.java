@@ -54,7 +54,7 @@ public class Game implements StringObservable, Observer {
         //for (Observer o : observers){
         //    o.update();           //TODO ksks lägga till igen
         //}
-        this.lastDiceRollResult = dice.roll();
+        this.lastDiceRollResult = 2;//dice.roll();
         return this.lastDiceRollResult;
     }
 

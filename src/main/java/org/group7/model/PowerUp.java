@@ -9,7 +9,9 @@ public abstract class PowerUp implements IEntity { //borde väl vara en abstrakt
         this.handler = handler;
         this.powerUpName = powerUpName;
     }
-
+    public void accept(EntityVisitor visitor){
+        visitor.visit(this);
+    }
     public abstract void handleCollision(Piece piece);
 
     public int getPos() {
