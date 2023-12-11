@@ -12,9 +12,10 @@ import static java.lang.Math.abs;
 public class GoalStretch implements Observable {
 
     private final int capacity = 4;
-    private final int insertCapacity = 5;
+    private final int insertCapacity = capacity + 1;
     private Tile[] tiles = new Tile[capacity];
     private IInsertable[] insertables = new IInsertable[insertCapacity];
+    //private List<IInsertable> insertables = new ArrayList<>(capacity + 1);
     private Color color;
     private int finishedPieces;
 
@@ -32,10 +33,9 @@ public class GoalStretch implements Observable {
     }
 
     private void initInsertables(){
-        for (int j=0; j < capacity; j++){
-            insertables[j] = tiles[j];
-        }
-        insertables[4] = new Goal();
+        System.arraycopy(this.tiles, 0, this.insertables, 0, capacity);
+        this.insertables[4] = new Goal();
+        //insertables.add(4, new Goal());
     }
 
     private void initTiles(){
@@ -57,22 +57,13 @@ public class GoalStretch implements Observable {
         pos += steps;  // där den ska
         pos = 4 - abs((pos - 4));
         if(isNotNewToGoalStretch){ removePiece(oldPos);}
-//        if (pos == 4) { //om/när den går i mål
-//            this.finishedPieces++;
-//            if(isNotNewToGoalStretch){
-//                p.removeFromGoalStretch();
-//                removePiece(oldPos);
-//            }
-//            p.setPos(pos); //kan bytas ut mot p.setPos(-1) beroende på om "speedboosts" inne i rakstreckan ska finnas (om pos kan bli mer än 10)
-//            p = null; //tar bort pjäsen
-//            System.out.println("goal!");
-//        }
-        /*else*/ if (pos < 0){
+        if (pos < 0){ //pjäsen studsar ut
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
-        } else {
+        } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
             p.setPos(pos);
-            this.tiles[pos].insertPiece(p);
+            this.insertables[pos].insertPiece(p);
+            //lägga till en if check eller liknande som lägger till/räknar antalet pjäser som går i mål?
         }
     }
 
@@ -87,6 +78,10 @@ public class GoalStretch implements Observable {
     public Tile[] getTiles(){
         return this.tiles;
     }
+
+//    public List<IInsertable> getTiles(){
+//        return this.insertables.subList(0, insertables.size() - 1);
+//    }
 
     private void checkIfFull(){
         if (finishedPieces == capacity) {
