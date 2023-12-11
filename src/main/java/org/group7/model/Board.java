@@ -108,8 +108,9 @@ public class Board implements IMoveHandler {
         return b.removePiece();
     }
 
-    public void activateBasePowerUp(){
-
+    public void activateBasePowerUp(Piece piece){
+        this.field[piece.getPos()].removeEntity();
+        pieceFromBaseToField(piece.getColor());
     }
 
     public void pieceFromBaseToField(Color c){

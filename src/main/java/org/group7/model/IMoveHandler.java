@@ -7,7 +7,7 @@ public interface IMoveHandler { //Borde kanske heta CollisionHandler trots allt?
     void addPieceToField(Piece p, int index);
     void returnPieceToBase(Piece piece);
 
-    void pieceFromBaseToField(Color color);
+    void activateBasePowerUp(Piece piece);
 
     void yeetPieceFromGoal(Piece p); //TODO move to seperate handler
 }

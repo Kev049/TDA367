@@ -7,10 +7,8 @@ public class BasePowerUp extends PowerUp{
 
     @Override
     public void handleCollision(Piece piece) {
-        pieceFromBaseToField(piece);
+        this.handler.activateBasePowerUp(piece);
+        this.handler.addPieceToField(piece, this.getPos());
     }
 
-    public void pieceFromBaseToField(Piece piece){
-        this.handler.pieceFromBaseToField(piece.getColor());
-    }
 }
