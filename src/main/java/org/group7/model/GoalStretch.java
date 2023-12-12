@@ -9,15 +9,14 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
-public class GoalStretch implements Observable, IMoveHandler { //TODO kolla över denna klass, skriv om beroenden Tile -> Insertable
+public class GoalStretch implements Observable, IMoveHandler {
 
     private final int capacity = 4;
     private final int insertCapacity = capacity + 1;
     private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
     private final IInsertable[] insertables = new IInsertable[insertCapacity];
-    //private List<IInsertable> insertables = new ArrayList<>(capacity + 1);
     private final Color color;
-    private final int finishedPieces;
+    private int finishedPieces;
 
     private final PieceExtractor handler;
 
