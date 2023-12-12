@@ -1,16 +1,15 @@
 package org.group7.view;
 
-import org.group7.model.Entity;
+import org.group7.model.IEntity;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public abstract class PaintableEntity extends JComponent{
-    private Entity entity;
+    private IEntity entity;
     private Image image;
 
-    public PaintableEntity(Image image, Entity entity) {
+    public PaintableEntity(Image image, IEntity entity) {
         this.image = image;
         this.entity = entity;
     }

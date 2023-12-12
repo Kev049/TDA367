@@ -15,7 +15,6 @@ public class GoalStretch implements Observable, IMoveHandler {
     private final int insertCapacity = capacity + 1;
     private Tile[] tiles = new Tile[capacity];
     private IInsertable[] insertables = new IInsertable[insertCapacity];
-    //private List<IInsertable> insertables = new ArrayList<>(capacity + 1);
     private Color color;
     private int finishedPieces;
 

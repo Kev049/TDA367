@@ -3,13 +3,15 @@ package org.group7.model;
 import org.group7.controllers.Observable;
 import org.group7.controllers.Observer;
 
-//public class Goal implements IInsertable, Observable {
-public class Goal implements IInsertable {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Goal implements IInsertable, Observable {
     private Piece piece;
-    //private static Goal instance;
+    private List<Observer> observers;
 
     public Goal(){
-
+        this.observers = new ArrayList<>();
     }
     @Override
     public void insertPiece(Piece p) {
@@ -25,11 +27,15 @@ public class Goal implements IInsertable {
         // om Goal är Observable så kan vi lägga till at vi räknar pjäser i mål eller liknade här
     }
 
+    @Override
+    public void notifyObservers(){
+        for (Observer o: this.observers){
+            o.update();
+        }
+    }
 
-//    public static Goal getInstance() {
-//        if(instance == null){
-//            instance = new Goal();
-//        }
-//        return instance;
-//    }
+    @Override
+    public void addObserver(Observer o) {
+        this.observers.add(o);
+    }
 }
