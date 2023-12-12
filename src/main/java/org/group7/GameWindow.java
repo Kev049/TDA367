@@ -1,30 +1,20 @@
 package org.group7;
 
-import org.group7.controllers.BoardListener;
-import org.group7.controllers.GameController;
-import org.group7.model.Board;
 import org.group7.model.Game;
-import org.group7.model.Tile;
 import org.group7.view.BoardPanel;
-import org.group7.view.DrawPanel;
-import org.group7.view.PaintableTile;
+import org.group7.view.DrawPanels;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.util.*;
-import java.util.List;
 
 public class GameWindow extends JFrame{
     private static final int X = 1920;
     private static final int Y = 1080;
     private Game game;  //TODO: Should probably remove this, unless it will serve a purpose in the future
-    private DrawPanel drawPanel;
+    private DrawPanels drawPanel;
     private BoardPanel boardPanel; //TODO:Remove this when pieces are fixed, gameWindow should only have DrawPanel
 
-    public GameWindow(String name, DrawPanel drawPanel, BoardPanel boardPanel, Game game){
+    public GameWindow(String name, DrawPanels drawPanel, BoardPanel boardPanel, Game game){
         this.game = game;
         this.drawPanel = drawPanel;
         this.boardPanel = boardPanel;

@@ -9,11 +9,11 @@ public class MoveState extends GameState {
     }
 
     @Override
-    public void move(Tile tile){
-        if (game.validateMove(tile)) { //TODO Can we make movestate only call one function (move) from game instead of validate + move
-            game.movePiece(tile);
-            game.setState(new RollState(game));
-            game.nextPlayer();
+    public void move(Piece piece){
+        if (game.validateMove(piece)) { //TODO Can we make movestate only call one function (move) from game instead of validate + move
+            game.movePiece(piece);
+            //game.setState(new RollState(game));
+            //game.nextPlayer();
         }
     }
 
@@ -21,8 +21,8 @@ public class MoveState extends GameState {
     public void pieceFromBaseToField(Color color){
         if (game.validateBaseMove(color)){
             game.movePieceOutOfBase(color);
-            game.setState(new RollState(game));
-            game.nextPlayer();
+            //game.setState(new RollState(game));
+            //game.nextPlayer();
         }
     }
 

@@ -15,54 +15,58 @@ public class Main {
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
     private static final int TOTAL_AMOUNT_PIECES = 16;
     private static BoardPanel boardPanel;
-    private static DrawPanel drawPanel;
+    private static DrawPanels drawPanel;
     private static List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
+    private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
     private static List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
     private static List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
     private static Tile fieldTiles[];
     private static List<Base> bases = new ArrayList<>(TOTAL_AMOUNT_BASES);
     private static List<Tile> goalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
-    private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
 
     public static void main(String[] args) {
         //Model instances
-        Board board = new Board();
+        Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 
         //View instances
         fieldTiles = board.getFieldTiles();
         bases = board.getBases();
         goalTiles = board.getGoalTiles();
-        /*
-        for (int i = 0; i < TOTAL_AMOUNT_PIECES; i++){
-            PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces.get(i));
-            paintablePieces.add(paintablePiece);
-        }
-         */
 
-        for(int i = 0; i < TOTAL_AMOUNT_FIELD_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(fieldTiles[i]);
+        for (Tile fieldTile : fieldTiles) {
+            PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTile);
             paintableFieldTiles.add(paintableTile);
         }
 
+        List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
         for(Base base : bases){
-            PaintableBase paintableBase = new PaintableBase(base);
+            Piece[] pieces = base.getPieces();
+            coloredPaintablePieces.clear();
+            for(int i = 0; i < pieces.length; i++){
+                PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(pieces[i]);
+                coloredPaintablePieces.add(paintablePiece);
+                paintablePieces.add(paintablePiece);
+            }
+            PaintableBase paintableBase = new PaintableBase(base, coloredPaintablePieces);
             paintableBases.add(paintableBase);
         }
 
-        for(int i = 0; i < TOTAL_AMOUNT_GOAL_TILES; i++){
-            PaintableTile paintableTile = TileFactory.createTile(goalTiles.get(i));
+
+        for (Tile goalTile : goalTiles) {
+            PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalTiles.add(paintableTile);
         }
 
         GameController gameController = new GameController(game);
         List<JButton> buttons = gameController.getListOfButtons();
 
-        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles);
-        drawPanel = new DrawPanel(boardPanel, buttons, game);
+        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
+        //Move right and left panel to main, pass down to DrawPanels
+        drawPanel = new DrawPanels(boardPanel, buttons, game);
 
         //Controller
-        BoardController boardController = new BoardController(paintableFieldTiles, paintableGoalTiles, paintableBases, game, board, boardPanel);
+        BoardController boardController = new BoardController(paintablePieces, paintableBases, game, board, boardPanel);
 
         new GameWindow("TurboFia", drawPanel, boardPanel, game);
     }

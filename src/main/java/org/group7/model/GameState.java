@@ -9,7 +9,7 @@ public abstract class GameState {
         this.game = g;
     }
 
-    public abstract void move(Tile t);
+    public abstract void move(Piece piece);
     public abstract void pieceFromBaseToField(Color c);
     public abstract void roll();
 }

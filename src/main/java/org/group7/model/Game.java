@@ -38,6 +38,7 @@ public class Game implements StringObservable, Observer {
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
+        spawnPowerups();
     }
 
     private void initPlayers(){
@@ -62,21 +63,18 @@ public class Game implements StringObservable, Observer {
         return this.lastDiceRollResult;
     }
 
-    protected boolean validateMove(Tile tile) {
+    protected boolean validateMove(Piece piece) {
         //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
-        return ((!tile.isEmpty()) && tile.getPieceColor().equals(currentPlayer.getColor()));
+        return (piece.getColor().equals(currentPlayer.getColor()));
     }
 
-    public void move(Tile tile) {
-        gameState.move(tile);
+    public void move(Piece piece) {
+        gameState.move(piece);
     }
 
-    protected void movePiece(Tile tile) {
-        //if(validateMove(tile)) {
-        Piece p = tile.getPiece();
-        this.board.movePiece(p, this.lastDiceRollResult);
-        setState(this.gameState);
-        //}
+    protected void movePiece(Piece piece) {
+        this.board.movePiece(piece, this.lastDiceRollResult);
+        //setState(this.gameState);
     }
 
     //TODO: Validate that it is player's turn
@@ -118,13 +116,14 @@ public class Game implements StringObservable, Observer {
     private void spawnPowerups(){
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUp();
+
     }
 
-    public void setState(GameState gamestate){
+    protected void setState(GameState gamestate){
         this.gameState = gamestate;
     }
 
-    public void nextPlayer(){
+    protected void nextPlayer(){
         this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
         this.currentPlayer = this.players[currentPlayerNumber];
         String playerColor = this.currentPlayer.getColor().toString();

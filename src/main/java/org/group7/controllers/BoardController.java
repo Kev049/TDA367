@@ -4,42 +4,31 @@ import org.group7.model.*;
 import org.group7.view.BoardPanel;
 import org.group7.view.PaintableBase;
 import org.group7.view.PaintablePiece;
-import org.group7.view.PaintableTile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BoardController{
-    List<PaintableTile> paintableFieldTiles;
-    List<PaintableTile> paintableGoalTiles;
+    List<PaintablePiece> paintablePieces;
     List<PaintableBase> paintableBases;
     Game game;
     Board board;
     BoardPanel boardPanel;
-    public BoardController(List<PaintableTile> paintableFieldTiles, List<PaintableTile> paintableGoalTiles ,List<PaintableBase> paintableBases,
+    public BoardController(List<PaintablePiece> paintablePieces,List<PaintableBase> paintableBases,
                            Game game, Board board, BoardPanel boardPanel){
         this.board = board;
         this.boardPanel = boardPanel;
-        this.paintableFieldTiles = paintableFieldTiles;
-        this.paintableGoalTiles = paintableGoalTiles;
+        this.paintablePieces = paintablePieces;
         this.paintableBases = paintableBases;
         this.game = game;
         addListeners();
     }
 
     private void addListeners(){
-        for(PaintableTile paintableTile : paintableGoalTiles){
-            paintableTile.addActionListener(e ->{
-                Tile tile = paintableTile.getTile();
-                game.move(tile);
-                boardPanel.refreshPaintableTiles();
-            });
-        }
-        for(PaintableTile paintableTile : paintableFieldTiles){
-            paintableTile.addActionListener(e ->{
-                Tile tile = paintableTile.getTile();
-                game.move(tile);
-                boardPanel.refreshPaintableTiles();
+        for(PaintablePiece paintablePiece : paintablePieces){
+            paintablePiece.addActionListener(e -> {
+                Piece piece = paintablePiece.getPiece();
+                game.move(piece);
+                boardPanel.drawBoard();
             });
         }
         for(PaintableBase paintableBase : paintableBases){
@@ -47,7 +36,7 @@ public class BoardController{
                 Base base = paintableBase.getBase();
                 game.moveBasePiece(base.getColor());
                 paintableBase.redrawPieces();
-                boardPanel.refreshPaintableTiles();
+                boardPanel.drawBoard();
             });
         }
     }

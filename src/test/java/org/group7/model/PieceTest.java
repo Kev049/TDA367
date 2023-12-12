@@ -52,7 +52,6 @@ class PieceTest {
 
     @Test
     void pieceBeingPushedIsSentBackToBase() {
-        System.out.println(handler);
         handler = new Board();
         piece = new Piece(Color.RED, handler);
         Piece luigi = new Piece(Color.GREEN, handler);

@@ -14,14 +14,22 @@ public class PaintableBase extends JButton{
     private Base base;
     List<PaintablePiece> paintablePieces = new ArrayList<>();
     HashMap<Piece, PaintablePiece> paintablePiecesHash = new HashMap<>();
-    public PaintableBase(Base base){
+    public PaintableBase(Base base, List<PaintablePiece> paintablePieces){
         this.base = base;
+        this.paintablePieces = paintablePieces;
         this.setLayout(new GridBagLayout());
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
-        createPaintablePieces();
+        initPaintablePiecesHashMap();
         drawBoxes();
         drawPieces();
+    }
+
+    private void initPaintablePiecesHashMap(){
+        for(PaintablePiece paintablePiece : paintablePieces){
+            Piece piece = paintablePiece.getPiece();
+            paintablePiecesHash.put(piece, paintablePiece);
+        }
     }
 
     private void drawBoxes(){
@@ -48,16 +56,10 @@ public class PaintableBase extends JButton{
         for(Component component : this.getComponents()){
             if (component instanceof JPanel){
                 PaintablePiece paintablePiece = paintablePieces.get(i++);
-                ((JPanel) component).add(paintablePiece);
+                JLabel pieceLabel = new JLabel();
+                pieceLabel.setIcon(paintablePiece.getIcon());
+                ((JPanel) component).add(pieceLabel);
             }
-        }
-    }
-
-    private void createPaintablePieces(){
-        for(Piece piece : base.getPieces()){
-            PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(piece);
-            paintablePieces.add(paintablePiece);
-            paintablePiecesHash.put(piece, paintablePiece);
         }
     }
 
@@ -71,7 +73,10 @@ public class PaintableBase extends JButton{
         for(Piece piece : base.getPieces()){
             if(piece != null){
                 JPanel component = (JPanel) this.getComponent(i++);
-                component.add(paintablePiecesHash.get(piece));
+                PaintablePiece paintablePiece = paintablePiecesHash.get(piece);
+                JLabel pieceLabel = new JLabel();
+                pieceLabel.setIcon(paintablePiece.getIcon());
+                ((JPanel) component).add(pieceLabel);
             }
         }
     }

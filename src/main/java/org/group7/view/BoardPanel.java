@@ -1,6 +1,7 @@
 package org.group7.view;
 
 import org.group7.model.Piece;
+import org.group7.model.PowerUps.PowerUp;
 import org.group7.model.Tile;
 
 import javax.imageio.ImageIO;
@@ -17,34 +18,41 @@ public class BoardPanel extends JPanel{
     private List<PaintableTile> paintableFieldTiles;
     private List<PaintableBase> paintableBases;
     private List<PaintableTile> paintableGoalTiles;
+    private List<PaintablePiece> paintablePieces;
     private List<Integer> fieldTileIndices;
     private List<Integer> baseTileIndices;
     private List<Integer> goalTileIndices;
     private List<Point> baseBoxPoints;
     private HashMap<Integer, Box> indexBoxHashMap;
+    private HashMap<Piece, PaintablePiece> piecePaintablePieceHashMap;
     private final int TOTAL_AMOUNT_TILES = 121;
     private final int fieldStartCapacity = 40;
     private Image image;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableBase> paintableBases,
-                      List<PaintableTile> paintableGoalTiles){
+                      List<PaintableTile> paintableGoalTiles,
+                      List<PaintablePiece> paintablePieces){
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
         this.paintableGoalTiles = paintableGoalTiles;
+        this.paintablePieces = paintablePieces;
         this.fieldTileIndices = new ArrayList<>(fieldStartCapacity); //Index for paintableTiles that match game path
         this.baseTileIndices = new ArrayList<>(16);
         this.goalTileIndices = new ArrayList<>(16);
         this.baseBoxPoints = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
+        this.piecePaintablePieceHashMap = new HashMap<>();
         this.setLayout(new GridBagLayout());
-        applyImage();
         initBaseBoxPoints();
+        initTileIndices();
+        initPaintablePiecesMap();
+        applyImage();
         addFieldBoxes();
         addBaseBoxes();
         storeBoardTileIndex();
-        initTileIndices();
         addBoardComponents();
+        drawBoard();
     }
 
     private void applyImage(){
@@ -73,28 +81,37 @@ public class BoardPanel extends JPanel{
         }
     }
 
-    public void refreshPaintableTiles(){
-        for(PaintableTile paintableTile : paintableGoalTiles){
-            paintableTile.removeAll();
-            Tile tile = paintableTile.getTile();
-            if(!tile.isEmpty()){
-                paintableTile.add(PaintableEntityFactory.makePieceImage(tile.getPiece()));
-            }
-        }
-        for(PaintableTile paintableTile : paintableFieldTiles){
-            paintableTile.removeAll();
-            Tile tile = paintableTile.getTile();
-            if(!tile.isEmpty()){
-                //TODO: Kom på ett sätt att getta paintablePiece motsvarande piece på rutan
-                paintableTile.add(PaintableEntityFactory.makePieceImage(tile.getPiece()));
-            }
-        }
-        for(PaintableBase paintableBase : paintableBases){
-            paintableBase.redrawPieces();
-        }
+    public void drawBoard(){
+        redrawPaintableTiles(paintableGoalTiles);
+        redrawPaintableTiles(paintableFieldTiles);
+        redrawPaintableBases(paintableBases);
         this.repaint();
         this.revalidate();
     }
+
+    private void redrawPaintableTiles(List<PaintableTile> paintableGoalTiles) {
+        for(PaintableTile paintableTile : paintableGoalTiles){
+            Tile tile = paintableTile.getTile();
+            paintableTile.removeAll();
+            if(!(tile.isEmpty())){
+                if(tile.getEntity() instanceof Piece){
+                    PaintablePiece paintablePiece = piecePaintablePieceHashMap.get((Piece) tile.getEntity());
+                    paintableTile.add(paintablePiece);
+                }
+                else{
+                    PaintablePowerUp paintablePowerUp = PaintableEntityFactory.makePaintedPowerUp((PowerUp) tile.getEntity());
+                    paintableTile.add(paintablePowerUp);
+                }
+            }
+        }
+    }
+
+    private void redrawPaintableBases(List<PaintableBase> paintableBases){
+        for(PaintableBase paintableBase : paintableBases){
+            paintableBase.redrawPieces();
+        }
+    }
+
 
     private void addFieldBoxes(){
         GridBagConstraints c = new GridBagConstraints();
@@ -158,8 +175,7 @@ public class BoardPanel extends JPanel{
         int i = 0;
         for(int index : tileIndices){
             Box box = indexBoxHashMap.get(index);
-            box.add(paintableTiles.get(i));
-            i++;
+            box.add(paintableTiles.get(i++));
         }
     }
 
@@ -167,8 +183,7 @@ public class BoardPanel extends JPanel{
         int i = 0;
         for(int index : tileIndices){
             Box box = indexBoxHashMap.get(index);
-            box.add(paintableBase.get(i));
-            i++;
+            box.add(paintableBase.get(i++));
         }
     }
 
@@ -198,5 +213,12 @@ public class BoardPanel extends JPanel{
                 new Point(2,9), new Point(8, 1), new Point(8, 2), new Point(8,8),
                 new Point(8, 9), new Point(9,1), new Point(9,2), new Point(9,8),
                 new Point(9,9));
+    }
+
+    private void initPaintablePiecesMap(){
+        for(PaintablePiece paintablePiece : paintablePieces){
+            Piece piece = paintablePiece.getPiece();
+            piecePaintablePieceHashMap.put(piece, paintablePiece);
+        }
     }
 }

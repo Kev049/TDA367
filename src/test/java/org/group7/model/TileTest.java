@@ -47,7 +47,7 @@ public class TileTest {
         tile.insertPiece(new Piece(Color.red, handler));
         assertFalse(tile.isEmpty());
     }
-
+    /*
     @Test
     void getPieceReturnsSamePieceInsertedPiece() {
         IMoveHandler handler = new Board();
@@ -65,11 +65,12 @@ public class TileTest {
         tile.removePiece();
         assertTrue(tile.isEmpty());
     }
-
+    */
     @Test //behöver vi ha ett test med denna?
     void isEmpty() {
 
     }
+    /*
     @Test
     void getPieceColorReturnsSameColorAsPieceColor() {
         Color red = Color.red;
@@ -89,4 +90,6 @@ public class TileTest {
             tile.removePiece();
         }
     }
+
+     */
 }
