@@ -16,14 +16,13 @@ import java.util.Random;
 import java.util.List;
 
 public class RollDiceListener implements ActionListener {
-        private JButton rollDiceButton;
-        private int frames = 0;
-        private int randomInt = 0;
-        private Random random;
-        private BufferedImage image;
-        private List<Point> imageCoordinates = new ArrayList<>();
-        private Game game;
-        private final int totalAmountFrames = 6;
+    private final JButton rollDiceButton;
+    private int frames = 0;
+    private final Random random;
+    private BufferedImage image;
+    private final List<Point> imageCoordinates = new ArrayList<>();
+    private final Game game;
+
     public RollDiceListener(JButton rollDiceButton, Game game){
         this.game = game;
         this.image = new BufferedImage(205, 205, BufferedImage.TYPE_INT_RGB);
@@ -61,6 +60,7 @@ public class RollDiceListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        int totalAmountFrames = 6;
         if(++frames >= totalAmountFrames){
             Timer timer = (Timer) e.getSource();
             timer.stop();
@@ -68,7 +68,7 @@ public class RollDiceListener implements ActionListener {
             timerDone();
         }
         else{
-            randomInt = random.nextInt(6);
+            int randomInt = random.nextInt(6);
             Icon icon = new ImageIcon(image.getSubimage(
                     (int) imageCoordinates.get(randomInt).getX(),
                     (int) imageCoordinates.get(randomInt).getY(),

@@ -14,15 +14,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
-    private Base[] bases;
-    private Tile[] field;
-    private GoalStretch[] goalStretches;
-    private Color[] colors;
-    private HashMap<Color,Integer> playerStartTiles;
-    private HashMap<Color, GoalStretch> goalsHashMap;
-    private HashMap<Color,Base> colorBaseMap;
-    private HashMap<Color, Piece[]> piecesHashMap;
-    private EntityVisitor visitor;
+    private final Base[] bases;
+    private final Tile[] field;
+    private final GoalStretch[] goalStretches;
+    private final Color[] colors;     //TODO varför har vi ens denna?
+    private final HashMap<Color,Integer> playerStartTiles;
+    private final HashMap<Color, GoalStretch> goalsHashMap;
+    private final HashMap<Color,Base> colorBaseMap;
+    private final EntityVisitor visitor;
 
     public Board() {
         this.bases = new Base[4];
@@ -32,7 +31,6 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
-        this.piecesHashMap = new HashMap<>();
         this.visitor = new RemoveEntityVisitor(this);
         initColors();
         initBases();
@@ -121,7 +119,7 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         return b.removePiece();
     }
 
-    public void switchEntityPositions(Piece piece){
+    public void switchEntityPositions(Piece piece){     // TODO Onödig, ta bort
         int pos = piece.getPos();
         for(int i = 1; i < field.length; i++){
             if(!field[(pos + i) % 40].isEmpty()){
@@ -162,36 +160,14 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         p.enableFieldState();
     }
 
-    /*          Antagligen onödigt komplicerat
-    public void removeEntityFromField(Entity e) {
-        for (int i = 0; i < field.length; i++) {
-            if (e == field[i].getEntity()) {
-                field[i].removeEntity();
-            }
-        }
-    }*/
-
-    /*
-    public Entity removeEntityFromField(int index) {
-        return field[index].removeEntity();
-    }
-
-     */
-
-    public void addPieceToGoalStretch(Piece p, int steps) { //Color behövs inte explicit då player har den??
+    public void addPieceToGoalStretch(Piece p, int steps) {
         GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
         p.setHandler(goalStretch);
         p.enableGoalState();
         goalStretch.addPiece(p, steps);
     }
 
-    public void movePieceInGoalStretch(Piece piece, int steps){
-        Color c = piece.getColor();
-        GoalStretch goalStretch = goalsHashMap.get(c);
-        goalStretch.goalStretchMove(piece, steps);
-    }
-
-    public void removeEntityFromGoalStretch(Color goalColor, int index)  {
+    public void removeEntityFromGoalStretch(Color goalColor, int index)  {  //TODO denna eller yeet?
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.removeEntity(index);
     }
@@ -209,52 +185,14 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
-        if (piece.isAtGoalStretch()){        //TODO Refactor this if/else statement
-            movePieceInGoalStretch(piece, diceRoll);
+        this.field[from].removeEntity();
+        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
+            int stepsLeft = (to - tileIndex);
+            addPieceToGoalStretch(piece, stepsLeft);
+        } else {                                    // still on first lap
+            this.field[to].insertPiece(piece);
         }
-        else {
-            this.field[from].removeEntity();
-            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
-                int stepsLeft = (to - tileIndex);
-                //System.out.println(stepsLeft);
-                addPieceToGoalStretch(piece, stepsLeft);
-            } else {                                    // still on first lap
-                this.field[to].insertPiece(piece);
-            }
-        }
-
-        //Unused below
-        /*
-        int current = from;
-        GoalStretch goalStretch = goalsHashMap.get(c);
-        int goalIndex = 0; //TODO should decide how far into goal it moves?
-
-        for (int i = 0; i < offset; i++){
-            if ((current+1) == tileIndex){        //TODO handle when piece is already in goal
-                for (int j = 0; j < (offset - i); j ++){
-                    goalIndex += 1;
-                }
-                goalStretch.addPiece(piece);    //TODO add
-            }
-            else {
-                current += 1;
-            }
-        }*/
-        //this.field[from + offset].insertPiece(piece);
     }
-
-    /*
-    public Piece nextPiece(Tile tile) { //TODO Fix this nasty method
-        int startPos = tile.getIndex();
-        for (int i = 0; i < 40; i++){
-            Piece p = this.field[i+startPos].getPiece();
-            if (p != null){
-                return p;
-            }
-        }
-        return null;
-    }
-    */
 
     public void spawnPowerUp(){
         LightningPowerUp lightningPowerUp = new LightningPowerUp(this);
@@ -292,7 +230,5 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         }
         return goalTiles;
     }
-
-    //--------------------------------------------------------
 
 }

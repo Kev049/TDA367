@@ -3,17 +3,22 @@ package org.group7.view;
 import org.group7.model.Base;
 import org.group7.model.Piece;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+
+import java.awt.GridBagLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.Component;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class PaintableBase extends JButton{
-    private Base base;
-    List<PaintablePiece> paintablePieces = new ArrayList<>();
-    HashMap<Piece, PaintablePiece> paintablePiecesHash = new HashMap<>();
+    private final Base base;
+    private final List<PaintablePiece> paintablePieces;
+    private final HashMap<Piece, PaintablePiece> paintablePiecesHash = new HashMap<>();
     public PaintableBase(Base base, List<PaintablePiece> paintablePieces){
         this.base = base;
         this.paintablePieces = paintablePieces;
@@ -51,14 +56,24 @@ public class PaintableBase extends JButton{
         }
     }
 
-    private void drawPieces(){
-        int i = 0;
+    private void drawPieces(){  // TODO tog bort onödig/"duplicerad" kod, fungerar?
+        /*int i = 0;
         for(Component component : this.getComponents()){
             if (component instanceof JPanel){
                 PaintablePiece paintablePiece = paintablePieces.get(i++);
                 JLabel pieceLabel = new JLabel();
                 pieceLabel.setIcon(paintablePiece.getIcon());
                 ((JPanel) component).add(pieceLabel);
+            }
+        }*/
+        int i = 0;
+        for(Piece piece : base.getPieces()){
+            if(piece != null){
+                JPanel component = (JPanel) this.getComponent(i++);
+                PaintablePiece paintablePiece = paintablePiecesHash.get(piece);
+                JLabel pieceLabel = new JLabel();
+                pieceLabel.setIcon(paintablePiece.getIcon());
+                component.add(pieceLabel);
             }
         }
     }
@@ -69,7 +84,7 @@ public class PaintableBase extends JButton{
                 ((JPanel) component).removeAll();
             }
         }
-        int i = 0;
+        /*int i = 0;
         for(Piece piece : base.getPieces()){
             if(piece != null){
                 JPanel component = (JPanel) this.getComponent(i++);
@@ -78,7 +93,8 @@ public class PaintableBase extends JButton{
                 pieceLabel.setIcon(paintablePiece.getIcon());
                 ((JPanel) component).add(pieceLabel);
             }
-        }
+        }*/
+        drawPieces();
     }
 
     public Base getBase(){

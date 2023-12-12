@@ -7,15 +7,13 @@ import org.group7.view.PaintablePiece;
 
 import java.util.List;
 
-public class BoardController{
-    List<PaintablePiece> paintablePieces;
-    List<PaintableBase> paintableBases;
-    Game game;
-    Board board;
-    BoardPanel boardPanel;
+public class BoardController{ //TODO namnet på denna klassen borde ifrågasättas då den aldrig interagerar med Board direkt
+    private final List<PaintablePiece> paintablePieces;
+    private final List<PaintableBase> paintableBases;
+    private final Game game;
+    private final BoardPanel boardPanel;
     public BoardController(List<PaintablePiece> paintablePieces,List<PaintableBase> paintableBases,
-                           Game game, Board board, BoardPanel boardPanel){
-        this.board = board;
+                           Game game, BoardPanel boardPanel){
         this.boardPanel = boardPanel;
         this.paintablePieces = paintablePieces;
         this.paintableBases = paintableBases;

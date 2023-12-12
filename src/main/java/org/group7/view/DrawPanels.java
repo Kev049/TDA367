@@ -3,20 +3,23 @@ package org.group7.view;
 import org.group7.controllers.StringObserver;
 import org.group7.model.Game;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Set;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
 import java.util.List;
 
 public class DrawPanels extends JPanel{
-    private JPanel boardPanel;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
-    private JButton rollDiceButton;
+    private final JPanel boardPanel;
+    private final JPanel leftPanel;
+    private final JPanel rightPanel;
 
     public DrawPanels(BoardPanel boardPanel, List<JButton> buttons, Game game) {
         this.boardPanel = boardPanel;
-        this.rollDiceButton = buttons.get(0);
+        JButton rollDiceButton = buttons.getFirst();   // TODO Utan Java21 funkar inte detta, ändra?
         this.leftPanel = new LeftPanel();
         this.rightPanel = new RightPanel(rollDiceButton);
         this.setLayout(new GridBagLayout());
@@ -45,11 +48,5 @@ public class DrawPanels extends JPanel{
         c.gridx = 2;
         this.add(rightPanel, c);
     }
-    /*
-    @Override
-    public void update() {
-        repaint();
-    }
-     */
 }
 

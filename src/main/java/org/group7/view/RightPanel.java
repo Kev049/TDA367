@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class RightPanel extends JPanel implements StringObserver {
-    JButton rollDiceButton;
-    JLabel playerTurnOutput;
+    private final JButton rollDiceButton;
+    private final JLabel playerTurnOutput;
     public RightPanel(JButton rollDiceButton){
         this.rollDiceButton = rollDiceButton;
         this.playerTurnOutput = new JLabel("Red player's turn");

@@ -1,9 +1,7 @@
 package org.group7.model;
 
-import java.awt.Color;
-//deprecated
 public abstract class Entity{ //TODO: Ta bort denna klassen
-private int pos;
+    private int pos;
 
     public Entity(int pos){
         this.pos = pos;
@@ -14,9 +12,10 @@ private int pos;
         return this.pos;
     }
 
-    public void setPos(int newPos) { this.pos = pos; }
+    public void setPos(int newPos) { this.pos = newPos; }
 
-    public abstract void handleCollision(Piece p); //TODO kolla om detta är ok, ska det vara Piece?
-
+    //public void accept(EntityVisitor visitor) {
+    //   visitor.visit(this);
+    //}
 
 }

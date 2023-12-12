@@ -4,7 +4,7 @@ import org.group7.model.*;
 
 public abstract class PowerUp implements IEntity { //borde väl vara en abstrakt klass?
     private int pos;
-    protected IPowerUpHandler handler;
+    protected IPowerUpHandler handler;  //TODO PowerUpHandler är för stor
     private final String powerUpName;
 
     public PowerUp(IPowerUpHandler handler, String powerUpName) {

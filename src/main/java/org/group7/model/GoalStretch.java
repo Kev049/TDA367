@@ -9,19 +9,19 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
-public class GoalStretch implements Observable, IMoveHandler {
+public class GoalStretch implements Observable, IMoveHandler { //TODO kolla över denna klass, skriv om beroenden Tile -> Insertable
 
     private final int capacity = 4;
     private final int insertCapacity = capacity + 1;
-    private Tile[] tiles = new Tile[capacity];
-    private IInsertable[] insertables = new IInsertable[insertCapacity];
+    private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
+    private final IInsertable[] insertables = new IInsertable[insertCapacity];
     //private List<IInsertable> insertables = new ArrayList<>(capacity + 1);
-    private Color color;
-    private int finishedPieces;
+    private final Color color;
+    private final int finishedPieces;
 
-    private PieceExtractor handler;
+    private final PieceExtractor handler;
 
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
@@ -46,7 +46,7 @@ public class GoalStretch implements Observable, IMoveHandler {
 
     @Override
     public void addPiece(Piece p, int index) {
-        int entryTileIndex = 4 - abs(index - 4);
+        //int entryTileIndex = 4 - abs(index - 4);
         p.setPos(0);
         //p.setPos(entryTileIndex);
         //p.addToGoalStretch();
@@ -71,7 +71,7 @@ public class GoalStretch implements Observable, IMoveHandler {
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int pos = p.getPos();  // där den står
         int oldPos = pos;
-        boolean isNotNewToGoalStretch = p.isAtGoalStretch();
+        boolean isNotNewToGoalStretch = p.isAtGoalStretch();    // TODO varför finns detta? vad är poängen?
         pos += steps;  // där den ska
         pos = 4 - abs((pos - 4));
         if(isNotNewToGoalStretch){ removeEntity(oldPos);}
@@ -96,10 +96,6 @@ public class GoalStretch implements Observable, IMoveHandler {
     public Tile[] getTiles(){
         return this.tiles;
     }
-
-//    public List<IInsertable> getTiles(){
-//        return this.insertables.subList(0, insertables.size() - 1);
-//    }
 
     private void checkIfFull(){
         if (finishedPieces == capacity) {

@@ -1,14 +1,13 @@
 package org.group7.model;
 
-import java.awt.*;
-import java.util.Arrays;
+import java.awt.Color;
 
 public class Base {
 
     private final int capacity;       //Går att ändra om man vill byta antal pjäser (istället för standard som är 4)
     private int pieceAmount;
-    private Piece[] pieces;
-    private Color color;
+    private final Piece[] pieces;
+    private final Color color;
 
     public Base(int capacity, Color color, IMoveHandler handler) {
         this.capacity = capacity;
@@ -16,13 +15,6 @@ public class Base {
         this.pieces = new Piece[capacity];
         this.color = color;
         initPieces(handler);
-
-        /*
-        for (int i = 0; i < capacity; i++) {
-            //this.pieces[capacity] = new Piece(this.colour); //TODO implement Player
-            this.pieces[capacity] = PieceFactory.createPiece(this.colour);
-        }
-         */
     }
 
     private void initPieces(IMoveHandler handler) { //Kan nog delas upp till 2 metoder

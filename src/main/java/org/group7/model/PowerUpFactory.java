@@ -4,7 +4,7 @@ import org.group7.model.PowerUps.BasePowerUp;
 import org.group7.model.PowerUps.LightningPowerUp;
 import org.group7.model.PowerUps.PowerUp;
 
-public class PowerUpFactory {
+public class PowerUpFactory { //TODO ta bort/bestäm vad som ska hända med denna klass, implementerad fel och anvönds inte
 
     public static PowerUp createPowerUp(String powerUpName, IPowerUpHandler handler){
         if (powerUpName.equals("Base")) {

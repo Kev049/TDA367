@@ -7,21 +7,20 @@ import org.group7.controllers.StringObservable;
 import org.group7.controllers.StringObserver;
 import java.awt.Color;
 
-public class Game implements StringObservable, Observer {
+public class Game implements StringObservable, Observer {   //TODO ta bort onödiga metoder
 
     private final Set<StringObserver> stringObservers;
-    private Dice dice;
-    private Board board;
+    private final Dice dice;
+    private final Board board;
     public Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
     private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
     private int currentPlayerNumber;
     private int turnNumber;
-    private final int turnNumberStart = 0;
 
     private GameState gameState;
-    private Color[] colorArray;
+    private final Color[] colorArray; //TODO varför finns denna?
     private int lastDiceRollResult;
 
     public Game(Board board) { //TODO Game should create the board, not Main
@@ -34,7 +33,7 @@ public class Game implements StringObservable, Observer {
         this.colorArray[2] = Color.BLUE;
         this.colorArray[3] = Color.YELLOW;
         initPlayers();
-        this.turnNumber = turnNumberStart;
+        this.turnNumber = 0;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
@@ -50,12 +49,8 @@ public class Game implements StringObservable, Observer {
         this.currentPlayer = players[currentPlayerNumber];
     }
 
-    public int rollDice() {         //TODO implementera så att en state bestämmer vad som händer. RollState - rulla tärning, MoveState - gör inget (man ska flytta pjäs)
-        //for (Observer o : observers){
-        //    o.update();           //TODO ksks lägga till igen
-        //}
+    public void rollDice() {
         this.lastDiceRollResult = dice.roll();
-        return this.lastDiceRollResult;
     }
 
     public int roll(){
@@ -64,7 +59,6 @@ public class Game implements StringObservable, Observer {
     }
 
     protected boolean validateMove(Piece piece) {
-        //Måste kolla piece color, men tile borde inte arbeta med konkreta pieces.
         return (piece.getColor().equals(currentPlayer.getColor()));
     }
 
@@ -104,12 +98,9 @@ public class Game implements StringObservable, Observer {
 
     public Piece[] getPiecesFromBase(Player player){
         return this.board.getPiecesFromBase(player.getColor());
-    }
+    }   //Onödig?
 
-    /* public void placePowerups() { // Where should this be implemented? Should we create a new class?
-
-    }*/
-    public int getLastDiceRollResult() {
+    public int getLastDiceRollResult() {    //TODO antagligen ta bort?
         return lastDiceRollResult;
     }
 

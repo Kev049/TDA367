@@ -12,8 +12,7 @@ public class MoveState extends GameState {
     public void move(Piece piece){
         if (game.validateMove(piece)) { //TODO Can we make movestate only call one function (move) from game instead of validate + move
             game.movePiece(piece);
-            //game.setState(new RollState(game));
-            //game.nextPlayer();
+            finishRound();
         }
     }
 
@@ -21,18 +20,18 @@ public class MoveState extends GameState {
     public void pieceFromBaseToField(Color color){
         if (game.validateBaseMove(color)){
             game.movePieceOutOfBase(color);
-            //game.setState(new RollState(game));
-            //game.nextPlayer();
+            finishRound();
         }
+    }
+
+    private void finishRound() {
+        game.setState(new RollState(game));
+        game.nextPlayer();
     }
 
 
     @Override
     public void roll(){
-
-    }
-
-    public void changeState(){
 
     }
 }

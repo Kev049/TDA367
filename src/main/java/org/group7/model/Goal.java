@@ -1,7 +1,7 @@
 package org.group7.model;
 
 import org.group7.controllers.Observable;
-import org.group7.controllers.Observer;
+import org.group7.controllers.Observer;     //TODO
 
 //public class Goal implements IInsertable, Observable {
 public class Goal implements IInsertable {
@@ -24,12 +24,5 @@ public class Goal implements IInsertable {
         System.out.println("goal!");
         // om Goal är Observable så kan vi lägga till at vi räknar pjäser i mål eller liknade här
     }
-
-
-//    public static Goal getInstance() {
-//        if(instance == null){
-//            instance = new Goal();
-//        }
-//        return instance;
-//    }
+    //TODO bestäm vad som händer med denna klassen, klar? lägga till funktionalitet?
 }

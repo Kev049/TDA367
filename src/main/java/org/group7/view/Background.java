@@ -1,12 +1,11 @@
 package org.group7.view;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.Objects;
+import javax.swing.JPanel;
 
-public class Background extends JPanel {
+import java.awt.Image;
+import java.awt.Graphics;
+
+public class Background extends JPanel { //TODO antar att denna är WIP?
 
     private final Image image;
 

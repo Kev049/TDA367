@@ -12,11 +12,11 @@ import java.io.IOException;
 public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna klassen
     private static Image image;
     public static PaintablePiece makePieceImage(Piece piece) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
-        String color = null;
+        String color;
         if(piece.getColor().equals(Color.RED)) color = "red";
         else if(piece.getColor().equals(Color.GREEN)) color = "green";
         else if(piece.getColor().equals(Color.YELLOW)) color = "yellow";
-        else color = "blue";
+        else color = "blue";    //TODO för att vara tydlig kan detta vara en else-if
         return makePaintedPiece("src/main/resources/" + color + "_player_circle.png", piece);
     }
 

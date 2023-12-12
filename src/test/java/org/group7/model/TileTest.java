@@ -1,17 +1,9 @@
 package org.group7.model;
-//import org.junit.Test;>
-import org.group7.model.Board;
-import org.group7.model.IMoveHandler;
-import org.group7.model.Piece;
-import org.group7.model.Tile;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,10 +58,6 @@ public class TileTest {
         assertTrue(tile.isEmpty());
     }
     */
-    @Test //behöver vi ha ett test med denna?
-    void isEmpty() {
-
-    }
     /*
     @Test
     void getPieceColorReturnsSameColorAsPieceColor() {

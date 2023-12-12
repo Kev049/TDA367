@@ -10,14 +10,10 @@ import java.awt.*;
 public class GameWindow extends JFrame{
     private static final int X = 1920;
     private static final int Y = 1080;
-    private Game game;  //TODO: Should probably remove this, unless it will serve a purpose in the future
-    private DrawPanels drawPanel;
-    private BoardPanel boardPanel; //TODO:Remove this when pieces are fixed, gameWindow should only have DrawPanel
+    private final DrawPanels drawPanel;
 
-    public GameWindow(String name, DrawPanels drawPanel, BoardPanel boardPanel, Game game){
-        this.game = game;
+    public GameWindow(String name, DrawPanels drawPanel){
         this.drawPanel = drawPanel;
-        this.boardPanel = boardPanel;
         componentSetup(name);
     }
 

@@ -3,7 +3,8 @@ package org.group7.model;
 import java.awt.Color;
 
 public abstract class GameState {
-    protected Game game;
+
+    protected final Game game;
 
     public GameState(Game g) {
         this.game = g;

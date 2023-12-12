@@ -2,7 +2,7 @@ package org.group7.model;
 
 public class FieldState implements PieceState {
 
-    private Piece piece;
+    private final Piece piece;
 
     public FieldState(Piece p) {
         this.piece = p;

@@ -34,14 +34,13 @@ public class Piece implements IEntity {
 
     public void enableGoalState() {
         this.state = new GoalState(this);
-    }
+    } //TODO borde antagligen flytta detta beroendet till State-klasserna
 
     public void enableFieldState() {
         this.state = new FieldState(this);
-    }
+    } //TODO borde antagligen flytta detta beroendet till State-klasserna
 
     public void setHandler(IMoveHandler handler) {
-        System.out.println("Changed handler!!!");
         this.handler = handler;
     }
 

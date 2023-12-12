@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PowerUpPicker {
+public class PowerUpPicker {    //TODO diskutera poängen med denna klassen
     private static PowerUpPicker instance;
     private final Random powerUpGenerator;
     private final List<String> powerUpList;

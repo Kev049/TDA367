@@ -1,15 +1,14 @@
 package org.group7.view;
 
 import javax.swing.*;
-
-import org.group7.controllers.BoardListener;
 import org.group7.model.Tile;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
-import java.awt.*;
 
 public class PaintableTile extends JButton{
 
-    private Tile tile = null;
+    private Tile tile;
 
     public PaintableTile(Tile tile){
         this.tile = tile;

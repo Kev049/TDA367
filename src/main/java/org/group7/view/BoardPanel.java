@@ -14,19 +14,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel{
-    private List<PaintableTile> paintableFieldTiles;
-    private List<PaintableBase> paintableBases;
-    private List<PaintableTile> paintableGoalTiles;
-    private List<PaintablePiece> paintablePieces;
-    private List<Integer> fieldTileIndices;
-    private List<Integer> baseTileIndices;
-    private List<Integer> goalTileIndices;
-    private List<Point> baseBoxPoints;
-    private HashMap<Integer, Box> indexBoxHashMap;
-    private HashMap<Piece, PaintablePiece> piecePaintablePieceHashMap;
-    private final int TOTAL_AMOUNT_TILES = 121;
-    private final int fieldStartCapacity = 40;
+public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
+    private final List<PaintableTile> paintableFieldTiles;
+    private final List<PaintableBase> paintableBases;
+    private final List<PaintableTile> paintableGoalTiles;
+    private final List<PaintablePiece> paintablePieces;
+    private final List<Integer> fieldTileIndices;
+    private final List<Integer> baseTileIndices;
+    private final List<Integer> goalTileIndices;
+    private final List<Point> baseBoxPoints;
+    private final HashMap<Integer, Box> indexBoxHashMap;
+    private final HashMap<Piece, PaintablePiece> piecePaintablePieceHashMap;
+    private static final int TOTAL_AMOUNT_TILES = 121;
+    private static final int fieldStartCapacity = 40;
     private Image image;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,

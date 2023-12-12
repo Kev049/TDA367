@@ -37,7 +37,6 @@ class PieceTest {
         List<Color> colorList = Arrays.asList(Color.red, Color.blue, Color.green, Color.yellow);
 
         for(Color c : colorList) {
-            piece = null;
             piece = new Piece(c, handler);
             assertEquals(c, piece.getColor());
         }
@@ -45,7 +44,6 @@ class PieceTest {
 
     @Test
     void getPosGivesTheCorrectPosition() {
-        int num = 0;
         piece.setPos(0);
         assertEquals(piece.getPos(),0);
     }
@@ -55,15 +53,13 @@ class PieceTest {
         handler = new Board();
         piece = new Piece(Color.RED, handler);
         Piece luigi = new Piece(Color.GREEN, handler);
-        handler.addPieceToField(piece,0);
+        handler.addPiece(piece,0);
         piece.handleCollision(luigi);
         assertEquals(piece.getPos(), -1);
     }
 
     @Test
     void piecePushesOtherPiece() { //TODO:Get Kevin on the case
-//        handler = new Board();
-//        piece = new Piece(Color.RED, handler);
         Piece goomba = new Piece(Color.BLUE, handler);
         goomba.handleCollision(piece);
         assertEquals(goomba.getPos(), -1);

@@ -14,18 +14,18 @@ import java.util.List;
 
 public class LeftPanel extends JPanel {
 
-    JPanel powerUpFrame;
-    List<JButton> powerUpButtons;
+    private final JPanel powerUpFrame;
+    private final List<JButton> powerUpButtons;
 
     //PowerUp buttons
-    JButton basePowerUp;
-    JButton catapultPowerUp;
-    JButton laserPowerUp;
-    JButton lightningPowerUp;
-    JButton switchPowerUp;
+    private final JButton basePowerUp;
+    private final JButton catapultPowerUp;
+    private final JButton laserPowerUp;
+    private final JButton lightningPowerUp;
+    private final JButton switchPowerUp;
 
     //Game button
-    JButton newGameButton;
+    private final JButton newGameButton;
 
     public LeftPanel(){
         this.setLayout(new GridBagLayout());
