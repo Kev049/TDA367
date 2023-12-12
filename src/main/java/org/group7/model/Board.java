@@ -189,6 +189,7 @@ public class Board implements IMoveHandler, PieceExtractor {
             this.field[from].removePiece();
             if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
                 int stepsLeft = (to - tileIndex);
+                System.out.println(stepsLeft);
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
                 this.field[to].insertPiece(piece);
