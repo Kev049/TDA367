@@ -26,7 +26,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Model instances
-        Board board = new Board();
+        Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 
         //View instances
@@ -62,6 +62,7 @@ public class Main {
         List<JButton> buttons = gameController.getListOfButtons();
 
         boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
+        //Move right and left panel to main, pass down to DrawPanels
         drawPanel = new DrawPanels(boardPanel, buttons, game);
 
         //Controller

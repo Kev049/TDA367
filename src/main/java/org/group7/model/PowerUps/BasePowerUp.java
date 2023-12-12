@@ -1,6 +1,9 @@
-package org.group7.model;
+package org.group7.model.PowerUps;
 
-public class BasePowerUp extends PowerUp{
+import org.group7.model.IMoveHandler;
+import org.group7.model.Piece;
+
+public class BasePowerUp extends PowerUp {
     public BasePowerUp(IMoveHandler handler){
         super(handler, "Base");
     }

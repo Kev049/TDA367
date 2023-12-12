@@ -8,10 +8,7 @@ import java.awt.*;
 import java.util.Set;
 import java.util.List;
 
-
-//public class DrawPanel extends JPanel implements Observer {
 public class DrawPanels extends JPanel{
-    private Set<PaintablePiece> pieces; //TODO: Fixa så att vi tar denna data antingen från board eller tiles och sätt ut dem.
     private JPanel boardPanel;
     private JPanel leftPanel;
     private JPanel rightPanel;

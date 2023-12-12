@@ -1,6 +1,9 @@
-package org.group7.model;
+package org.group7.model.PowerUps;
 
-public class LaserPowerUp extends PowerUp{
+import org.group7.model.IMoveHandler;
+import org.group7.model.Piece;
+
+public class LaserPowerUp extends PowerUp {
 
     public LaserPowerUp(IMoveHandler handler) {
         super(handler, "Laser");

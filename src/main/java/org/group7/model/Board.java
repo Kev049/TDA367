@@ -2,6 +2,10 @@ package org.group7.model;
 
 
 import org.group7.controllers.Observer;
+import org.group7.model.PowerUps.BasePowerUp;
+import org.group7.model.PowerUps.LaserPowerUp;
+import org.group7.model.PowerUps.LightningPowerUp;
+import org.group7.model.PowerUps.PowerUp;
 
 import java.awt.*;
 import java.util.List;
@@ -92,7 +96,6 @@ public class Board implements IMoveHandler {
         }
     }
 
-
     private void addPieceToBase(Piece p){   //Private ksk??
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
@@ -118,8 +121,19 @@ public class Board implements IMoveHandler {
         return b.removePiece();
     }
 
-    public void removePowerUpFromField(PowerUp powerUp){
+    public void switchEntityPosition(Piece piece){
+        int pos = piece.getPos();
+        for(int i = 1; i < field.length; i++){
+            if(!field[(pos + i) % 40].isEmpty()){
+                IEntity entity = field[pos + i].getEntity();
+                entity.accept(visitor);
+            }
+        }
+    }
+
+    public PowerUp removePowerUpFromField(PowerUp powerUp){
         this.field[powerUp.getPos()].removeEntity();
+        return powerUp;
     }
 
     public void pieceFromBaseToField(Color c){
@@ -156,8 +170,6 @@ public class Board implements IMoveHandler {
     }
 
      */
-
-
 
     public void addPieceToGoalStretch(Piece p, int steps) { //Color behövs inte explicit då player har den??
         GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
@@ -234,12 +246,11 @@ public class Board implements IMoveHandler {
     }
     */
 
-
     public void spawnPowerUp(){
         LightningPowerUp lightningPowerUp = new LightningPowerUp(this);
         BasePowerUp basePowerUp = new BasePowerUp(this);
         LaserPowerUp laserPowerUp = new LaserPowerUp(this);
-        //this.field[8].insertPowerUp(lightningPowerUp);
+        this.field[14].insertPowerUp(lightningPowerUp);
         this.field[24].insertPowerUp(basePowerUp);
         this.field[8].insertPowerUp(laserPowerUp);
     }
@@ -261,15 +272,6 @@ public class Board implements IMoveHandler {
         }
         return null;
     }
-
-    public List<Piece> getAllPieces(){
-        ArrayList<Piece> pieceList = new ArrayList<>();
-        for(Base base : bases){
-            pieceList.addAll(Arrays.asList(base.getPieces()));
-        }
-        return pieceList;
-    }
-
 
     public Tile[] getFieldTiles(){
         return this.field;

@@ -1,5 +1,9 @@
 package org.group7.model;
 
+import org.group7.model.PowerUps.BasePowerUp;
+import org.group7.model.PowerUps.LightningPowerUp;
+import org.group7.model.PowerUps.PowerUp;
+
 public class PowerUpFactory {
 
     public static PowerUp createPowerUp(String powerUpName, IMoveHandler handler){

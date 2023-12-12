@@ -1,13 +1,11 @@
 package org.group7.view;
 
 
-import org.group7.model.Entity;
 import org.group7.model.Piece;
-import org.group7.model.PowerUp;
+import org.group7.model.PowerUps.PowerUp;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 

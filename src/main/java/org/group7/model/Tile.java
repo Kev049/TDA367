@@ -1,5 +1,7 @@
 package org.group7.model;
 
+import org.group7.model.PowerUps.PowerUp;
+
 public class Tile {
 
     private final int index;

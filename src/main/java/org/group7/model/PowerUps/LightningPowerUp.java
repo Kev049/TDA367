@@ -1,6 +1,9 @@
-package org.group7.model;
+package org.group7.model.PowerUps;
 
-public class LightningPowerUp extends PowerUp{
+import org.group7.model.IMoveHandler;
+import org.group7.model.Piece;
+
+public class LightningPowerUp extends PowerUp {
 
     public LightningPowerUp(IMoveHandler handler) {
         super(handler, "Lightning");

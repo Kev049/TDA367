@@ -1,6 +1,6 @@
 package org.group7.view;
 
-import org.group7.model.PowerUp;
+import org.group7.model.PowerUps.PowerUp;
 
 import javax.swing.*;
 import java.awt.*;

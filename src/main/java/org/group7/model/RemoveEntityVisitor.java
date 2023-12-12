@@ -1,5 +1,7 @@
 package org.group7.model;
 
+import org.group7.model.PowerUps.PowerUp;
+
 public class RemoveEntityVisitor implements EntityVisitor{
     IMoveHandler handler;
     public RemoveEntityVisitor(IMoveHandler handler){
