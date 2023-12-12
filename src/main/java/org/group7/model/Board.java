@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements IMoveHandler {
+public class Board implements IMoveHandler, PieceExtractor {
     private Base[] bases;
     private Tile[] field;
-    private GoalStretch[] goals;
+    private GoalStretch[] goalStretches;
     private Color[] colors;
     private HashMap<Color,Integer> playerStartTiles;
     private HashMap<Color, GoalStretch> goalsHashMap;
@@ -27,7 +27,7 @@ public class Board implements IMoveHandler {
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
-        this.goals = new GoalStretch[4];
+        this.goalStretches = new GoalStretch[4];
         this.colors = new Color[4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
@@ -79,20 +79,20 @@ public class Board implements IMoveHandler {
     private void initGoals() {
         int i = 0;
         for (Color c : this.colors) {
-            this.goals[i] = new GoalStretch(c, this);
+            this.goalStretches[i] = new GoalStretch(c, this);
             i++;
         }
     }
 
     public void addGoalObserver(Observer o) {
-        for (GoalStretch gs: this.goals) {
+        for (GoalStretch gs: this.goalStretches) {
             gs.addObserver(o);
         }
     }
 
     private void initGoalsHashMap(){
         for (int i = 0; i < 4; i++){
-            this.goalsHashMap.put(this.colors[i], goals[i]);
+            this.goalsHashMap.put(this.colors[i], goalStretches[i]);
         }
     }
 
@@ -140,12 +140,12 @@ public class Board implements IMoveHandler {
 
     public void pieceFromBaseToField(Color c){
         Piece p = extractPieceFromBase(c);
-        if (p != null) {
-            addPieceToField(p, playerStartTiles.get(p.getColor()));
+        if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
+            addPiece(p, playerStartTiles.get(p.getColor()));
         }
     }
 
-    public void addPieceToField(Piece p, int index) {
+    public void addPiece(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
         t.insertPiece(p);
     }
@@ -153,8 +153,13 @@ public class Board implements IMoveHandler {
     public void yeetPieceFromGoal(Piece p){
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        Tile t = field[tileIndex];
+        Tile t;
+        if(tileIndex == 0) {
+           t = field[39];
+        } else {  t = field[tileIndex - 1];}
         t.insertPiece(p);
+        p.setHandler(this);
+        p.enableFieldState();
     }
 
     /*          Antagligen onödigt komplicerat
@@ -175,6 +180,8 @@ public class Board implements IMoveHandler {
 
     public void addPieceToGoalStretch(Piece p, int steps) { //Color behövs inte explicit då player har den??
         GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
+        p.setHandler(goalStretch);
+        p.enableGoalState();
         goalStretch.addPiece(p, steps);
     }
 
@@ -189,26 +196,27 @@ public class Board implements IMoveHandler {
         goalStretch.removePiece(index);
     }
 
-    private boolean completedLap(int from, int to, int start) { //Verkar fungera, testa? allt behövs kanske inte
-        if (from < to) {
-            return (from < start && to >= start);       //TODO Add explanation perhaps, currently hard to read
+    private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
+        if (prevPos < nextPos) { //if next pos is larger than pos, which will not happen if nextPos is >40
+            return (prevPos < start && nextPos >= start);       //TODO Add explanation perhaps, currently hard to read
         } else {
-            return (from < start || to >= start);
+            return (prevPos < start || nextPos >= start);
         }
     }
 
-    public void movePiece(Piece piece, int offset) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
+    public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        int to = (from + offset) % 40;
-        int stepsLeft = (to - tileIndex);
+        int to = (from + diceRoll) % 40;
         if (piece.isAtGoalStretch()){        //TODO Refactor this if/else statement
-            movePieceInGoalStretch(piece, stepsLeft);
+            movePieceInGoalStretch(piece, diceRoll);
         }
         else {
             this.field[from].removeEntity();
-            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goal
+            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
+                int stepsLeft = (to - tileIndex);
+                System.out.println(stepsLeft);
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
                 this.field[to].insertPiece(piece);
@@ -256,7 +264,6 @@ public class Board implements IMoveHandler {
         this.field[24].insertPowerUp(basePowerUp);
         this.field[8].insertPowerUp(laserPowerUp);
     }
-
     //Getters
 
     public List<Base> getBases(){
@@ -280,7 +287,7 @@ public class Board implements IMoveHandler {
     }
     public List<Tile> getGoalTiles(){
         List<Tile> goalTiles = new ArrayList<>(16);
-        for (GoalStretch goal : goals) {
+        for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }
         return goalTiles;

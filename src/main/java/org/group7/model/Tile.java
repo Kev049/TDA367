@@ -2,7 +2,7 @@ package org.group7.model;
 
 import org.group7.model.PowerUps.PowerUp;
 
-public class Tile {
+public class Tile implements IInsertable {
 
     private final int index;
     private IEntity entity;
