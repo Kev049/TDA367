@@ -2,7 +2,7 @@ package org.group7.model;
 
 import java.awt.Color;
 
-public class Tile {
+public class Tile implements IInsertable {
 
     private final int index;
     private Piece piece;

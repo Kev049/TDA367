@@ -12,7 +12,10 @@ import static java.lang.Math.abs;
 public class GoalStretch implements Observable, IMoveHandler {
 
     private final int capacity = 4;
+    private final int insertCapacity = capacity + 1;
     private Tile[] tiles = new Tile[capacity];
+    private IInsertable[] insertables = new IInsertable[insertCapacity];
+    //private List<IInsertable> insertables = new ArrayList<>(capacity + 1);
     private Color color;
     private int finishedPieces;
 
@@ -23,9 +26,16 @@ public class GoalStretch implements Observable, IMoveHandler {
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
         initTiles();
+        initInsertables();
         this.finishedPieces = 0;
         this.observers = new ArrayList<>();
         this.handler = handler;
+    }
+
+    private void initInsertables(){
+        System.arraycopy(this.tiles, 0, this.insertables, 0, capacity);
+        this.insertables[4] = new Goal();
+        //insertables.add(4, new Goal());
     }
 
     private void initTiles(){
@@ -57,30 +67,19 @@ public class GoalStretch implements Observable, IMoveHandler {
         boolean isNotNewToGoalStretch = p.isAtGoalStretch();
         pos += steps;  // där den ska
         pos = 4 - abs((pos - 4));
-        if (pos == 4) { //om/när den går i mål
-            this.finishedPieces++;
-            if(isNotNewToGoalStretch){
-                p.removeFromGoalStretch();
-                this.tiles[oldPos].removePiece();
-            }
-            p.setPos(pos); //kan bytas ut mot p.setPos(-1) beroende på om "speedboosts" inne i rakstreckan ska finnas (om pos kan bli mer än 10)
-            p = null; //tar bort pjäsen
-            System.out.println("goal!");
-        }
-        else if (pos < 0){
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
-            this.handler.yeetPieceFromGoal(p);      //Antagligen inte optimalt
+        if(isNotNewToGoalStretch){ removePiece(oldPos);}
+        if (pos < 0){ //pjäsen studsar ut
+            this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
-        } else {
-            if(isNotNewToGoalStretch){ this.tiles[oldPos].removePiece();}
-            this.tiles[pos].insertPiece(p);
+        } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
             p.setPos(pos);
+            this.insertables[pos].insertPiece(p);
+            //lägga till en if check eller liknande som lägger till/räknar antalet pjäser som går i mål?
         }
-
     }
 
     public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
-        this.tiles[index].removePiece();
+        this.insertables[index].removePiece();
     }
 
     public Color getColor(){
@@ -91,12 +90,15 @@ public class GoalStretch implements Observable, IMoveHandler {
         return this.tiles;
     }
 
+//    public List<IInsertable> getTiles(){
+//        return this.insertables.subList(0, insertables.size() - 1);
+//    }
+
     private void checkIfFull(){
         if (finishedPieces == capacity) {
             notifyObservers();
         }
     }
-
     @Override
     public void notifyObservers(){
         for (Observer o: this.observers){

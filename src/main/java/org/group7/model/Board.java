@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Board implements IMoveHandler, PieceExtractor {
     private Base[] bases;
     private Tile[] field;
-    private GoalStretch[] goals;
+    private GoalStretch[] goalStretches;
     private Color[] colors;
     private HashMap<Color,Integer> playerStartTiles;
     private HashMap<Color, GoalStretch> goalsHashMap;
@@ -22,7 +22,7 @@ public class Board implements IMoveHandler, PieceExtractor {
     public Board() {
         this.bases = new Base[4];
         this.field = new Tile[40];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
-        this.goals = new GoalStretch[4];
+        this.goalStretches = new GoalStretch[4];
         this.colors = new Color[4];
         this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
@@ -73,20 +73,20 @@ public class Board implements IMoveHandler, PieceExtractor {
     private void initGoals() {
         int i = 0;
         for (Color c : this.colors) {
-            this.goals[i] = new GoalStretch(c, this);
+            this.goalStretches[i] = new GoalStretch(c, this);
             i++;
         }
     }
 
     public void addGoalObserver(Observer o) {
-        for (GoalStretch gs: this.goals) {
+        for (GoalStretch gs: this.goalStretches) {
             gs.addObserver(o);
         }
     }
 
     private void initGoalsHashMap(){
         for (int i = 0; i < 4; i++){
-            this.goalsHashMap.put(this.colors[i], goals[i]);
+            this.goalsHashMap.put(this.colors[i], goalStretches[i]);
         }
     }
 
@@ -229,7 +229,6 @@ public class Board implements IMoveHandler, PieceExtractor {
     public void spawnPowerUp(){
 
     }
-
     //Getters
 
     public List<Base> getBases(){
@@ -264,7 +263,7 @@ public class Board implements IMoveHandler, PieceExtractor {
     }
     public List<Tile> getGoalTiles(){
         List<Tile> goalTiles = new ArrayList<>(16);
-        for (GoalStretch goal : goals) {
+        for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }
         return goalTiles;

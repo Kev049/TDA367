@@ -25,4 +25,5 @@ public class Dice { // Implementerar Singleton pattern så att ingen klass ska k
     }
 
 
+
 }
