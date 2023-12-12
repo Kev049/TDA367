@@ -127,6 +127,8 @@ public class Board implements IMoveHandler {
             if(!field[(pos + i) % 40].isEmpty()){
                 IEntity entity = field[pos + i].getEntity();
                 entity.accept(visitor);
+                field[pos + i].insertPiece(piece);
+
             }
         }
     }
