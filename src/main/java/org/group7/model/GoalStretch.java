@@ -55,6 +55,7 @@ public class GoalStretch implements Observable, IMoveHandler {
         //goalStretchMove(p, index);
         //this.tiles[entryTileIndex].insertPiece(p);
         goalStretchMove(p, index);
+        p.addToGoalStretch();
 //        if (entryTileIndex < 4) {
 //            this.tiles[entryTileIndex].insertPiece(p);
 //            goalStretchMove(p, 0);
@@ -73,7 +74,7 @@ public class GoalStretch implements Observable, IMoveHandler {
         boolean isNotNewToGoalStretch = p.isAtGoalStretch();
         pos += steps;  // där den ska
         pos = 4 - abs((pos - 4));
-        if(isNotNewToGoalStretch){ removePiece(oldPos);}
+        if(isNotNewToGoalStretch){ removeEntity(oldPos);}
         if (pos < 0){ //pjäsen studsar ut
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
@@ -84,8 +85,8 @@ public class GoalStretch implements Observable, IMoveHandler {
         }
     }
 
-    public void removePiece(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
-        this.insertables[index].removePiece();
+    public void removeEntity(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
+        this.insertables[index].removeEntity();
     }
 
     public Color getColor(){

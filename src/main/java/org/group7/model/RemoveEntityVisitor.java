@@ -3,8 +3,8 @@ package org.group7.model;
 import org.group7.model.PowerUps.PowerUp;
 
 public class RemoveEntityVisitor implements EntityVisitor{
-    IMoveHandler handler;
-    public RemoveEntityVisitor(IMoveHandler handler){
+    IPowerUpHandler handler;
+    public RemoveEntityVisitor(IPowerUpHandler handler){
         this.handler = handler;
     }
     public void visit(Piece piece){

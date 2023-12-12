@@ -2,7 +2,7 @@ package org.group7.model;
 
 import java.awt.Color;
 //deprecated
-public abstract class Entity{
+public abstract class Entity{ //TODO: Ta bort denna klassen
 private int pos;
 
     public Entity(int pos){

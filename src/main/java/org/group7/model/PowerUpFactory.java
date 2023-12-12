@@ -6,12 +6,14 @@ import org.group7.model.PowerUps.PowerUp;
 
 public class PowerUpFactory {
 
-    public static PowerUp createPowerUp(String powerUpName, IMoveHandler handler){
+    public static PowerUp createPowerUp(String powerUpName, IPowerUpHandler handler){
         if (powerUpName.equals("Base")) {
             return new BasePowerUp(handler);
-        } else if (powerUpName.equals("Lightning")) {
+        }
+        else if (powerUpName.equals("Lightning")) {
             return new LightningPowerUp(handler);
-        } else {
+        }
+        else {
             try {
                 throw new Exception("Unknown powerup!");
             } catch (Exception e) {

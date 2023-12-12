@@ -1,11 +1,12 @@
 package org.group7.model.PowerUps;
 
 import org.group7.model.IMoveHandler;
+import org.group7.model.IPowerUpHandler;
 import org.group7.model.Piece;
 
 public class LightningPowerUp extends PowerUp {
 
-    public LightningPowerUp(IMoveHandler handler) {
+    public LightningPowerUp(IPowerUpHandler handler) {
         super(handler, "Lightning");
     }
 
@@ -13,6 +14,6 @@ public class LightningPowerUp extends PowerUp {
     public void handleCollision(Piece piece) {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
-        this.handler.addPieceToField(piece, pos + 2);
+        this.handler.addPiece(piece, pos + 2);
     }
 }

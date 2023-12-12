@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements IMoveHandler, PieceExtractor {
+public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
     private Base[] bases;
     private Tile[] field;
     private GoalStretch[] goalStretches;
@@ -121,14 +121,13 @@ public class Board implements IMoveHandler, PieceExtractor {
         return b.removePiece();
     }
 
-    public void switchEntityPosition(Piece piece){
+    public void switchEntityPositions(Piece piece){
         int pos = piece.getPos();
         for(int i = 1; i < field.length; i++){
             if(!field[(pos + i) % 40].isEmpty()){
                 IEntity entity = field[pos + i].getEntity();
                 entity.accept(visitor);
                 field[pos + i].insertPiece(piece);
-
             }
         }
     }
@@ -145,6 +144,7 @@ public class Board implements IMoveHandler, PieceExtractor {
         }
     }
 
+    @Override
     public void addPiece(Piece p, int index) {
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
         t.insertPiece(p);
@@ -193,7 +193,7 @@ public class Board implements IMoveHandler, PieceExtractor {
 
     public void removeEntityFromGoalStretch(Color goalColor, int index)  {
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
-        goalStretch.removePiece(index);
+        goalStretch.removeEntity(index);
     }
 
     private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
@@ -216,7 +216,7 @@ public class Board implements IMoveHandler, PieceExtractor {
             this.field[from].removeEntity();
             if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
                 int stepsLeft = (to - tileIndex);
-                System.out.println(stepsLeft);
+                //System.out.println(stepsLeft);
                 addPieceToGoalStretch(piece, stepsLeft);
             } else {                                    // still on first lap
                 this.field[to].insertPiece(piece);

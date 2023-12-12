@@ -1,16 +1,13 @@
 package org.group7.model.PowerUps;
 
-import org.group7.model.EntityVisitor;
-import org.group7.model.IEntity;
-import org.group7.model.IMoveHandler;
-import org.group7.model.Piece;
+import org.group7.model.*;
 
 public abstract class PowerUp implements IEntity { //borde väl vara en abstrakt klass?
     private int pos;
-    protected IMoveHandler handler;
+    protected IPowerUpHandler handler;
     private final String powerUpName;
 
-    public PowerUp(IMoveHandler handler, String powerUpName) {
+    public PowerUp(IPowerUpHandler handler, String powerUpName) {
         this.handler = handler;
         this.powerUpName = powerUpName;
     }

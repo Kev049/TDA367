@@ -14,11 +14,11 @@ public class Goal implements IInsertable {
     @Override
     public void insertPiece(Piece p) {
         this.piece = p;
-        removePiece();
+        removeEntity();
     }
 
     @Override
-    public void removePiece() {
+    public void removeEntity() {
         this.piece.setPos(-1);
         this.piece = null;
         System.out.println("goal!");
