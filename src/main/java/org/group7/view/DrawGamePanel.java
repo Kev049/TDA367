@@ -12,12 +12,12 @@ import java.awt.GridBagConstraints;
 
 import java.util.List;
 
-public class DrawPanels extends JPanel{
+public class DrawGamePanel extends JPanel{
     private final JPanel boardPanel;
     private final JPanel leftPanel;
     private final JPanel rightPanel;
 
-    public DrawPanels(BoardPanel boardPanel, List<JButton> buttons, Game game) {
+    public DrawGamePanel(BoardPanel boardPanel, List<JButton> buttons, Game game) {
         this.boardPanel = boardPanel;
         JButton rollDiceButton = buttons.getFirst();   // TODO Utan Java21 funkar inte detta, ändra?
         this.leftPanel = new LeftPanel();

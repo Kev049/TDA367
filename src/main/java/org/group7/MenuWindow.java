@@ -1,24 +1,24 @@
 package org.group7;
 
-import org.group7.view.DrawGamePanel;
+import org.group7.view.DrawMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameWindow extends JFrame{
+public class MenuWindow extends JFrame{
     private static final int X = 1920;
     private static final int Y = 1080;
-    private final DrawGamePanel drawPanel;
+    private DrawMenuPanel drawMenuPanel;
 
-    public GameWindow(String name, DrawGamePanel drawPanel){
-        this.drawPanel = drawPanel;
+    public MenuWindow(String name, DrawMenuPanel drawMenuPanel){
+        this.drawMenuPanel = drawMenuPanel;
         componentSetup(name);
     }
 
     private void componentSetup(String title){
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
-        this.add(drawPanel);
+        this.add(drawMenuPanel);
         this.pack();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
