@@ -125,7 +125,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void pieceFromBaseToField(Color c, int diceRoll){
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
-            addPiece(p, 0);//playerStartTiles.get(p.getColor()) + diceRoll - 1);
+            addPiece(p,playerStartTiles.get(p.getColor()) + diceRoll - 1);
         }
     }
 

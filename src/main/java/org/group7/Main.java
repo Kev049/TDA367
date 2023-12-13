@@ -82,7 +82,7 @@ public class Main {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                    (new File("src/main/resources/jazz.wav")));
+                    (new File("src/main/resources/kanye.wav")));
             clip.open(inputStream);
             clip.start();
         } catch (Exception e) {
