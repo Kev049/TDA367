@@ -20,6 +20,5 @@ public class PowerUpFactory { //TODO ta bort/bestäm vad som ska hända med denn
                 throw new RuntimeException(e);
             }
         }
-
     }
 }

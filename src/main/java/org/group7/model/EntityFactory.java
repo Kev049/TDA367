@@ -1,7 +1,15 @@
 package org.group7.model;
 
-public abstract class EntityFactory { //TODO varför existerar denna?
+import org.group7.model.PowerUps.PowerUp;
 
-    abstract IEntity createEntity();
+import java.awt.*;
 
+public class EntityFactory { //TODO varför existerar denna?
+    public static Piece createPiece(Color color, IMoveHandler handler){
+        return new Piece(color, handler);
+    }
+
+    public static PowerUp createPowerUp(String powerUpName, IPowerUpHandler handler){
+        return new PowerUp(powerUpName, handler);
+    }
 }

@@ -39,6 +39,8 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
+        this.finishedPieces = new HashMap<>();
+        initFinishedPieces();
         spawnPowerups();
     }
 
@@ -49,6 +51,12 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         }
         this.currentPlayerNumber = 0;
         this.currentPlayer = players[currentPlayerNumber];
+    }
+
+    private void initFinishedPieces(){
+        for (int i = 0; i < 4; i++){
+            this.finishedPieces.put(this.colorArray[i], 0);
+        }
     }
 
     public void rollDice() {
@@ -126,11 +134,18 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     @Override
     public void update(){
-        System.out.println(this.currentPlayer.getColor() + "won!");
+        Color c = currentPlayer.getColor();
+        this.finishedPieces.replace(c, this.finishedPieces.get(c) + 1);
+        if (this.finishedPieces.get(c) == 4){
+            System.out.println(c + "won!");
+        }
     }
 
     public boolean noMovesAvailable(){      //Checks if the current player has any pieces on the board
-        return this.lastDiceRollResult != (1 | 6);
+        Color c = this.currentPlayer.getColor();
+        Piece[] P = this.getPiecesFromBase(currentPlayer);
+        int basePieces = P.length;
+        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + basePieces) == 4));
         //return ((((getPiecesFromBase(currentPlayer).length) + finishedPieces.get(currentPlayer.getColor())) == 4) && (lastDiceRollResult != (1 | 6)));
     } //TODO make it so Goal notifies Game of a new finished piece so this is actually usable
 }

@@ -23,7 +23,6 @@ public class RollState extends GameState {
         game.rollDice();
         if(game.noMovesAvailable()){
             finishRound();
-            game.setState(new RollState(game));
         }
         else {
             game.setState(new MoveState(game));

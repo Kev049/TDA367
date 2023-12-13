@@ -5,7 +5,7 @@ import org.group7.model.PowerUps.PowerUp;
 public class Tile implements IInsertable {
 
     private final int index;
-    private IEntity entity;
+    private Entity entity;
 
     public Tile(int index) {
         this.entity = null;
@@ -28,7 +28,7 @@ public class Tile implements IInsertable {
         }
     }
 
-    public IEntity getEntity(){
+    public Entity getEntity(){
         return this.entity;
     }
 

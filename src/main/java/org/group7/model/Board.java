@@ -123,7 +123,7 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         int pos = piece.getPos();
         for(int i = 1; i < field.length; i++){
             if(!field[(pos + i) % 40].isEmpty()){
-                IEntity entity = field[pos + i].getEntity();
+                Entity entity = field[pos + i].getEntity();
                 entity.accept(visitor);
                 field[pos + i].insertPiece(piece);
             }

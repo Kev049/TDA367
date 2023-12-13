@@ -2,7 +2,7 @@ package org.group7.model;
 
 import java.awt.*;
 
-public class Piece implements IEntity {
+public class Piece extends Entity {
     private int pos;
     public IMoveHandler handler;
     private final Color color;
@@ -17,6 +17,7 @@ public class Piece implements IEntity {
         this.state = new FieldState(this);
     }
 
+    @Override
     public void accept(EntityVisitor visitor){
         visitor.visit(this);
     }
@@ -24,10 +25,7 @@ public class Piece implements IEntity {
         return this.color;
     }
 
-    public int getPos(){
-        return this.pos;
-    }
-
+    @Override
     public void handleCollision(Piece p) {
         state.handleCollision(p,handler);
     }
@@ -54,9 +52,5 @@ public class Piece implements IEntity {
 
     public boolean isAtGoalStretch(){
         return this.atGoalStretch;
-    }
-
-    public void setPos(int index){
-        this.pos = index;
     }
 }
