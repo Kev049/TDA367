@@ -132,17 +132,17 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     @Override
     public void addPiece(Piece p, int index) {
-        int tileIndex = playerStartTiles.get(p.getColor());
-        int from = p.getPos();
-        if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
-            int stepsLeft = (index - tileIndex);
-            addPieceToGoalStretch(p, stepsLeft);
-        } else {                                    // still on first lap
-            this.field[index].insertPiece(p);
-        }
+//        int tileIndex = playerStartTiles.get(p.getColor());
+//        int from = p.getPos();
+//        if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
+//            int stepsLeft = (index - tileIndex);
+//            addPieceToGoalStretch(p, stepsLeft);
+//        } else {                                    // still on first lap
+//            this.field[index].insertPiece(p);
+//        }
         //insertsPieceAtCorrectPos(0, p);
-//        Tile t = this.field[index];         //TODO kanske kan komma att ändras
-//        t.insertPiece(p);
+        Tile t = this.field[index];         //TODO kanske kan komma att ändras
+        t.insertPiece(p);
     }
 
     public void yeetPieceFromGoal(Piece p){
@@ -209,8 +209,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public void spawnPowerUp(){
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
-        BasePowerUp basePowerUp = new BasePowerUp(this);
-        LaserPowerUp laserPowerUp = new LaserPowerUp(this);
+        BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(this);
+        LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(this);
         this.field[14].insertPowerUp(lightningPowerUp);
         this.field[24].insertPowerUp(basePowerUp);
         this.field[8].insertPowerUp(laserPowerUp);

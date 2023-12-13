@@ -16,11 +16,11 @@ public class EntityFactory {
         return new BasePowerUp(powerUpHandler);
     }
 
-    public static PowerUp createLaserPowerUp(ILaserPowerUpHandler powerUpHandler){
+    public static LaserPowerUp createLaserPowerUp(ILaserPowerUpHandler powerUpHandler){
         return new LaserPowerUp(powerUpHandler);
     }
 
-    public static PowerUp createLightningPowerUp(ILightningPowerUpHandler powerUpHandler){
+    public static LightningPowerUp createLightningPowerUp(ILightningPowerUpHandler powerUpHandler){
         return new LightningPowerUp(powerUpHandler);
     }
 }
