@@ -134,7 +134,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void addPiece(Piece p, int index) {
         int tileIndex = playerStartTiles.get(p.getColor());
         int from = p.getPos();
-        if (completedLap(-1, index, tileIndex)) {    // completed a lap, so should enter goalStretch
+        if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
             int stepsLeft = (index - tileIndex);
             addPieceToGoalStretch(p, stepsLeft);
         } else {                                    // still on first lap
@@ -208,7 +208,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     }
 
     public void spawnPowerUp(){
-        LightningPowerUp lightningPowerUp = new LightningPowerUp(this);
+        LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
         BasePowerUp basePowerUp = new BasePowerUp(this);
         LaserPowerUp laserPowerUp = new LaserPowerUp(this);
         this.field[14].insertPowerUp(lightningPowerUp);

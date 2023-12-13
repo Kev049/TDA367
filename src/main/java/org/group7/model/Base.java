@@ -19,7 +19,7 @@ public class Base {
 
     private void initPieces(IMoveHandler handler) { //Kan nog delas upp till 2 metoder
         for (int i = 0; i < 4; i++) {
-            Piece piece = new Piece(this.color, handler);
+            Piece piece = EntityFactory.createPiece(color, handler);
             this.pieces[i] = piece;
         }
     }

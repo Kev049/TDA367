@@ -8,19 +8,19 @@ import org.group7.model.PowerUps.PowerUp;
 import java.awt.*;
 
 public class EntityFactory {
-    public static Entity createPiece(Color color, IMoveHandler handler){
+    public static Piece createPiece(Color color, IMoveHandler handler){
         return new Piece(color, handler);
     }
 
-    public static Entity createBasePowerUp(IBasePowerUpHandler powerUpHandler){
+    public static BasePowerUp createBasePowerUp(IBasePowerUpHandler powerUpHandler){
         return new BasePowerUp(powerUpHandler);
     }
 
-    public static Entity createLaserPowerUp(ILaserPowerUpHandler powerUpHandler){
+    public static PowerUp createLaserPowerUp(ILaserPowerUpHandler powerUpHandler){
         return new LaserPowerUp(powerUpHandler);
     }
 
-    public static Entity createLightningPowerUp(ILightningPowerUpHandler powerUpHandler){
+    public static PowerUp createLightningPowerUp(ILightningPowerUpHandler powerUpHandler){
         return new LightningPowerUp(powerUpHandler);
     }
 }
