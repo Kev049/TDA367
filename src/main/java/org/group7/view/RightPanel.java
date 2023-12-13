@@ -9,7 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class RightPanel extends JPanel implements StringObserver {
+public class
+RightPanel extends JPanel implements StringObserver {
     private final JButton rollDiceButton;
     private final JLabel playerTurnOutput;
     public RightPanel(JButton rollDiceButton){

@@ -1,7 +1,6 @@
 package org.group7.model.PowerUps;
 
 import org.group7.model.IBasePowerUpHandler;
-import org.group7.model.IPowerUpHandler;
 import org.group7.model.Piece;
 
 public class BasePowerUp extends PowerUp {
@@ -20,7 +19,7 @@ public class BasePowerUp extends PowerUp {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
-        this.handler.pieceFromBaseToField(piece.getColor());
+        this.handler.pieceFromBaseToField(piece.getColor(), 1);
     }
 
 }

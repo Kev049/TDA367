@@ -32,5 +32,6 @@ public class RollState extends GameState {
     @Override
     public void finishRound() {
         game.nextPlayer();
+        game.endTurn();
     }
 }

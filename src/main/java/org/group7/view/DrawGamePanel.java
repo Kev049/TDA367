@@ -24,7 +24,7 @@ public class DrawGamePanel extends JPanel{
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         drawPanels();
-        game.addObserver((StringObserver)rightPanel); //TODO bort med denna
+        game.addObserver((StringObserver)rightPanel);
     }
 
     private void drawPanels(){

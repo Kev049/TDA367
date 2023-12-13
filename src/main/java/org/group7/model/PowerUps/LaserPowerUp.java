@@ -1,7 +1,6 @@
 package org.group7.model.PowerUps;
 
 import org.group7.model.ILaserPowerUpHandler;
-import org.group7.model.IPowerUpHandler;
 import org.group7.model.Piece;
 
 public class LaserPowerUp extends PowerUp {

@@ -19,8 +19,7 @@ public class Dice { // Implementerar Singleton pattern så att ingen klass ska k
     }
 
     public int roll() {
-        //return this.generator.nextInt(6) + 1;
-        return 6;
+        return 6;//this.generator.nextInt(6) + 1;
     }
 
 

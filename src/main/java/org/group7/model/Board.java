@@ -8,16 +8,14 @@ import org.group7.model.PowerUps.LightningPowerUp;
 import org.group7.model.PowerUps.PowerUp;
 
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler{
     private final Base[] bases;
     private final Tile[] field;
     private final GoalStretch[] goalStretches;
-    private final Color[] colors;     //TODO varför har vi ens denna?
+    private final Color[] colors;
     private final HashMap<Color,Integer> playerStartTiles;
     private final HashMap<Color, GoalStretch> goalsHashMap;
     private final HashMap<Color,Base> colorBaseMap;
@@ -108,8 +106,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public void removeFromField(int pos){
         for(int i = 1; i < 9; i++){
-            if(!field[pos + i].isEmpty()){
-                field[pos + i].getEntity().accept(visitor);
+            int index = (pos + i) % 40;
+            if(!field[index].isEmpty()){
+                field[index].getEntity().accept(visitor);
             }
         }
     }
@@ -123,23 +122,23 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.field[powerUp.getPos()].removeEntity();
     }
 
-    public void pieceFromBaseToField(Color c){
+    public void pieceFromBaseToField(Color c, int diceRoll){
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
-            addPiece(p, playerStartTiles.get(p.getColor()));
+            addPiece(p, 0);//playerStartTiles.get(p.getColor()) + diceRoll - 1);
         }
     }
 
     @Override
     public void addPiece(Piece p, int index) {
-//        int tileIndex = playerStartTiles.get(p.getColor());
-//        int from = p.getPos();
-//        if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
-//            int stepsLeft = (index - tileIndex);
-//            addPieceToGoalStretch(p, stepsLeft);
-//        } else {                                    // still on first lap
-//            this.field[index].insertPiece(p);
-//        }
+        //int tileIndex = playerStartTiles.get(p.getColor());
+        //int from = p.getPos();
+        //if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
+        //    int stepsLeft = (index - tileIndex);
+        //    addPieceToGoalStretch(p, stepsLeft);
+        //} else {                                    // still on first lap
+        //    this.field[index].insertPiece(p);
+        //}
         //insertsPieceAtCorrectPos(0, p);
         Tile t = this.field[index];         //TODO kanske kan komma att ändras
         t.insertPiece(p);
@@ -164,7 +163,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         goalStretch.addPiece(p, steps);
     }
 
-    public void removeEntityFromGoalStretch(Color goalColor, int index)  {  //TODO denna eller yeet?
+    public void removeEntityFromGoalStretch(Color goalColor, int index){  //TODO denna eller yeet?
         GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
         goalStretch.removeEntity(index);
     }
@@ -177,43 +176,40 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
-    public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
-//        int from = piece.getPos();
-//        this.field[from].removeEntity();
-//        insertsPieceAtCorrectPos(diceRoll, piece);
+    public void movePieceInGoalStretch(Piece piece, int steps){
+        Color c = piece.getColor();
+        GoalStretch goalStretch = goalsHashMap.get(c);
+        goalStretch.goalStretchMove(piece, steps);
+    }
+
+    public void movePiece(Piece piece, int diceRoll){  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
-        this.field[from].removeEntity();
-        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
-            int stepsLeft = (to - tileIndex);
-            addPieceToGoalStretch(piece, stepsLeft);
-        } else {                                    // still on first lap
-            this.field[to].insertPiece(piece);
+        if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
+            movePieceInGoalStretch(piece, diceRoll);
         }
-    }
-
-    public void insertsPieceAtCorrectPos(int roll,  Piece piece){
-        int from = piece.getPos();
-        Color c = piece.getColor();
-        int tileIndex = playerStartTiles.get(c);
-        int to = (from + roll) % 40;
-        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
-            int stepsLeft = (to - tileIndex);
-            addPieceToGoalStretch(piece, stepsLeft);
-        } else {                                    // still on first lap
-            this.field[to].insertPiece(piece);
+        else{
+            this.field[from].removeEntity();
+            if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
+                int stepsLeft = (to - tileIndex);
+                //System.out.println(stepsLeft);
+                addPieceToGoalStretch(piece, stepsLeft);
+            } else {                                    // still on first lap
+                this.field[to].insertPiece(piece);
+            }
         }
     }
 
     public void spawnPowerUp(){
+        Random rand = new Random();
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(this);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(this);
-        this.field[14].insertPowerUp(lightningPowerUp);
-        this.field[24].insertPowerUp(basePowerUp);
-        this.field[8].insertPowerUp(laserPowerUp);
+        this.field[rand.nextInt(40)].insertPowerUp(lightningPowerUp);
+        this.field[rand.nextInt(40)].insertPowerUp(basePowerUp);
+        this.field[rand.nextInt(40)].insertPowerUp(laserPowerUp);
     }
     //Getters
 

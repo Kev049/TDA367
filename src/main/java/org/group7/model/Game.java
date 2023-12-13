@@ -1,28 +1,26 @@
 package org.group7.model;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.group7.controllers.Observer;
 import org.group7.controllers.StringObservable;
 import org.group7.controllers.StringObserver;
-import java.awt.Color;
+
+import java.awt.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Game implements StringObservable, Observer {   //TODO ta bort onödiga metoder
-
     private final Set<StringObserver> stringObservers;
     private final Dice dice;
     private final Board board;
-    private Player[] players; //TODO:Byt tillbaka till private
-    //private Player[] players;
+    private Player[] players;
     private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
     private int currentPlayerNumber;
     private int turnNumber;
     private HashMap<Color, Integer> finishedPieces;
-
     private GameState gameState;
-    private final Color[] colorArray; //TODO varför finns denna?
+    private final Color[] colorArray;
     private int lastDiceRollResult;
 
     public Game(Board board) { //TODO Game should create the board, not Main
@@ -81,8 +79,6 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         //setState(this.gameState);
     }
 
-    //TODO: Validate that it is player's turn
-
     protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
         return ((this.currentPlayer.getColor().equals(color) && !(board.getBaseFromColor(color).isEmpty()))
                 && (this.lastDiceRollResult == 1 || this.lastDiceRollResult == 6));
@@ -93,7 +89,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     public void movePieceOutOfBase(Color color) {
-        board.pieceFromBaseToField(color);
+        board.pieceFromBaseToField(color, lastDiceRollResult);
     }
 
     @Override
@@ -111,11 +107,6 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     public Piece[] getPiecesFromBase(Player player) {
         return this.board.getPiecesFromBase(player.getColor());
     }   //Onödig?
-
-
-    public int getLastDiceRollResult() {    //TODO antagligen ta bort?
-        return lastDiceRollResult;
-    }
 
     private void spawnPowerups() {
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
@@ -139,15 +130,21 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         Color c = currentPlayer.getColor();
         this.finishedPieces.replace(c, this.finishedPieces.get(c) + 1);
         if (this.finishedPieces.get(c) == 4) {
-            System.out.println(c + "won!");
+            System.out.println(c + "won!");     //TODO change this to proper victory popup
         }
     }
 
-    //TODO make it so Goal notifies Game of a new finished piece so this is actually usable
     public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
         Color c = this.currentPlayer.getColor();
         int pieceAmount = board.getPieceAmount(c);
         return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
+    }
+
+    public void endTurn(){
+        this.turnNumber++;
+        if(turnNumber % 10 == 0){
+            spawnPowerups();
+        }
     }
 }
 

@@ -13,7 +13,6 @@ import java.util.List;
 //This panel will have the new game button and the powerup info
 
 public class LeftPanel extends JPanel {
-
     private final JPanel powerUpFrame;
     private final List<JButton> powerUpButtons;
 
@@ -29,7 +28,6 @@ public class LeftPanel extends JPanel {
 
     public LeftPanel(){
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.RED);
         this.powerUpButtons = new ArrayList<>();
         this.powerUpFrame = new JPanel();
         this.basePowerUp = new JButton();
@@ -82,6 +80,13 @@ public class LeftPanel extends JPanel {
             i++;
         }
 
+        basePowerUp.setToolTipText("Takes a piece out of base");
+        catapultPowerUp.setToolTipText("To be implemented");
+        laserPowerUp.setToolTipText("Blasts all powerups and pieces 8 tiles in front of the piece");
+        lightningPowerUp.setToolTipText("Move forward 2 steps");
+        switchPowerUp.setToolTipText("To be implemented");
+
+
         basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Base_icon.png")));
         catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Catapult_icon.png")));
         laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Laser_icon.png")));
@@ -98,5 +103,9 @@ public class LeftPanel extends JPanel {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public JButton getNewGameButton(){
+        return this.newGameButton;
     }
 }

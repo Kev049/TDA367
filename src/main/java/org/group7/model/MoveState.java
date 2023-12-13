@@ -26,8 +26,9 @@ public class MoveState extends GameState {
 
     @Override
     public void finishRound() {
-        game.setState(new RollState(game));
-        game.nextPlayer();
+        //game.setState(new RollState(game));
+        //game.nextPlayer();
+        game.endTurn();
     }
 
 

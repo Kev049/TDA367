@@ -6,7 +6,11 @@ import org.group7.controllers.WindowController;
 import org.group7.model.*;
 import org.group7.view.*;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,7 @@ public class Main {
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
     private static final int TOTAL_AMOUNT_PIECES = 16;
 
-    public static void main(String[] args) {    //TODO försöka att städa denna klass
+    public static <URL, AudioInputStream> void main(String[] args) {    //TODO försöka att städa denna klass
         Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 
@@ -54,6 +58,7 @@ public class Main {
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalTiles.add(paintableTile);
         }
+
         //TODO: refactor please
         GameController gameController = new GameController(game);
         JButton rollDiceButton = gameController.getRollDiceButton();
@@ -61,6 +66,7 @@ public class Main {
         BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
         LeftPanel leftPanel = new LeftPanel();
         RightPanel rightPanel = new RightPanel(rollDiceButton);
+        JButton newGameButton = leftPanel.getNewGameButton();
 
         DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, game, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
@@ -69,7 +75,18 @@ public class Main {
         BoardController boardController = new BoardController(paintablePieces, paintableBases, game, boardPanel); //TODO borde kanske ändra detta, används men "ändå inte"
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
-        WindowController windowController = new WindowController(menuWindow, drawGamePanel, fourPlayerMenuButton);
-
+        WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel,fourPlayerMenuButton, newGameButton);
+        playSound();
+    }
+    public static synchronized void playSound() {
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                    (new File("src/main/resources/jazz.wav")));
+            clip.open(inputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,7 +16,6 @@ public class GoalStretch implements Observable, IMoveHandler {
     private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
     private final IInsertable[] insertables = new IInsertable[insertCapacity];
     private final Color color;
-    private int finishedPieces;
 
     private final PieceExtractor handler;
 
@@ -26,7 +25,6 @@ public class GoalStretch implements Observable, IMoveHandler {
         this.color = color;
         initTiles();
         initInsertables();
-        this.finishedPieces = 0;
         this.observers = new ArrayList<>();
         this.handler = handler;
     }
@@ -49,24 +47,21 @@ public class GoalStretch implements Observable, IMoveHandler {
         p.setPos(entryTileIndex);
         p.addToGoalStretch();
         this.insertables[entryTileIndex].insertPiece(p);
-        goalStretchMove(p, 0);
-
-        //this.tiles[finishedPieces].insertPiece(p); //TODO change to actual index not dummy checker
-        //this.finishedPieces += 1;
-        //checkIfFull(); //TODO use observer pattern here to tell Game that a player has won
+        //goalStretchMove(p, 0);
     }
 
     public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
         int pos = p.getPos();  // där den står
-        int oldPos = pos;
-        boolean isNotNewToGoalStretch = p.isAtGoalStretch();    // TODO varför finns detta? vad är poängen?
-        pos += steps;  // där den ska
-        pos = 4 - abs((pos - 4));
-        if(isNotNewToGoalStretch){ removeEntity(oldPos);}
-        if (pos < 0){ //pjäsen studsar ut
+        //int oldPos = pos;
+        //boolean isNotNewToGoalStretch = p.isAtGoalStretch();    // TODO varför finns detta? vad är poängen?
+        removeEntity(pos);
+        //pos += steps;  // där den ska
+        pos = 4 - abs((pos + steps - 4));
+        if(pos < 0){ //pjäsen studsar ut
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
-        } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
+        }
+        else{ //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
             p.setPos(pos);
             this.insertables[pos].insertPiece(p);
             //lägga till en if check eller liknande som lägger till/räknar antalet pjäser som går i mål?
@@ -83,12 +78,6 @@ public class GoalStretch implements Observable, IMoveHandler {
 
     public Tile[] getTiles(){
         return this.tiles;
-    }
-
-    private void checkIfFull(){
-        if (finishedPieces == capacity) {
-            notifyObservers();
-        }
     }
 
     @Override
