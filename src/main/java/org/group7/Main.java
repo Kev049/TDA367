@@ -17,23 +17,20 @@ public class Main {
     private static final int TOTAL_AMOUNT_BASES = 4;
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
     private static final int TOTAL_AMOUNT_PIECES = 16;
-    private static BoardPanel boardPanel;
-    private static DrawGamePanel drawPanel;
-    private static List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
-    private static List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
-    private static List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
-    private static List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
-    private static Tile[] fieldTiles;
-    private static List<Base> bases = new ArrayList<>(TOTAL_AMOUNT_BASES);
-    private static List<Tile> goalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
 
     public static void main(String[] args) {    //TODO försöka att städa denna klass
         Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 
-        fieldTiles = board.getFieldTiles();
-        bases = board.getBases();
-        goalTiles = board.getGoalTiles();
+        Tile[] fieldTiles = board.getFieldTiles();
+        List<Base> bases = board.getBases();
+        List<Tile> goalTiles = board.getGoalTiles();
+
+        List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
+        List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
+
+        List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
+        List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
 
         for (Tile fieldTile : fieldTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTile);
@@ -59,18 +56,20 @@ public class Main {
         }
         //TODO: refactor please
         GameController gameController = new GameController(game);
-        List<JButton> buttons = gameController.getListOfButtons();
+        JButton rollDiceButton = gameController.getRollDiceButton();
 
-        boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
-        //Move right and left panel to main, pass down to DrawPanels
-        drawPanel = new DrawGamePanel(boardPanel, buttons, game);
+        BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
+        LeftPanel leftPanel = new LeftPanel();
+        RightPanel rightPanel = new RightPanel(rollDiceButton);
+
+        DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, game, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
-
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
+
         BoardController boardController = new BoardController(paintablePieces, paintableBases, game, boardPanel); //TODO borde kanske ändra detta, används men "ändå inte"
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
-        WindowController windowController = new WindowController(menuWindow, drawPanel, fourPlayerMenuButton);
+        WindowController windowController = new WindowController(menuWindow, drawGamePanel, fourPlayerMenuButton);
 
     }
 }

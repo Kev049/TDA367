@@ -1,4 +1,5 @@
 package org.group7.model;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     private Player currentPlayer;
     private int currentPlayerNumber;
     private int turnNumber;
+    private HashMap<Color, Integer> finishedPieces;
 
     private GameState gameState;
     private final Color[] colorArray; //TODO varför finns denna?
@@ -100,6 +102,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         return this.board.getPiecesFromBase(player.getColor());
     }   //Onödig?
 
+
     public int getLastDiceRollResult() {    //TODO antagligen ta bort?
         return lastDiceRollResult;
     }
@@ -126,6 +129,10 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         System.out.println(this.currentPlayer.getColor() + "won!");
     }
 
+    public boolean noMovesAvailable(){      //Checks if the current player has any pieces on the board
+        return this.lastDiceRollResult != (1 | 6);
+        //return ((((getPiecesFromBase(currentPlayer).length) + finishedPieces.get(currentPlayer.getColor())) == 4) && (lastDiceRollResult != (1 | 6)));
+    } //TODO make it so Goal notifies Game of a new finished piece so this is actually usable
 }
 
 

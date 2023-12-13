@@ -17,11 +17,10 @@ public class DrawGamePanel extends JPanel{
     private final JPanel leftPanel;
     private final JPanel rightPanel;
 
-    public DrawGamePanel(BoardPanel boardPanel, List<JButton> buttons, Game game) {
+    public DrawGamePanel(BoardPanel boardPanel, Game game, JPanel leftPanel, JPanel rightPanel) {
         this.boardPanel = boardPanel;
-        JButton rollDiceButton = buttons.getFirst();   // TODO Utan Java21 funkar inte detta, ändra?
-        this.leftPanel = new LeftPanel();
-        this.rightPanel = new RightPanel(rollDiceButton);
+        this.leftPanel = leftPanel;
+        this.rightPanel = rightPanel;
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         drawPanels();

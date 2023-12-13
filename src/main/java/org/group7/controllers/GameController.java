@@ -35,7 +35,7 @@ public class GameController{
         buttons.add(this.newGameButton);
     }
 
-    public List<JButton> getListOfButtons(){
-        return this.buttons;
+    public JButton getRollDiceButton(){
+        return this.rollDiceButton;
     }
 }

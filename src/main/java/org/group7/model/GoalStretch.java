@@ -45,16 +45,12 @@ public class GoalStretch implements Observable, IMoveHandler {
 
     @Override
     public void addPiece(Piece p, int index) {
-        //int entryTileIndex = 4 - abs(index - 4);
-        p.setPos(0);
-        //p.setPos(entryTileIndex);
-        //p.addToGoalStretch();
-        //this.insertables[entryTileIndex].insertPiece(p);
-        //goalStretchMove(p, entryTileIndex);
-        //goalStretchMove(p, index);
-        //this.tiles[entryTileIndex].insertPiece(p);
-        goalStretchMove(p, index);
+        int entryTileIndex = 4 - abs(index - 4);
+        //p.setPos(0);
+        p.setPos(entryTileIndex);
         p.addToGoalStretch();
+        this.insertables[entryTileIndex].insertPiece(p);
+        goalStretchMove(p, 0);
 //        if (entryTileIndex < 4) {
 //            this.tiles[entryTileIndex].insertPiece(p);
 //            goalStretchMove(p, 0);
