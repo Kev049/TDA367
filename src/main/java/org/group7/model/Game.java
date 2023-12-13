@@ -13,7 +13,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     private final Set<StringObserver> stringObservers;
     private final Dice dice;
     private final Board board;
-    public Player[] players; //TODO:Byt tillbaka till private
+    private Player[] players; //TODO:Byt tillbaka till private
     //private Player[] players;
     private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
@@ -44,17 +44,17 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         spawnPowerups();
     }
 
-    private void initPlayers(){
+    private void initPlayers() {
         this.players = new Player[amountOfPlayers];
-        for( int i = 0; i < this.amountOfPlayers; i++) {
+        for (int i = 0; i < this.amountOfPlayers; i++) {
             this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
         }
         this.currentPlayerNumber = 0;
         this.currentPlayer = players[currentPlayerNumber];
     }
 
-    private void initFinishedPieces(){
-        for (int i = 0; i < 4; i++){
+    private void initFinishedPieces() {
+        for (int i = 0; i < 4; i++) {
             this.finishedPieces.put(this.colorArray[i], 0);
         }
     }
@@ -63,7 +63,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         this.lastDiceRollResult = dice.roll();
     }
 
-    public int roll(){
+    public int roll() {
         gameState.roll();
         return this.lastDiceRollResult;
     }
@@ -83,14 +83,16 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     //TODO: Validate that it is player's turn
 
-    protected boolean validateBaseMove(Color color){
-        return (this.currentPlayer.getColor().equals(color) && !(board.getBaseFromColor(color).isEmpty()));
-    }
-    public void moveBasePiece(Color color){
-            this.gameState.pieceFromBaseToField(color);
+    protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
+        return ((this.currentPlayer.getColor().equals(color) && !(board.getBaseFromColor(color).isEmpty()))
+                && (this.lastDiceRollResult == 1 || this.lastDiceRollResult == 6));
     }
 
-    public void movePieceOutOfBase(Color color){
+    public void moveBasePiece(Color color) {
+        this.gameState.pieceFromBaseToField(color);
+    }
+
+    public void movePieceOutOfBase(Color color) {
         board.pieceFromBaseToField(color);
     }
 
@@ -101,12 +103,12 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     @Override
     public void notifyObservers(String playerColor) {
-        for (StringObserver o: this.stringObservers) {
+        for (StringObserver o : this.stringObservers) {
             o.update(playerColor);
         }
     }
 
-    public Piece[] getPiecesFromBase(Player player){
+    public Piece[] getPiecesFromBase(Player player) {
         return this.board.getPiecesFromBase(player.getColor());
     }   //Onödig?
 
@@ -115,17 +117,17 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         return lastDiceRollResult;
     }
 
-    private void spawnPowerups(){
+    private void spawnPowerups() {
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUp();
 
     }
 
-    protected void setState(GameState gamestate){
+    protected void setState(GameState gamestate) {
         this.gameState = gamestate;
     }
 
-    protected void nextPlayer(){
+    protected void nextPlayer() {
         this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
         this.currentPlayer = this.players[currentPlayerNumber];
         String playerColor = this.currentPlayer.getColor().toString();
@@ -133,21 +135,20 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     @Override
-    public void update(){
+    public void update() {
         Color c = currentPlayer.getColor();
         this.finishedPieces.replace(c, this.finishedPieces.get(c) + 1);
-        if (this.finishedPieces.get(c) == 4){
+        if (this.finishedPieces.get(c) == 4) {
             System.out.println(c + "won!");
         }
     }
 
-    public boolean noMovesAvailable(){      //Checks if the current player has any pieces on the board
+    //TODO make it so Goal notifies Game of a new finished piece so this is actually usable
+    public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
         Color c = this.currentPlayer.getColor();
-        Piece[] P = this.getPiecesFromBase(currentPlayer);
-        int basePieces = P.length;
-        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + basePieces) == 4));
-        //return ((((getPiecesFromBase(currentPlayer).length) + finishedPieces.get(currentPlayer.getColor())) == 4) && (lastDiceRollResult != (1 | 6)));
-    } //TODO make it so Goal notifies Game of a new finished piece so this is actually usable
+        int pieceAmount = board.getPieceAmount(c);
+        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
+    }
 }
 
 

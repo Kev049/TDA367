@@ -1,11 +1,14 @@
 package org.group7.model.PowerUps;
 
+import org.group7.model.IBasePowerUpHandler;
 import org.group7.model.IPowerUpHandler;
 import org.group7.model.Piece;
 
 public class BasePowerUp extends PowerUp {
-    public BasePowerUp(IPowerUpHandler handler){
-        super(handler, "Base");
+    IBasePowerUpHandler handler;
+    public BasePowerUp(IBasePowerUpHandler handler){
+        super("Base");
+        this.handler = handler;
     }
 
     @Override

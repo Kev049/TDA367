@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
+public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler{
     private final Base[] bases;
     private final Tile[] field;
     private final GoalStretch[] goalStretches;
@@ -119,20 +119,8 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
         return b.removePiece();
     }
 
-    public void switchEntityPositions(Piece piece){     // TODO Onödig, ta bort
-        int pos = piece.getPos();
-        for(int i = 1; i < field.length; i++){
-            if(!field[(pos + i) % 40].isEmpty()){
-                Entity entity = field[pos + i].getEntity();
-                entity.accept(visitor);
-                field[pos + i].insertPiece(piece);
-            }
-        }
-    }
-
-    public PowerUp removePowerUpFromField(PowerUp powerUp){
+    public void removePowerUpFromField(PowerUp powerUp){
         this.field[powerUp.getPos()].removeEntity();
-        return powerUp;
     }
 
     public void pieceFromBaseToField(Color c){
@@ -144,8 +132,17 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
 
     @Override
     public void addPiece(Piece p, int index) {
-        Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        t.insertPiece(p);
+        int tileIndex = playerStartTiles.get(p.getColor());
+        int from = p.getPos();
+        if (completedLap(-1, index, tileIndex)) {    // completed a lap, so should enter goalStretch
+            int stepsLeft = (index - tileIndex);
+            addPieceToGoalStretch(p, stepsLeft);
+        } else {                                    // still on first lap
+            this.field[index].insertPiece(p);
+        }
+        //insertsPieceAtCorrectPos(0, p);
+//        Tile t = this.field[index];         //TODO kanske kan komma att ändras
+//        t.insertPiece(p);
     }
 
     public void yeetPieceFromGoal(Piece p){
@@ -181,11 +178,27 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
     }
 
     public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
+//        int from = piece.getPos();
+//        this.field[from].removeEntity();
+//        insertsPieceAtCorrectPos(diceRoll, piece);
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
         this.field[from].removeEntity();
+        if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
+            int stepsLeft = (to - tileIndex);
+            addPieceToGoalStretch(piece, stepsLeft);
+        } else {                                    // still on first lap
+            this.field[to].insertPiece(piece);
+        }
+    }
+
+    public void insertsPieceAtCorrectPos(int roll,  Piece piece){
+        int from = piece.getPos();
+        Color c = piece.getColor();
+        int tileIndex = playerStartTiles.get(c);
+        int to = (from + roll) % 40;
         if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
             int stepsLeft = (to - tileIndex);
             addPieceToGoalStretch(piece, stepsLeft);
@@ -229,6 +242,10 @@ public class Board implements IMoveHandler, PieceExtractor, IPowerUpHandler{
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }
         return goalTiles;
+    }
+
+    public int getPieceAmount(Color c){
+        return colorBaseMap.get(c).getPieceAmount();
     }
 
 }

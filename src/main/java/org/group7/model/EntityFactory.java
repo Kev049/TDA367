@@ -1,15 +1,26 @@
 package org.group7.model;
 
+import org.group7.model.PowerUps.BasePowerUp;
+import org.group7.model.PowerUps.LaserPowerUp;
+import org.group7.model.PowerUps.LightningPowerUp;
 import org.group7.model.PowerUps.PowerUp;
 
 import java.awt.*;
 
-public class EntityFactory { //TODO varför existerar denna?
-    public static Piece createPiece(Color color, IMoveHandler handler){
+public class EntityFactory {
+    public static Entity createPiece(Color color, IMoveHandler handler){
         return new Piece(color, handler);
     }
 
-    public static PowerUp createPowerUp(String powerUpName, IPowerUpHandler handler){
-        return new PowerUp(powerUpName, handler);
+    public static Entity createBasePowerUp(IBasePowerUpHandler powerUpHandler){
+        return new BasePowerUp(powerUpHandler);
+    }
+
+    public static Entity createLaserPowerUp(ILaserPowerUpHandler powerUpHandler){
+        return new LaserPowerUp(powerUpHandler);
+    }
+
+    public static Entity createLightningPowerUp(ILightningPowerUpHandler powerUpHandler){
+        return new LightningPowerUp(powerUpHandler);
     }
 }

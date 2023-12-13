@@ -51,4 +51,8 @@ public class Base {
         return this.color;
     }
 
+    public int getPieceAmount(){
+        return this.pieceAmount;
+    }
+
 }

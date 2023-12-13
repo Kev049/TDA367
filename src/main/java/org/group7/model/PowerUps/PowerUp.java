@@ -4,11 +4,9 @@ import org.group7.model.*;
 
 public abstract class PowerUp extends Entity{
     private int pos;
-    protected IPowerUpHandler handler;  //TODO PowerUpHandler är för stor
     private final String powerUpName;
 
-    public PowerUp(IPowerUpHandler handler, String powerUpName) {
-        this.handler = handler;
+    public PowerUp(String powerUpName) {
         this.powerUpName = powerUpName;
     }
 
