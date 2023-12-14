@@ -20,7 +20,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     private final Color[] colorArray;
     private Player[] players;
     private int lastDiceRollResult;
-    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
+    private int amountOfPlayers; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private int currentPlayerNumber;
     private int turnNumber;
     private final int piecePerPlayer = 4;
@@ -29,6 +29,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         this.dice = Dice.getInstance();
         this.board = board;
         this.board.addGoalObserver(this);
+        this.amountOfPlayers = 4;
         this.colorArray = new Color[amountOfPlayers];
         this.colorArray[0] = Color.RED;
         this.colorArray[1] = Color.GREEN;
@@ -45,7 +46,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     private void initPlayers() {
-        this.players = new Player[amountOfPlayers];
+        this.players = new Player[this.amountOfPlayers];
         for (int i = 0; i < this.amountOfPlayers; i++) {
             this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
         }
@@ -105,7 +106,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     protected void nextPlayer() {
-        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % this.currentPlayerNumber;
+        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % this.amountOfPlayers;
         this.currentPlayer = this.players[currentPlayerNumber];
         String playerColor = this.currentPlayer.getColor().toString();
         notifyObservers(playerColor);

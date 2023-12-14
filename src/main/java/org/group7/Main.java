@@ -76,7 +76,7 @@ public class Main {
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
         WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
-        playSound();
+        //playSound();
     }
 
     public static synchronized void playSound() {
