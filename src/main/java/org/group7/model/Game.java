@@ -48,7 +48,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     private void initPlayers() {
         this.players = new Player[this.amountOfPlayers];
         for (int i = 0; i < this.amountOfPlayers; i++) {
-            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
+            this.players[i] = new Player(this.colorArray[i]);
         }
         this.currentPlayerNumber = 0;
         this.currentPlayer = players[currentPlayerNumber];
