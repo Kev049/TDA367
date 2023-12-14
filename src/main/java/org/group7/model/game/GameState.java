@@ -18,7 +18,5 @@ public abstract class GameState {
 
     public abstract void roll();
 
-    public abstract void finishRound();
-
     public abstract void nextState(Game game);
 }

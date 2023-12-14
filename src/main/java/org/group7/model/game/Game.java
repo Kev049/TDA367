@@ -5,8 +5,8 @@ import org.group7.controller.observe.Observer;
 import org.group7.controller.observe.StringObservable;
 import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Board;
-import org.group7.model.utilities.Dice;
 import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.utilities.Dice;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -39,7 +39,6 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         this.observers = new HashSet<>();
         this.finishedPieces = new HashMap<>();
         initFinishedPieces();
-        spawnPowerups();
     }
 
     public void initColors() {
@@ -56,13 +55,18 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         }
     }
 
-    public void rollDice() {
+    protected void rollDice() {
         this.lastDiceRollResult = dice.roll();
+        if (noMovesAvailable()) {
+            finishRoll();
+        } else {
+            setState(new MoveState(this));
+        }
     }
 
     public int roll() {
-        gameState.roll();
         notifyObservers();
+        gameState.roll();
         return this.lastDiceRollResult;
     }
 
@@ -75,18 +79,26 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected void movePiece(Piece piece) {
-        this.board.movePiece(piece, this.lastDiceRollResult);
-        notifyObservers();
+        if (this.validateMove(piece)) {
+            this.board.movePiece(piece, this.lastDiceRollResult);
+            notifyObservers();
+            finishMove();
+        }
     }
 
-    private void finishRound() {
+    private void finishMove() {
         gameState.nextState(this);
-        this.spawnPowerUpsEachSixteenTurns();
-        if (!this.hasRolledSix()) {
-            this.nextPlayer();
+        spawnPowerUpsEachSixteenTurns();
+        if (!hasRolledSix()) {
+            nextPlayer();
         } else {
-            this.increaseTurnNumber();
+            increaseTurnNumber();
         }
+    }
+
+    private void finishRoll() {
+        increaseTurnNumber();
+        nextPlayer();
     }
 
     protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
@@ -99,8 +111,11 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     public void movePieceOutOfBase(Color color) {
-        board.pieceFromBaseToField(color, lastDiceRollResult);
-        notifyObservers();
+        if (this.validateBaseMove(color)) {
+            board.pieceFromBaseToField(color, lastDiceRollResult);
+            notifyObservers();
+            finishMove();
+        }
     }
 
     private void spawnPowerups() {
@@ -134,9 +149,10 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     public void increaseTurnNumber(){
         this.turnNumber++;
+        System.out.println(turnNumber);
     }
     public void spawnPowerUpsEachSixteenTurns() {
-        if (turnNumber % 16 == 0) {
+        if (turnNumber % 8 == 0) {
             spawnPowerups();
         }
     }

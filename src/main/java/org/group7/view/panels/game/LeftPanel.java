@@ -48,7 +48,7 @@ public class LeftPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
 
         c.gridy = 0;
-        c.insets = new Insets(0, 0, 350, 0);
+        c.insets = new Insets(0, 0, 250, 0);
         this.add(newGameButton, c);
 
         c.insets = new Insets(0, 0, 50, 0);
@@ -64,8 +64,7 @@ public class LeftPanel extends JPanel {
 
     private void initPowerUpButtons() {
         powerUpFrame.setLayout(new GridBagLayout());
-        powerUpFrame.setBackground(Color.RED);
-        //powerUpFrame.setOpaque(false);
+        powerUpFrame.setOpaque(false);
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -81,6 +80,7 @@ public class LeftPanel extends JPanel {
             powerUpFrame.add(powerUpButton, c);
 
             c.gridx = 1;
+            c.insets = new Insets(0, 100,25, 0);
             JLabel questionMark = new JLabel();
             questionMark.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Question_mark.png")));
             powerUpFrame.add(questionMark, c);

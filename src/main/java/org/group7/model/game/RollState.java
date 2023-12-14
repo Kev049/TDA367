@@ -2,7 +2,7 @@ package org.group7.model.game;
 
 import org.group7.model.board.entities.piece.Piece;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class RollState extends GameState {
 
@@ -23,16 +23,6 @@ public class RollState extends GameState {
     @Override
     public void roll() {
         game.rollDice();
-        if (game.noMovesAvailable()) {
-            finishRound();
-        } else {
-            game.setState(new MoveState(game));
-        }
-    }
-
-    @Override
-    public void finishRound() {
-        game.nextPlayer();
     }
 
     @Override

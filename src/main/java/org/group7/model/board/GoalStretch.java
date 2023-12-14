@@ -94,7 +94,7 @@ public class GoalStretch implements Observable, IMoveHandler {
 
     @Override
     public void returnPieceToBase(Piece p) {
-        //VERY TEMPORARY
+        
     }
 
 
