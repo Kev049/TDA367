@@ -1,6 +1,6 @@
 package org.group7.model;
 import org.group7.model.board.Board;
-import org.group7.model.board.Board.Entities.Piece;
+import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.board.IMoveHandler;
 import org.group7.model.board.Tile;
 import org.junit.jupiter.api.AfterEach;
