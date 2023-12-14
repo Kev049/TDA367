@@ -21,7 +21,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
     private final int fieldTileAmount = 40;
-    private int playerAmount = 4;
+    private final int playerAmount = 4;
 
     public Board() {
         this.bases = new Base[playerAmount];
