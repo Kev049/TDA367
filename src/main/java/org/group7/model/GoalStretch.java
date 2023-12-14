@@ -16,13 +16,13 @@ public class GoalStretch implements Observable, IMoveHandler {
     private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
     private final IInsertable[] insertables = new IInsertable[insertCapacity];
     private final Color color;
-
     private final PieceExtractor handler;
-
     private final List<Observer> observers;
+    private Goal goal;
 
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
+        this.goal = new Goal();
         initTiles();
         initInsertables();
         this.observers = new ArrayList<>();
@@ -31,7 +31,7 @@ public class GoalStretch implements Observable, IMoveHandler {
 
     private void initInsertables(){
         System.arraycopy(this.tiles, 0, this.insertables, 0, capacity);
-        this.insertables[4] = new Goal();
+        this.insertables[4] = goal;
         //insertables.add(4, new Goal());
     }
 
@@ -90,6 +90,7 @@ public class GoalStretch implements Observable, IMoveHandler {
     @Override
     public void addObserver(Observer o) {
         this.observers.add(o);
+        this.goal.addObserver(o);
     }
 
     @Override

@@ -202,7 +202,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
-    public void spawnPowerUp(){
+    public void spawnPowerUps(){
         Random rand = new Random();
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(this);

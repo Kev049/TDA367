@@ -110,7 +110,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     private void spawnPowerups() {
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
-        this.board.spawnPowerUp();
+        this.board.spawnPowerUps();
 
     }
 
@@ -128,7 +128,8 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     @Override
     public void update() {
         Color c = currentPlayer.getColor();
-        this.finishedPieces.replace(c, this.finishedPieces.get(c) + 1);
+        int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
+        this.finishedPieces.replace(c, increasedFinishedPieces);
         if (this.finishedPieces.get(c) == 4) {
             System.out.println(c + "won!");     //TODO change this to proper victory popup
         }
@@ -142,7 +143,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     public void endTurn(){
         this.turnNumber++;
-        if(turnNumber % 10 == 0){
+        if(turnNumber % 15 == 0){
             spawnPowerups();
         }
     }

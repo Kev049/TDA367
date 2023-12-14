@@ -16,6 +16,6 @@ public class LightningPowerUp extends PowerUp {
     public void handleCollision(Piece piece) {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
-        this.handler.addPiece(piece, pos + 2);
+        this.handler.addPiece(piece, (pos + 2) % 40);
     }
 }
