@@ -20,7 +20,7 @@ public class Player{
     } //TODO onödig
 
     public Piece choosePiece(){ //väljer automatiskt piece 0,
-        return pieces.getFirst();
+        return pieces.get(0);
     } //TODO onödig
 
 }

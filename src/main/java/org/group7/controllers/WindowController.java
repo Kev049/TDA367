@@ -26,7 +26,7 @@ public class WindowController {
     private void addListener(){
         fourPlayerMenuButton.addActionListener(e -> {
             menuWindow.dispose();
-            this.gameWindow = new GameWindow("TurboFia", drawGamePanel);
+            gameWindow = new GameWindow("TurboFia", drawGamePanel);
         });
         newGameButton.addActionListener(e -> {
             gameWindow.dispose();
