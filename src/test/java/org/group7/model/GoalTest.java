@@ -30,10 +30,13 @@ class GoalTest {
     }
 
     @Test
-    void insertPieceRemovesPiece() {
+    void removeEntitySetsPiecePosOutOfBounds() {
         goal.insertPiece(piece);
-        assertEquals(piece.getPos(), -1);
+        assertEquals(-1, piece.getPos());
     }
+
+//    @Test
+//    void
 
     @Test
     void removeEntity() {
