@@ -25,6 +25,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
     private final int fieldTileAmount = 40;
+    private final int goalTileAmount = 16;
     private final int playerAmount = 4;
     private final PowerUpGenerator powerUpGenerator;
 
@@ -142,7 +143,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         return b.removePiece();
     }
 
-
     public void pieceFromBaseToField(Color c, int diceRoll) {
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
@@ -153,7 +153,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void pieceFromGoalStretchToField(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        tileIndex = ((((tileIndex - 1) % 40) + 40) % 40); // Positive modulo
+        tileIndex = ((((tileIndex - 1) % fieldTileAmount) + fieldTileAmount) % fieldTileAmount); // Positive modulo
         field[tileIndex].insertPiece(p);
         p.setHandler(this);
         p.toggleState();
@@ -177,7 +177,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        int to = (from + diceRoll) % 40;
+        int to = (from + diceRoll) % fieldTileAmount;
         if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
             movePieceInGoalStretch(piece, diceRoll);
         } else {
@@ -218,7 +218,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     }
 
     public List<Tile> getGoalTiles() {
-        List<Tile> goalTiles = new ArrayList<>(16);
+        List<Tile> goalTiles = new ArrayList<>(goalTileAmount);
         for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }
