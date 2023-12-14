@@ -77,10 +77,21 @@ class PieceTest {
     }
 
     @Test
+    void isAtGoalStretchReturnsFalseIfNotAtGoalStretch() {
+        assertFalse(piece.isAtGoalStretch());
+    }
+
+    @Test
     void pieceIsAtGoalStretchIfAddedToGoalStretch() {
         piece.addToGoalStretch();
         assertTrue(piece.isAtGoalStretch());
     }
 
+    @Test
+    void removeFromGoalStretchRemovesPieceFromGoalStretch() {
+        piece.addToGoalStretch();
+        piece.removeFromGoalStretch();
+        assertFalse(piece.isAtGoalStretch());
+    }
     
 }
