@@ -15,6 +15,7 @@ public class LaserPowerUp extends PowerUp {
     @Override
     public void handleCollision(Piece piece) {
         int pos = this.getPos();
+        System.out.println(pos);
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
         this.handler.removeFromField(pos);

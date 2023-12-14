@@ -39,7 +39,9 @@ public class Base {
         }
     }
 
-    public boolean isEmpty() {return (this.pieceAmount == 0);}
+    public boolean isEmpty() {
+        return (this.pieceAmount == 0);
+    }
 
     //getters
 
