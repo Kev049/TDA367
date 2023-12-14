@@ -1,6 +1,7 @@
 package org.group7.view.panels.game;
 
 import org.group7.controller.observe.StringObserver;
+import org.group7.view.PaintableEntityFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class
 RightPanel extends JPanel implements StringObserver {
@@ -44,7 +46,9 @@ RightPanel extends JPanel implements StringObserver {
     private void initDiceComponent() {
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         try {
-            image = ImageIO.read(new File("src/main/resources/Dices.png"));
+            URL dicePath = RightPanel.class.getClassLoader().getResource("Dices.png");
+            image = ImageIO.read(dicePath);
+            //image = ImageIO.read(new File("src/main/resources/Dices.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

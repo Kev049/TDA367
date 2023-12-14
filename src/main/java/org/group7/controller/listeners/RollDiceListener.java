@@ -1,6 +1,7 @@
 package org.group7.controller.listeners;
 
 import org.group7.model.game.Game;
+import org.group7.view.panels.menu.DrawMenuPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -41,7 +43,9 @@ public class RollDiceListener implements ActionListener {
 
     private void readImage() {
         try {
-            image = ImageIO.read(new File("src/main/resources/Dices.png"));
+            URL dicePath = DrawMenuPanel.class.getClassLoader().getResource("Dices.png");
+            image = ImageIO.read(dicePath);
+            //image = ImageIO.read(new File("src/main/resources/Dices.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

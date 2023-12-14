@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,7 +66,9 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
 
     private void applyImage() {
         try {
-            this.image = ImageIO.read(new File("src/main/resources/Board.png"));
+            URL path = BoardPanel.class.getClassLoader().getResource("Board.png");
+            this.image = ImageIO.read(path);
+            //this.image = ImageIO.read(new File("src/main/resources/Board.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

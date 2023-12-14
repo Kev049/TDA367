@@ -19,11 +19,13 @@ import org.group7.view.panels.game.LeftPanel;
 import org.group7.view.panels.game.RightPanel;
 import org.group7.view.panels.menu.DrawMenuPanel;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,8 +99,13 @@ public class Main {
     public static synchronized void playSound() {
         try {
             Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                    (new File("src/main/resources/audio/cook.wav")));
+
+            URL songPath = Main.class.getClassLoader().getResource("audio/cook.wav");
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(songPath);
+
+            //AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+            //        (new File("src/main/resources/audio/cook.wav")));
+
             clip.open(inputStream);
             clip.start();
         } catch (Exception e) {
