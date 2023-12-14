@@ -64,6 +64,7 @@ public class Main {
         JButton rollDiceButton = gameController.getRollDiceButton();
 
         BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
+        game.addObserver(boardPanel);
         LeftPanel leftPanel = new LeftPanel();
         RightPanel rightPanel = new RightPanel(rollDiceButton);
         JButton newGameButton = leftPanel.getNewGameButton();
@@ -72,11 +73,11 @@ public class Main {
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 
-        BoardController boardController = new BoardController(paintablePieces, paintableBases, game, boardPanel); //TODO borde kanske ändra detta, används men "ändå inte"
+        BoardController boardController = new BoardController(paintablePieces, paintableBases, game); //TODO borde kanske ändra detta, används men "ändå inte"
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
         WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
-        //playSound();
+        playSound();
     }
 
     public static synchronized void playSound() {

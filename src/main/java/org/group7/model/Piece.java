@@ -3,7 +3,7 @@ package org.group7.model;
 import java.awt.*;
 
 public class Piece extends Entity {
-    private int pos;
+
     public IMoveHandler handler;
     private final Color color;
     private boolean atGoalStretch;
@@ -31,13 +31,21 @@ public class Piece extends Entity {
         state.handleCollision(p, handler);
     }
 
-    public void enableGoalState() {
+    protected void setState(PieceState s) {
+        this.state = s;
+    }
+
+    public void toggleState() {
+        this.state.nextState();
+    }
+
+    /*public void enableGoalState() {
         this.state = new GoalState(this);
     } //TODO borde antagligen flytta detta beroendet till State-klasserna
 
     public void enableFieldState() {
         this.state = new FieldState(this);
-    } //TODO borde antagligen flytta detta beroendet till State-klasserna
+    } //TODO borde antagligen flytta detta beroendet till State-klasserna*/
 
     public void setHandler(IMoveHandler handler) {
         this.handler = handler;

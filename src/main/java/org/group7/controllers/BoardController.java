@@ -1,7 +1,6 @@
 package org.group7.controllers;
 
-import org.group7.model.*;
-import org.group7.view.BoardPanel;
+import org.group7.model.Game;
 import org.group7.view.PaintableBase;
 import org.group7.view.PaintablePiece;
 
@@ -11,32 +10,25 @@ public class BoardController { //TODO namnet på denna klassen borde ifrågasät
     private final List<PaintablePiece> paintablePieces;
     private final List<PaintableBase> paintableBases;
     private final Game game;
-    private final BoardPanel boardPanel;
+    private final PaintableBaseListener paintableBaseListener;
+    private final PaintablePieceListener paintablePieceListener;
 
     public BoardController(List<PaintablePiece> paintablePieces, List<PaintableBase> paintableBases,
-                           Game game, BoardPanel boardPanel) {
-        this.boardPanel = boardPanel;
+                           Game game) {
         this.paintablePieces = paintablePieces;
         this.paintableBases = paintableBases;
         this.game = game;
+        this.paintableBaseListener = new PaintableBaseListener(game);
+        this.paintablePieceListener = new PaintablePieceListener(game);
         addListeners();
     }
 
     private void addListeners() {
         for (PaintablePiece paintablePiece : paintablePieces) {
-            paintablePiece.addActionListener(e -> {
-                Piece piece = paintablePiece.getPiece();
-                game.move(piece);
-                boardPanel.drawBoard();
-            });
+            paintablePiece.addActionListener(paintablePieceListener);
         }
         for (PaintableBase paintableBase : paintableBases) {
-            paintableBase.addActionListener(e -> { // TODO säg åt game att byta spelare
-                Base base = paintableBase.getBase();
-                game.moveBasePiece(base.getColor());
-                paintableBase.redrawPieces();
-                boardPanel.drawBoard();
-            });
+            paintableBase.addActionListener(paintableBaseListener);
         }
     }
 }

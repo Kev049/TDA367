@@ -18,6 +18,7 @@ public class BasePowerUp extends PowerUp {
 
     private void activateBasePowerUp(Piece piece) {
         int pos = this.getPos();
+        System.out.println(pos);
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
         this.handler.pieceFromBaseToField(piece.getColor(), 1);

@@ -8,8 +8,8 @@ import org.group7.model.PowerUps.LightningPowerUp;
 import org.group7.model.PowerUps.PowerUp;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler {
     private final Base[] bases;
@@ -21,13 +21,13 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
     private final int fieldTileAmount = 40;
-    private int playerAmount = 4;
+    private final int playerAmount = 4;
 
     public Board() {
         this.bases = new Base[playerAmount];
         this.field = new Tile[fieldTileAmount];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
         this.goalStretches = new GoalStretch[playerAmount];
-        this.colors = new Color[playerAmount];
+        this.colors = new Color[4];
         this.goalStretchesHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
@@ -133,37 +133,22 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     @Override
     public void addPiece(Piece p, int index) {
-        //int tileIndex = playerStartTiles.get(p.getColor());
-        //int from = p.getPos();
-        //if (completedLap(from, index, tileIndex)) {    // completed a lap, so should enter goalStretch
-        //    int stepsLeft = (index - tileIndex);
-        //    addPieceToGoalStretch(p, stepsLeft);
-        //} else {                                    // still on first lap
-        //    this.field[index].insertPiece(p);
-        //}
-        //insertsPieceAtCorrectPos(0, p);
-        Tile t = this.field[index];         //TODO kanske kan komma att ändras
-        t.insertPiece(p);
+        this.field[index].insertPiece(p);
     }
 
     public void yeetPieceFromGoal(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        Tile t;
-        if (tileIndex == 0) {
-            t = field[39];
-        } else {
-            t = field[tileIndex - 1];
-        }
-        t.insertPiece(p);
+        tileIndex = ((((tileIndex - 1) % 40) + 40) % 40); // Positive modulo
+        field[tileIndex].insertPiece(p);
         p.setHandler(this);
-        p.enableFieldState();
+        p.toggleState();
     }
 
     public void addPieceToGoalStretch(Piece p, int steps) {
         GoalStretch goalStretch = this.goalStretchesHashMap.get(p.getColor());
         p.setHandler(goalStretch);
-        p.enableGoalState();
+        p.toggleState();
         goalStretch.addPiece(p, steps);
     }
 
@@ -188,6 +173,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
+        System.out.println(from);
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
