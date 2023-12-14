@@ -49,7 +49,7 @@ class PieceTest {
     }
 
     @Test
-    void pieceBeingPushedIsSentBackToBase() {
+    void PushedPieceIsSentBackToBase() {
         handler = new Board();
         piece = new Piece(Color.RED, handler);
         Piece luigi = new Piece(Color.GREEN, handler);
@@ -72,4 +72,12 @@ class PieceTest {
         piece.setPos(2);
         assertNotEquals(prevPos, piece.getPos());
     }
+
+    @Test
+    void pieceIsAtGoalStretchIfAddedToGoalStretch() {
+        piece.addToGoalStretch();
+        assertTrue(piece.isAtGoalStretch());
+    }
+
+    
 }
