@@ -12,6 +12,7 @@ public class Background extends JPanel { //TODO antar att denna är WIP?
     public Background(Image image) {
         this.image = image;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -6,6 +6,7 @@ import org.group7.model.Piece;
 public class LightningPowerUp extends PowerUp {
 
     ILightningPowerUpHandler handler;
+
     public LightningPowerUp(ILightningPowerUpHandler handler) {
         super("Lightning");
         this.handler = handler;

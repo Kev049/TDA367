@@ -12,7 +12,7 @@ public class Dice { // Implementerar Singleton pattern så att ingen klass ska k
     }
 
     public static Dice getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new Dice();
         }
         return instance;
@@ -21,7 +21,6 @@ public class Dice { // Implementerar Singleton pattern så att ingen klass ska k
     public int roll() {
         return this.generator.nextInt(6) + 1;
     }
-
 
 
 }

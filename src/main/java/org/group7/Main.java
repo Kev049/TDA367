@@ -42,7 +42,7 @@ public class Main {
         }
 
         List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
-        for(Base base : bases){
+        for (Base base : bases) {
             Piece[] pieces = base.getPieces();
             coloredPaintablePieces.clear();
             for (Piece piece : pieces) {

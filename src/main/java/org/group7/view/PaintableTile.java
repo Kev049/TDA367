@@ -1,16 +1,18 @@
 package org.group7.view;
 
 import javax.swing.*;
+
 import org.group7.model.Tile;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 
-public class PaintableTile extends JButton{
+public class PaintableTile extends JButton {
 
     private Tile tile;
 
-    public PaintableTile(Tile tile){
+    public PaintableTile(Tile tile) {
         this.tile = tile;
         this.setPreferredSize(new Dimension(91, 91));
         this.setMaximumSize(new Dimension(91, 91));
@@ -19,7 +21,8 @@ public class PaintableTile extends JButton{
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
     }
-    public Tile getTile(){
+
+    public Tile getTile() {
         return this.tile;
     }
 

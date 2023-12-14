@@ -18,16 +18,17 @@ public class Piece extends Entity {
     }
 
     @Override
-    public void accept(EntityVisitor visitor){
+    public void accept(EntityVisitor visitor) {
         visitor.visit(this);
     }
-    public Color getColor(){
+
+    public Color getColor() {
         return this.color;
     }
 
     @Override
     public void handleCollision(Piece p) {
-        state.handleCollision(p,handler);
+        state.handleCollision(p, handler);
     }
 
     public void enableGoalState() {
@@ -42,15 +43,15 @@ public class Piece extends Entity {
         this.handler = handler;
     }
 
-    public void addToGoalStretch(){
+    public void addToGoalStretch() {
         this.atGoalStretch = true;
     }
 
-    public void removeFromGoalStretch(){
+    public void removeFromGoalStretch() {
         this.atGoalStretch = false;
     }
 
-    public boolean isAtGoalStretch(){
+    public boolean isAtGoalStretch() {
         return this.atGoalStretch;
     }
 }

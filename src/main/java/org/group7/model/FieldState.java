@@ -7,6 +7,7 @@ public class FieldState implements PieceState {
     public FieldState(Piece p) {
         this.piece = p;
     }
+
     public void handleCollision(Piece p, IMoveHandler handler) {
         if (piece.getColor().equals(p.getColor())) {
             // Same Color, skip one tile

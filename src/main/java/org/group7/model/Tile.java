@@ -13,7 +13,7 @@ public class Tile implements IInsertable {
     }
 
     public void insertPiece(Piece p) {
-        if(this.entity != null){     // if collision
+        if (this.entity != null) {     // if collision
             this.entity.handleCollision(p);
         } else {                    // else
             this.entity = p;
@@ -21,14 +21,14 @@ public class Tile implements IInsertable {
         }
     }
 
-    public void insertPowerUp(PowerUp powerUp){
-        if(this.entity == null){
+    public void insertPowerUp(PowerUp powerUp) {
+        if (this.entity == null) {
             this.entity = powerUp;
             this.entity.setPos(index);
         }
     }
 
-    public Entity getEntity(){
+    public Entity getEntity() {
         return this.entity;
     }
 

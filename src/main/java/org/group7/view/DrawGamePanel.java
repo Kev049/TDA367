@@ -12,7 +12,7 @@ import java.awt.GridBagConstraints;
 
 import java.util.List;
 
-public class DrawGamePanel extends JPanel{
+public class DrawGamePanel extends JPanel {
     private final JPanel boardPanel;
     private final JPanel leftPanel;
     private final JPanel rightPanel;
@@ -24,10 +24,10 @@ public class DrawGamePanel extends JPanel{
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         drawPanels();
-        game.addObserver((StringObserver)rightPanel);
+        game.addObserver((StringObserver) rightPanel);
     }
 
-    private void drawPanels(){
+    private void drawPanels() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 

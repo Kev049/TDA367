@@ -14,7 +14,8 @@ public class WindowController {
     private GameWindow gameWindow;
     private DrawGamePanel drawGamePanel;
     private DrawMenuPanel drawMenuPanel;
-    public WindowController(MenuWindow menuWindow, DrawGamePanel drawGamePanel, DrawMenuPanel drawMenuPanel, JButton fourPlayerMenuButton, JButton newGameButton){
+
+    public WindowController(MenuWindow menuWindow, DrawGamePanel drawGamePanel, DrawMenuPanel drawMenuPanel, JButton fourPlayerMenuButton, JButton newGameButton) {
         this.newGameButton = newGameButton;
         this.drawGamePanel = drawGamePanel;
         this.drawMenuPanel = drawMenuPanel;
@@ -23,7 +24,7 @@ public class WindowController {
         addListener();
     }
 
-    private void addListener(){
+    private void addListener() {
         fourPlayerMenuButton.addActionListener(e -> {
             menuWindow.dispose();
             gameWindow = new GameWindow("TurboFia", drawGamePanel);

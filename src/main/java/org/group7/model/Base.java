@@ -39,7 +39,7 @@ public class Base {
         }
     }
 
-    public Piece[] getPieces(){
+    public Piece[] getPieces() {
         return this.pieces;
     }
 
@@ -47,11 +47,11 @@ public class Base {
         return (this.pieceAmount == 0);
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 
-    public int getPieceAmount(){
+    public int getPieceAmount() {
         return this.pieceAmount;
     }
 

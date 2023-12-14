@@ -1,10 +1,11 @@
 package org.group7.view;
 
 import org.group7.model.Piece;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class PaintablePiece extends JButton{
+public class PaintablePiece extends JButton {
     private final ImageIcon icon;
     private final Piece piece;
 
@@ -17,10 +18,12 @@ public class PaintablePiece extends JButton{
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
     }
-    public ImageIcon getIcon(){
+
+    public ImageIcon getIcon() {
         return this.icon;
     }
-    public Piece getPiece(){
+
+    public Piece getPiece() {
         return piece;
     }
 }

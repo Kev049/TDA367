@@ -21,10 +21,9 @@ public class RollState extends GameState {
     @Override
     public void roll() {
         game.rollDice();
-        if(game.noMovesAvailable()){
+        if (game.noMovesAvailable()) {
             finishRound();
-        }
-        else {
+        } else {
             game.setState(new MoveState(game));
         }
     }

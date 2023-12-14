@@ -141,9 +141,9 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
     }
 
-    public void endTurn(){
+    public void endTurn() {
         this.turnNumber++;
-        if(turnNumber % 15 == 0){
+        if (turnNumber % 15 == 0) {
             spawnPowerups();
         }
     }

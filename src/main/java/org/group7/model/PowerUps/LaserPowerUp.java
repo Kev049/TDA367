@@ -6,6 +6,7 @@ import org.group7.model.Piece;
 public class LaserPowerUp extends PowerUp {
 
     ILaserPowerUpHandler handler;
+
     public LaserPowerUp(ILaserPowerUpHandler handler) {
         super("Laser");
         this.handler = handler;

@@ -11,7 +11,10 @@ public abstract class GameState {
     }
 
     public abstract void move(Piece piece);
+
     public abstract void pieceFromBaseToField(Color c);
+
     public abstract void roll();
+
     public abstract void finishRound();
 }

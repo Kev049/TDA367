@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
+public class BoardPanel extends JPanel { //TODO kan vi minska på denna klassen?
     private final List<PaintableTile> paintableFieldTiles;
     private final List<PaintableBase> paintableBases;
     private final List<PaintableTile> paintableGoalTiles;
@@ -32,7 +32,7 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableBase> paintableBases,
                       List<PaintableTile> paintableGoalTiles,
-                      List<PaintablePiece> paintablePieces){
+                      List<PaintablePiece> paintablePieces) {
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
         this.paintableGoalTiles = paintableGoalTiles;
@@ -55,11 +55,10 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         drawBoard();
     }
 
-    private void applyImage(){
-        try{
+    private void applyImage() {
+        try {
             this.image = ImageIO.read(new File("src/main/resources/board5.png"));
-        }
-        catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -70,10 +69,10 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         g.drawImage(this.image, 0, 0, null); // see javadoc for more info on the parameters
     }
 
-    private void storeBoardTileIndex(){
+    private void storeBoardTileIndex() {
         int tileIndex = 0;
-        for(Component component : this.getComponents()){
-            if(component instanceof Box){
+        for (Component component : this.getComponents()) {
+            if (component instanceof Box) {
                 //Put the tile in hashmap with matching index as key for later use
                 indexBoxHashMap.put(tileIndex, (Box) component);
                 tileIndex++;
@@ -81,7 +80,7 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         }
     }
 
-    public void drawBoard(){
+    public void drawBoard() {
         redrawPaintableTiles(paintableGoalTiles);
         redrawPaintableTiles(paintableFieldTiles);
         redrawPaintableBases(paintableBases);
@@ -90,15 +89,14 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
     }
 
     private void redrawPaintableTiles(List<PaintableTile> paintableGoalTiles) {
-        for(PaintableTile paintableTile : paintableGoalTiles){
+        for (PaintableTile paintableTile : paintableGoalTiles) {
             Tile tile = paintableTile.getTile();
             paintableTile.removeAll();
-            if(!(tile.isEmpty())){
-                if(tile.getEntity() instanceof Piece){
+            if (!(tile.isEmpty())) {
+                if (tile.getEntity() instanceof Piece) {
                     PaintablePiece paintablePiece = piecePaintablePieceHashMap.get((Piece) tile.getEntity());
                     paintableTile.add(paintablePiece);
-                }
-                else{
+                } else {
                     PaintablePowerUp paintablePowerUp = PaintableEntityFactory.makePaintedPowerUp((PowerUp) tile.getEntity());
                     paintableTile.add(paintablePowerUp);
                 }
@@ -106,17 +104,17 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         }
     }
 
-    private void redrawPaintableBases(List<PaintableBase> paintableBases){
-        for(PaintableBase paintableBase : paintableBases){
+    private void redrawPaintableBases(List<PaintableBase> paintableBases) {
+        for (PaintableBase paintableBase : paintableBases) {
             paintableBase.redrawPieces();
         }
     }
 
 
-    private void addFieldBoxes(){
+    private void addFieldBoxes() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        for(int y = 0; y < 11; y++) {
+        for (int y = 0; y < 11; y++) {
             c.gridy = y;
             for (int x = 0; x < 11; x++) {
                 c.gridx = x;
@@ -129,12 +127,12 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         }
     }
 
-    private void addBaseBoxes(){
+    private void addBaseBoxes() {
         remove1x1Boxes();
-        addBaseBox(1,1);
+        addBaseBox(1, 1);
         addBaseBox(1, 8);
-        addBaseBox(8,1);
-        addBaseBox(8,8);
+        addBaseBox(8, 1);
+        addBaseBox(8, 8);
     }
 
     private void addBaseBox(int row, int col) {
@@ -151,10 +149,10 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
     private void remove1x1Boxes() {
         Component[] components = this.getComponents();
         int index = 0;
-        for (Component component : components){
-            if(index == 16){
+        for (Component component : components) {
+            if (index == 16) {
                 break; //"you're breaking my heart" - Padmé Amidala in ROTS
-                        //"the women and the children too" - Anakin Skywalker (Gigachad) in the same trilogy
+                //"the women and the children too" - Anakin Skywalker (Gigachad) in the same trilogy
             }
             Point basePoint = baseBoxPoints.get(index);
             GridBagConstraints gbc = ((GridBagLayout) this.getLayout()).getConstraints(component);
@@ -165,58 +163,58 @@ public class BoardPanel extends JPanel{ //TODO kan vi minska på denna klassen?
         }
     }
 
-    private void addBoardComponents(){
+    private void addBoardComponents() {
         addTilesToBox(fieldTileIndices, paintableFieldTiles);
         addBaseToBox(baseTileIndices, paintableBases);
         addTilesToBox(goalTileIndices, paintableGoalTiles);
     }
 
-    private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles){
+    private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles) {
         int i = 0;
-        for(int index : tileIndices){
+        for (int index : tileIndices) {
             Box box = indexBoxHashMap.get(index);
             box.add(paintableTiles.get(i++));
         }
     }
 
-    private void addBaseToBox(List<Integer> tileIndices, List<PaintableBase> paintableBase){
+    private void addBaseToBox(List<Integer> tileIndices, List<PaintableBase> paintableBase) {
         int i = 0;
-        for(int index : tileIndices){
+        for (int index : tileIndices) {
             Box box = indexBoxHashMap.get(index);
             box.add(paintableBase.get(i++));
         }
     }
 
-    private void initTileIndices(){
+    private void initTileIndices() {
         initFieldTileIndices();
         initBaseTileIndices();
         initGoalTileIndices();
     }
 
-    private void initFieldTileIndices(){
+    private void initFieldTileIndices() {
         Collections.addAll(this.fieldTileIndices, 36, 37, 38, 39, 40, 29, 20, 13, 4, 5, 6, 15, 22, 31, 42,
                 43, 44, 45, 46, 57, 68, 67, 66, 65, 64, 75, 84, 91, 100, 99, 98, 89, 82, 73, 62, 61, 60, 59, 58, 47);
     }
 
-    private void initBaseTileIndices(){
+    private void initBaseTileIndices() {
         Collections.addAll(this.baseTileIndices, 105, 106, 108, 107);
     }
 
-    private void initGoalTileIndices(){
+    private void initGoalTileIndices() {
         Collections.addAll(this.goalTileIndices, 48, 49, 50, 51, 14, 21, 30, 41, 56, 55, 54, 53,
                 90, 83, 74, 63);
     }
 
-    private void initBaseBoxPoints(){
+    private void initBaseBoxPoints() {
         Collections.addAll(baseBoxPoints, new Point(1, 1), new Point(1, 2), new Point(1, 8),
                 new Point(1, 9), new Point(2, 1), new Point(2, 2), new Point(2, 8),
-                new Point(2,9), new Point(8, 1), new Point(8, 2), new Point(8,8),
-                new Point(8, 9), new Point(9,1), new Point(9,2), new Point(9,8),
-                new Point(9,9));
+                new Point(2, 9), new Point(8, 1), new Point(8, 2), new Point(8, 8),
+                new Point(8, 9), new Point(9, 1), new Point(9, 2), new Point(9, 8),
+                new Point(9, 9));
     }
 
-    private void initPaintablePiecesMap(){
-        for(PaintablePiece paintablePiece : paintablePieces){
+    private void initPaintablePiecesMap() {
+        for (PaintablePiece paintablePiece : paintablePieces) {
             Piece piece = paintablePiece.getPiece();
             piecePaintablePieceHashMap.put(piece, paintablePiece);
         }
