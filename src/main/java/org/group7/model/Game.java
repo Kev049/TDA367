@@ -67,7 +67,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     public void rollDice() {
-        this.lastDiceRollResult = 6;//dice.roll();
+        this.lastDiceRollResult = dice.roll();
     }
 
     public int roll() {
@@ -148,7 +148,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     @Override
-    public void addObserver(Observer observer){
+    public void addObserver(Observer observer) {
         observers.add(observer);
     }
 
@@ -160,8 +160,8 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     @Override
-    public void notifyObservers(){
-        for(Observer observer : observers){
+    public void notifyObservers() {
+        for (Observer observer : observers) {
             observer.update();
         }
     }
