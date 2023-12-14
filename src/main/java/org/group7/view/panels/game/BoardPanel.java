@@ -34,6 +34,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
     private static final int TOTAL_AMOUNT_TILES = 121;
     private static final int fieldStartCapacity = 40;
     private Image image;
+    private PaintableEntityFactory paintableEntityFactory;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableBase> paintableBases,
@@ -49,6 +50,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
         this.baseBoxPoints = new ArrayList<>(16);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.piecePaintablePieceHashMap = new HashMap<>();
+        this.paintableEntityFactory = new PaintableEntityFactory();
         this.setLayout(new GridBagLayout());
         initBaseBoxPoints();
         initTileIndices();
@@ -106,7 +108,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
                     PaintablePiece paintablePiece = piecePaintablePieceHashMap.get((Piece) tile.getEntity());
                     paintableTile.add(paintablePiece);
                 } else {
-                    PaintablePowerUp paintablePowerUp = PaintableEntityFactory.makePaintedPowerUp((PowerUp) tile.getEntity());
+                    PaintablePowerUp paintablePowerUp = paintableEntityFactory.makePaintedPowerUp((PowerUp) tile.getEntity());
                     paintableTile.add(paintablePowerUp);
                 }
             }

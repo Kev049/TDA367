@@ -49,6 +49,8 @@ public class Main {
         List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
         List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
 
+        PaintableEntityFactory paintableEntityFactory = new PaintableEntityFactory();
+
         for (Tile fieldTile : fieldTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTile);
             paintableFieldTiles.add(paintableTile);
@@ -59,7 +61,7 @@ public class Main {
             Piece[] pieces = base.getPieces();
             coloredPaintablePieces.clear();
             for (Piece piece : pieces) {
-                PaintablePiece paintablePiece = PaintableEntityFactory.makePieceImage(piece);
+                PaintablePiece paintablePiece = paintableEntityFactory.makePieceImage(piece);
                 coloredPaintablePieces.add(paintablePiece);
                 paintablePieces.add(paintablePiece);
             }

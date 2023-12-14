@@ -8,22 +8,26 @@ import org.group7.view.paintables.PaintablePowerUp;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class PaintableEntityFactory {
-    private static Image image;
+    private static BufferedImage image;
 
-    public static PaintablePiece makePieceImage(Piece piece) {
-        String color;
+    public PaintableEntityFactory(){
+    }
+
+    public PaintablePiece makePieceImage(Piece piece) {
+        String color = null;
         if (piece.getColor().equals(Color.RED)) color = "red";
         else if (piece.getColor().equals(Color.GREEN)) color = "green";
         else if (piece.getColor().equals(Color.YELLOW)) color = "yellow";
-        else color = "blue";    //TODO för att vara tydlig kan detta vara en else-if
+        else if (piece.getColor().equals(Color.BLUE)) color = "blue";    //TODO för att vara tydlig kan detta vara en else-if
         return makePaintedPiece("src/main/resources/player/" + color + "_player_circle.png", piece);
     }
 
-    private static PaintablePiece makePaintedPiece(String s, Piece piece) {
+    private PaintablePiece makePaintedPiece(String s, Piece piece) {
         try {
             image = ImageIO.read(new File(s));
         } catch (IOException ex) {
@@ -32,7 +36,7 @@ public class PaintableEntityFactory {
         return new PaintablePiece(image, piece);
     }
 
-    private static Image getPowerUpImage(PowerUp powerUp) {
+    private Image getPowerUpImage(PowerUp powerUp) {
         String powerUpImagePath = ("src/main/resources/powerups/" + powerUp.getPowerUpName() + "_icon.png");
         try {
             image = ImageIO.read(new File(powerUpImagePath));
@@ -42,7 +46,7 @@ public class PaintableEntityFactory {
         return image;
     }
 
-    public static PaintablePowerUp makePaintedPowerUp(PowerUp powerUp) {
+    public PaintablePowerUp makePaintedPowerUp(PowerUp powerUp) {
         return new PaintablePowerUp(getPowerUpImage(powerUp), powerUp);
     }
 }

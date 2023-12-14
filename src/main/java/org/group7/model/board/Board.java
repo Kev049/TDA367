@@ -193,11 +193,14 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public void spawnPowerUps() {
         Random rand = new Random();
-        powerUpGenerator.initPowerUps();
-        List<PowerUp> powerUps = powerUpGenerator.getPowerUps();
-        for(PowerUp powerUp : powerUps){
+        for(PowerUp powerUp : getGeneratedPowerUps()){
             this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(powerUp);
         }
+    }
+
+    private List<PowerUp> getGeneratedPowerUps(){
+        powerUpGenerator.generatePowerUps();
+        return powerUpGenerator.getPowerUps();
     }
 
     //Getters

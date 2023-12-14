@@ -26,7 +26,6 @@ public class Goal implements IInsertable, Observable {
         this.piece.setPos(-1);
         this.piece = null;
         notifyObservers();
-        System.out.println("goal!"); //TODO: Ta bort denna print
     }
 
     @Override

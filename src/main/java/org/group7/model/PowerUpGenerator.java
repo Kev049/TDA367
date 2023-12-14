@@ -10,8 +10,8 @@ import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
 import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.List;
+import java.util.Random;
 
 public class PowerUpGenerator {
     private final Random powerUpGenerator;
@@ -28,10 +28,10 @@ public class PowerUpGenerator {
         this.baseHandler = baseHandler;
         this.laserHandler = laserHandler;
         this.lightningHandler = lightningHandler;
-        initPowerUps();
     }
 
-    public void initPowerUps() {
+    public void generatePowerUps() {
+        powerUps.clear();
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(lightningHandler);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(baseHandler);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(laserHandler);
