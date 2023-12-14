@@ -64,7 +64,8 @@ public class LeftPanel extends JPanel {
 
     private void initPowerUpButtons() {
         powerUpFrame.setLayout(new GridBagLayout());
-        powerUpFrame.setOpaque(false);
+        powerUpFrame.setBackground(Color.RED);
+        //powerUpFrame.setOpaque(false);
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -72,11 +73,17 @@ public class LeftPanel extends JPanel {
         int i = 0;
         for (JButton powerUpButton : powerUpButtons) {
             c.gridy = i;
+            c.gridx = 0;
             c.insets = new Insets(0, 0, 25, 0);
             powerUpButton.setContentAreaFilled(false);
             powerUpButton.setBorderPainted(false);
             powerUpButton.setFocusPainted(false);
             powerUpFrame.add(powerUpButton, c);
+
+            c.gridx = 1;
+            JLabel questionMark = new JLabel();
+            questionMark.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Question_mark.png")));
+            powerUpFrame.add(questionMark, c);
             i++;
         }
 
@@ -85,7 +92,6 @@ public class LeftPanel extends JPanel {
         laserPowerUp.setToolTipText("Blasts all powerups and pieces 8 tiles in front of the piece");
         lightningPowerUp.setToolTipText("Move forward 2 steps");
         switchPowerUp.setToolTipText("To be implemented");
-
 
         basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Base_icon.png")));
         catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Catapult_icon.png")));

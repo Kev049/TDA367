@@ -72,12 +72,21 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     public void move(Piece piece) {
         gameState.move(piece);
-        notifyObservers();
     }
 
     protected void movePiece(Piece piece) {
         this.board.movePiece(piece, this.lastDiceRollResult);
         notifyObservers();
+    }
+
+    private void finishRound() {
+        gameState.nextState(this);
+        this.spawnPowerUpsEachSixteenTurns();
+        if (!this.hasRolledSix()) {
+            this.nextPlayer();
+        } else {
+            this.increaseTurnNumber();
+        }
     }
 
     protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
@@ -87,7 +96,6 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     public void moveBasePiece(Color color) {
         this.gameState.pieceFromBaseToField(color);
-        notifyObservers();
     }
 
     public void movePieceOutOfBase(Color color) {
@@ -96,7 +104,6 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     private void spawnPowerups() {
-        //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUps();
         notifyObservers();
     }

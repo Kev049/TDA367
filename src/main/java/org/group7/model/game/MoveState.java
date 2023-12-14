@@ -42,4 +42,9 @@ public class MoveState extends GameState {
     public void roll() {
 
     }
+
+    @Override
+    public void nextState(Game game) {
+        game.setState(new RollState(game));
+    }
 }

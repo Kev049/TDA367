@@ -34,4 +34,9 @@ public class RollState extends GameState {
     public void finishRound() {
         game.nextPlayer();
     }
+
+    @Override
+    public void nextState(Game game) {
+        game.setState(new MoveState(game));
+    }
 }
