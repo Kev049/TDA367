@@ -11,9 +11,6 @@ public class Player {
         this.color = color;
     }
 
-    public Color getColor() {
-        return this.color;
-    }
 
     public List<Piece> getPieces() {
         return this.pieces;
@@ -22,5 +19,9 @@ public class Player {
     public Piece choosePiece() { //väljer automatiskt piece 0,
         return pieces.get(0);
     } //TODO onödig
+
+    public Color getColor() {
+        return this.color;
+    }
 
 }

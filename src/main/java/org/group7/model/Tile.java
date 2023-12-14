@@ -3,9 +3,9 @@ package org.group7.model;
 import org.group7.model.PowerUps.PowerUp;
 
 public class Tile implements IInsertable {
-
-    private final int index;
     private Entity entity;
+    private final int index;
+    private final int outOfBounds = -1;
 
     public Tile(int index) {
         this.entity = null;
@@ -33,7 +33,7 @@ public class Tile implements IInsertable {
     }
 
     public void removeEntity() {
-        this.entity.setPos(-1);
+        this.entity.setPos(outOfBounds);
         this.entity = null;
     }
 

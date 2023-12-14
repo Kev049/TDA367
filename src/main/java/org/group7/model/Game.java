@@ -11,17 +11,19 @@ import java.util.Set;
 
 public class Game implements StringObservable, Observer {   //TODO ta bort onödiga metoder
     private final Set<StringObserver> stringObservers;
+
     private final Dice dice;
     private final Board board;
-    private Player[] players;
-    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
+    private GameState gameState;
+    private HashMap<Color, Integer> finishedPieces;
+    private final Color[] colorArray;
+    private Player[] players;
+    private int lastDiceRollResult;
+    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private int currentPlayerNumber;
     private int turnNumber;
-    private HashMap<Color, Integer> finishedPieces;
-    private GameState gameState;
-    private final Color[] colorArray;
-    private int lastDiceRollResult;
+    private final int piecePerPlayer = 4;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
@@ -52,7 +54,7 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     private void initFinishedPieces() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < piecePerPlayer; i++) {
             this.finishedPieces.put(this.colorArray[i], 0);
         }
     }
@@ -92,18 +94,6 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         board.pieceFromBaseToField(color, lastDiceRollResult);
     }
 
-    @Override
-    public void addObserver(StringObserver stringObserver) {
-        stringObservers.add(stringObserver);
-    }
-
-    @Override
-    public void notifyObservers(String playerColor) {
-        for (StringObserver o : this.stringObservers) {
-            o.update(playerColor);
-        }
-    }
-
     public Piece[] getPiecesFromBase(Player player) {
         return this.board.getPiecesFromBase(player.getColor());
     }   //Onödig?
@@ -114,25 +104,11 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     }
 
-    protected void setState(GameState gamestate) {
-        this.gameState = gamestate;
-    }
-
     protected void nextPlayer() {
-        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
+        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % this.currentPlayerNumber;
         this.currentPlayer = this.players[currentPlayerNumber];
         String playerColor = this.currentPlayer.getColor().toString();
         notifyObservers(playerColor);
-    }
-
-    @Override
-    public void update() {
-        Color c = currentPlayer.getColor();
-        int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
-        this.finishedPieces.replace(c, increasedFinishedPieces);
-        if (this.finishedPieces.get(c) == 4) {
-            System.out.println(c + "won!");     //TODO change this to proper victory popup
-        }
     }
 
     public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
@@ -147,6 +123,35 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
             spawnPowerups();
         }
     }
+
+    @Override
+    public void update() {
+        Color c = currentPlayer.getColor();
+        int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
+        this.finishedPieces.replace(c, increasedFinishedPieces);
+        if (this.finishedPieces.get(c) == 4) {
+            System.out.println(c + "won!");     //TODO change this to proper victory popup
+        }
+    }
+
+    @Override
+    public void addObserver(StringObserver stringObserver) {
+        stringObservers.add(stringObserver);
+    }
+
+    @Override
+    public void notifyObservers(String playerColor) {
+        for (StringObserver o : this.stringObservers) {
+            o.update(playerColor);
+        }
+    }
+
+    //setters
+
+    protected void setState(GameState gamestate) {
+        this.gameState = gamestate;
+    }
+
 }
 
 
