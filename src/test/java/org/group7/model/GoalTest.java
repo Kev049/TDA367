@@ -39,9 +39,6 @@ class GoalTest {
         assertEquals(-1, piece.getPos());
     }
 
-//    @Test
-//    void
-
     @Test
     void removeEntity() {
     }
