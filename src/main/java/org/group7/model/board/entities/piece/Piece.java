@@ -8,10 +8,9 @@ import java.awt.*;
 
 public class Piece extends Entity {
 
-    public IMoveHandler handler;
+    private IMoveHandler handler;
     private final Color color;
     private boolean atGoalStretch;
-
     private PieceState state;
 
     public Piece(Color color, IMoveHandler handler) {
