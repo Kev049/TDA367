@@ -13,6 +13,7 @@ public class Tile implements IInsertable {
     }
 
     public void insertPiece(Piece p) {
+        System.out.println(index);
         if (this.entity != null) {     // if collision
             this.entity.handleCollision(p);
         } else {                    // else

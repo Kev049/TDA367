@@ -10,7 +10,6 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class GoalStretch implements Observable, IMoveHandler {
-
     private final int capacity = 4;
     private final int insertCapacity = capacity + 1;
     private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
@@ -57,7 +56,7 @@ public class GoalStretch implements Observable, IMoveHandler {
         removeEntity(pos);
         //pos += steps;  // där den ska
         pos = 4 - abs((pos + steps - 4));
-        if (pos < 0) { //pjäsen studsar ut
+        if(pos < 0) { //pjäsen studsar ut
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
         } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"

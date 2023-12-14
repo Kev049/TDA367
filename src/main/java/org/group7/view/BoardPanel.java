@@ -1,5 +1,6 @@
 package org.group7.view;
 
+import org.group7.controllers.Observer;
 import org.group7.model.Piece;
 import org.group7.model.PowerUps.PowerUp;
 import org.group7.model.Tile;
@@ -14,7 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel { //TODO kan vi minska på denna klassen?
+public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska på denna klassen?
     private final List<PaintableTile> paintableFieldTiles;
     private final List<PaintableBase> paintableBases;
     private final List<PaintableTile> paintableGoalTiles;
@@ -79,7 +80,10 @@ public class BoardPanel extends JPanel { //TODO kan vi minska på denna klassen?
             }
         }
     }
-
+    @Override
+    public void update(){
+        drawBoard();
+    }
     public void drawBoard() {
         redrawPaintableTiles(paintableGoalTiles);
         redrawPaintableTiles(paintableFieldTiles);

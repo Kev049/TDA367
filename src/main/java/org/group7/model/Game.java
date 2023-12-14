@@ -1,5 +1,6 @@
 package org.group7.model;
 
+import org.group7.controllers.Observable;
 import org.group7.controllers.Observer;
 import org.group7.controllers.StringObservable;
 import org.group7.controllers.StringObserver;
@@ -9,9 +10,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Game implements StringObservable, Observer {   //TODO ta bort onödiga metoder
+public class Game implements StringObservable, Observable, Observer {   //TODO ta bort onödiga metoder
     private final Set<StringObserver> stringObservers;
-
+    private final Set<Observer> observers;
     private final Dice dice;
     private final Board board;
     private Player currentPlayer;
@@ -31,18 +32,23 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         this.board.addGoalObserver(this);
         this.amountOfPlayers = 4;
         this.colorArray = new Color[amountOfPlayers];
-        this.colorArray[0] = Color.RED;
-        this.colorArray[1] = Color.GREEN;
-        this.colorArray[2] = Color.BLUE;
-        this.colorArray[3] = Color.YELLOW;
+        initColors();
         initPlayers();
         this.turnNumber = 0;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
         this.stringObservers = new HashSet<>();
+        this.observers = new HashSet<>();
         this.finishedPieces = new HashMap<>();
         initFinishedPieces();
         spawnPowerups();
+    }
+
+    public void initColors() {
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
     }
 
     private void initPlayers() {
@@ -61,11 +67,12 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     public void rollDice() {
-        this.lastDiceRollResult = dice.roll();
+        this.lastDiceRollResult = 6;//dice.roll();
     }
 
     public int roll() {
         gameState.roll();
+        notifyObservers();
         return this.lastDiceRollResult;
     }
 
@@ -75,10 +82,12 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     public void move(Piece piece) {
         gameState.move(piece);
+        notifyObservers();
     }
 
     protected void movePiece(Piece piece) {
         this.board.movePiece(piece, this.lastDiceRollResult);
+        notifyObservers();
         //setState(this.gameState);
     }
 
@@ -89,20 +98,18 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
 
     public void moveBasePiece(Color color) {
         this.gameState.pieceFromBaseToField(color);
+        notifyObservers();
     }
 
     public void movePieceOutOfBase(Color color) {
         board.pieceFromBaseToField(color, lastDiceRollResult);
+        notifyObservers();
     }
-
-    public Piece[] getPiecesFromBase(Player player) {
-        return this.board.getPiecesFromBase(player.getColor());
-    }   //Onödig?
 
     private void spawnPowerups() {
         //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
         this.board.spawnPowerUps();
-
+        notifyObservers();
     }
 
     protected void nextPlayer() {
@@ -141,9 +148,21 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     @Override
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+
+    @Override
     public void notifyObservers(String playerColor) {
         for (StringObserver o : this.stringObservers) {
             o.update(playerColor);
+        }
+    }
+
+    @Override
+    public void notifyObservers(){
+        for(Observer observer : observers){
+            observer.update();
         }
     }
 
