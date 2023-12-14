@@ -1,9 +1,11 @@
 package org.group7.model.board.entities.powerups;
 
+import org.group7.model.board.entities.EntityVisitor;
 import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.board.entities.Entity;
 
 public abstract class PowerUp extends Entity {
+
     private final String powerUpName;
 
     public PowerUp(String powerUpName) {

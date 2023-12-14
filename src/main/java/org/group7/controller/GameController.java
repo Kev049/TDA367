@@ -4,8 +4,8 @@ import org.group7.controller.listeners.PaintableBaseListener;
 import org.group7.controller.listeners.PaintablePieceListener;
 import org.group7.controller.listeners.RollDiceListener;
 import org.group7.model.game.Game;
-import org.group7.view.paintable.PaintableBase;
-import org.group7.view.paintable.PaintablePiece;
+import org.group7.view.paintables.PaintableBase;
+import org.group7.view.paintables.PaintablePiece;
 
 import javax.swing.*;
 import java.util.List;

@@ -21,10 +21,8 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     private GameState gameState;
     private HashMap<Color, Integer> finishedPieces;
     private final Color[] colorArray;
-    private Color currentColor;
+    private int currentColor;
     private int lastDiceRollResult;
-    private int amountOfPlayers; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
-    private int currentPlayerNumber;
     private int turnNumber;
     private final int piecePerPlayer = 4;
 
@@ -32,8 +30,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         this.dice = Dice.getInstance();
         this.board = board;
         this.board.addGoalObserver(this);
-        this.amountOfPlayers = 4;
-        this.colorArray = new Color[amountOfPlayers];
+        this.colorArray = new Color[4];
         initColors();
         this.turnNumber = 0;
         this.lastDiceRollResult = 0;
@@ -50,6 +47,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         this.colorArray[1] = Color.GREEN;
         this.colorArray[2] = Color.BLUE;
         this.colorArray[3] = Color.YELLOW;
+        currentColor = 0;
     }
 
     private void initFinishedPieces() {
@@ -69,7 +67,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected boolean validateMove(Piece piece) {
-        return (piece.getColor().equals(currentPlayer.getColor()));
+        return (colorArray[currentColor].equals(piece.getColor()));
     }
 
     public void move(Piece piece) {
@@ -80,11 +78,10 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     protected void movePiece(Piece piece) {
         this.board.movePiece(piece, this.lastDiceRollResult);
         notifyObservers();
-        //setState(this.gameState);
     }
 
     protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
-        return ((this.currentPlayer.getColor().equals(color) && !(board.getBaseFromColor(color).isEmpty()))
+        return ((colorArray[currentColor].equals(color) && !(board.getBaseFromColor(color).isEmpty()))
                 && (this.lastDiceRollResult == 1 || this.lastDiceRollResult == 6));
     }
 
@@ -105,16 +102,23 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected void nextPlayer() {
-        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % this.amountOfPlayers;
-        this.currentPlayer = this.players[currentPlayerNumber];
-        String playerColor = this.currentPlayer.getColor().toString();
+        this.currentColor = (this.currentColor + 1) % 4;
+        String playerColor = this.colorArray[this.currentColor].toString();
         notifyObservers(playerColor);
     }
 
-    public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
-        Color c = this.currentPlayer.getColor();
+    public boolean noMovesAvailable() {
+        return (baseMovePossible() && noPiecesLeft());
+    }
+
+    private boolean noPiecesLeft() {
+        Color c = colorArray[currentColor];
         int pieceAmount = board.getPieceAmount(c);
-        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
+        return ((this.finishedPieces.get(c) + pieceAmount) == 4);
+    }
+
+    private boolean baseMovePossible() {
+        return (this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6);
     }
 
     public boolean hasRolledSix(){
@@ -132,11 +136,11 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     @Override
     public void update() {
-        Color c = currentPlayer.getColor();
+        Color c = colorArray[currentColor];
         int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
         this.finishedPieces.replace(c, increasedFinishedPieces);
         if (this.finishedPieces.get(c) == 4) {
-            System.out.println(c + "won!");     //TODO change this to proper victory popup
+            System.out.println(currentColor + "won!");     //TODO change this to proper victory popup
         }
     }
 

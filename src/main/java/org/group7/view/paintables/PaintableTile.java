@@ -1,4 +1,4 @@
-package org.group7.view.paintable;
+package org.group7.view.paintables;
 
 import javax.swing.*;
 

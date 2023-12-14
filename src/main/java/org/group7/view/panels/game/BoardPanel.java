@@ -5,10 +5,10 @@ import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.board.entities.powerups.PowerUp;
 import org.group7.model.board.Tile;
 import org.group7.view.PaintableEntityFactory;
-import org.group7.view.paintable.PaintablePowerUp;
-import org.group7.view.paintable.PaintableBase;
-import org.group7.view.paintable.PaintablePiece;
-import org.group7.view.paintable.PaintableTile;
+import org.group7.view.paintables.PaintablePowerUp;
+import org.group7.view.paintables.PaintableBase;
+import org.group7.view.paintables.PaintablePiece;
+import org.group7.view.paintables.PaintableTile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

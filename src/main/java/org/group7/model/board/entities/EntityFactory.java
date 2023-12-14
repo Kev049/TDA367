@@ -12,6 +12,7 @@ import org.group7.model.board.IMoveHandler;
 import java.awt.*;
 
 public class EntityFactory {
+
     public static Piece createPiece(Color color, IMoveHandler handler) {
         return new Piece(color, handler);
     }

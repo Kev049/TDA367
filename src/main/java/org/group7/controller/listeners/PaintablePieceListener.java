@@ -2,7 +2,7 @@ package org.group7.controller.listeners;
 
 import org.group7.model.game.Game;
 import org.group7.model.board.entities.piece.Piece;
-import org.group7.view.paintable.PaintablePiece;
+import org.group7.view.paintables.PaintablePiece;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

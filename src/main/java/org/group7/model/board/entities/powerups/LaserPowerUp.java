@@ -17,7 +17,7 @@ public class LaserPowerUp extends PowerUp {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
-        this.handler.removeFromField(pos);
+        this.handler.removeEntitiesFromField(pos);
     }
 }
 

@@ -4,7 +4,7 @@ import org.group7.controller.observe.Observable;
 import org.group7.controller.observe.Observer;
 import org.group7.model.board.entities.piece.Piece;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

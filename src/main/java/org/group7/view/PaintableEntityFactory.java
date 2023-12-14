@@ -3,8 +3,8 @@ package org.group7.view;
 
 import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.board.entities.powerups.PowerUp;
-import org.group7.view.paintable.PaintablePiece;
-import org.group7.view.paintable.PaintablePowerUp;
+import org.group7.view.paintables.PaintablePiece;
+import org.group7.view.paintables.PaintablePowerUp;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

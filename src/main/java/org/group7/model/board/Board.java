@@ -2,13 +2,14 @@ package org.group7.model.board;
 
 
 import org.group7.controller.observe.Observer;
+import org.group7.model.PowerUpGenerator;
+import org.group7.model.board.entities.EntityVisitor;
+import org.group7.model.board.entities.RemoveFromFieldVisitor;
 import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.powerups.*;
+import org.group7.model.board.entities.powerups.PowerUp;
 import org.group7.model.board.entities.powerups.handlers.IBasePowerUpHandler;
 import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
 import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
-import org.group7.model.board.entities.RemoveEntityVisitor;
 
 import java.awt.*;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final EntityVisitor visitor;
     private final int fieldTileAmount = 40;
     private final int playerAmount = 4;
+    private final PowerUpGenerator powerUpGenerator;
 
     public Board() {
         this.bases = new Base[playerAmount];
@@ -34,7 +36,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.goalStretchesHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
-        this.visitor = new RemoveEntityVisitor(this);
+        this.visitor = new RemoveFromFieldVisitor(this);
+        this.powerUpGenerator = new PowerUpGenerator(this, this, this);
         initColors();
         initBases();
         initStartTileIndices();
@@ -85,16 +88,21 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    private void initGoalStretchesHashMap() {
+        for (int i = 0; i < 4; i++) {
+            this.goalStretchesHashMap.put(this.colors[i], goalStretches[i]);
+        }
+    }
+
     public void addGoalObserver(Observer o) {
         for (GoalStretch gs : this.goalStretches) {
             gs.addObserver(o);
         }
     }
 
-    private void initGoalStretchesHashMap() {
-        for (int i = 0; i < 4; i++) {
-            this.goalStretchesHashMap.put(this.colors[i], goalStretches[i]);
-        }
+    @Override
+    public void addPiece(Piece p, int index) {
+        this.field[index].insertPiece(p);
     }
 
     private void addPieceToBase(Piece p) {   //Private ksk??
@@ -103,13 +111,20 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         b.addPiece(p);
     }
 
+    public void addPieceToGoalStretch(Piece p, int steps) {
+        GoalStretch goalStretch = this.goalStretchesHashMap.get(p.getColor());
+        p.setHandler(goalStretch);
+        p.toggleState();
+        goalStretch.addPiece(p, steps);
+    }
+
     public void returnPieceToBase(Piece p) {
         int index = p.getPos();
         field[index].removeEntity();
         addPieceToBase(p);
     }
 
-    public void removeFromField(int pos) {
+    public void removeEntitiesFromField(int pos) {
         for (int i = 1; i < 9; i++) {
             int index = (pos + i) % 40;
             if (!field[index].isEmpty()) {
@@ -118,25 +133,21 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    public void removePowerUpFromField(PowerUp powerUp) {
+        this.field[powerUp.getPos()].removeEntity();
+    }
+
     public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
 
-    public void removePowerUpFromField(PowerUp powerUp) {
-        this.field[powerUp.getPos()].removeEntity();
-    }
 
     public void pieceFromBaseToField(Color c, int diceRoll) {
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
             addPiece(p, playerStartTiles.get(p.getColor()) + diceRoll - 1);
         }
-    }
-
-    @Override
-    public void addPiece(Piece p, int index) {
-        this.field[index].insertPiece(p);
     }
 
     public void pieceFromGoalStretchToField(Piece p) {
@@ -146,13 +157,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         field[tileIndex].insertPiece(p);
         p.setHandler(this);
         p.toggleState();
-    }
-
-    public void addPieceToGoalStretch(Piece p, int steps) {
-        GoalStretch goalStretch = this.goalStretchesHashMap.get(p.getColor());
-        p.setHandler(goalStretch);
-        p.toggleState();
-        goalStretch.addPiece(p, steps);
     }
 
     private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
@@ -189,13 +193,13 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public void spawnPowerUps() {
         Random rand = new Random();
-        LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
-        BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(this);
-        LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(this);
-        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(lightningPowerUp);
-        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(basePowerUp);
-        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(laserPowerUp);
+        powerUpGenerator.initPowerUps();
+        List<PowerUp> powerUps = powerUpGenerator.getPowerUps();
+        for(PowerUp powerUp : powerUps){
+            this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(powerUp);
+        }
     }
+
     //Getters
 
     public List<Base> getBases() {
@@ -204,14 +208,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     public Base getBaseFromColor(Color color) {
         return this.colorBaseMap.get(color);
-    }
-
-    public Piece[] getPiecesFromBase(Color color) {
-        for (Base b : this.bases) {
-            if (b.getColor() == color)
-                return b.getPieces();
-        }
-        return null;
     }
 
     public Tile[] getFieldTiles() {

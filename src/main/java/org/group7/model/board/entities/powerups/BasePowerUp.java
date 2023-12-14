@@ -4,6 +4,7 @@ import org.group7.model.board.entities.powerups.handlers.IBasePowerUpHandler;
 import org.group7.model.board.entities.piece.Piece;
 
 public class BasePowerUp extends PowerUp {
+
     IBasePowerUpHandler handler;
 
     public BasePowerUp(IBasePowerUpHandler handler) {
@@ -13,14 +14,9 @@ public class BasePowerUp extends PowerUp {
 
     @Override
     public void handleCollision(Piece piece) {
-        activateBasePowerUp(piece);
-    }
-
-    private void activateBasePowerUp(Piece piece) {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
         this.handler.pieceFromBaseToField(piece.getColor(), 1);
     }
-
 }

@@ -1,4 +1,4 @@
-package org.group7.view.paintable;
+package org.group7.view.paintables;
 
 import org.group7.model.board.Base;
 import org.group7.model.board.entities.piece.Piece;

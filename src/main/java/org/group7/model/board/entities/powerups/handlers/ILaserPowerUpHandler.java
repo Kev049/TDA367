@@ -8,7 +8,7 @@ public interface ILaserPowerUpHandler {
 
     void removePowerUpFromField(PowerUp powerUp);
 
-    void removeFromField(int pos);
+    void removeEntitiesFromField(int pos);
 
     void returnPieceToBase(Piece piece);
 }

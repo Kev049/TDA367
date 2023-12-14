@@ -1,7 +1,6 @@
 package org.group7.model.board.entities;
 
 import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.EntityVisitor;
 
 public abstract class Entity {
     private int pos;
