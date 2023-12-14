@@ -15,11 +15,12 @@ import java.awt.Component;
 import java.util.HashMap;
 import java.util.List;
 
-public class PaintableBase extends JButton{
+public class PaintableBase extends JButton {
     private final Base base;
     private final List<PaintablePiece> paintablePieces;
     private final HashMap<Piece, PaintablePiece> paintablePiecesHash = new HashMap<>();
-    public PaintableBase(Base base, List<PaintablePiece> paintablePieces){
+
+    public PaintableBase(Base base, List<PaintablePiece> paintablePieces) {
         this.base = base;
         this.paintablePieces = paintablePieces;
         this.setLayout(new GridBagLayout());
@@ -30,16 +31,16 @@ public class PaintableBase extends JButton{
         drawPieces();
     }
 
-    private void initPaintablePiecesHashMap(){
-        for(PaintablePiece paintablePiece : paintablePieces){
+    private void initPaintablePiecesHashMap() {
+        for (PaintablePiece paintablePiece : paintablePieces) {
             Piece piece = paintablePiece.getPiece();
             paintablePiecesHash.put(piece, paintablePiece);
         }
     }
 
-    private void drawBoxes(){
+    private void drawBoxes() {
         GridBagConstraints c = new GridBagConstraints();
-        for(int y = 0; y < 2; y++) {
+        for (int y = 0; y < 2; y++) {
             c.fill = GridBagConstraints.BOTH;
             c.gridy = y;
             for (int x = 0; x < 2; x++) {
@@ -56,7 +57,7 @@ public class PaintableBase extends JButton{
         }
     }
 
-    private void drawPieces(){  // TODO tog bort onödig/"duplicerad" kod, fungerar?
+    private void drawPieces() {  // TODO tog bort onödig/"duplicerad" kod, fungerar?
         /*int i = 0;
         for(Component component : this.getComponents()){
             if (component instanceof JPanel){
@@ -67,8 +68,8 @@ public class PaintableBase extends JButton{
             }
         }*/
         int i = 0;
-        for(Piece piece : base.getPieces()){
-            if(piece != null){
+        for (Piece piece : base.getPieces()) {
+            if (piece != null) {
                 JPanel component = (JPanel) this.getComponent(i++);
                 PaintablePiece paintablePiece = paintablePiecesHash.get(piece);
                 JLabel pieceLabel = new JLabel();
@@ -78,9 +79,9 @@ public class PaintableBase extends JButton{
         }
     }
 
-    public void redrawPieces(){
-        for(Component component : this.getComponents()){
-            if (component instanceof JPanel){
+    public void redrawPieces() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
                 ((JPanel) component).removeAll();
             }
         }
@@ -97,7 +98,7 @@ public class PaintableBase extends JButton{
         drawPieces();
     }
 
-    public Base getBase(){
+    public Base getBase() {
         return this.base;
     }
 }

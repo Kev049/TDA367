@@ -13,14 +13,15 @@ public class
 RightPanel extends JPanel implements StringObserver {
     private final JButton rollDiceButton;
     private final JLabel playerTurnOutput;
-    public RightPanel(JButton rollDiceButton){
+
+    public RightPanel(JButton rollDiceButton) {
         this.rollDiceButton = rollDiceButton;
         this.playerTurnOutput = new JLabel("Red player's turn");
         this.setLayout(new GridBagLayout());
         initDiceComponents();
     }
 
-    private void initDiceComponents(){
+    private void initDiceComponents() {
         initTurnComponent();
         initDiceComponent();
         GridBagConstraints c = new GridBagConstraints();
@@ -31,21 +32,20 @@ RightPanel extends JPanel implements StringObserver {
         c.insets = new Insets(0, 0, 550, 0);
         this.add(playerTurnOutput, c);
 
-        c.insets = new Insets(0,0, 50, 0);
+        c.insets = new Insets(0, 0, 50, 0);
         c.gridy = 1;
         this.add(rollDiceButton, c);
     }
 
-    private void initTurnComponent(){
+    private void initTurnComponent() {
         playerTurnOutput.setFont(new Font("Arial", Font.PLAIN, 32));
     }
 
-    private void initDiceComponent(){
+    private void initDiceComponent() {
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
-        try{
+        try {
             image = ImageIO.read(new File("src/main/resources/dices2.png"));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -61,15 +61,12 @@ RightPanel extends JPanel implements StringObserver {
     public void update(String s) {
         if (s.equals(Color.RED.toString())) {
             this.playerTurnOutput.setText("Red player's turn");
-        }
-        else if (s.equals(Color.GREEN.toString())) {
+        } else if (s.equals(Color.GREEN.toString())) {
             this.playerTurnOutput.setText("Green player's turn");
-        }
-        else if(s.equals(Color.BLUE.toString())) {
-        this.playerTurnOutput.setText("Blue player's turn");
-        }
-        else if(s.equals(Color.YELLOW.toString())) {
-        this.playerTurnOutput.setText("Yellow player's turn");
+        } else if (s.equals(Color.BLUE.toString())) {
+            this.playerTurnOutput.setText("Blue player's turn");
+        } else if (s.equals(Color.YELLOW.toString())) {
+            this.playerTurnOutput.setText("Yellow player's turn");
         }
 
     }

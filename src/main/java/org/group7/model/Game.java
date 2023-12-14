@@ -11,22 +11,25 @@ import java.util.Set;
 
 public class Game implements StringObservable, Observer {   //TODO ta bort onödiga metoder
     private final Set<StringObserver> stringObservers;
+
     private final Dice dice;
     private final Board board;
-    private Player[] players;
-    private int amountOfPlayers = 4; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private Player currentPlayer;
+    private GameState gameState;
+    private HashMap<Color, Integer> finishedPieces;
+    private final Color[] colorArray;
+    private Player[] players;
+    private int lastDiceRollResult;
+    private int amountOfPlayers; //TODO:Ändra så att mängden players skickas in från ett annat ställe(menyn)
     private int currentPlayerNumber;
     private int turnNumber;
-    private HashMap<Color, Integer> finishedPieces;
-    private GameState gameState;
-    private final Color[] colorArray;
-    private int lastDiceRollResult;
+    private final int piecePerPlayer = 4;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
         this.board = board;
         this.board.addGoalObserver(this);
+        this.amountOfPlayers = 4;
         this.colorArray = new Color[amountOfPlayers];
         this.colorArray[0] = Color.RED;
         this.colorArray[1] = Color.GREEN;
@@ -43,16 +46,16 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
     }
 
     private void initPlayers() {
-        this.players = new Player[amountOfPlayers];
+        this.players = new Player[this.amountOfPlayers];
         for (int i = 0; i < this.amountOfPlayers; i++) {
-            this.players[i] = PlayerFactory.createPlayer(this.colorArray[i]);
+            this.players[i] = new Player(this.colorArray[i]);
         }
         this.currentPlayerNumber = 0;
         this.currentPlayer = players[currentPlayerNumber];
     }
 
     private void initFinishedPieces() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < piecePerPlayer; i++) {
             this.finishedPieces.put(this.colorArray[i], 0);
         }
     }
@@ -92,6 +95,46 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         board.pieceFromBaseToField(color, lastDiceRollResult);
     }
 
+    public Piece[] getPiecesFromBase(Player player) {
+        return this.board.getPiecesFromBase(player.getColor());
+    }   //Onödig?
+
+    private void spawnPowerups() {
+        //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
+        this.board.spawnPowerUps();
+
+    }
+
+    protected void nextPlayer() {
+        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % this.amountOfPlayers;
+        this.currentPlayer = this.players[currentPlayerNumber];
+        String playerColor = this.currentPlayer.getColor().toString();
+        notifyObservers(playerColor);
+    }
+
+    public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
+        Color c = this.currentPlayer.getColor();
+        int pieceAmount = board.getPieceAmount(c);
+        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
+    }
+
+    public void endTurn() {
+        this.turnNumber++;
+        if (turnNumber % 15 == 0) {
+            spawnPowerups();
+        }
+    }
+
+    @Override
+    public void update() {
+        Color c = currentPlayer.getColor();
+        int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
+        this.finishedPieces.replace(c, increasedFinishedPieces);
+        if (this.finishedPieces.get(c) == 4) {
+            System.out.println(c + "won!");     //TODO change this to proper victory popup
+        }
+    }
+
     @Override
     public void addObserver(StringObserver stringObserver) {
         stringObservers.add(stringObserver);
@@ -104,48 +147,12 @@ public class Game implements StringObservable, Observer {   //TODO ta bort onöd
         }
     }
 
-    public Piece[] getPiecesFromBase(Player player) {
-        return this.board.getPiecesFromBase(player.getColor());
-    }   //Onödig?
-
-    private void spawnPowerups() {
-        //TODO: Implementera något som spawnar olika powerups beroende på hur långt in i matchen vi kommit
-        this.board.spawnPowerUp();
-
-    }
+    //setters
 
     protected void setState(GameState gamestate) {
         this.gameState = gamestate;
     }
 
-    protected void nextPlayer() {
-        this.currentPlayerNumber = (this.currentPlayerNumber + 1) % 4;
-        this.currentPlayer = this.players[currentPlayerNumber];
-        String playerColor = this.currentPlayer.getColor().toString();
-        notifyObservers(playerColor);
-    }
-
-    @Override
-    public void update() {
-        Color c = currentPlayer.getColor();
-        this.finishedPieces.replace(c, this.finishedPieces.get(c) + 1);
-        if (this.finishedPieces.get(c) == 4) {
-            System.out.println(c + "won!");     //TODO change this to proper victory popup
-        }
-    }
-
-    public boolean noMovesAvailable() {      //Checks if the current player has any pieces on the board
-        Color c = this.currentPlayer.getColor();
-        int pieceAmount = board.getPieceAmount(c);
-        return ((this.lastDiceRollResult != 1 && this.lastDiceRollResult != 6) && ((this.finishedPieces.get(c) + pieceAmount) == 4));
-    }
-
-    public void endTurn(){
-        this.turnNumber++;
-        if(turnNumber % 10 == 0){
-            spawnPowerups();
-        }
-    }
 }
 
 

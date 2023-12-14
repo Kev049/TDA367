@@ -26,7 +26,7 @@ public class LeftPanel extends JPanel {
     //Game button
     private final JButton newGameButton;
 
-    public LeftPanel(){
+    public LeftPanel() {
         this.setLayout(new GridBagLayout());
         this.powerUpButtons = new ArrayList<>();
         this.powerUpFrame = new JPanel();
@@ -40,7 +40,7 @@ public class LeftPanel extends JPanel {
         initComponents();
     }
 
-    private void initComponents(){
+    private void initComponents() {
         initPowerUpButtons();
         initNewGameButton();
 
@@ -51,18 +51,18 @@ public class LeftPanel extends JPanel {
         c.insets = new Insets(0, 0, 350, 0);
         this.add(newGameButton, c);
 
-        c.insets = new Insets(0,0, 50, 0);
+        c.insets = new Insets(0, 0, 50, 0);
         c.gridy = 1;
         this.add(powerUpFrame, c);
 
     }
 
-    public void initNewGameButton(){
+    public void initNewGameButton() {
         newGameButton.setText("New Game");
         newGameButton.setFont(new Font("Monospaced", Font.PLAIN, 30));
     }
 
-    private void initPowerUpButtons(){
+    private void initPowerUpButtons() {
         powerUpFrame.setLayout(new GridBagLayout());
         powerUpFrame.setOpaque(false);
 
@@ -70,7 +70,7 @@ public class LeftPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
         int i = 0;
-        for(JButton powerUpButton : powerUpButtons){
+        for (JButton powerUpButton : powerUpButtons) {
             c.gridy = i;
             c.insets = new Insets(0, 0, 25, 0);
             powerUpButton.setContentAreaFilled(false);
@@ -94,18 +94,17 @@ public class LeftPanel extends JPanel {
         switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/Switch_icon.png")));
     }
 
-    private Image getImage(String path){
+    private Image getImage(String path) {
         BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
-        try{
+        try {
             image = ImageIO.read(new File(path));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return image;
     }
 
-    public JButton getNewGameButton(){
+    public JButton getNewGameButton() {
         return this.newGameButton;
     }
 }

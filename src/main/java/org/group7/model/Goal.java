@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Goal implements IInsertable, Observable {
-//public class Goal implements IInsertable, Observable {
+    //public class Goal implements IInsertable, Observable {
     private Piece piece;
     private Color color;
     private List<Observer> observers;
 
-    public Goal(){
+    public Goal() {
         this.observers = new ArrayList<>();
     }
 
@@ -34,8 +34,8 @@ public class Goal implements IInsertable, Observable {
     }
 
     @Override
-    public void notifyObservers(){
-        for (Observer o: this.observers){
+    public void notifyObservers() {
+        for (Observer o : this.observers) {
             o.update();
         }
     }

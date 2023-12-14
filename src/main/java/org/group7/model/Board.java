@@ -11,22 +11,24 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler{
+public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler {
     private final Base[] bases;
     private final Tile[] field;
     private final GoalStretch[] goalStretches;
     private final Color[] colors;
-    private final HashMap<Color,Integer> playerStartTiles;
-    private final HashMap<Color, GoalStretch> goalsHashMap;
-    private final HashMap<Color,Base> colorBaseMap;
+    private final HashMap<Color, Integer> playerStartTiles;
+    private final HashMap<Color, GoalStretch> goalStretchesHashMap;
+    private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
+    private final int fieldTileAmount = 40;
+    private int playerAmount = 4;
 
     public Board() {
-        this.bases = new Base[4];
-        this.field = new Tile[40];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
-        this.goalStretches = new GoalStretch[4];
-        this.colors = new Color[4];
-        this.goalsHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
+        this.bases = new Base[playerAmount];
+        this.field = new Tile[fieldTileAmount];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
+        this.goalStretches = new GoalStretch[playerAmount];
+        this.colors = new Color[playerAmount];
+        this.goalStretchesHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
         this.visitor = new RemoveEntityVisitor(this);
@@ -35,12 +37,12 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         initStartTileIndices();
         initColorBaseMap();
         initGoals();
-        initGoalsHashMap();
+        initGoalStretchesHashMap();
         initTiles();
     }
 
     private void initTiles() {
-        for (int i = 0; i < 40; i++){
+        for (int i = 0; i < fieldTileAmount; i++) {
             this.field[i] = new Tile(i);
         }
     }
@@ -54,20 +56,20 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     private void initBases() {
         int i = 0;
-        for (Color c : this.colors){
+        for (Color c : this.colors) {
             this.bases[i] = new Base(4, c, this);
             i++;
         }
     }
 
     private void initStartTileIndices() {
-        for (int i = 0; i < 4; i++) {
-            this.playerStartTiles.put(this.colors[i], i*10);
+        for (int i = 0; i < playerAmount; i++) {
+            this.playerStartTiles.put(this.colors[i], i * 10);
         }
     }
 
-    private void initColorBaseMap() {
-        for (int i = 0; i < 4; i++) {
+    private void initColorBaseMap() { //ska dennas for loop istället utgå från sådant som redan gjorts i initBases?
+        for (int i = 0; i < playerAmount; i++) {
             this.colorBaseMap.put(this.colors[i], bases[i]);
         }
     }
@@ -81,22 +83,22 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     }
 
     public void addGoalObserver(Observer o) {
-        for (GoalStretch gs: this.goalStretches) {
+        for (GoalStretch gs : this.goalStretches) {
             gs.addObserver(o);
         }
     }
 
-    private void initGoalsHashMap(){
-        for (int i = 0; i < 4; i++){
-            this.goalsHashMap.put(this.colors[i], goalStretches[i]);
+    private void initGoalStretchesHashMap() {
+        for (int i = 0; i < 4; i++) {
+            this.goalStretchesHashMap.put(this.colors[i], goalStretches[i]);
         }
     }
 
-    private void addPieceToBase(Piece p){   //Private ksk??
+    private void addPieceToBase(Piece p) {   //Private ksk??
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
         b.addPiece(p);
-     }
+    }
 
     public void returnPieceToBase(Piece p) {
         int index = p.getPos();
@@ -104,10 +106,10 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         addPieceToBase(p);
     }
 
-    public void removeFromField(int pos){
-        for(int i = 1; i < 9; i++){
+    public void removeFromField(int pos) {
+        for (int i = 1; i < 9; i++) {
             int index = (pos + i) % 40;
-            if(!field[index].isEmpty()){
+            if (!field[index].isEmpty()) {
                 field[index].getEntity().accept(visitor);
             }
         }
@@ -118,14 +120,14 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         return b.removePiece();
     }
 
-    public void removePowerUpFromField(PowerUp powerUp){
+    public void removePowerUpFromField(PowerUp powerUp) {
         this.field[powerUp.getPos()].removeEntity();
     }
 
-    public void pieceFromBaseToField(Color c, int diceRoll){
+    public void pieceFromBaseToField(Color c, int diceRoll) {
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
-            addPiece(p,playerStartTiles.get(p.getColor()) + diceRoll - 1);
+            addPiece(p, playerStartTiles.get(p.getColor()) + diceRoll - 1);
         }
     }
 
@@ -144,27 +146,29 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         t.insertPiece(p);
     }
 
-    public void yeetPieceFromGoal(Piece p){
+    public void yeetPieceFromGoal(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
         Tile t;
-        if(tileIndex == 0) {
-           t = field[39];
-        } else {  t = field[tileIndex - 1];}
+        if (tileIndex == 0) {
+            t = field[39];
+        } else {
+            t = field[tileIndex - 1];
+        }
         t.insertPiece(p);
         p.setHandler(this);
         p.enableFieldState();
     }
 
     public void addPieceToGoalStretch(Piece p, int steps) {
-        GoalStretch goalStretch = this.goalsHashMap.get(p.getColor());
+        GoalStretch goalStretch = this.goalStretchesHashMap.get(p.getColor());
         p.setHandler(goalStretch);
         p.enableGoalState();
         goalStretch.addPiece(p, steps);
     }
 
-    public void removeEntityFromGoalStretch(Color goalColor, int index){  //TODO denna eller yeet?
-        GoalStretch goalStretch = this.goalsHashMap.get(goalColor);
+    public void removeEntityFromGoalStretch(Color goalColor, int index) {  //TODO denna eller yeet?
+        GoalStretch goalStretch = this.goalStretchesHashMap.get(goalColor);
         goalStretch.removeEntity(index);
     }
 
@@ -176,21 +180,20 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
-    public void movePieceInGoalStretch(Piece piece, int steps){
+    public void movePieceInGoalStretch(Piece piece, int steps) {
         Color c = piece.getColor();
-        GoalStretch goalStretch = goalsHashMap.get(c);
+        GoalStretch goalStretch = goalStretchesHashMap.get(c);
         goalStretch.goalStretchMove(piece, steps);
     }
 
-    public void movePiece(Piece piece, int diceRoll){  // Just nu finns movePiece och insertPiece, går det att slå ihop?
+    public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % 40;
         if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
             movePieceInGoalStretch(piece, diceRoll);
-        }
-        else{
+        } else {
             this.field[from].removeEntity();
             if (completedLap(from, to, tileIndex)) {    // completed a lap, so should enter goalStretch
                 int stepsLeft = (to - tileIndex);
@@ -202,18 +205,18 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
-    public void spawnPowerUp(){
+    public void spawnPowerUps() {
         Random rand = new Random();
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(this);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(this);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(this);
-        this.field[rand.nextInt(40)].insertPowerUp(lightningPowerUp);
-        this.field[rand.nextInt(40)].insertPowerUp(basePowerUp);
-        this.field[rand.nextInt(40)].insertPowerUp(laserPowerUp);
+        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(lightningPowerUp);
+        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(basePowerUp);
+        this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(laserPowerUp);
     }
     //Getters
 
-    public List<Base> getBases(){
+    public List<Base> getBases() {
         return Arrays.asList(this.bases);
     }
 
@@ -221,18 +224,19 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         return this.colorBaseMap.get(color);
     }
 
-    public Piece[] getPiecesFromBase(Color color){
-        for (Base b: this.bases) {
+    public Piece[] getPiecesFromBase(Color color) {
+        for (Base b : this.bases) {
             if (b.getColor() == color)
-                    return b.getPieces();
+                return b.getPieces();
         }
         return null;
     }
 
-    public Tile[] getFieldTiles(){
+    public Tile[] getFieldTiles() {
         return this.field;
     }
-    public List<Tile> getGoalTiles(){
+
+    public List<Tile> getGoalTiles() {
         List<Tile> goalTiles = new ArrayList<>(16);
         for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
@@ -240,7 +244,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         return goalTiles;
     }
 
-    public int getPieceAmount(Color c){
+    public int getPieceAmount(Color c) {
         return colorBaseMap.get(c).getPieceAmount();
     }
 

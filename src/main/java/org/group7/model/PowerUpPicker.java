@@ -9,8 +9,8 @@ public class PowerUpPicker {    //TODO diskutera poängen med denna klassen
     private final Random powerUpGenerator;
     private final List<String> powerUpList;
 
-    private PowerUpPicker(){
-        long seed = System.currentTimeMillis()*31;
+    private PowerUpPicker() {
+        long seed = System.currentTimeMillis() * 31;
         this.powerUpGenerator = new Random(seed);
         this.powerUpList = new ArrayList<>();
         populatePowerUpList();
@@ -22,13 +22,13 @@ public class PowerUpPicker {    //TODO diskutera poängen med denna klassen
     }
 
     public static PowerUpPicker getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new PowerUpPicker();
         }
         return instance;
     }
 
-    public String choosePowerUp(){
+    public String choosePowerUp() {
         int randomPowerUp = powerUpGenerator.nextInt(powerUpList.size());
         return powerUpList.get(randomPowerUp);
     }

@@ -6,9 +6,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class DrawMenuPanel extends JPanel{
+public class DrawMenuPanel extends JPanel {
     private Image image;
     private JButton fourPlayerMenuButton = new JButton();
+
     public DrawMenuPanel() {
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
@@ -21,16 +22,16 @@ public class DrawMenuPanel extends JPanel{
         super.paintComponent(g);
         g.drawImage(this.image, 0, 0, null); // see javadoc for more info on the parameters
     }
-    private void applyImage(){
-        try{
+
+    private void applyImage() {
+        try {
             this.image = ImageIO.read(new File("src/main/resources/Menu3.png"));
-        }
-        catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    private void initComponents(){
+    private void initComponents() {
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -43,7 +44,7 @@ public class DrawMenuPanel extends JPanel{
         this.add(fourPlayerMenuButton, c);
     }
 
-    public JButton getFourPlayerMenuButton(){
+    public JButton getFourPlayerMenuButton() {
         return this.fourPlayerMenuButton;
     }
 }

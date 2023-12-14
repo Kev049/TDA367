@@ -3,9 +3,9 @@ package org.group7.model;
 import org.group7.model.PowerUps.PowerUp;
 
 public class Tile implements IInsertable {
-
-    private final int index;
     private Entity entity;
+    private final int index;
+    private final int outOfBounds = -1;
 
     public Tile(int index) {
         this.entity = null;
@@ -13,7 +13,7 @@ public class Tile implements IInsertable {
     }
 
     public void insertPiece(Piece p) {
-        if(this.entity != null){     // if collision
+        if (this.entity != null) {     // if collision
             this.entity.handleCollision(p);
         } else {                    // else
             this.entity = p;
@@ -21,19 +21,19 @@ public class Tile implements IInsertable {
         }
     }
 
-    public void insertPowerUp(PowerUp powerUp){
-        if(this.entity == null){
+    public void insertPowerUp(PowerUp powerUp) {
+        if (this.entity == null) {
             this.entity = powerUp;
             this.entity.setPos(index);
         }
     }
 
-    public Entity getEntity(){
+    public Entity getEntity() {
         return this.entity;
     }
 
     public void removeEntity() {
-        this.entity.setPos(-1);
+        this.entity.setPos(outOfBounds);
         this.entity = null;
     }
 

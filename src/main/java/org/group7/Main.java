@@ -22,7 +22,7 @@ public class Main {
     private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
     private static final int TOTAL_AMOUNT_PIECES = 16;
 
-    public static <URL, AudioInputStream> void main(String[] args) {    //TODO försöka att städa denna klass
+    public static void main(String[] args) {    //TODO försöka att städa denna klass
         Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 
@@ -42,7 +42,7 @@ public class Main {
         }
 
         List<PaintablePiece> coloredPaintablePieces = new ArrayList<>();
-        for(Base base : bases){
+        for (Base base : bases) {
             Piece[] pieces = base.getPieces();
             coloredPaintablePieces.clear();
             for (Piece piece : pieces) {
@@ -75,14 +75,15 @@ public class Main {
         BoardController boardController = new BoardController(paintablePieces, paintableBases, game, boardPanel); //TODO borde kanske ändra detta, används men "ändå inte"
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
-        WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel,fourPlayerMenuButton, newGameButton);
-        playSound();
+        WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
+        //playSound();
     }
+
     public static synchronized void playSound() {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                    (new File("src/main/resources/kanye.wav")));
+                    (new File("src/main/resources/gus.wav")));
             clip.open(inputStream);
             clip.start();
         } catch (Exception e) {

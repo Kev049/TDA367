@@ -16,26 +16,26 @@ public class GoalStretch implements Observable, IMoveHandler {
     private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
     private final IInsertable[] insertables = new IInsertable[insertCapacity];
     private final Color color;
-
     private final PieceExtractor handler;
-
     private final List<Observer> observers;
+    private Goal goal;
 
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
+        this.goal = new Goal();
         initTiles();
         initInsertables();
         this.observers = new ArrayList<>();
         this.handler = handler;
     }
 
-    private void initInsertables(){
+    private void initInsertables() {
         System.arraycopy(this.tiles, 0, this.insertables, 0, capacity);
-        this.insertables[4] = new Goal();
+        this.insertables[4] = goal;
         //insertables.add(4, new Goal());
     }
 
-    private void initTiles(){
+    private void initTiles() {
         for (int i = 0; i < capacity; i++) {
             this.tiles[i] = new Tile(i);
         }
@@ -57,32 +57,31 @@ public class GoalStretch implements Observable, IMoveHandler {
         removeEntity(pos);
         //pos += steps;  // där den ska
         pos = 4 - abs((pos + steps - 4));
-        if(pos < 0){ //pjäsen studsar ut
+        if (pos < 0) { //pjäsen studsar ut
             this.handler.yeetPieceFromGoal(p);
             p.removeFromGoalStretch();
-        }
-        else{ //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
+        } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
             p.setPos(pos);
             this.insertables[pos].insertPiece(p);
             //lägga till en if check eller liknande som lägger till/räknar antalet pjäser som går i mål?
         }
     }
 
-    public void removeEntity(int index){ //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
+    public void removeEntity(int index) { //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
         this.insertables[index].removeEntity();
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 
-    public Tile[] getTiles(){
+    public Tile[] getTiles() {
         return this.tiles;
     }
 
     @Override
-    public void notifyObservers(){
-        for (Observer o: this.observers){
+    public void notifyObservers() {
+        for (Observer o : this.observers) {
             o.update();
         }
     }
@@ -90,6 +89,7 @@ public class GoalStretch implements Observable, IMoveHandler {
     @Override
     public void addObserver(Observer o) {
         this.observers.add(o);
+        this.goal.addObserver(o);
     }
 
     @Override

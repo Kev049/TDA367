@@ -39,19 +39,19 @@ public class Base {
         }
     }
 
-    public Piece[] getPieces(){
+    public boolean isEmpty() {return (this.pieceAmount == 0);}
+
+    //getters
+
+    public Piece[] getPieces() {
         return this.pieces;
     }
 
-    public boolean isEmpty() {
-        return (this.pieceAmount == 0);
-    }
-
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 
-    public int getPieceAmount(){
+    public int getPieceAmount() {
         return this.pieceAmount;
     }
 
