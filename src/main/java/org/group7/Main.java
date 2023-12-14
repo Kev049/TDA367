@@ -1,10 +1,23 @@
 package org.group7;
 
-import org.group7.controllers.BoardController;
-import org.group7.controllers.GameController;
-import org.group7.controllers.WindowController;
-import org.group7.model.*;
-import org.group7.view.*;
+import org.group7.controller.GameController;
+import org.group7.controller.WindowController;
+import org.group7.model.board.Base;
+import org.group7.model.board.Board;
+import org.group7.model.board.Tile;
+import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.game.Game;
+import org.group7.view.MenuWindow;
+import org.group7.view.PaintableEntityFactory;
+import org.group7.view.PaintableTileFactory;
+import org.group7.view.paintable.PaintableBase;
+import org.group7.view.paintable.PaintablePiece;
+import org.group7.view.paintable.PaintableTile;
+import org.group7.view.panels.game.BoardPanel;
+import org.group7.view.panels.game.DrawGamePanel;
+import org.group7.view.panels.game.LeftPanel;
+import org.group7.view.panels.game.RightPanel;
+import org.group7.view.panels.menu.DrawMenuPanel;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -60,7 +73,7 @@ public class Main {
         }
 
         //TODO: refactor please
-        GameController gameController = new GameController(game);
+        GameController gameController = new GameController(game, paintablePieces, paintableBases);
         JButton rollDiceButton = gameController.getRollDiceButton();
 
         BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
@@ -73,7 +86,6 @@ public class Main {
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 
-        BoardController boardController = new BoardController(paintablePieces, paintableBases, game); //TODO borde kanske ändra detta, används men "ändå inte"
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
         WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
@@ -84,7 +96,7 @@ public class Main {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                    (new File("src/main/resources/gus.wav")));
+                    (new File("src/main/resources/audio/cook.wav")));
             clip.open(inputStream);
             clip.start();
         } catch (Exception e) {
