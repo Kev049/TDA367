@@ -3,6 +3,7 @@ package org.group7.model.board;
 import org.group7.model.board.entities.Entity;
 import org.group7.model.board.entities.piece.Piece;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,19 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     Board board;
-    Color[] colorArray;
+    Color[] colorArray = new Color[4];;
+
+    @BeforeAll
+    void beforeAll(){
+        colorArray[0] = Color.RED;
+        colorArray[1] = Color.GREEN;
+        colorArray[2] = Color.BLUE;
+        colorArray[3] = Color.YELLOW;
+    }
 
     @BeforeEach
     void setUp() {
-        this.colorArray = new Color[4];
-        this.colorArray[0] = Color.RED;
-        this.colorArray[1] = Color.GREEN;
-        this.colorArray[2] = Color.BLUE;
-        this.colorArray[3] = Color.YELLOW;
         Board board = new Board(colorArray);
-        board = new Board(colorArray);
     }
-
 
     @AfterEach
     void tearDown() {
