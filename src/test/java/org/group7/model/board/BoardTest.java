@@ -226,6 +226,8 @@ class BoardTest {
     void movePieceWillMovePieceAsMuchAsDiceRoll() {
         int diceRoll = 1;
         Piece piece = new Piece(Color.GREEN, board);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 1);
         board.addPiece(piece, 0);
         int piecePos = piece.getPos();
         board.movePiece(piece, diceRoll);

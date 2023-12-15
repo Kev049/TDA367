@@ -203,7 +203,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     public void removeEntitiesFromField(int pos, int amountTiles) {
         for (int i = 1; i < amountTiles + 1; i++) {
-            int index = (pos + i) % fieldTileAmount;
+            int index = (pos + i) % FIELD_TILE_AMOUNT;
             if (!field[index].isEmpty()) {
                 field[index].getEntity().accept(visitor);
             }
