@@ -56,7 +56,6 @@ public class GoalStretch implements IMoveHandler {
     @Override
     public void addPiece(Piece p, int index) {
         int entryTileIndex = 4 - abs(index - 4);
-        p.setPos(entryTileIndex); //TODO onödigt
         p.addToGoalStretch();
         this.insertables[entryTileIndex].insertPiece(p);
     }
