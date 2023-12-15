@@ -324,6 +324,7 @@ class BoardTest {
         Piece piece1 = new Piece(Color.RED, board);
         removeEntityIfTileIsNotEmpty(board, 0);
         removeEntityIfTileIsNotEmpty(board, 1);
+        removeEntityIfTileIsNotEmpty(board, 2);
         board.addPiece(piece, 0);
         board.addPiece(piece1, 1);
         board.movePiece(piece, 1);
