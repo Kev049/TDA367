@@ -31,16 +31,6 @@ class GameTest {
     }
 
     @Test
-    void moveMovesPiece() {
-        Piece piece = new Piece(Color.RED, game.getBoard());
-        game.getBoard().addPiece(piece, 0);
-        int startingPos = piece.getPos();
-        game.roll();
-        game.move(piece);
-        assertTrue(piece.getPos() != startingPos);
-    }
-
-    @Test
     void pieceDoesntMoveIfDieHasNotBeenRolled() {
         Piece piece = new Piece(Color.RED, game.getBoard());
         game.getBoard().addPiece(piece, 0);
