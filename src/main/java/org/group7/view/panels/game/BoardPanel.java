@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska på denna klassen?
+public class BoardPanel extends JPanel implements Observer{
     private final List<PaintableTile> paintableFieldTiles;
     private final List<PaintableBase> paintableBases;
     private final List<PaintableTile> paintableGoalStretchTiles;

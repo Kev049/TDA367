@@ -68,7 +68,7 @@ public class Goal implements IInsertable, Observable {
     /**
      * The function adds an observer to a list of observers.
      * 
-     * @param o The parameter "o" is an instance of the Observer interface that woöö ne added
+     * @param o The parameter "o" is an instance of the Observer interface that will be added
      * to the list of observers.
      */
     @Override
