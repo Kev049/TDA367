@@ -67,13 +67,6 @@ class PieceTest {
         assertEquals(piece.getPos(), -1);
     }
 
-//    @Test
-//    void piecePushesOtherPiece() { //TODO:Get Kevin on the case
-//        Piece goomba = new Piece(Color.BLUE, handler);
-//        goomba.handleCollision(piece);
-//        assertEquals(goomba.getPos(), -1);
-//    }
-
     @Test
     void setPosChangesPosition() {
         piece.setPos(1);
