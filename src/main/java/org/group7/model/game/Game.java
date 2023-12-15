@@ -34,9 +34,8 @@ public class Game implements StringObservable, Observable, Observer {
 
     /**
      * Constructor for Game
-     * @param board the board to be used in the game
      */
-    public Game(Board board) {
+    public Game() {
         this.dice = new Dice();
         this.colorArray = new Color[4];
         initColors();
