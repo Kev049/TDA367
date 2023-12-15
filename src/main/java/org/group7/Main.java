@@ -29,22 +29,22 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {    //TODO försöka att städa denna klass
+    public static void main(String[] args) {
 
         final int TOTAL_AMOUNT_FIELD_TILES = 40;
         final int TOTAL_AMOUNT_BASES = 4;
         final int TOTAL_AMOUNT_GOAL_TILES = 16;
         final int TOTAL_AMOUNT_PIECES = 16;
 
-        Board board = new Board(); //TODO: Flytta tillbaka till game
-        Game game = new Game(board);
+        Game game = new Game();
+        Board board = game.getBoard();
 
         Tile[] fieldTiles = board.getFieldTiles();
         List<Base> bases = board.getBases();
         List<Tile> goalTiles = board.getGoalTiles();
 
         List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
-        List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
+        List<PaintableTile> paintableGoalStretchTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
 
         List<PaintableBase> paintableBases = new ArrayList<>(TOTAL_AMOUNT_BASES);
         List<PaintablePiece> paintablePieces = new ArrayList<>(TOTAL_AMOUNT_PIECES);
@@ -71,23 +71,22 @@ public class Main {
 
         for (Tile goalTile : goalTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
-            paintableGoalTiles.add(paintableTile);
+            paintableGoalStretchTiles.add(paintableTile);
         }
 
-        //TODO: refactor please
         GameController gameController = new GameController(game, paintablePieces, paintableBases);
         JButton rollDiceButton = gameController.getRollDiceButton();
 
-        BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalTiles, paintablePieces);
-        game.addObserver(boardPanel);
+        BoardPanel boardPanel = new BoardPanel(paintableFieldTiles, paintableBases, paintableGoalStretchTiles, paintablePieces);
         LeftPanel leftPanel = new LeftPanel();
         RightPanel rightPanel = new RightPanel(rollDiceButton);
         JButton newGameButton = leftPanel.getNewGameButton();
 
+        game.addObserver(boardPanel);
+
         DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, game, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
-
 
         MenuWindow menuWindow = new MenuWindow("TurboFia", drawMenuPanel);
         WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
@@ -98,11 +97,8 @@ public class Main {
         try {
             Clip clip = AudioSystem.getClip();
 
-            URL songPath = Main.class.getClassLoader().getResource("audio/cook.wav");
+            URL songPath = Main.class.getClassLoader().getResource("audio/gus.wav");
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(songPath);
-
-            //AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            //        (new File("src/main/resources/audio/cook.wav")));
 
             clip.open(inputStream);
             clip.start();

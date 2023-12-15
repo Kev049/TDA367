@@ -23,7 +23,7 @@ import java.util.List;
 public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska på denna klassen?
     private final List<PaintableTile> paintableFieldTiles;
     private final List<PaintableBase> paintableBases;
-    private final List<PaintableTile> paintableGoalTiles;
+    private final List<PaintableTile> paintableGoalStretchTiles;
     private final List<PaintablePiece> paintablePieces;
     private final List<Integer> fieldTileIndices;
     private final List<Integer> baseTileIndices;
@@ -33,21 +33,23 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
     private final HashMap<Piece, PaintablePiece> piecePaintablePieceHashMap;
     private static final int TOTAL_AMOUNT_TILES = 121;
     private static final int fieldStartCapacity = 40;
+    private static final int baseTilesCapacity = 16;
+    private static final int goalTilesCapacity = 16;
     private Image image;
     private PaintableEntityFactory paintableEntityFactory;
 
     public BoardPanel(List<PaintableTile> paintableFieldTiles,
                       List<PaintableBase> paintableBases,
-                      List<PaintableTile> paintableGoalTiles,
+                      List<PaintableTile> paintableGoalStretchTiles,
                       List<PaintablePiece> paintablePieces) {
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
-        this.paintableGoalTiles = paintableGoalTiles;
+        this.paintableGoalStretchTiles = paintableGoalStretchTiles;
         this.paintablePieces = paintablePieces;
-        this.fieldTileIndices = new ArrayList<>(fieldStartCapacity); //Index for paintableTiles that match game path
-        this.baseTileIndices = new ArrayList<>(16);
-        this.goalTileIndices = new ArrayList<>(16);
-        this.baseBoxPoints = new ArrayList<>(16);
+        this.fieldTileIndices = new ArrayList<>(fieldStartCapacity);
+        this.baseTileIndices = new ArrayList<>(baseTilesCapacity);
+        this.goalTileIndices = new ArrayList<>(goalTilesCapacity);
+        this.baseBoxPoints = new ArrayList<>(baseTilesCapacity);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.piecePaintablePieceHashMap = new HashMap<>();
         this.paintableEntityFactory = new PaintableEntityFactory();
@@ -67,7 +69,6 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
         try {
             URL path = BoardPanel.class.getClassLoader().getResource("Board.png");
             this.image = ImageIO.read(path);
-            //this.image = ImageIO.read(new File("src/main/resources/Board.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -94,15 +95,15 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
         drawBoard();
     }
     public void drawBoard() {
-        redrawPaintableTiles(paintableGoalTiles);
-        redrawPaintableTiles(paintableFieldTiles);
+        drawPaintableTiles(paintableGoalStretchTiles);
+        drawPaintableTiles(paintableFieldTiles);
         redrawPaintableBases(paintableBases);
         this.repaint();
         this.revalidate();
     }
 
-    private void redrawPaintableTiles(List<PaintableTile> paintableGoalTiles) {
-        for (PaintableTile paintableTile : paintableGoalTiles) {
+    private void drawPaintableTiles(List<PaintableTile> paintableGoalStretchTiles) {
+        for (PaintableTile paintableTile : paintableGoalStretchTiles) {
             Tile tile = paintableTile.getTile();
             paintableTile.removeAll();
             if (!(tile.isEmpty())) {
@@ -122,7 +123,6 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
             paintableBase.redrawPieces();
         }
     }
-
 
     private void addFieldBoxes() {
         GridBagConstraints c = new GridBagConstraints();
@@ -164,8 +164,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
         int index = 0;
         for (Component component : components) {
             if (index == 16) {
-                break; //"you're breaking my heart" - Padmé Amidala in ROTS
-                //"the women and the children too" - Anakin Skywalker (Gigachad) in the same trilogy
+                break;
             }
             Point basePoint = baseBoxPoints.get(index);
             GridBagConstraints gbc = ((GridBagLayout) this.getLayout()).getConstraints(component);
@@ -179,7 +178,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
     private void addBoardComponents() {
         addTilesToBox(fieldTileIndices, paintableFieldTiles);
         addBaseToBox(baseTileIndices, paintableBases);
-        addTilesToBox(goalTileIndices, paintableGoalTiles);
+        addTilesToBox(goalTileIndices, paintableGoalStretchTiles);
     }
 
     private void addTilesToBox(List<Integer> tileIndices, List<PaintableTile> paintableTiles) {

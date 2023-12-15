@@ -16,4 +16,5 @@ public interface IInsertable {
      * The removeEntity() function is used to remove an entity from a tile or goal.
      */
     void removeEntity();    //TODO ska vi ha detta interface måste vi använda det på alla ställen
+
 }

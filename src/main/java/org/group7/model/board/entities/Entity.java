@@ -9,7 +9,6 @@ import org.group7.model.board.entities.piece.Piece;
 public abstract class Entity {
     private int pos;
 
-    //TODO Can we not implement accept here? It seems to be identical implementations in piece and powerup.
     /**
      * The accept function takes in an EntityVisitor as a parameter and calls the visit function of the visitor.
      * 

@@ -30,7 +30,7 @@ public class PowerUpGenerator {
         this.lightningHandler = lightningHandler;
     }
 
-    public void generatePowerUps() {
+    public List<PowerUp> generatePowerUps() {
         powerUps.clear();
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(lightningHandler);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(baseHandler);
@@ -38,10 +38,6 @@ public class PowerUpGenerator {
         powerUps.add(lightningPowerUp);
         powerUps.add(basePowerUp);
         powerUps.add(laserPowerUp);
+        return powerUps;
     }
-
-    public List<PowerUp> getPowerUps(){
-        return this.powerUps;
-    }
-
 }

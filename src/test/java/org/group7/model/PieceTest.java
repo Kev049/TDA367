@@ -18,10 +18,18 @@ class PieceTest {
     Piece piece;
     IMoveHandler handler;
     Color color;
+    Color[] colorArray;
 
     @BeforeEach
     void setUp() {
-        IMoveHandler handler = new Board();
+        this.colorArray = new Color[4];
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
+        Board board = new Board(colorArray);
+        board = new Board(colorArray);
+        IMoveHandler handler = new Board(colorArray);
         color = Color.RED;
         piece = new Piece(color, handler);
     }

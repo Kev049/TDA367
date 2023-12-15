@@ -24,6 +24,7 @@ public class GameController {
     }
 
     public void addListeners(List<PaintablePiece> paintablePieces, List<PaintableBase> paintableBases) {
+        //Add a timer that has rollDiceListener as action listener
         Timer timer = new Timer(80, rollDiceListener);
         rollDiceButton.addActionListener(e -> rollDice(timer));
 
@@ -36,8 +37,9 @@ public class GameController {
     }
 
     private void rollDice(Timer timer) {
+        //Disable button and execute code in action performed in RollDiceListener
         rollDiceButton.setEnabled(false);
-        timer.start();                      //TODO tycker inte det är jättetydligt vad detta gör
+        timer.start();
     }
 
     public JButton getRollDiceButton() {

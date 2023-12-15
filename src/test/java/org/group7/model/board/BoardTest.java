@@ -13,10 +13,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     Board board;
+    Color[] colorArray;
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        this.colorArray = new Color[4];
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
+        Board board = new Board(colorArray);
+        board = new Board(colorArray);
     }
 
 

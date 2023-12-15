@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Game implements StringObservable, Observable, Observer {   //TODO ta bort onödiga metoder
+public class Game implements StringObservable, Observable, Observer {
 
     private final Dice dice;
     private final Board board;
     private GameState gameState;
     private final Color[] colorArray;
-    private int currentColor;
+    private int currentColorIndex;
     private int lastDiceRollResult;
     private int turnNumber;
     private final int piecePerPlayer = 4;
@@ -27,12 +27,12 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     private final Set<Observer> observers;
     private final HashMap<Color, Integer> finishedPieces;
 
-    public Game(Board board) { //TODO Game should create the board, not Main
-        this.dice = Dice.getInstance();
-        this.board = board;
-        this.board.addGoalObserver(this);
+    public Game() {
+        this.dice = new Dice();
         this.colorArray = new Color[4];
         initColors();
+        this.board = new Board(this.colorArray);
+        this.board.addGoalObserver(this);
         this.turnNumber = 0;
         this.lastDiceRollResult = 0;
         this.gameState = new RollState(this); //TODO this should come from the constructor to avoid dependency
@@ -47,7 +47,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         this.colorArray[1] = Color.GREEN;
         this.colorArray[2] = Color.BLUE;
         this.colorArray[3] = Color.YELLOW;
-        currentColor = 0;
+        currentColorIndex = 0;
     }
 
     private void initFinishedPieces() {
@@ -72,7 +72,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected boolean validateMove(Piece piece) {
-        return (colorArray[currentColor].equals(piece.getColor()));
+        return (colorArray[currentColorIndex].equals(piece.getColor()));
     }
 
     public void move(Piece piece) {
@@ -103,7 +103,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected boolean validateBaseMove(Color color) { //Checks if player rolled 1 or 6 and if base is same color as player and base isn't empty
-        return ((colorArray[currentColor].equals(color) && !(board.getBaseFromColor(color).isEmpty()))
+        return ((colorArray[currentColorIndex].equals(color) && !(board.getBaseFromColor(color).isEmpty()))
                 && (this.lastDiceRollResult == 1 || this.lastDiceRollResult == 6));
     }
 
@@ -125,8 +125,8 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     protected void nextPlayer() {
-        this.currentColor = (this.currentColor + 1) % 4;
-        String playerColor = this.colorArray[this.currentColor].toString();
+        this.currentColorIndex = (this.currentColorIndex + 1) % 4;
+        String playerColor = this.colorArray[this.currentColorIndex].toString();
         notifyObservers(playerColor);
     }
 
@@ -135,7 +135,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     private boolean noPiecesLeft() {
-        Color c = colorArray[currentColor];
+        Color c = colorArray[currentColorIndex];
         int pieceAmount = board.getPieceAmount(c);
         return ((this.finishedPieces.get(c) + pieceAmount) == 4);
     }
@@ -153,18 +153,18 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
     }
 
     public void tryForPowerupSpawn() {
-        if (turnNumber % 8 == 0) {
+        if (turnNumber % 6 == 0) {
             spawnPowerups();
         }
     }
 
     @Override
     public void update() {
-        Color c = colorArray[currentColor];
+        Color c = colorArray[currentColorIndex];
         int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
         this.finishedPieces.replace(c, increasedFinishedPieces);
         if (increasedFinishedPieces == 4) {
-            System.out.println(currentColor + "won!"); //Should display a proper victory message
+            System.out.println(currentColorIndex + "won!");
         }
     }
 
@@ -192,12 +192,15 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         }
     }
 
-    //setters
+    //Setters & getters
 
     protected void setState(GameState gamestate) {
         this.gameState = gamestate;
     }
 
+    public Board getBoard(){
+        return this.board;
+    }
 }
 
 

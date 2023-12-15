@@ -147,6 +147,8 @@ public class GoalStretch implements Observable, IMoveHandler {
      * 
      * @param o The parameter "o" is an instance of the Observer interface.
      */
+
+    //TODO: CHANGE SO THAT ONLY GOAL HAS OBSERVER
     @Override
     public void addObserver(Observer o) {
         this.observers.add(o);

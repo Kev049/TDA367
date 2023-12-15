@@ -44,6 +44,7 @@ public class Goal implements IInsertable, Observable {
         notifyObservers();
     }
 
+
     /**
      * The function notifies all observers by calling their update method.
      */

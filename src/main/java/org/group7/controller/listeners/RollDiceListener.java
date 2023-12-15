@@ -44,7 +44,6 @@ public class RollDiceListener implements ActionListener {
         try {
             URL dicePath = DrawMenuPanel.class.getClassLoader().getResource("Dices.png");
             image = ImageIO.read(dicePath);
-            //image = ImageIO.read(new File("src/main/resources/Dices.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
