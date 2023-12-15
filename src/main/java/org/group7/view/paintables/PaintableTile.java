@@ -2,6 +2,7 @@ package org.group7.view.paintables;
 
 import javax.swing.*;
 
+import org.group7.model.board.IInsertable;
 import org.group7.model.board.Tile;
 
 import java.awt.Dimension;
@@ -10,9 +11,9 @@ import java.awt.GridBagLayout;
 
 public class PaintableTile extends JButton {
 
-    private Tile tile;
+    private IInsertable tile;
 
-    public PaintableTile(Tile tile) {
+    public PaintableTile(IInsertable tile) {
         this.tile = tile;
         this.setPreferredSize(new Dimension(91, 91));
         this.setMaximumSize(new Dimension(91, 91));
@@ -22,7 +23,7 @@ public class PaintableTile extends JButton {
         this.setBorderPainted(false);
     }
 
-    public Tile getTile() {
+    public IInsertable getTile() {
         return this.tile;
     }
 

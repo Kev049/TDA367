@@ -4,6 +4,7 @@ import org.group7.controller.GameController;
 import org.group7.controller.WindowController;
 import org.group7.model.board.Base;
 import org.group7.model.board.Board;
+import org.group7.model.board.IInsertable;
 import org.group7.model.board.Tile;
 import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.game.Game;
@@ -41,7 +42,7 @@ public class Main {
 
         Tile[] fieldTiles = board.getFieldTiles();
         List<Base> bases = board.getBases();
-        List<Tile> goalTiles = board.getGoalTiles();
+        List<IInsertable> goalTiles = board.getGoalTiles();
 
         List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
         List<PaintableTile> paintableGoalTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
@@ -69,7 +70,7 @@ public class Main {
             paintableBases.add(paintableBase);
         }
 
-        for (Tile goalTile : goalTiles) {
+        for (IInsertable goalTile : goalTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalTiles.add(paintableTile);
         }

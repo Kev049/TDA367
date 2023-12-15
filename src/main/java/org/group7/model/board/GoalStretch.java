@@ -6,6 +6,7 @@ import org.group7.model.board.entities.piece.Piece;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -14,15 +15,11 @@ import static java.lang.Math.abs;
  * The GoalStretch class represents the goal stretch in the game (each player has their
  * own strip of tiles) that the pieces have to go through to reach the goal.
  */
-public class GoalStretch implements Observable, IMoveHandler {
+public class GoalStretch implements IMoveHandler {
     private final int capacity = 4;
-    private final int insertCapacity = capacity + 1;
-    private final Tile[] tiles = new Tile[capacity];                //TODO varför finns både Tile och Insertable?
-    private final IInsertable[] insertables = new IInsertable[insertCapacity];
+    private final IInsertable[] insertables = new IInsertable[capacity + 1];
     private final Color color;
     private final PieceExtractor handler;
-    private final List<Observer> observers;
-    private Goal goal;
 
     /**
      * The constructor of the GoalStretch class.
@@ -33,10 +30,7 @@ public class GoalStretch implements Observable, IMoveHandler {
      */
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
-        this.goal = new Goal();
-        initTiles();
         initInsertables();
-        this.observers = new ArrayList<>();
         this.handler = handler;
     }
 
@@ -45,18 +39,10 @@ public class GoalStretch implements Observable, IMoveHandler {
      * array called "tiles" and then inserting a "goal" object at index 4.
      */
     private void initInsertables() {
-        System.arraycopy(this.tiles, 0, this.insertables, 0, capacity);
-        this.insertables[4] = goal;
-        //insertables.add(4, new Goal());
-    }
-
-    /**
-     * The function initializes an array of Tile objects with a specified capacity.
-     */
-    private void initTiles() {
         for (int i = 0; i < capacity; i++) {
-            this.tiles[i] = new Tile(i);
+            this.insertables[i] = new Tile(i);
         }
+        this.insertables[capacity] = new Goal();
     }
 
     /**
@@ -70,10 +56,9 @@ public class GoalStretch implements Observable, IMoveHandler {
     @Override
     public void addPiece(Piece p, int index) {
         int entryTileIndex = 4 - abs(index - 4);
-        p.setPos(entryTileIndex);
+        p.setPos(entryTileIndex); //TODO onödigt
         p.addToGoalStretch();
         this.insertables[entryTileIndex].insertPiece(p);
-        //goalStretchMove(p, 0);
     }
 
 
@@ -84,20 +69,16 @@ public class GoalStretch implements Observable, IMoveHandler {
      * @param p The parameter "p" is an object of type "Piece".
      * @param steps The "steps" parameter represents the number of steps that the piece should move.
      */
-    public void goalStretchMove(Piece p, int steps) { //TODO clean up this function, only temp to check functionality
-        int pos = p.getPos();  // där den står
-        //int oldPos = pos;
-        //boolean isNotNewToGoalStretch = p.isAtGoalStretch();    // TODO varför finns detta? vad är poängen?
+    public void goalStretchMove(Piece p, int steps) {
+        int pos = p.getPos();
         removeEntity(pos);
-        //pos += steps;  // där den ska
         pos = 4 - abs((pos + steps - 4));
-        if(pos < 0) { //pjäsen studsar ut
+        if (pos < 0) {  // Went out of GoalStretch
             this.handler.pieceFromGoalStretchToField(p);
             p.removeFromGoalStretch();
-        } else { //pjäsen hamnar antingen på målrutan eller på någon av tilesen i "goalstretch"
+        } else {        // Landed inside GoalStretch
             p.setPos(pos);
             this.insertables[pos].insertPiece(p);
-            //lägga till en if check eller liknande som lägger till/räknar antalet pjäser som går i mål?
         }
     }
 
@@ -126,36 +107,22 @@ public class GoalStretch implements Observable, IMoveHandler {
      * 
      * @return An array of Tile objects.
      */
-    public Tile[] getTiles() {
-        return this.tiles;
-    }
-
-
-    /**
-     * The function notifies all observers by calling their update method.
-     */
-    @Override
-    public void notifyObservers() {
-        for (Observer o : this.observers) {
-            o.update();
+    public IInsertable[] getTiles() {
+        IInsertable[] copy = new IInsertable[capacity];
+        for (int i = 0; i < capacity; i++) {
+            copy[i] = this.insertables[i];
         }
+        //Arrays.copyOfRange(this.insertables,0,capacity - 1);
+        return copy;    //Returns the "Tiles" part of the
     }
 
-    /**
-     * The function adds an observer to a list of observers and also adds the observer to a goal
-     * object.
-     * 
-     * @param o The parameter "o" is an instance of the Observer interface.
-     */
-    @Override
-    public void addObserver(Observer o) {
-        this.observers.add(o);
-        this.goal.addObserver(o);
+    public IInsertable getGoal() {
+        return this.insertables[capacity];
     }
 
     @Override
     public void returnPieceToBase(Piece p) {
-        //TODO empty
+        //TODO future implementation
     }
 
 

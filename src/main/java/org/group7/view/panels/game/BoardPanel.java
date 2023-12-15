@@ -1,6 +1,7 @@
 package org.group7.view.panels.game;
 
 import org.group7.controller.observe.Observer;
+import org.group7.model.board.IInsertable;
 import org.group7.model.board.entities.piece.Piece;
 import org.group7.model.board.entities.powerups.PowerUp;
 import org.group7.model.board.Tile;
@@ -103,7 +104,7 @@ public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska
 
     private void redrawPaintableTiles(List<PaintableTile> paintableGoalTiles) {
         for (PaintableTile paintableTile : paintableGoalTiles) {
-            Tile tile = paintableTile.getTile();
+            IInsertable tile = paintableTile.getTile();
             paintableTile.removeAll();
             if (!(tile.isEmpty())) {
                 if (tile.getEntity() instanceof Piece) {
