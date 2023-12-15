@@ -20,16 +20,12 @@ class GoalTest {
     Color[] colorArray = new Color[4];
     IMoveHandler handler;
 
-    @BeforeAll
-    void beforeAll() {
+    @BeforeEach
+    void setUp() {
         colorArray[0] = Color.RED;
         colorArray[1] = Color.GREEN;
         colorArray[2] = Color.BLUE;
         colorArray[3] = Color.YELLOW;
-    }
-
-    @BeforeEach
-    void setUp() {
         this.goal = new Goal();
         this.handler = new Board(colorArray);
         this.piece = new Piece(Color.RED, handler);
