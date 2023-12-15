@@ -7,6 +7,10 @@ import org.group7.view.paintables.PaintablePiece;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is used to listen to the PaintablePiece objects.
+ * It is used to move pieces.
+ */
 public class PaintablePieceListener implements ActionListener{
     private Game game;
 

@@ -29,22 +29,27 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final EntityVisitor visitor;
     private final int fieldTileAmount = 40;
     private final int goalTileAmount = 16;
-    private final int playerAmount = 4;
+    private final int playerAmount;
     private final PowerUpGenerator powerUpGenerator;
 
     /**
      * Constructor for Board class. Initializes the board by calling several init methods.
      * */    
-    public Board() {
+    public Board(Color[] colors) {
+        this.colors = colors;
+        this.playerAmount = colors.length;
         this.bases = new Base[playerAmount];
         this.field = new Tile[fieldTileAmount];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
         this.goalStretches = new GoalStretch[playerAmount];
-        this.colors = new Color[4];
         this.goalStretchesHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
         this.visitor = new RemoveFromFieldVisitor(this);
         this.powerUpGenerator = new PowerUpGenerator(this, this, this);
+        initComponents();
+    }
+
+    private void initComponents() {
         initColors();
         initBases();
         initStartTileIndices();
@@ -52,6 +57,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         initGoals();
         initGoalStretchesHashMap();
         initTiles();
+        spawnPowerUps();
     }
 
     /**
@@ -327,8 +333,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * @return The function returns a list of power-ups.
      */
     private List<PowerUp> getGeneratedPowerUps(){
-        powerUpGenerator.generatePowerUps();
-        return powerUpGenerator.getPowerUps();
+        return powerUpGenerator.generatePowerUps();
+        //return powerUpGenerator.getPowerUps();
     }
 
     //Getters

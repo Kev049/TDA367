@@ -11,7 +11,7 @@ import java.awt.Color;
  */
 public class Base {
 
-    private final int capacity;       //Går att ändra om man vill byta antal pjäser (istället för standard som är 4)
+    private final int capacity;
     private int pieceAmount;
     private final Piece[] pieces;
     private final Color color;

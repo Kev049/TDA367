@@ -83,15 +83,6 @@ public class Piece extends Entity {
         this.state.nextState();
     }
 
-    /*public void enableGoalState() {
-        this.state = new GoalState(this);
-    } //TODO borde antagligen flytta detta beroendet till State-klasserna
-
-    public void enableFieldState() {
-        this.state = new FieldState(this);
-    } //TODO borde antagligen flytta detta beroendet till State-klasserna*/
-
-    
     /**
      * The function sets the handler for handling move events.
      * 

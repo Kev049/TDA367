@@ -7,6 +7,10 @@ import org.group7.view.panels.menu.DrawMenuPanel;
 
 import javax.swing.*;
 
+/*
+ * This class is responsible for controlling the windows of the application
+ * and switching between the start menu and the actual game window.
+ */
 public class WindowController {
     private final JButton fourPlayerMenuButton;
     private JButton newGameButton;

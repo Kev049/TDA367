@@ -18,10 +18,15 @@ class PieceTest {
     Piece piece;
     IMoveHandler handler;
     Color color;
+    Color[] colorArray;
 
     @BeforeEach
     void setUp() {
-        IMoveHandler handler = new Board();
+        this.colorArray = new Color[4];
+        this.colorArray[0] = Color.RED;
+        this.colorArray[1] = Color.GREEN;
+        this.colorArray[2] = Color.BLUE;
+        this.colorArray[3] = Color.YELLOW;
         color = Color.RED;
         piece = new Piece(color, handler);
     }
@@ -37,6 +42,7 @@ class PieceTest {
 
     @Test
     void getColorWorksForAllOurColors() {
+        IMoveHandler handler = new Board(colorArray);
         List<Color> colorList = Arrays.asList(Color.red, Color.blue, Color.green, Color.yellow);
 
         for(Color c : colorList) {
@@ -51,9 +57,9 @@ class PieceTest {
         assertEquals(piece.getPos(),0);
     }
 
-    /*@Test
+    @Test
     void PushedPieceIsSentBackToBase() {
-        handler = new Board();
+        IMoveHandler handler = new Board(colorArray);
         piece = new Piece(Color.RED, handler);
         Piece luigi = new Piece(Color.GREEN, handler);
         handler.addPiece(piece,0);
@@ -74,7 +80,7 @@ class PieceTest {
         int prevPos = piece.getPos();
         piece.setPos(2);
         assertNotEquals(prevPos, piece.getPos());
-    }*/
+    }
 
     @Test
     void isAtGoalStretchReturnsFalseIfNotAtGoalStretch() {

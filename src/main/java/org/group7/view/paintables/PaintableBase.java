@@ -57,16 +57,7 @@ public class PaintableBase extends JButton {
         }
     }
 
-    private void drawPieces() {  // TODO tog bort onödig/"duplicerad" kod, fungerar?
-        /*int i = 0;
-        for(Component component : this.getComponents()){
-            if (component instanceof JPanel){
-                PaintablePiece paintablePiece = paintablePieces.get(i++);
-                JLabel pieceLabel = new JLabel();
-                pieceLabel.setIcon(paintablePiece.getIcon());
-                ((JPanel) component).add(pieceLabel);
-            }
-        }*/
+    private void drawPieces() {
         int i = 0;
         for (Piece piece : base.getPieces()) {
             if (piece != null) {
@@ -79,22 +70,12 @@ public class PaintableBase extends JButton {
         }
     }
 
-    public void redrawPieces() {
+    public void redrawPieces(){
         for (Component component : this.getComponents()) {
             if (component instanceof JPanel) {
                 ((JPanel) component).removeAll();
             }
         }
-        /*int i = 0;
-        for(Piece piece : base.getPieces()){
-            if(piece != null){
-                JPanel component = (JPanel) this.getComponent(i++);
-                PaintablePiece paintablePiece = paintablePiecesHash.get(piece);
-                JLabel pieceLabel = new JLabel();
-                pieceLabel.setIcon(paintablePiece.getIcon());
-                ((JPanel) component).add(pieceLabel);
-            }
-        }*/
         drawPieces();
     }
 
