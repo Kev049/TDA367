@@ -15,6 +15,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
+/**
+ * The Board class represents the game board.
+ * */
 public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler, ILightningPowerUpHandler, ILaserPowerUpHandler {
     private final Base[] bases;
     private final Tile[] field;
@@ -29,6 +32,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final int playerAmount = 4;
     private final PowerUpGenerator powerUpGenerator;
 
+    /**
+     * Constructor for Board class. Initializes the board by calling several init methods.
+     * */    
     public Board() {
         this.bases = new Base[playerAmount];
         this.field = new Tile[fieldTileAmount];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
@@ -48,12 +54,18 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         initTiles();
     }
 
+    /**
+     * Initializes an array of Tile objects (spaces) for the board.
+     */
     private void initTiles() {
         for (int i = 0; i < fieldTileAmount; i++) {
             this.field[i] = new Tile(i);
         }
     }
 
+    /**
+     * Initializes an array of colors with four specific values (for each player).
+     */
     private void initColors() {
         this.colors[0] = Color.RED;
         this.colors[1] = Color.GREEN;
@@ -61,6 +73,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.colors[3] = Color.YELLOW;
     }
 
+    /**
+     * Initializes an array of Base objects with a fixed size of 4, assigning each Base a color.
+     */
     private void initBases() {
         int i = 0;
         for (Color c : this.colors) {
@@ -69,18 +84,27 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    /**
+     * Initializes the start tile indices for each player based on their assigned color.
+     */
     private void initStartTileIndices() {
         for (int i = 0; i < playerAmount; i++) {
             this.playerStartTiles.put(this.colors[i], i * 10);
         }
     }
 
-    private void initColorBaseMap() { //ska dennas for loop istället utgå från sådant som redan gjorts i initBases?
+    /**
+     * Initializes a color base map by mapping each color to its corresponding base.
+     */
+    private void initColorBaseMap() {
         for (int i = 0; i < playerAmount; i++) {
             this.colorBaseMap.put(this.colors[i], bases[i]);
         }
     }
 
+    /**
+     * Initializes goal stretches for each color in the colors array.
+     */
     private void initGoals() {
         int i = 0;
         for (Color c : this.colors) {
@@ -89,29 +113,57 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    /**
+     * Initializes a HashMap with color keys and corresponding goal stretch values.
+     */
     private void initGoalStretchesHashMap() {
         for (int i = 0; i < 4; i++) {
             this.goalStretchesHashMap.put(this.colors[i], goalStretches[i]);
         }
     }
 
+    /**
+     * The function adds an observer to each goal stretch in the goalStretches list.
+     * 
+     * @param o The parameter "o" is an instance of the Observer class.
+     */
     public void addGoalObserver(Observer o) {
         for (GoalStretch gs : this.goalStretches) {
             gs.addObserver(o);
         }
     }
 
+    /**
+     * Inserts a given piece at a specified index in the field.
+     * 
+     * @param p The parameter "p" is of type Piece, which represents a game piece that can be added to
+     * the field.
+     * @param index The index parameter represents the position in the field array where the piece
+     * should be added.
+     */
     @Override
     public void addPiece(Piece p, int index) {
         this.field[index].insertPiece(p);
     }
 
-    private void addPieceToBase(Piece p) {   //Private ksk??
+    /**
+     * The function adds a piece to the corresponding base based on its color.
+     * 
+     * @param p The parameter "p" is of type Piece, which represents a game piece.
+     */
+    private void addPieceToBase(Piece p) {
         Color color = p.getColor();
         Base b = this.colorBaseMap.get(color);
         b.addPiece(p);
     }
 
+    /**
+     * The function adds a piece to the "correct" goal stretch (based on its color).
+     * 
+     * @param p The parameter "p" is of type Piece, which represents a game piece.
+     * @param steps The parameter "steps" is of type int, which represents the number of steps the
+     * piece should take.
+     */
     public void addPieceToGoalStretch(Piece p, int steps) {
         GoalStretch goalStretch = this.goalStretchesHashMap.get(p.getColor());
         p.setHandler(goalStretch);
@@ -119,12 +171,27 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         goalStretch.addPiece(p, steps);
     }
 
+
+    /**
+     * The function removes a piece from its tile and adds it to the corresponding
+     * base based on its color.
+     * 
+     * @param p The parameter "p" is of type Piece, which represents a game piece.
+     */
     public void returnPieceToBase(Piece p) {
         int index = p.getPos();
         field[index].removeEntity();
         addPieceToBase(p);
     }
 
+    
+    /**
+     * The function removes all entities from a field starting from a given position and iterates through
+     * the field in a circular manner for 8 tiles.
+     * 
+     * @param pos The `pos` parameter represents the starting position from where entities will be
+     * removed.
+     */
     public void removeEntitiesFromField(int pos) {
         for (int i = 1; i < 9; i++) {
             int index = (pos + i) % 40;
@@ -134,15 +201,36 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    
+    /**
+     * Removes a power-up entity from a specific position on the field.
+     * 
+     * @param powerUp The powerUp parameter is an instance of the PowerUp class.
+     */
     public void removePowerUpFromField(PowerUp powerUp) {
         this.field[powerUp.getPos()].removeEntity();
     }
 
+    /**
+     * Removes and returns a piece from its base.
+     * 
+     * @param baseColor represents the color of the base from which we want to extract a piece.
+     * @return The method is returning a Piece object.
+     */
     public Piece extractPieceFromBase(Color baseColor) {
         Base b = this.colorBaseMap.get(baseColor);
         return b.removePiece();
     }
 
+    
+    /**
+     * The function moves a piece from a specific base (based on the color) to the field
+     * using the dice roll.
+     * 
+     * @param c The color of the player's pieces (e.g., Color.RED or Color.BLUE).
+     * @param diceRoll The diceRoll parameter represents the number rolled on a dice. It is used to
+     * determine the destination field for the piece being moved from the base.
+     */
     public void pieceFromBaseToField(Color c, int diceRoll) {
         Piece p = extractPieceFromBase(c);
         if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
@@ -150,6 +238,13 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+
+    /**
+     * The function takes a piece and moves it from the goal stretch to the field, updating its
+     * position and state.
+     * 
+     * @param p The parameter "p" is of type "Piece".
+     */
     public void pieceFromGoalStretchToField(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
@@ -159,6 +254,15 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         p.toggleState();
     }
 
+    /**
+     * The function checks if a lap has been completed based on the previous and next positions of a
+     * player and the starting position.
+     * 
+     * @param prevPos The previous position of the selected piece.
+     * @param nextPos The next position of the selected piece.
+     * @param start Represents the starting tile for the player who owns the piece.
+     * @return The method returns a boolean value representing whether the piece has completed a lap of the board.
+     */
     private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
         if (prevPos < nextPos) { //if next pos is larger than pos, which will not happen if nextPos is >40
             return (prevPos < start && nextPos >= start);       //TODO Add explanation perhaps, currently hard to read
@@ -167,12 +271,26 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    /**
+     * The function moves a piece in the goal stretch based on the number of steps.
+     * 
+     * @param piece The parameter "piece" is of type Piece, which represents a game piece.
+     * @param steps The parameter "steps" is of type int, which represents the number of steps the
+     * piece should take.
+     */
     public void movePieceInGoalStretch(Piece piece, int steps) {
         Color c = piece.getColor();
         GoalStretch goalStretch = goalStretchesHashMap.get(c);
         goalStretch.goalStretchMove(piece, steps);
     }
 
+    /**
+     * The function moves a piece based on the dice roll.
+     * 
+     * @param piece The parameter "piece" is of type Piece, which represents a game piece.
+     * @param diceRoll The parameter "diceRoll" is of type int, which represents the number rolled
+     * on a dice.
+     */
     public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
         int from = piece.getPos();
         Color c = piece.getColor();
@@ -191,6 +309,10 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+
+    /**
+     * The function spawns power-ups randomly on the game field.
+     */
     public void spawnPowerUps() {
         Random rand = new Random();
         for(PowerUp powerUp : getGeneratedPowerUps()){
@@ -198,6 +320,11 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         }
     }
 
+    /**
+     * The function generates power-ups and returns them in a list.
+     * 
+     * @return The function returns a list of power-ups.
+     */
     private List<PowerUp> getGeneratedPowerUps(){
         powerUpGenerator.generatePowerUps();
         return powerUpGenerator.getPowerUps();
@@ -205,18 +332,42 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     //Getters
 
+
+    /**
+     * The function returns a list of Base objects.
+     * 
+     * @return The method is returning a List of objects of type Base.
+     */
     public List<Base> getBases() {
         return Arrays.asList(this.bases);
     }
 
+    /**
+     * The function returns the base associated with a given color.
+     * 
+     * @param color The color parameter is used to identify the appropriate base from the colorBaseMap.
+     * @return The method is returning a Base object.
+     */
     public Base getBaseFromColor(Color color) {
         return this.colorBaseMap.get(color);
     }
 
+    /**
+     * The function returns an array of Tile objects representing the field.
+     * 
+     * @return The method is returning an array of Tile objects.
+     */
     public Tile[] getFieldTiles() {
         return this.field;
     }
 
+
+    /**
+     * The function returns a list of goal tiles by iterating through goal stretches and adding their
+     * tiles to the list.
+     * 
+     * @return The method is returning a List of Tile objects.
+     */
     public List<Tile> getGoalTiles() {
         List<Tile> goalTiles = new ArrayList<>(goalTileAmount);
         for (GoalStretch goal : goalStretches) {
@@ -225,6 +376,12 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         return goalTiles;
     }
 
+    /**
+     * The function returns the number of pieces of a specific color.
+     * 
+     * @param c The parameter "c" is of type "Color" and is used to identify which pieces to consider.
+     * @return The method is returning the amount of pieces for a given color.
+     */
     public int getPieceAmount(Color c) {
         return colorBaseMap.get(c).getPieceAmount();
     }
