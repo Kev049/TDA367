@@ -36,8 +36,9 @@ public class FieldState implements PieceState {
      * @param handler The parameter "handler" is of type "IMoveHandler". 
      */
     public void handleCollision(Piece p, IMoveHandler handler) {
+        int fieldTileAmount = 40;
         if (piece.getColor().equals(p.getColor())) { // Same Color, skip one tile
-            handler.addPiece(p, (piece.getPos() + 1) % 40);
+            handler.addPiece(p, (piece.getPos() + 1) % fieldTileAmount);
 
         } else { // Different color, send other to its base and take its place
             int position = piece.getPos();

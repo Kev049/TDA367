@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class PowerUpsTest {
     Board board;
-    Color[] colorArray = new Color[4];;
+    Color[] colorArray = new Color[4];
     @BeforeEach
 
     void setUp(){

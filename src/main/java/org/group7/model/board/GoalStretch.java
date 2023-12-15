@@ -11,8 +11,8 @@ import static java.lang.Math.abs;
  * own strip of tiles) that the pieces have to go through to reach the goal.
  */
 public class GoalStretch implements IMoveHandler {
-    private final int capacity = 4;
-    private final IInsertable[] insertables = new IInsertable[capacity + 1];
+    private final int CAPACITY = 4;
+    private final IInsertable[] insertables = new IInsertable[CAPACITY + 1];
     private final Color color;
     private final PieceExtractor handler;
 
@@ -34,10 +34,10 @@ public class GoalStretch implements IMoveHandler {
      * array called "tiles" and then inserting a "goal" object at index 4.
      */
     private void initInsertables() {
-        for (int i = 0; i < capacity; i++) {
+        for (int i = 0; i < CAPACITY; i++) {
             this.insertables[i] = new Tile(i);
         }
-        this.insertables[capacity] = new Goal();
+        this.insertables[CAPACITY] = new Goal();
     }
 
     /**
@@ -102,16 +102,15 @@ public class GoalStretch implements IMoveHandler {
      * @return An array of Tile objects.
      */
     public IInsertable[] getTiles() {
-        IInsertable[] copy = new IInsertable[capacity];
-        for (int i = 0; i < capacity; i++) {
+        IInsertable[] copy = new IInsertable[CAPACITY];
+        for (int i = 0; i < CAPACITY; i++) {
             copy[i] = this.insertables[i];
         }
-        //Arrays.copyOfRange(this.insertables,0,capacity - 1);
-        return copy;    //Returns the "Tiles" part of the
+        return copy;    //Returns the "Tiles" part of the goal-stretch
     }
 
     public IInsertable getGoal() {
-        return this.insertables[capacity];
+        return this.insertables[CAPACITY];
     }
 
     @Override

@@ -18,7 +18,7 @@ public class PowerUpGenerator {
 
     public PowerUpGenerator(IBasePowerUpHandler baseHandler, ILaserPowerUpHandler laserHandler,
                             ILightningPowerUpHandler lightningHandler) {
-        long seed = System.currentTimeMillis() * 31;
+        long seed = System.currentTimeMillis();
         this.powerUpGenerator = new Random(seed);
         this.powerUps = new ArrayList<>();
         this.baseHandler = baseHandler;

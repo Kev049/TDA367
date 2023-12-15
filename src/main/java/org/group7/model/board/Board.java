@@ -27,8 +27,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final HashMap<Color, GoalStretch> goalStretchesHashMap;
     private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
-    private final int fieldTileAmount = 40;
-    private final int goalTileAmount = 16;
+    private final int FIELD_TILE_AMOUNT = 40;
+    private final int GOAL_TILE_AMOUNT = 16;
     private final int playerAmount;
     private final PowerUpGenerator powerUpGenerator;
 
@@ -39,7 +39,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.colors = colors;
         this.playerAmount = colors.length;
         this.bases = new Base[playerAmount];
-        this.field = new Tile[fieldTileAmount];
+        this.field = new Tile[FIELD_TILE_AMOUNT];
         this.goalStretches = new GoalStretch[playerAmount];
         this.goalStretchesHashMap = new HashMap<>();
         this.playerStartTiles = new HashMap<>();
@@ -64,7 +64,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes an array of Tile objects (spaces) for the board.
      */
     private void initTiles() {
-        for (int i = 0; i < fieldTileAmount; i++) {
+        for (int i = 0; i < FIELD_TILE_AMOUNT; i++) {
             this.field[i] = new Tile(i);
         }
     }
@@ -83,9 +83,10 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes an array of Base objects with a fixed size of 4, assigning each Base a color.
      */
     private void initBases() {
+        int baseCapacity = 4;
         int i = 0;
         for (Color c : this.colors) {
-            this.bases[i] = new Base(4, c, this);
+            this.bases[i] = new Base(baseCapacity, c, this);
             i++;
         }
     }
@@ -202,7 +203,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     public void removeEntitiesFromField(int pos, int amountTiles) {
         for (int i = 1; i < amountTiles + 1; i++) {
-            int index = (pos + i) % 40;
+            int index = (pos + i) % fieldTileAmount;
             if (!field[index].isEmpty()) {
                 field[index].getEntity().accept(visitor);
             }
@@ -236,7 +237,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * using the dice roll.
      * 
      * @param c The color of the player's pieces (e.g., Color.RED or Color.BLUE).
-     * @param diceRoll The diceRoll parameter represents the number rolled on a dice. It is used to
+     * @param diceRoll The diceRoll parameter represents the number rolled on a die. It is used to
      * determine the destination field for the piece being moved from the base.
      */
     public void pieceFromBaseToField(Color c, int diceRoll) {
@@ -256,7 +257,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void pieceFromGoalStretchToField(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        tileIndex = ((((tileIndex - 1) % fieldTileAmount) + fieldTileAmount) % fieldTileAmount); // Positive modulo
+        tileIndex = ((((tileIndex - 1) % FIELD_TILE_AMOUNT) + FIELD_TILE_AMOUNT) % FIELD_TILE_AMOUNT); // Positive modulo
         field[tileIndex].insertPiece(p);
         p.setHandler(this);
         p.toggleState();
@@ -297,13 +298,13 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * 
      * @param piece The parameter "piece" is of type Piece, which represents a game piece.
      * @param diceRoll The parameter "diceRoll" is of type int, which represents the number rolled
-     * on a dice.
+     * on a die.
      */
     public void movePiece(Piece piece, int diceRoll) {
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        int to = (from + diceRoll) % fieldTileAmount;
+        int to = (from + diceRoll) % FIELD_TILE_AMOUNT;
         if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
             movePieceInGoalStretch(piece, diceRoll);
         } else {
@@ -324,7 +325,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void spawnPowerUps() {
         Random rand = new Random();
         for(PowerUp powerUp : getGeneratedPowerUps()){
-            this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(powerUp);
+            this.field[rand.nextInt(FIELD_TILE_AMOUNT)].insertPowerUp(powerUp);
         }
     }
 
@@ -377,7 +378,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * @return The method is returning a List of Tile objects.
      */
     public List<IInsertable> getGoalTiles() {
-        List<IInsertable> goalTiles = new ArrayList<>(goalTileAmount);
+        List<IInsertable> goalTiles = new ArrayList<>(GOAL_TILE_AMOUNT);
         for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }

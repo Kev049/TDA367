@@ -38,6 +38,7 @@ public class GoalState implements PieceState {
      */
     @Override
     public void handleCollision(Piece p, IMoveHandler handler) {
-        handler.addPiece(p, (piece.getPos() + 1) % 40);
+        int fieldTileAmount = 40;
+        handler.addPiece(p, (piece.getPos() + 1) % fieldTileAmount);
     }   //TODO functionality to insert a piece in the correct direction, -1 for a "bounce"
 }

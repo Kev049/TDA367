@@ -3,7 +3,6 @@ package org.group7.view.paintables;
 import javax.swing.*;
 
 import org.group7.model.board.IInsertable;
-import org.group7.model.board.Tile;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;

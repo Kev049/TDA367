@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Dice {
     private final Random generator;
-    private final int highestDieValue = 6;
+    private final int HIGHEST_DICE_VALUE = 6;
 
     public Dice() {
         long seed = System.currentTimeMillis();
@@ -12,7 +12,7 @@ public class Dice {
     }
 
     public int roll() {
-        return this.generator.nextInt(highestDieValue) + 1;
+        return this.generator.nextInt(HIGHEST_DICE_VALUE) + 1;
     }
 
 
