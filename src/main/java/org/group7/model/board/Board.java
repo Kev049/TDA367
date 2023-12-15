@@ -198,6 +198,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * 
      * @param pos The `pos` parameter represents the starting position from where entities will be
      * removed.
+     * @param amountTiles The`amountTiles` parameter represents the number of tiles to iterate through.
      */
     public void removeEntitiesFromField(int pos, int amountTiles) {
         for (int i = 1; i < amountTiles + 1; i++) {
