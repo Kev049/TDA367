@@ -17,6 +17,7 @@ public class RemoveFromFieldVisitor implements EntityVisitor {
 
     /**
      * The visit function takes in a piece as a parameter and returns it to the base.
+     * @param piece The parameter "piece" is of type "Piece".
      */
     public void visit(Piece piece) {
         this.handler.returnPieceToBase(piece);
@@ -24,6 +25,7 @@ public class RemoveFromFieldVisitor implements EntityVisitor {
 
     /**
      * The visit function takes in a power-up as a parameter and removes it from the field.
+     * @param powerUp The parameter "powerUp" is of type "PowerUp".
      */
     public void visit(PowerUp powerUp) {
         this.handler.removePowerUpFromField(powerUp);
