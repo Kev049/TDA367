@@ -1,9 +1,7 @@
 package org.group7.model.board;
 
 import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.EntityFactory;
 import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-import static java.lang.Math.abs;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
@@ -108,11 +105,13 @@ class BoardTest {
     @Test
     void removeEntitiesFromField() { //kolla med Liam hur denna ska funka
         Color color = Color.BLUE;
-        board.pieceFromBaseToField(color, 1);
+        Piece piece = board.extractPieceFromBase(color);
+        board.addPiece(piece, 10);
+        Piece piece1 = board.extractPieceFromBase(color);
+        board.addPiece(piece1, 11);
+        Piece piece2 = board.extractPieceFromBase(color);
+        board.addPiece(piece2, 12);
 
-        Tile[] field = board.getFieldTiles();
-        LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
-        field[10].insertPowerUp(laserPowerUp);
     }
 
     @Test

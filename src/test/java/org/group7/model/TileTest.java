@@ -23,7 +23,7 @@ public class TileTest {
     //TODO: Check that InsertEntity can't insert an entity if tile already has entity
 
     @BeforeAll
-    void beforeAll() {
+    void doBeforeAll() {
         colorArray[0] = Color.RED;
         colorArray[1] = Color.GREEN;
         colorArray[2] = Color.BLUE;
@@ -76,13 +76,4 @@ public class TileTest {
     }
 
 }
-
-//    @Test
-//    void getPieceColorReturnsSameColorAsPieceColor() {
-//        Color red = Color.red;
-//        IMoveHandler handler = new Board(colorArray);
-//        Piece redPiece = new Piece(red, handler);
-//        tile.insertPiece(redPiece);
-//        assertEquals(tile.getEntity().getColor(), redPiece.getColor());
-//    }
 

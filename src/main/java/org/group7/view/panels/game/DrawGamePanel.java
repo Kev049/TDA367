@@ -21,18 +21,18 @@ public class DrawGamePanel extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-        //leftpanel
+        //Left panel
         c.weightx = 0.45;
         c.gridy = 0;
         c.gridx = 0;
         this.add(leftPanel, c);
 
-        //boardpanel
+        //Board panel
         c.weightx = 0.1;
         c.gridx = 1;
         this.add(boardPanel, c);
 
-        //rightpanel
+        //Right panel
         c.weightx = 0.45;
         c.gridx = 2;
         this.add(rightPanel, c);
