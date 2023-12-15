@@ -6,6 +6,7 @@ Prerequisite software
 Before installing TurboFia, ensure that your system meets the following prerequisites:
 
 > Operating System: We would recommend using Windows 10/11, but any operating system (including macOS and Linux] that supports running the Java Virtual Machine should work.
+ 
 > Java Runtime Environment (JRE): TurboFia is a Java-based game; make sure you have Java installed. We would recommend using JDK 21 (which contains the necessary JRE) as that is the latest LTS (long-term support) version. If you don’t have it, you can, for example, download it here. However, all versions including JDK 17 (the previous LTS version) and upwards are supported too!
 
 Installation
