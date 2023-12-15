@@ -186,8 +186,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     
     /**
-     * The function removes entities from a field starting from a given position and iterates through
-     * the field in a circular manner.
+     * The function removes all entities from a field starting from a given position and iterates through
+     * the field in a circular manner for 8 tiles.
      * 
      * @param pos The `pos` parameter represents the starting position from where entities will be
      * removed.
@@ -224,7 +224,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
 
     
     /**
-     * The function moves a piece from the base to a specific field based on the color and dice roll.
+     * The function moves a piece from a specific base (based on the color) to the field
+     * using the dice roll.
      * 
      * @param c The color of the player's pieces (e.g., Color.RED or Color.BLUE).
      * @param diceRoll The diceRoll parameter represents the number rolled on a dice. It is used to
