@@ -25,7 +25,7 @@ public abstract class PowerUp extends Entity {
      * @param visitor The parameter "visitor" is of type "EntityVisitor".
      */
     @Override
-    public void accept(EntityVisitor visitor){
+    public void accept(EntityVisitor visitor) {
         visitor.visit(this);
     }
 
