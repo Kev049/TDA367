@@ -1,13 +1,17 @@
 package org.group7.model.board;
 
 import org.group7.model.board.entities.Entity;
+import org.group7.model.board.entities.EntityFactory;
 import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.board.entities.powerups.BasePowerUp;
+import org.group7.model.board.entities.powerups.LaserPowerUp;
+import org.group7.model.board.entities.powerups.LightningPowerUp;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,17 +20,14 @@ class BoardTest {
     Board board;
     Color[] colorArray = new Color[4];;
 
-    @BeforeAll
-    void beforeAll(){
+
+    @BeforeEach
+    void setUp() {
+        board = new Board(colorArray);
         colorArray[0] = Color.RED;
         colorArray[1] = Color.GREEN;
         colorArray[2] = Color.BLUE;
         colorArray[3] = Color.YELLOW;
-    }
-
-    @BeforeEach
-    void setUp() {
-        Board board = new Board(colorArray);
     }
 
     @AfterEach
@@ -103,19 +104,37 @@ class BoardTest {
         assertEquals(board.getBaseFromColor(color).getPieceAmount(), piecesInBoards + 1);
     }
     @Test
-    void removeEntitiesFromField() { //kolla med Liam hur denna ska funka
+    void insertPiecesAndPowerUpsAndRemoveFromEightTilesInField() { //kolla med Liam hur denna ska funka
+        Tile[] field = board.getFieldTiles();
         Color color = Color.BLUE;
         Piece piece = board.extractPieceFromBase(color);
         board.addPiece(piece, 10);
         Piece piece1 = board.extractPieceFromBase(color);
         board.addPiece(piece1, 11);
-        Piece piece2 = board.extractPieceFromBase(color);
-        board.addPiece(piece2, 12);
+        BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(board);
+        field[12].insertPowerUp(basePowerUp);
+        LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(board);
+        field[13].insertPowerUp(lightningPowerUp);
+        LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
+        field[14].insertPowerUp(laserPowerUp);
+        board.removeEntitiesFromField(9);
 
+        int numberOfNullEntities = 0;
+        for(int i = 10; i < 15; i++){
+            if(field[i].isEmpty()){
+                numberOfNullEntities++;
+            }
+        }
+        assertEquals(5, numberOfNullEntities);
     }
 
     @Test
     void removePowerUpFromField() {
+        Tile[] field = board.getFieldTiles();
+        BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(board);
+        field[0].insertPowerUp(basePowerUp);
+        board.removePowerUpFromField(basePowerUp);
+        assertNull(field[0].getEntity());
     }
 
     @Test
@@ -231,32 +250,54 @@ class BoardTest {
     }
 
     @Test
-    void spawnPowerUps() {
-
-    }
-
-    @Test
-    void addGoalObserver() {
+    void spawnAmountOfPowerupsThatIsMoreThanOrEqualsToThree() {
+        board.spawnPowerUps();
+        Tile[] field = board.getFieldTiles();
+        int numberOfPowerUps = 0;
+        for(Tile tile : field){
+            if(tile.getEntity() instanceof BasePowerUp || tile.getEntity() instanceof LightningPowerUp || tile.getEntity() instanceof LaserPowerUp){
+                numberOfPowerUps++;
+            }
+        }
+        Boolean hasSpawnedRightAmountOfPowerUps = null;
+        if(numberOfPowerUps <= 3){
+            hasSpawnedRightAmountOfPowerUps = false;
+        }
+        else{
+            hasSpawnedRightAmountOfPowerUps = true;
+        }
+        assertTrue(hasSpawnedRightAmountOfPowerUps);
     }
 
     @Test
     void getBases() {
+        List<Base> bases = board.getBases();
+        assertEquals(4, bases.size());
     }
 
     @Test
-    void getBaseFromColor() {
+    void getRightColorOfBaseFromBoard() {
+        Color color = Color.RED;
+        Base base = board.getBaseFromColor(color);
+        assertEquals(color, base.getColor());
     }
 
     @Test
-    void getFieldTiles() {
-
+    void getRightAmountOfFieldTilesFromBoard() {
+        Tile[] field = board.getFieldTiles();
+        assertEquals(40, field.length);
     }
 
     @Test
-    void getGoalTiles() {
+    void getRightAmountOfGoalStretchTilesFromBoard() {
+        List<Tile> goalStretchTiles = board.getGoalTiles();
+        assertEquals(16, goalStretchTiles.size());
     }
 
     @Test
-    void getPieceAmount() {
+    void getRightAmountOfPiecesOfRightColorFromBoard() {
+        Color color = Color.RED;
+        int amountOfPieces = board.getPieceAmount(color);
+        assertEquals(4, amountOfPieces);
     }
 }

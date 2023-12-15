@@ -26,7 +26,6 @@ class GoalStretchTest {
 
     @BeforeEach
     void setUp() {
-
         handler = new Board(colorArray);
         goalStretch = new GoalStretch(Color.RED, handler);
     }
