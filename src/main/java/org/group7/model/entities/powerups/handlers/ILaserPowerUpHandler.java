@@ -28,7 +28,7 @@ public interface ILaserPowerUpHandler {
      * @param pos The `pos` parameter represents the starting position from where entities will be
      * removed.
      */
-    void removeEntitiesFromField(int pos);
+    void removeEntitiesFromField(int pos, int amountTiles);
 
     /**
      * The function removes a piece from its tile and adds it to the corresponding

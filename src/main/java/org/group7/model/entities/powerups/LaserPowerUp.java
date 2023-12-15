@@ -12,6 +12,8 @@ public class LaserPowerUp extends PowerUp {
 
     ILaserPowerUpHandler handler;
 
+    private final int AMOUNT_OF_TILES_IN_FRONT = 8;
+
     /**
      * The BasePowerUp constructor takes an ILaserPowerUpHandler as a parameter.
      * @param handler The parameter "handler" is of type "ILaserPowerUpHandler".
@@ -31,7 +33,7 @@ public class LaserPowerUp extends PowerUp {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
-        this.handler.removeEntitiesFromField(pos);
+        this.handler.removeEntitiesFromField(pos, AMOUNT_OF_TILES_IN_FRONT);
     }
 }
 

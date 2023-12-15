@@ -1,10 +1,6 @@
 package org.group7.model.entities.powerups;
 
 import org.group7.model.entities.EntityFactory;
-import org.group7.model.entities.powerups.BasePowerUp;
-import org.group7.model.entities.powerups.LaserPowerUp;
-import org.group7.model.entities.powerups.LightningPowerUp;
-import org.group7.model.entities.powerups.PowerUp;
 import org.group7.model.entities.powerups.handlers.IBasePowerUpHandler;
 import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
 import org.group7.model.entities.powerups.handlers.ILightningPowerUpHandler;
