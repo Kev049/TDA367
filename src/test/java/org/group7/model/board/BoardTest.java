@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     Board board;
-    Color[] colorArray = new Color[4];;
+    Color[] colorArray = new Color[4];
 
     @BeforeEach
     void setUp() {
