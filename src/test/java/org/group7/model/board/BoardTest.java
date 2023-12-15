@@ -37,6 +37,9 @@ class BoardTest {
     @Test
     void pieceAddedToFieldCanBeFoundInTile() {
         Piece piece = new Piece(Color.RED, board);
+        if(!board.getFieldTiles()[0].isEmpty()){
+            board.getFieldTiles()[0].removeEntity();
+        }
         int index = 0;
         board.addPiece(piece, index);
         assertEquals(piece, board.getFieldTiles()[index].getEntity());
@@ -172,6 +175,7 @@ class BoardTest {
     void pieceCanBounceToField(){
         Piece piece = new Piece(Color.RED, board);
         board.addPieceToGoalStretch(piece, 3);
+        removeEntityIfTileIsNotEmpty(board, 39);
         board.movePiece(piece,6);
         assertEquals(piece, board.getFieldTiles()[39].getEntity());
     }
@@ -304,6 +308,8 @@ class BoardTest {
     void pieceHasCollidedWithAnotherPieceOfOtherColorAndSentItToBase(){
         Piece piece = new Piece(Color.RED, board);
         Piece piece1 = new Piece(Color.GREEN, board);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 1);
         board.addPiece(piece, 0);
         board.addPiece(piece1, 1);
         board.movePiece(piece, 1);
@@ -314,6 +320,8 @@ class BoardTest {
     void pieceHasCollidedWithAnotherPieceOfSameColorAndMovedPast(){
         Piece piece = new Piece(Color.RED, board);
         Piece piece1 = new Piece(Color.RED, board);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 1);
         board.addPiece(piece, 0);
         board.addPiece(piece1, 1);
         board.movePiece(piece, 1);
@@ -324,6 +332,8 @@ class BoardTest {
     void pieceHasCollidedWithLightningPowerUpAndMovedTwoSteps(){
         Piece piece = new Piece(colorArray[0], board);
         LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(board);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 2);
         board.addPiece(piece, 0);
         board.getFieldTiles()[2].insertPowerUp(lightningPowerUp);
         board.movePiece(piece, 2);
@@ -335,6 +345,8 @@ class BoardTest {
         Piece piece = board.extractPieceFromBase(colorArray[0]);
         BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(board);
         Base redBase = board.getBases().get(0);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 2);
         board.addPiece(piece, 0);
         board.getFieldTiles()[2].insertPowerUp(basePowerUp);
         board.movePiece(piece, 2);
@@ -346,10 +358,21 @@ class BoardTest {
         Piece redPiece = board.extractPieceFromBase(colorArray[0]);
         Piece bluePiece = board.extractPieceFromBase(colorArray[2]);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
+        removeEntityIfTileIsNotEmpty(board, 0);
+        removeEntityIfTileIsNotEmpty(board, 5);
         board.addPiece(redPiece, 0);
         board.addPiece(bluePiece, 5);
+        removeEntityIfTileIsNotEmpty(board, 2);
         board.getFieldTiles()[2].insertPowerUp(laserPowerUp);
         board.movePiece(redPiece, 2);
         assertTrue(bluePiece.getPos() == -1);
     }
+
+    void removeEntityIfTileIsNotEmpty(Board board, int index) {
+        Tile[] field = board.getFieldTiles();
+        if(!field[index].isEmpty()){
+            field[index].removeEntity();
+        }
+    }
+
 }
