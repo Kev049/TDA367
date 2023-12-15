@@ -38,7 +38,7 @@ public class Application {
         Game game = new Game();
         Board board = game.getBoard();
 
-        Tile[] fieldTiles = board.getFieldTiles();
+        IInsertable[] fieldTiles = board.getFieldTiles();
         List<Base> bases = board.getBases();
         List<IInsertable> goalTiles = board.getGoalTiles();
 
@@ -50,7 +50,7 @@ public class Application {
 
         PaintableEntityFactory paintableEntityFactory = new PaintableEntityFactory();
 
-        for (Tile fieldTile : fieldTiles) {
+        for (IInsertable fieldTile : fieldTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(fieldTile);
             paintableFieldTiles.add(paintableTile);
         }

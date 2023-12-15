@@ -48,6 +48,10 @@ public class Tile implements IInsertable {
         }
     }
 
+    public boolean isEmpty() {
+        return this.entity == null;
+    }
+
     /**
      * The function returns the entity on the tile.
      * 
@@ -81,8 +85,5 @@ public class Tile implements IInsertable {
      * @return The method returns a boolean value. It returns true if there is no entity
      * on the tile (i.e "entity" variable is null).
      */
-    public boolean isEmpty() {
-        return this.entity == null;
-    }
 
 }

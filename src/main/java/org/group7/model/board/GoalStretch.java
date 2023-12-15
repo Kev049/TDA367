@@ -106,8 +106,7 @@ public class GoalStretch implements IMoveHandler {
         for (int i = 0; i < CAPACITY; i++) {
             copy[i] = this.insertables[i];
         }
-        //Arrays.copyOfRange(this.insertables,0,capacity - 1);
-        return copy;    //Returns the "Tiles" part of the
+        return copy;    //Returns the "Tiles" part of the goal-stretch
     }
 
     public IInsertable getGoal() {

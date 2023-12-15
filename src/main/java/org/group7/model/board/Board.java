@@ -83,9 +83,10 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes an array of Base objects with a fixed size of 4, assigning each Base a color.
      */
     private void initBases() {
+        int baseCapacity = 4;
         int i = 0;
         for (Color c : this.colors) {
-            this.bases[i] = new Base(4, c, this);
+            this.bases[i] = new Base(baseCapacity, c, this);
             i++;
         }
     }
@@ -202,7 +203,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     public void removeEntitiesFromField(int pos, int amountTiles) {
         for (int i = 1; i < amountTiles + 1; i++) {
-            int index = (pos + i) % 40;
+            int index = (pos + i) % fieldTileAmount;
             if (!field[index].isEmpty()) {
                 field[index].getEntity().accept(visitor);
             }
@@ -236,7 +237,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * using the dice roll.
      * 
      * @param c The color of the player's pieces (e.g., Color.RED or Color.BLUE).
-     * @param diceRoll The diceRoll parameter represents the number rolled on a dice. It is used to
+     * @param diceRoll The diceRoll parameter represents the number rolled on a die. It is used to
      * determine the destination field for the piece being moved from the base.
      */
     public void pieceFromBaseToField(Color c, int diceRoll) {
@@ -297,7 +298,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * 
      * @param piece The parameter "piece" is of type Piece, which represents a game piece.
      * @param diceRoll The parameter "diceRoll" is of type int, which represents the number rolled
-     * on a dice.
+     * on a die.
      */
     public void movePiece(Piece piece, int diceRoll) {
         int from = piece.getPos();

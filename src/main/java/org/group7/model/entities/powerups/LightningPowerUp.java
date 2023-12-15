@@ -28,8 +28,9 @@ public class LightningPowerUp extends PowerUp {
      */
     @Override
     public void handleCollision(Piece piece) {
+        int fieldTileAmount = 40;
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
-        this.handler.addPiece(piece, (pos + 2) % 40);
+        this.handler.addPiece(piece, (pos + 2) % fieldTileAmount);
     }
 }
