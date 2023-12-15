@@ -1,12 +1,9 @@
 package org.group7.view.panels.game;
 
-import org.group7.view.PaintableEntityFactory;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

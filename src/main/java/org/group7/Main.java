@@ -19,25 +19,23 @@ import org.group7.view.panels.game.LeftPanel;
 import org.group7.view.panels.game.RightPanel;
 import org.group7.view.panels.menu.DrawMenuPanel;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    //TODO varför har vi attribut i main när det endast kopplar ihop programmet?
-    private static final int TOTAL_AMOUNT_FIELD_TILES = 40;
-    private static final int TOTAL_AMOUNT_BASES = 4;
-    private static final int TOTAL_AMOUNT_GOAL_TILES = 16;
-    private static final int TOTAL_AMOUNT_PIECES = 16;
-
     public static void main(String[] args) {    //TODO försöka att städa denna klass
+
+        final int TOTAL_AMOUNT_FIELD_TILES = 40;
+        final int TOTAL_AMOUNT_BASES = 4;
+        final int TOTAL_AMOUNT_GOAL_TILES = 16;
+        final int TOTAL_AMOUNT_PIECES = 16;
+
         Board board = new Board(); //TODO: Flytta tillbaka till game
         Game game = new Game(board);
 

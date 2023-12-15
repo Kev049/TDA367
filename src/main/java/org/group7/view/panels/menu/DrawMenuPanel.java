@@ -1,11 +1,8 @@
 package org.group7.view.panels.menu;
 
-import org.group7.view.PaintableEntityFactory;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 

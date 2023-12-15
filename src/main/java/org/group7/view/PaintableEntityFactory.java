@@ -9,15 +9,11 @@ import org.group7.view.paintables.PaintablePowerUp;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 public class PaintableEntityFactory {
     private static BufferedImage image;
-
-    public PaintableEntityFactory(){
-    }
 
     public PaintablePiece makePieceImage(Piece piece) {
         String color = null;

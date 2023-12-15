@@ -8,7 +8,7 @@ public class Dice { // Implementerar Singleton pattern så att ingen klass ska k
     private final int highestDieValue = 6;
 
     private Dice() {
-        long seed = System.currentTimeMillis();     //kanske kan implementera detta som en time klass???
+        long seed = System.currentTimeMillis();
         this.generator = new Random(seed);
     }
 

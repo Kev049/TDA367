@@ -14,17 +14,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Game implements StringObservable, Observable, Observer {   //TODO ta bort onödiga metoder
-    private final Set<StringObserver> stringObservers;
-    private final Set<Observer> observers;
+
     private final Dice dice;
     private final Board board;
     private GameState gameState;
-    private HashMap<Color, Integer> finishedPieces;
     private final Color[] colorArray;
     private int currentColor;
     private int lastDiceRollResult;
     private int turnNumber;
     private final int piecePerPlayer = 4;
+    private final Set<StringObserver> stringObservers;
+    private final Set<Observer> observers;
+    private final HashMap<Color, Integer> finishedPieces;
 
     public Game(Board board) { //TODO Game should create the board, not Main
         this.dice = Dice.getInstance();
@@ -88,7 +89,7 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     private void finishMove() {
         gameState.nextState(this);
-        spawnPowerUpsEachSixteenTurns();
+        tryForPowerupSpawn();
         if (!hasRolledSix()) {
             nextPlayer();
         } else {
@@ -149,9 +150,9 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
 
     public void increaseTurnNumber(){
         this.turnNumber++;
-        System.out.println(turnNumber);
     }
-    public void spawnPowerUpsEachSixteenTurns() {
+
+    public void tryForPowerupSpawn() {
         if (turnNumber % 8 == 0) {
             spawnPowerups();
         }
@@ -162,8 +163,8 @@ public class Game implements StringObservable, Observable, Observer {   //TODO t
         Color c = colorArray[currentColor];
         int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
         this.finishedPieces.replace(c, increasedFinishedPieces);
-        if (this.finishedPieces.get(c) == 4) {
-            System.out.println(currentColor + "won!");     //TODO change this to proper victory popup
+        if (increasedFinishedPieces == 4) {
+            System.out.println(currentColor + "won!"); //Should display a proper victory message
         }
     }
 

@@ -1,5 +1,6 @@
 package org.group7.view.panels.game;
 
+import org.group7.controller.observe.StringObservable;
 import org.group7.controller.observe.StringObserver;
 import org.group7.model.game.Game;
 
@@ -14,14 +15,14 @@ public class DrawGamePanel extends JPanel {
     private final JPanel leftPanel;
     private final JPanel rightPanel;
 
-    public DrawGamePanel(BoardPanel boardPanel, Game game, JPanel leftPanel, JPanel rightPanel) {
+    public DrawGamePanel(BoardPanel boardPanel, StringObservable observable, JPanel leftPanel, JPanel rightPanel) {
         this.boardPanel = boardPanel;
         this.leftPanel = leftPanel;
         this.rightPanel = rightPanel;
         this.setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1920, 1080));
         drawPanels();
-        game.addObserver((StringObserver) rightPanel);
+        observable.addObserver((StringObserver) rightPanel);
     }
 
     private void drawPanels() {

@@ -1,18 +1,15 @@
 package org.group7.view.panels.game;
 
 import org.group7.controller.observe.StringObserver;
-import org.group7.view.PaintableEntityFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class
-RightPanel extends JPanel implements StringObserver {
+public class RightPanel extends JPanel implements StringObserver {
     private final JButton rollDiceButton;
     private final JLabel playerTurnOutput;
 

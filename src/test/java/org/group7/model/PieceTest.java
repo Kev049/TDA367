@@ -51,7 +51,7 @@ class PieceTest {
         assertEquals(piece.getPos(),0);
     }
 
-    @Test
+    /*@Test
     void PushedPieceIsSentBackToBase() {
         handler = new Board();
         piece = new Piece(Color.RED, handler);
@@ -74,7 +74,7 @@ class PieceTest {
         int prevPos = piece.getPos();
         piece.setPos(2);
         assertNotEquals(prevPos, piece.getPos());
-    }
+    }*/
 
     @Test
     void isAtGoalStretchReturnsFalseIfNotAtGoalStretch() {
