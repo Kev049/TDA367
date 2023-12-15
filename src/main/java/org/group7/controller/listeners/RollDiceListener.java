@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * This class is used to listen to the RollDiceButton.
- * It is used to roll the dice once cliked upon and also handles the animation.
+ * It is used to roll the dice once clicked upon and also handles the animation.
  */
 public class RollDiceListener implements ActionListener {
     private final JButton rollDiceButton;

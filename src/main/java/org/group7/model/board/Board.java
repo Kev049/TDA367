@@ -39,9 +39,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.colors = colors;
         this.playerAmount = colors.length;
         this.bases = new Base[playerAmount];
-        this.field = new Tile[fieldTileAmount];                  //Kan man göra så att denna lista automatiskt loopar runt eller måste man ha mod40 varje gång man vill gå runt den?
+        this.field = new Tile[fieldTileAmount];
         this.goalStretches = new GoalStretch[playerAmount];
-        this.goalStretchesHashMap = new HashMap<>();       // tycker att detta kanske borde vara en egen klass så att den inte ärver onödiga funktione
+        this.goalStretchesHashMap = new HashMap<>();
         this.playerStartTiles = new HashMap<>();
         this.colorBaseMap = new HashMap<>();
         this.visitor = new RemoveFromFieldVisitor(this);
@@ -240,7 +240,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     public void pieceFromBaseToField(Color c, int diceRoll) {
         Piece p = extractPieceFromBase(c);
-        if (p != null) {        // Skyddar mot tom bas, kanske finns något snyggare, exempelvis att base inte är "tryckbar" då den är tom
+        if (p != null) { //Protects against empty bases
             addPiece(p, playerStartTiles.get(p.getColor()) + diceRoll - 1);
         }
     }
@@ -270,9 +270,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * @param start Represents the starting tile for the player who owns the piece.
      * @return The method returns a boolean value representing whether the piece has completed a lap of the board.
      */
-    private boolean completedLap(int prevPos, int nextPos, int start) { //Verkar fungera, testa? allt behövs kanske inte
+    private boolean completedLap(int prevPos, int nextPos, int start) {
         if (prevPos < nextPos) { //if next pos is larger than pos, which will not happen if nextPos is >40
-            return (prevPos < start && nextPos >= start);       //TODO Add explanation perhaps, currently hard to read
+            return (prevPos < start && nextPos >= start);
         } else {
             return (prevPos < start || nextPos >= start);
         }
@@ -298,7 +298,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * @param diceRoll The parameter "diceRoll" is of type int, which represents the number rolled
      * on a dice.
      */
-    public void movePiece(Piece piece, int diceRoll) {  // Just nu finns movePiece och insertPiece, går det att slå ihop?
+    public void movePiece(Piece piece, int diceRoll) {
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);

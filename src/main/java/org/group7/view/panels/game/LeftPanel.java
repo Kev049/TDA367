@@ -82,7 +82,6 @@ public class LeftPanel extends JPanel {
             c.gridx = 1;
             c.insets = new Insets(0, 100,25, 0);
             JLabel questionMark = new JLabel();
-            //questionMark.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Question_mark.png")));
             questionMark.setIcon(new ImageIcon(getImage("powerups/Question_mark.png")));
             powerUpFrame.add(questionMark, c);
             i++;
@@ -93,12 +92,6 @@ public class LeftPanel extends JPanel {
         laserPowerUp.setToolTipText("Blasts all powerups and pieces 8 tiles in front of the piece");
         lightningPowerUp.setToolTipText("Move forward 2 steps");
         switchPowerUp.setToolTipText("To be implemented");
-
-//        basePowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Base_icon.png")));
-//        catapultPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Catapult_icon.png")));
-//        laserPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Laser_icon.png")));
-//        lightningPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Lightning_icon.png")));
-//        switchPowerUp.setIcon(new ImageIcon(getImage("src/main/resources/powerups/Switch_icon.png")));
 
         basePowerUp.setIcon(new ImageIcon(getImage("powerups/Base_icon.png")));
         catapultPowerUp.setIcon(new ImageIcon(getImage("powerups/Catapult_icon.png")));
@@ -113,7 +106,6 @@ public class LeftPanel extends JPanel {
             URL powerUpPath = LeftPanel.class.getClassLoader().getResource(path);
             System.out.println(powerUpPath.toString());
             image = ImageIO.read(powerUpPath);
-            //image = ImageIO.read(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
