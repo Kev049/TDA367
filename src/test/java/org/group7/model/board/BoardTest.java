@@ -289,7 +289,7 @@ class BoardTest {
 
     @Test
     void getRightAmountOfGoalStretchTilesFromBoard() {
-        List<Tile> goalStretchTiles = board.getGoalTiles();
+        List<IInsertable> goalStretchTiles = board.getGoalTiles();
         assertEquals(16, goalStretchTiles.size());
     }
 
