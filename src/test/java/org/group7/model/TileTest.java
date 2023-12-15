@@ -1,17 +1,13 @@
 package org.group7.model;
-//import org.junit.Test;>
-import org.group7.model.Board;
-import org.group7.model.IMoveHandler;
-import org.group7.model.Piece;
-import org.group7.model.Tile;
+import org.group7.model.board.Board;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.board.IMoveHandler;
+import org.group7.model.board.Tile;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,11 +16,17 @@ public class TileTest {
 
     int someNumber;
     Tile tile;
+    Color[] colorArray = new Color[4];
+    IMoveHandler handler;
 
     //TODO: Check that InsertEntity can't insert an entity if tile already has entity
 
     @BeforeEach
     void setupBeforeEach(){
+        colorArray[0] = Color.RED;
+        colorArray[1] = Color.GREEN;
+        colorArray[2] = Color.BLUE;
+        colorArray[3] = Color.YELLOW;
         someNumber = 0;
         tile = new Tile(someNumber);
     }
@@ -32,6 +34,7 @@ public class TileTest {
     @AfterEach
     void tearDownAfterEach(){
         tile = null;
+        handler = null;
     }
 
     @Test
@@ -42,54 +45,28 @@ public class TileTest {
 
     @Test
     void insertPieceMakesTileNotEmpty() {
-        IMoveHandler handler = new Board();
+        handler = new Board(colorArray);
         assertTrue(tile.isEmpty());
         tile.insertPiece(new Piece(Color.red, handler));
         assertFalse(tile.isEmpty());
     }
-    /*
+
     @Test
     void getPieceReturnsSamePieceInsertedPiece() {
-        IMoveHandler handler = new Board();
+        handler = new Board(colorArray);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
-        assertEquals(tile.getPiece(), piece);
+        assertEquals(tile.getEntity(), piece);
     }
 
     @Test
     void removePieceWillRemovePiece() {
-        IMoveHandler handler = new Board();
+        handler = new Board(colorArray);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
-        assertFalse(tile.isEmpty());
-        tile.removePiece();
+        tile.removeEntity();
         assertTrue(tile.isEmpty());
     }
-    */
-    @Test //behöver vi ha ett test med denna?
-    void isEmpty() {
 
-    }
-    /*
-    @Test
-    void getPieceColorReturnsSameColorAsPieceColor() {
-        Color red = Color.red;
-        IMoveHandler handler = new Board();
-        Piece redPiece = new Piece(red, handler);
-        tile.insertPiece(redPiece);
-        assertEquals(tile.getPieceColor(), redPiece.getColor());
-    }
-
-    @Test
-    void getPieceColorWorksForAllOurColors() {
-        List<Color> colorList = Arrays.asList(Color.red, Color.blue, Color.green, Color.yellow);
-
-        for(Color c : colorList) {
-            tile.insertPiece(new Piece(c, new Board()));
-            assertEquals(c, tile.getPieceColor());
-            tile.removePiece();
-        }
-    }
-
-     */
 }
+

@@ -1,1 +1,1 @@
-Main-Class: org.group7.Main
+Main-Class: org.group7.Application

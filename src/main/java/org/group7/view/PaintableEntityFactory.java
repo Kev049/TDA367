@@ -1,47 +1,52 @@
 package org.group7.view;
 
 
-import org.group7.model.Piece;
-import org.group7.model.PowerUps.PowerUp;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
+import org.group7.view.paintables.PaintablePiece;
+import org.group7.view.paintables.PaintablePowerUp;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 
-public class PaintableEntityFactory{ //TODO: Ta bort eller gör något med denna klassen
-    private static Image image;
-    public static PaintablePiece makePieceImage(Piece piece) { //skulle kunna ta bort funktionen ovan och göra denna mer generell
+public class PaintableEntityFactory {
+    private static BufferedImage image;
+
+    public PaintablePiece makePieceImage(Piece piece) {
         String color = null;
-        if(piece.getColor().equals(Color.RED)) color = "red";
-        else if(piece.getColor().equals(Color.GREEN)) color = "green";
-        else if(piece.getColor().equals(Color.YELLOW)) color = "yellow";
-        else color = "blue";
-        return makePaintedPiece("src/main/resources/" + color + "_player_circle.png", piece);
+        if (piece.getColor().equals(Color.RED)) color = "red";
+        else if (piece.getColor().equals(Color.GREEN)) color = "green";
+        else if (piece.getColor().equals(Color.YELLOW)) color = "yellow";
+        else if (piece.getColor().equals(Color.BLUE)) color = "blue";
+        return makePaintedPiece("player/" + color + "_player_circle.png", piece);
     }
 
-    private static PaintablePiece makePaintedPiece(String s, Piece piece) {
-        try{
-            image = ImageIO.read(new File(s));
-        }
-        catch (IOException ex){
+    private PaintablePiece makePaintedPiece(String s, Piece piece) {
+        try {
+            // This allows the resource to be compiled into the jar file
+            URL path = PaintableEntityFactory.class.getClassLoader().getResource(s);
+            image = ImageIO.read(path);
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return new PaintablePiece(image, piece);
     }
 
-    private static Image getPowerUpImage(PowerUp powerUp){
-        String powerUpImagePath = ("src/main/resources/" + powerUp.getPowerUpName() + "_icon.png");
-        try{
-            image = ImageIO.read(new File(powerUpImagePath));
-        }
-        catch (IOException ex){
+    private Image getPowerUpImage(PowerUp powerUp) {
+        String powerUpImagePath = ("powerups/" + powerUp.getPowerUpName() + "_icon.png");
+        try {
+            URL path = PaintableEntityFactory.class.getClassLoader().getResource(powerUpImagePath);
+            image = ImageIO.read(path);
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return image;
     }
 
-    public static PaintablePowerUp makePaintedPowerUp(PowerUp powerUp){
+    public PaintablePowerUp makePaintedPowerUp(PowerUp powerUp) {
         return new PaintablePowerUp(getPowerUpImage(powerUp), powerUp);
     }
 }
