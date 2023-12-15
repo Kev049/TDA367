@@ -1,5 +1,7 @@
 package org.group7.model.game;
 
+import org.group7.model.board.Board;
+import org.group7.model.board.entities.Entity;
 import org.group7.model.board.entities.piece.Piece;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,77 +26,51 @@ class GameTest {
     }
 
     @Test
-    void rollDice() {
-
-    }
-
-    @Test
-    void roll() {
-    }
-
-    @Test
     void validateMoveWillNotAllowPieceOfIncorrectColorToMove() {
         Piece piece = new Piece(Color.YELLOW, game.getBoard());
         game.validateMove(piece);
     }
 
     @Test
-    void move() {
+    void moveMovesPiece() {
+        Piece piece = new Piece(Color.RED, game.getBoard());
+        game.getBoard().addPiece(piece, 0);
+        int startingPos = piece.getPos();
+        game.roll();
+        game.move(piece);
+        assertTrue(piece.getPos() != startingPos);
     }
 
     @Test
-    void movePiece() {
+    void pieceDoesntMoveIfDieHasNotBeenRolled() {
+        Piece piece = new Piece(Color.RED, game.getBoard());
+        game.getBoard().addPiece(piece, 0);
+        int startingPos = piece.getPos();
+        game.movePiece(piece);
+        assertEquals(piece.getPos(), startingPos);
     }
 
     @Test
-    void validateBaseMove() {
+    void validateBaseMoveReturnsFalseIfCurrentColorIsNotTheSame() {
+        Color blue = Color.BLUE;
+        assertFalse(game.validateBaseMove(blue));
     }
 
     @Test
-    void moveBasePiece() {
+    void moveBasePieceDoesNotMovePieceIfDieHasNotBeenRolled() {
+        Color red = Color.RED;
+        game.moveBasePiece(red);
+        assertEquals(4, game.getBoard().getBaseFromColor(red).getPieceAmount());
     }
 
     @Test
-    void movePieceOutOfBase() {
+    void noMovesAvailableIfNoPiecesLeft() {
+        Color color = Color.RED;
+        Board board = game.getBoard();
+        while(board.getBaseFromColor(color).isEmpty()){
+            game.getBoard().extractPieceFromBase(Color.RED);
+        }
+        assertTrue(game.noMovesAvailable());
     }
 
-    @Test
-    void nextPlayer() {
-    }
-
-    @Test
-    void noMovesAvailable() {
-    }
-
-    @Test
-    void hasRolledSix() {
-    }
-
-    @Test
-    void increaseTurnNumber() {
-    }
-
-    @Test
-    void tryForPowerupSpawn() {
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void addObserver() {
-    }
-
-    @Test
-    void testAddObserver() {
-    }
-
-    @Test
-    void notifyObservers() {
-    }
-
-    @Test
-    void testNotifyObservers() {
-    }
 }

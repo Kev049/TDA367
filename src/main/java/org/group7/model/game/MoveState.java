@@ -38,7 +38,7 @@ public class MoveState extends GameState {
 
 
     /*
-     * This method should not be accessible in this state
+     * This method should do nothing in this state
      */
     @Override
     public void roll() {

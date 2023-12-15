@@ -212,7 +212,7 @@ public class Game implements StringObservable, Observable, Observer {
      * Checks if the player just rolled a six.
      * @return true if the player just rolled a six, false otherwise.
      */
-    public boolean hasRolledSix(){
+    private boolean hasRolledSix(){
         return this.lastDiceRollResult == 6;
     }
 
