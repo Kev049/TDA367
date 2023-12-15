@@ -1,8 +1,8 @@
 package org.group7.view;
 
 
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.PowerUp;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
 import org.group7.view.paintables.PaintablePiece;
 import org.group7.view.paintables.PaintablePowerUp;
 

@@ -1,7 +1,7 @@
-package org.group7.model.board.entities.powerups.handlers;
+package org.group7.model.entities.powerups.handlers;
 
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.PowerUp;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
 
 public interface ILaserPowerUpHandler {
     /**
@@ -28,7 +28,7 @@ public interface ILaserPowerUpHandler {
      * @param pos The `pos` parameter represents the starting position from where entities will be
      * removed.
      */
-    void removeEntitiesFromField(int pos);
+    void removeEntitiesFromField(int pos, int amountTiles);
 
     /**
      * The function removes a piece from its tile and adds it to the corresponding

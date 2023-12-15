@@ -1,13 +1,8 @@
 package org.group7.model.board;
 
-import org.group7.controller.observe.Observable;
-import org.group7.controller.observe.Observer;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -26,7 +21,7 @@ public class GoalStretch implements IMoveHandler {
      * 
      * @param color The parameter "color" represents the color of the goal-stretch.
      * @param handler The parameter "handler" represents an object of type PieceExtractor which can
-     * trasnfer pieces from the goal-stretch back to the field (rest of the board).
+     * transfer pieces from the goal-stretch back to the field (rest of the board).
      */
     public GoalStretch(Color color, PieceExtractor handler) {
         this.color = color;
@@ -87,7 +82,7 @@ public class GoalStretch implements IMoveHandler {
      * @param index The index parameter represents the position of the entity in the insertables array
      * that to be removed.
      */
-    public void removeEntity(int index) { //har ändrat removeEntity så har kanske pajat denna, removeEntity returnade en entity innan
+    public void removeEntity(int index) {
         this.insertables[index].removeEntity();
     }
 

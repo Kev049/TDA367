@@ -5,7 +5,7 @@ import org.group7.controller.observe.Observer;
 import org.group7.controller.observe.StringObservable;
 import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Board;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 import org.group7.model.utilities.Dice;
 
 import java.awt.*;

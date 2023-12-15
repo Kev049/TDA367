@@ -1,8 +1,8 @@
-package org.group7.model.board.entities.powerups;
+package org.group7.model.entities.powerups;
 
-import org.group7.model.board.entities.EntityVisitor;
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.Entity;
+import org.group7.model.entities.EntityVisitor;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.Entity;
 
 /**
  * The PowerUp class is an abstract class that extends the Entity class.

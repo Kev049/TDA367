@@ -1,12 +1,12 @@
-package org.group7.model.board.entities;
+package org.group7.model.entities;
 
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.BasePowerUp;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
-import org.group7.model.board.entities.powerups.LightningPowerUp;
-import org.group7.model.board.entities.powerups.handlers.IBasePowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.BasePowerUp;
+import org.group7.model.entities.powerups.LaserPowerUp;
+import org.group7.model.entities.powerups.LightningPowerUp;
+import org.group7.model.entities.powerups.handlers.IBasePowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILightningPowerUpHandler;
 import org.group7.model.board.IMoveHandler;
 
 import java.awt.*;

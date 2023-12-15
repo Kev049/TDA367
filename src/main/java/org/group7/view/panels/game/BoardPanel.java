@@ -2,9 +2,8 @@ package org.group7.view.panels.game;
 
 import org.group7.controller.observe.Observer;
 import org.group7.model.board.IInsertable;
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.PowerUp;
-import org.group7.model.board.Tile;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
 import org.group7.view.PaintableEntityFactory;
 import org.group7.view.paintables.PaintablePowerUp;
 import org.group7.view.paintables.PaintableBase;
@@ -21,7 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPanel extends JPanel implements Observer{ //TODO kan vi minska på denna klassen?
+public class BoardPanel extends JPanel implements Observer{
     private final List<PaintableTile> paintableFieldTiles;
     private final List<PaintableBase> paintableBases;
     private final List<PaintableTile> paintableGoalStretchTiles;

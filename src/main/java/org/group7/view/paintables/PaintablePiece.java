@@ -1,6 +1,6 @@
 package org.group7.view.paintables;
 
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 
 import javax.swing.*;
 import java.awt.*;

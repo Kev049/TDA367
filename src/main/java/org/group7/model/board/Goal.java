@@ -2,8 +2,8 @@ package org.group7.model.board;
 
 import org.group7.controller.observe.Observable;
 import org.group7.controller.observe.Observer;
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class Goal implements IInsertable, Observable {
     /**
      * The function adds an observer to a list of observers.
      * 
-     * @param o The parameter "o" is an instance of the Observer interface that woöö ne added
+     * @param o The parameter "o" is an instance of the Observer interface that will be added
      * to the list of observers.
      */
     @Override

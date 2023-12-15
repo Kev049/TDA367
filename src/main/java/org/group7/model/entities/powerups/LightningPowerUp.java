@@ -1,7 +1,7 @@
-package org.group7.model.board.entities.powerups;
+package org.group7.model.entities.powerups;
 
-import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.powerups.handlers.ILightningPowerUpHandler;
+import org.group7.model.entities.piece.Piece;
 
 /**
  * The LightningPowerUp class is a specific power-up class, 

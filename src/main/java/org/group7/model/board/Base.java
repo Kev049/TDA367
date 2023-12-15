@@ -1,7 +1,7 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.EntityFactory;
+import org.group7.model.entities.piece.Piece;
 
 import java.awt.Color;
 
@@ -39,7 +39,7 @@ public class Base {
      * @param handler The "handler" parameter is an instance of the IMoveHandler interface. It is used
      * to handle the movement of the pieces in the game.
      */
-    private void initPieces(IMoveHandler handler) { //Kan nog delas upp till 2 metoder
+    private void initPieces(IMoveHandler handler) {
         for (int i = 0; i < capacity; i++) {
             Piece piece = EntityFactory.createPiece(color, handler);
             this.pieces[i] = piece;

@@ -1,11 +1,11 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.BasePowerUp;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
-import org.group7.model.board.entities.powerups.LightningPowerUp;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.EntityFactory;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.BasePowerUp;
+import org.group7.model.entities.powerups.LaserPowerUp;
+import org.group7.model.entities.powerups.LightningPowerUp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -119,7 +119,7 @@ class BoardTest {
         field[13].insertPowerUp(lightningPowerUp);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
         field[14].insertPowerUp(laserPowerUp);
-        board.removeEntitiesFromField(9);
+        board.removeEntitiesFromField(9, 9);
 
         int numberOfNullEntities = 0;
         for(int i = 10; i < 15; i++){

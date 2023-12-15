@@ -1,9 +1,9 @@
 package org.group7.model;
 
 import org.group7.model.board.Board;
-import org.group7.model.board.entities.powerups.BasePowerUp;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
-import org.group7.model.board.entities.powerups.LightningPowerUp;
+import org.group7.model.entities.powerups.BasePowerUp;
+import org.group7.model.entities.powerups.LaserPowerUp;
+import org.group7.model.entities.powerups.LightningPowerUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

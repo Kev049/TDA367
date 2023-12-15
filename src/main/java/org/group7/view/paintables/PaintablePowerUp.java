@@ -1,6 +1,6 @@
 package org.group7.view.paintables;
 
-import org.group7.model.board.entities.powerups.PowerUp;
+import org.group7.model.entities.powerups.PowerUp;
 
 import javax.swing.*;
 import java.awt.*;

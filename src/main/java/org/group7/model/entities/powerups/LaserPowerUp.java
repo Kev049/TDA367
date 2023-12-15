@@ -1,7 +1,7 @@
-package org.group7.model.board.entities.powerups;
+package org.group7.model.entities.powerups;
 
-import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
+import org.group7.model.entities.piece.Piece;
 
 /**
  * The LaserPowerUp class is a specific power-up class, 
@@ -11,6 +11,8 @@ import org.group7.model.board.entities.piece.Piece;
 public class LaserPowerUp extends PowerUp {
 
     ILaserPowerUpHandler handler;
+
+    private final int AMOUNT_OF_TILES_IN_FRONT = 8;
 
     /**
      * The BasePowerUp constructor takes an ILaserPowerUpHandler as a parameter.
@@ -31,7 +33,7 @@ public class LaserPowerUp extends PowerUp {
         int pos = this.getPos();
         this.handler.removePowerUpFromField(this);
         this.handler.addPiece(piece, pos);
-        this.handler.removeEntitiesFromField(pos);
+        this.handler.removeEntitiesFromField(pos, AMOUNT_OF_TILES_IN_FRONT);
     }
 }
 

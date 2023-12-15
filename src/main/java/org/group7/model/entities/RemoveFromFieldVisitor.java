@@ -1,8 +1,8 @@
-package org.group7.model.board.entities;
+package org.group7.model.entities;
 
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.PowerUp;
-import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
+import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
 
 public class RemoveFromFieldVisitor implements EntityVisitor {
     private final ILaserPowerUpHandler handler;

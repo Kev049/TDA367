@@ -1,7 +1,7 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.piece.Piece;
 
 /**
  * The IInsertable interface represents an object that can insert and remove
