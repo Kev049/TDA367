@@ -38,6 +38,12 @@ public class RightPanel extends JPanel implements StringObserver {
 
     private void initTurnComponent() {
         playerTurnOutput.setFont(new Font("Arial", Font.PLAIN, 32));
+        FontMetrics fm = playerTurnOutput.getFontMetrics(playerTurnOutput.getFont());
+        int w = 275;
+        int h = fm.getHeight();
+        Dimension size = new Dimension(w, h);
+        playerTurnOutput.setMinimumSize(size);
+        playerTurnOutput.setPreferredSize(size);
     }
 
     private void initDiceComponent() {

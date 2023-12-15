@@ -124,7 +124,6 @@ public class Game implements StringObservable, Observable, Observer {
 
     private void finishMove() {
         gameState.nextState(this);
-        tryForPowerupSpawn();
         if (!hasRolledSix()) {
             nextPlayer();
         } else {
@@ -137,6 +136,7 @@ public class Game implements StringObservable, Observable, Observer {
      */
     private void finishRoll() {
         increaseTurnNumber();
+        tryForPowerupSpawn();
         nextPlayer();
     }
 
