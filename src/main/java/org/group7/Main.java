@@ -2,6 +2,7 @@ package org.group7;
 
 import org.group7.controller.GameController;
 import org.group7.controller.WindowController;
+import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Base;
 import org.group7.model.board.Board;
 import org.group7.model.board.Tile;
@@ -84,8 +85,9 @@ public class Main {
         JButton newGameButton = leftPanel.getNewGameButton();
 
         game.addObserver(boardPanel);
+        game.addObserver((StringObserver) rightPanel);
 
-        DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, game, leftPanel, rightPanel);
+        DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 

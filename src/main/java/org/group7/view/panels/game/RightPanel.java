@@ -21,7 +21,7 @@ public class RightPanel extends JPanel implements StringObserver {
     }
 
     private void initDiceComponents() {
-        initTurnComponent();
+        initPlayerTurnOutputComponent();
         initDiceComponent();
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -36,7 +36,7 @@ public class RightPanel extends JPanel implements StringObserver {
         this.add(rollDiceButton, c);
     }
 
-    private void initTurnComponent() {
+    private void initPlayerTurnOutputComponent() {
         playerTurnOutput.setFont(new Font("Arial", Font.PLAIN, 32));
         FontMetrics fm = playerTurnOutput.getFontMetrics(playerTurnOutput.getFont());
         int w = 275;
