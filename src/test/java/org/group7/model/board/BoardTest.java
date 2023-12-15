@@ -23,11 +23,11 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(colorArray);
         colorArray[0] = Color.RED;
         colorArray[1] = Color.GREEN;
         colorArray[2] = Color.BLUE;
         colorArray[3] = Color.YELLOW;
+        board = new Board(colorArray);
     }
 
     @AfterEach
