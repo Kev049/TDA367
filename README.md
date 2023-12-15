@@ -12,12 +12,12 @@ Before installing TurboFia, ensure that your system meets the following prerequi
 Installation
 
 Follow these simple steps to install TurboFia on your system:
-Step 1: Download TurboFia
 
-Click on the "Releases" section (to the right-hand-side of your screen) to find the latest version. Once you have selected the latest release, download the JAR file. At the time of writing you can find our latest release (TurboFia-1.0-SNAPSHOT.jar) here.
-Step 2: Run TurboFia
+> Step 1: Download TurboFia
+> Click on the "Releases" section (to the right-hand-side of your screen) to find the latest version. Once you have selected the latest release, download the JAR file. At the time of writing you can find our latest release (TurboFia-1.0-SNAPSHOT.jar) here.
 
-Once the jar has been downloaded, you can simply double-click the application and enjoy the game!
+> Step 2: Run TurboFia
+>Once the jar has been downloaded, you can simply double-click the application and enjoy the game!
 
 If you encounter any issues or have feedback, feel free to create an issue on the GitHub repository!
 
