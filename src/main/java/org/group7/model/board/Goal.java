@@ -2,6 +2,7 @@ package org.group7.model.board;
 
 import org.group7.controller.observe.Observable;
 import org.group7.controller.observe.Observer;
+import org.group7.model.board.entities.Entity;
 import org.group7.model.board.entities.piece.Piece;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * The Goal class represents the goal tile in the game that the pieces are trying to reach.
  */
 public class Goal implements IInsertable, Observable {
-    private Piece piece;
+    private Entity entity;
     private List<Observer> observers;
 
     /**
@@ -29,7 +30,7 @@ public class Goal implements IInsertable, Observable {
      */
     @Override
     public void insertPiece(Piece p) {
-        this.piece = p;
+        this.entity = p;
         removeEntity();
     }
 
@@ -39,11 +40,20 @@ public class Goal implements IInsertable, Observable {
      */
     @Override
     public void removeEntity() {
-        this.piece.setPos(-1);
-        this.piece = null;
+        this.entity.setPos(-1);
+        this.entity = null;
         notifyObservers();
     }
 
+    @Override
+    public Entity getEntity() {
+        return this.entity;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (this.entity == null);
+    }
 
     /**
      * The function notifies all observers by calling their update method.

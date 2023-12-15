@@ -299,4 +299,57 @@ class BoardTest {
         int amountOfPieces = board.getPieceAmount(color);
         assertEquals(4, amountOfPieces);
     }
+
+    @Test
+    void pieceHasCollidedWithAnotherPieceOfOtherColorAndSentItToBase(){
+        Piece piece = new Piece(Color.RED, board);
+        Piece piece1 = new Piece(Color.GREEN, board);
+        board.addPiece(piece, 0);
+        board.addPiece(piece1, 1);
+        board.movePiece(piece, 1);
+        assertEquals(piece1.getPos(), -1);
+    }
+
+    @Test
+    void pieceHasCollidedWithAnotherPieceOfSameColorAndMovedPast(){
+        Piece piece = new Piece(Color.RED, board);
+        Piece piece1 = new Piece(Color.RED, board);
+        board.addPiece(piece, 0);
+        board.addPiece(piece1, 1);
+        board.movePiece(piece, 1);
+        assertEquals(piece.getPos(), 2);
+    }
+
+    @Test
+    void pieceHasCollidedWithLightningPowerUpAndMovedTwoSteps(){
+        Piece piece = new Piece(colorArray[0], board);
+        LightningPowerUp lightningPowerUp = EntityFactory.createLightningPowerUp(board);
+        board.addPiece(piece, 0);
+        board.getFieldTiles()[2].insertPowerUp(lightningPowerUp);
+        board.movePiece(piece, 2);
+        assertEquals(piece.getPos(), 4);
+    }
+
+    @Test
+    void pieceHasCollidedWithBasePowerUpAndExtractedPieceFromBase(){
+        Piece piece = board.extractPieceFromBase(colorArray[0]);
+        BasePowerUp basePowerUp = EntityFactory.createBasePowerUp(board);
+        Base redBase = board.getBases().get(0);
+        board.addPiece(piece, 0);
+        board.getFieldTiles()[2].insertPowerUp(basePowerUp);
+        board.movePiece(piece, 2);
+        assertEquals(redBase.getPieceAmount(), 2);
+    }
+
+    @Test
+    void pieceHasCollidedWithLaserPowerUpAndRemovedPieceFromField(){
+        Piece redPiece = board.extractPieceFromBase(colorArray[0]);
+        Piece bluePiece = board.extractPieceFromBase(colorArray[2]);
+        LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
+        board.addPiece(redPiece, 0);
+        board.addPiece(bluePiece, 5);
+        board.getFieldTiles()[2].insertPowerUp(laserPowerUp);
+        board.movePiece(redPiece, 2);
+        assertTrue(bluePiece.getPos() == -1);
+    }
 }

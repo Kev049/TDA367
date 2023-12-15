@@ -135,7 +135,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     public void addGoalObserver(Observer o) {
         for (GoalStretch gs : this.goalStretches) {
-            gs.addObserver(o);
+            Goal g = (Goal)gs.getGoal();
+            g.addObserver(o);
         }
     }
 
@@ -374,8 +375,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * 
      * @return The method is returning a List of Tile objects.
      */
-    public List<Tile> getGoalTiles() {
-        List<Tile> goalTiles = new ArrayList<>(goalTileAmount);
+    public List<IInsertable> getGoalTiles() {
+        List<IInsertable> goalTiles = new ArrayList<>(goalTileAmount);
         for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }
