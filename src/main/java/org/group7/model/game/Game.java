@@ -27,6 +27,7 @@ public class Game implements StringObservable, Observable, Observer {
     private int lastDiceRollResult;
     private int turnNumber;
     private final int PIECE_PER_PLAYER = 4;
+    private final int Amount_OF_COLORS = 4;
     private final Set<StringObserver> stringObservers;
     private final Set<Observer> observers;
     private final HashMap<Color, Integer> finishedPieces;
@@ -37,7 +38,7 @@ public class Game implements StringObservable, Observable, Observer {
      */
     public Game() {
         this.dice = new Dice();
-        this.colorArray = new Color[4];
+        this.colorArray = new Color[Amount_OF_COLORS];
         initColors();
         this.board = new Board(this.colorArray);
         this.board.addGoalObserver(this);
