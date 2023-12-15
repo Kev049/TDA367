@@ -116,7 +116,7 @@ class BoardTest {
         field[13].insertPowerUp(lightningPowerUp);
         LaserPowerUp laserPowerUp = EntityFactory.createLaserPowerUp(board);
         field[14].insertPowerUp(laserPowerUp);
-        board.removeEntitiesFromField(9);
+        board.removeEntitiesFromField(9, 9);
 
         int numberOfNullEntities = 0;
         for(int i = 10; i < 15; i++){
