@@ -22,19 +22,14 @@ public class TileTest {
 
     //TODO: Check that InsertEntity can't insert an entity if tile already has entity
 
-    @BeforeAll
-    void doBeforeAll() {
+    @BeforeEach
+    void setupBeforeEach(){
         colorArray[0] = Color.RED;
         colorArray[1] = Color.GREEN;
         colorArray[2] = Color.BLUE;
         colorArray[3] = Color.YELLOW;
-    }
-
-    @BeforeEach
-    void setupBeforeEach(){
         someNumber = 0;
         tile = new Tile(someNumber);
-        IMoveHandler handler = new Board(colorArray);
     }
 
     @AfterEach
@@ -51,7 +46,7 @@ public class TileTest {
 
     @Test
     void insertPieceMakesTileNotEmpty() {
-        IMoveHandler handler = new Board(colorArray);
+        handler = new Board(colorArray);
         assertTrue(tile.isEmpty());
         tile.insertPiece(new Piece(Color.red, handler));
         assertFalse(tile.isEmpty());
@@ -59,7 +54,7 @@ public class TileTest {
 
     @Test
     void getPieceReturnsSamePieceInsertedPiece() {
-        IMoveHandler handler = new Board(colorArray);
+        handler = new Board(colorArray);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
         assertEquals(tile.getEntity(), piece);
@@ -67,10 +62,9 @@ public class TileTest {
 
     @Test
     void removePieceWillRemovePiece() {
-        IMoveHandler handler = new Board(colorArray);
+        handler = new Board(colorArray);
         Piece piece = new Piece(Color.red, handler);
         tile.insertPiece(piece);
-        assertFalse(tile.isEmpty());
         tile.removeEntity();
         assertTrue(tile.isEmpty());
     }

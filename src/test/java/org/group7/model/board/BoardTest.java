@@ -20,7 +20,6 @@ class BoardTest {
     Board board;
     Color[] colorArray = new Color[4];;
 
-
     @BeforeEach
     void setUp() {
         colorArray[0] = Color.RED;
