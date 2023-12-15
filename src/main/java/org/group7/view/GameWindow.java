@@ -8,7 +8,7 @@ import java.awt.*;
 public class GameWindow extends JFrame {
     private static final int X = 1920;
     private static final int Y = 1080;
-    private static final int two = 2;
+    private static final int HALF = 2;
     private final DrawGamePanel drawPanel;
 
     public GameWindow(String name, DrawGamePanel drawPanel) {
@@ -24,7 +24,7 @@ public class GameWindow extends JFrame {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         // Centers the frame
-        setLocation(dim.width / two - this.getSize().width / two, dim.height / two - this.getSize().height / two);
+        setLocation(dim.width / HALF - this.getSize().width / HALF, dim.height / HALF - this.getSize().height / HALF);
         // Makes the frame visible
         setVisible(true);
         // Ensures that the window closes when pressing the 'x' button

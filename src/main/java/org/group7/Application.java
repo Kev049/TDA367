@@ -29,7 +29,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        final String gameName = "TurboFia";
+        final String GAME_NAME = "TurboFia";
         final int TOTAL_AMOUNT_FIELD_TILES = 40;
         final int TOTAL_AMOUNT_BASES = 4;
         final int TOTAL_AMOUNT_GOAL_TILES = 16;
@@ -88,7 +88,7 @@ public class Application {
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 
-        MenuWindow menuWindow = new MenuWindow(gameName, drawMenuPanel);
+        MenuWindow menuWindow = new MenuWindow(GAME_NAME, drawMenuPanel);
         WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
     }
 }

@@ -27,8 +27,8 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     private final HashMap<Color, GoalStretch> goalStretchesHashMap;
     private final HashMap<Color, Base> colorBaseMap;
     private final EntityVisitor visitor;
-    private final int fieldTileAmount = 40;
-    private final int goalTileAmount = 16;
+    private final int FIELD_TILE_AMOUNT = 40;
+    private final int GOAL_TILE_AMOUNT = 16;
     private final int playerAmount;
     private final PowerUpGenerator powerUpGenerator;
 
@@ -39,7 +39,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         this.colors = colors;
         this.playerAmount = colors.length;
         this.bases = new Base[playerAmount];
-        this.field = new Tile[fieldTileAmount];
+        this.field = new Tile[FIELD_TILE_AMOUNT];
         this.goalStretches = new GoalStretch[playerAmount];
         this.goalStretchesHashMap = new HashMap<>();
         this.playerStartTiles = new HashMap<>();
@@ -64,7 +64,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes an array of Tile objects (spaces) for the board.
      */
     private void initTiles() {
-        for (int i = 0; i < fieldTileAmount; i++) {
+        for (int i = 0; i < FIELD_TILE_AMOUNT; i++) {
             this.field[i] = new Tile(i);
         }
     }
@@ -256,7 +256,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void pieceFromGoalStretchToField(Piece p) {
         Color c = p.getColor();
         int tileIndex = playerStartTiles.get(c);
-        tileIndex = ((((tileIndex - 1) % fieldTileAmount) + fieldTileAmount) % fieldTileAmount); // Positive modulo
+        tileIndex = ((((tileIndex - 1) % FIELD_TILE_AMOUNT) + FIELD_TILE_AMOUNT) % FIELD_TILE_AMOUNT); // Positive modulo
         field[tileIndex].insertPiece(p);
         p.setHandler(this);
         p.toggleState();
@@ -303,7 +303,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         int from = piece.getPos();
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
-        int to = (from + diceRoll) % fieldTileAmount;
+        int to = (from + diceRoll) % FIELD_TILE_AMOUNT;
         if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
             movePieceInGoalStretch(piece, diceRoll);
         } else {
@@ -324,7 +324,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     public void spawnPowerUps() {
         Random rand = new Random();
         for(PowerUp powerUp : getGeneratedPowerUps()){
-            this.field[rand.nextInt(fieldTileAmount)].insertPowerUp(powerUp);
+            this.field[rand.nextInt(FIELD_TILE_AMOUNT)].insertPowerUp(powerUp);
         }
     }
 
@@ -377,7 +377,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * @return The method is returning a List of Tile objects.
      */
     public List<IInsertable> getGoalTiles() {
-        List<IInsertable> goalTiles = new ArrayList<>(goalTileAmount);
+        List<IInsertable> goalTiles = new ArrayList<>(GOAL_TILE_AMOUNT);
         for (GoalStretch goal : goalStretches) {
             goalTiles.addAll(Arrays.asList(goal.getTiles()));
         }

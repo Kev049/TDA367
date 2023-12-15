@@ -26,7 +26,7 @@ public class Game implements StringObservable, Observable, Observer {
     private int currentColorIndex;
     private int lastDiceRollResult;
     private int turnNumber;
-    private final int piecePerPlayer = 4;
+    private final int PIECE_PER_PLAYER = 4;
     private final Set<StringObserver> stringObservers;
     private final Set<Observer> observers;
     private final HashMap<Color, Integer> finishedPieces;
@@ -65,7 +65,7 @@ public class Game implements StringObservable, Observable, Observer {
      * Initializes the finished pieces map (how many pieces each player has finished)
      */
     private void initFinishedPieces() {
-        for (int i = 0; i < piecePerPlayer; i++) {
+        for (int i = 0; i < PIECE_PER_PLAYER; i++) {
             this.finishedPieces.put(this.colorArray[i], 0);
         }
     }
