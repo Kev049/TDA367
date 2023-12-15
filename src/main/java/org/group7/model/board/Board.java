@@ -2,7 +2,7 @@ package org.group7.model.board;
 
 
 import org.group7.controller.observe.Observer;
-import org.group7.model.PowerUpGenerator;
+import org.group7.model.entities.powerups.PowerUpGenerator;
 import org.group7.model.entities.EntityVisitor;
 import org.group7.model.entities.RemoveFromFieldVisitor;
 import org.group7.model.entities.piece.Piece;
