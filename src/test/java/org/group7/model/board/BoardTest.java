@@ -1,11 +1,11 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.BasePowerUp;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
-import org.group7.model.board.entities.powerups.LightningPowerUp;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.EntityFactory;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.BasePowerUp;
+import org.group7.model.entities.powerups.LaserPowerUp;
+import org.group7.model.entities.powerups.LightningPowerUp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -289,7 +289,7 @@ class BoardTest {
 
     @Test
     void getRightAmountOfGoalStretchTilesFromBoard() {
-        List<Tile> goalStretchTiles = board.getGoalTiles();
+        List<IInsertable> goalStretchTiles = board.getGoalTiles();
         assertEquals(16, goalStretchTiles.size());
     }
 

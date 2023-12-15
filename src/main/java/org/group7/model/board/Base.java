@@ -1,7 +1,7 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.EntityFactory;
+import org.group7.model.entities.piece.Piece;
 
 import java.awt.Color;
 

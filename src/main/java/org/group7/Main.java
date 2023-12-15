@@ -7,7 +7,7 @@ import org.group7.model.board.Base;
 import org.group7.model.board.Board;
 import org.group7.model.board.IInsertable;
 import org.group7.model.board.Tile;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 import org.group7.model.game.Game;
 import org.group7.view.MenuWindow;
 import org.group7.view.PaintableEntityFactory;

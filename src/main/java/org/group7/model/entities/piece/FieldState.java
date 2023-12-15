@@ -1,4 +1,4 @@
-package org.group7.model.board.entities.piece;
+package org.group7.model.entities.piece;
 
 import org.group7.model.board.IMoveHandler;
 

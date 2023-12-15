@@ -1,13 +1,13 @@
 package org.group7.model;
 
-import org.group7.model.board.entities.EntityFactory;
-import org.group7.model.board.entities.powerups.BasePowerUp;
-import org.group7.model.board.entities.powerups.LaserPowerUp;
-import org.group7.model.board.entities.powerups.LightningPowerUp;
-import org.group7.model.board.entities.powerups.PowerUp;
-import org.group7.model.board.entities.powerups.handlers.IBasePowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
+import org.group7.model.entities.EntityFactory;
+import org.group7.model.entities.powerups.BasePowerUp;
+import org.group7.model.entities.powerups.LaserPowerUp;
+import org.group7.model.entities.powerups.LightningPowerUp;
+import org.group7.model.entities.powerups.PowerUp;
+import org.group7.model.entities.powerups.handlers.IBasePowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILightningPowerUpHandler;
 
 import java.util.ArrayList;
 import java.util.List;

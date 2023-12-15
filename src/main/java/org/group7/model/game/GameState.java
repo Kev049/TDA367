@@ -1,6 +1,6 @@
 package org.group7.model.game;
 
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 
 import java.awt.Color;
 

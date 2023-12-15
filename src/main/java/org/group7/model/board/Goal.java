@@ -2,8 +2,8 @@ package org.group7.model.board;
 
 import org.group7.controller.observe.Observable;
 import org.group7.controller.observe.Observer;
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;

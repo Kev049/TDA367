@@ -3,13 +3,13 @@ package org.group7.model.board;
 
 import org.group7.controller.observe.Observer;
 import org.group7.model.PowerUpGenerator;
-import org.group7.model.board.entities.EntityVisitor;
-import org.group7.model.board.entities.RemoveFromFieldVisitor;
-import org.group7.model.board.entities.piece.Piece;
-import org.group7.model.board.entities.powerups.PowerUp;
-import org.group7.model.board.entities.powerups.handlers.IBasePowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILaserPowerUpHandler;
-import org.group7.model.board.entities.powerups.handlers.ILightningPowerUpHandler;
+import org.group7.model.entities.EntityVisitor;
+import org.group7.model.entities.RemoveFromFieldVisitor;
+import org.group7.model.entities.piece.Piece;
+import org.group7.model.entities.powerups.PowerUp;
+import org.group7.model.entities.powerups.handlers.IBasePowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILaserPowerUpHandler;
+import org.group7.model.entities.powerups.handlers.ILightningPowerUpHandler;
 
 import java.awt.*;
 import java.util.List;

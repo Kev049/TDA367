@@ -1,6 +1,6 @@
 package org.group7.model.board;
 
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 
 /**
  * The PieceExtractor interface represents an object that can extract a piece from the goal stretch

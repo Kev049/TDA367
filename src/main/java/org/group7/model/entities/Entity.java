@@ -1,6 +1,6 @@
-package org.group7.model.board.entities;
+package org.group7.model.entities;
 
-import org.group7.model.board.entities.piece.Piece;
+import org.group7.model.entities.piece.Piece;
 
 /**
  * The Entity class is an abstract class that acts as the parent class for all

@@ -1,7 +1,7 @@
-package org.group7.model.board.entities.piece;
+package org.group7.model.entities.piece;
 
-import org.group7.model.board.entities.Entity;
-import org.group7.model.board.entities.EntityVisitor;
+import org.group7.model.entities.Entity;
+import org.group7.model.entities.EntityVisitor;
 import org.group7.model.board.IMoveHandler;
 
 import java.awt.*;
