@@ -7,6 +7,10 @@ import org.group7.view.paintables.PaintableBase;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is used to listen to the PaintableBase objects.
+ * It is used to move a piece from the base to the field.
+ */
 public class PaintableBaseListener implements ActionListener{
     private Game game;
     public PaintableBaseListener(Game game) {

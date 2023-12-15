@@ -10,6 +10,10 @@ import org.group7.view.paintables.PaintablePiece;
 import javax.swing.*;
 import java.util.List;
 
+/*
+ * This class is responsible for controlling the flow of the game
+ * and takes care of functionality like adding listeners and rolling the dice.
+ */
 public class GameController {
     private final JButton rollDiceButton = new JButton();
     private final RollDiceListener rollDiceListener;
