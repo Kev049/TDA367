@@ -10,7 +10,7 @@ import org.group7.model.entities.Entity;
 public class Tile implements IInsertable {
     private Entity entity;
     private final int index;
-    private final int outOfBounds = -1;
+    private final int OUT_OF_BOUNDS = -1;
 
     /**
      * The constructor of the Tile class.
@@ -48,6 +48,12 @@ public class Tile implements IInsertable {
         }
     }
 
+    /**
+     * The function checks if there is no entity on the tile.
+     *
+     * @return The method returns a boolean value. It returns true if there isn't an entity
+     * on this tile (i.e "entity" variable is null).
+     */
     public boolean isEmpty() {
         return this.entity == null;
     }
@@ -66,7 +72,7 @@ public class Tile implements IInsertable {
      * entity variable to null.
      */
     public void removeEntity() {
-        this.entity.setPos(outOfBounds);
+        this.entity.setPos(OUT_OF_BOUNDS);
         this.entity = null;
     }
 
@@ -79,11 +85,6 @@ public class Tile implements IInsertable {
         return this.index;
     }
 
-    /**
-     * The function checks if there is no entity on the tile.
-     * 
-     * @return The method returns a boolean value. It returns true if there is no entity
-     * on the tile (i.e "entity" variable is null).
-     */
+
 
 }
