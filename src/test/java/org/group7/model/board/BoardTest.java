@@ -250,7 +250,7 @@ class BoardTest {
         Piece piece = board.getBaseFromColor(Color.red).removePiece();
         board.addPieceToGoalStretch(piece, 0);
         int goalPos = 4;
-        board.movePiece(piece, 4);
+        board.movePiece(piece, goalPos);
         assertEquals(initialAmountOfRedPieces - 1,board.getPieceAmount(color));
     }
 
@@ -264,14 +264,7 @@ class BoardTest {
                 numberOfPowerUps++;
             }
         }
-        Boolean hasSpawnedRightAmountOfPowerUps = null;
-        if(numberOfPowerUps <= 3){
-            hasSpawnedRightAmountOfPowerUps = false;
-        }
-        else{
-            hasSpawnedRightAmountOfPowerUps = true;
-        }
-        assertTrue(hasSpawnedRightAmountOfPowerUps);
+        assertTrue(numberOfPowerUps > 3);
     }
 
     @Test
@@ -368,7 +361,7 @@ class BoardTest {
         removeEntityIfTileIsNotEmpty(board, 2);
         board.getFieldTiles()[2].insertPowerUp(laserPowerUp);
         board.movePiece(redPiece, 2);
-        assertTrue(bluePiece.getPos() == -1);
+        assertEquals(-1, bluePiece.getPos());
     }
 
     void removeEntityIfTileIsNotEmpty(Board board, int index) {

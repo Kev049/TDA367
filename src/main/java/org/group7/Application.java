@@ -82,7 +82,7 @@ public class Application {
         JButton newGameButton = leftPanel.getNewGameButton();
 
         game.addObserver(boardPanel);
-        game.addObserver((StringObserver) rightPanel);
+        game.addObserver(rightPanel);
 
         DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();

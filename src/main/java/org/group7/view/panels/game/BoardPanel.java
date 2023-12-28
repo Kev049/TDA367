@@ -32,9 +32,9 @@ public class BoardPanel extends JPanel implements Observer{
     private final HashMap<Integer, Box> indexBoxHashMap;
     private final HashMap<Piece, PaintablePiece> piecePaintablePieceHashMap;
     private static final int TOTAL_AMOUNT_TILES = 121;
-    private static final int fieldStartCapacity = 40;
-    private static final int baseTilesCapacity = 16;
-    private static final int goalTilesCapacity = 16;
+    private static final int FIELD_START_CAPACITY = 40;
+    private static final int BASE_TILES_CAPACITY = 16;
+    private static final int GOAL_TILES_CAPACITY = 16;
     private Image image;
     private PaintableEntityFactory paintableEntityFactory;
 
@@ -46,10 +46,10 @@ public class BoardPanel extends JPanel implements Observer{
         this.paintableBases = paintableBases;
         this.paintableGoalStretchTiles = paintableGoalStretchTiles;
         this.paintablePieces = paintablePieces;
-        this.fieldTileIndices = new ArrayList<>(fieldStartCapacity);
-        this.baseTileIndices = new ArrayList<>(baseTilesCapacity);
-        this.goalTileIndices = new ArrayList<>(goalTilesCapacity);
-        this.baseBoxPoints = new ArrayList<>(baseTilesCapacity);
+        this.fieldTileIndices = new ArrayList<>(FIELD_START_CAPACITY);
+        this.baseTileIndices = new ArrayList<>(BASE_TILES_CAPACITY);
+        this.goalTileIndices = new ArrayList<>(GOAL_TILES_CAPACITY);
+        this.baseBoxPoints = new ArrayList<>(BASE_TILES_CAPACITY);
         this.indexBoxHashMap = new HashMap<>(TOTAL_AMOUNT_TILES);
         this.piecePaintablePieceHashMap = new HashMap<>();
         this.paintableEntityFactory = new PaintableEntityFactory();
