@@ -187,7 +187,7 @@ class BoardTest {
         int diceRoll = 2;
         board.addPieceToGoalStretch(piece, steps);
         board.movePiece(piece, diceRoll);
-        board.getGoalTiles().get(steps+diceRoll).getEntity();
+        board.getGoalStretchTiles().get(steps+diceRoll).getEntity();
     }
 
     @Test
@@ -288,7 +288,7 @@ class BoardTest {
 
     @Test
     void getRightAmountOfGoalStretchTilesFromBoard() {
-        List<IInsertable> goalStretchTiles = board.getGoalTiles();
+        List<IInsertable> goalStretchTiles = board.getGoalStretchTiles();
         assertEquals(16, goalStretchTiles.size());
     }
 

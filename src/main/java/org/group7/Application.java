@@ -40,7 +40,7 @@ public class Application {
 
         IInsertable[] fieldTiles = board.getFieldTiles();
         List<Base> bases = board.getBases();
-        List<IInsertable> goalTiles = board.getGoalTiles();
+        List<IInsertable> goalStretchTiles = board.getGoalStretchTiles();
 
         List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
         List<PaintableTile> paintableGoalStretchTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
@@ -68,7 +68,7 @@ public class Application {
             paintableBases.add(paintableBase);
         }
 
-        for (IInsertable goalTile : goalTiles) {
+        for (IInsertable goalTile : goalStretchTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalStretchTiles.add(paintableTile);
         }
