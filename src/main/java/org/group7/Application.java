@@ -2,11 +2,9 @@ package org.group7;
 
 import org.group7.controller.GameController;
 import org.group7.controller.WindowController;
-import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Base;
 import org.group7.model.board.Board;
 import org.group7.model.board.IInsertable;
-import org.group7.model.board.Tile;
 import org.group7.model.entities.piece.Piece;
 import org.group7.model.game.Game;
 import org.group7.view.MenuWindow;
