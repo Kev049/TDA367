@@ -10,6 +10,8 @@ import org.group7.model.entities.piece.Piece;
 public interface IInsertable {
     /**
      * The insertPiece() function is used to add a piece to a tile or goal.
+     *
+     * @param p The parameter "p" is of type "Piece".
      */
     void insertPiece(Piece p);
 
