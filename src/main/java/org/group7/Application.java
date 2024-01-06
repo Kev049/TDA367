@@ -6,7 +6,6 @@ import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Base;
 import org.group7.model.board.Board;
 import org.group7.model.board.IInsertable;
-import org.group7.model.board.Tile;
 import org.group7.model.entities.piece.Piece;
 import org.group7.model.game.Game;
 import org.group7.view.MenuWindow;
@@ -40,7 +39,7 @@ public class Application {
 
         IInsertable[] fieldTiles = board.getFieldTiles();
         List<Base> bases = board.getBases();
-        List<IInsertable> goalTiles = board.getGoalTiles();
+        List<IInsertable> goalStretchTiles = board.getGoalStretchTiles();
 
         List<PaintableTile> paintableFieldTiles = new ArrayList<>(TOTAL_AMOUNT_FIELD_TILES);
         List<PaintableTile> paintableGoalStretchTiles = new ArrayList<>(TOTAL_AMOUNT_GOAL_TILES);
@@ -68,7 +67,7 @@ public class Application {
             paintableBases.add(paintableBase);
         }
 
-        for (IInsertable goalTile : goalTiles) {
+        for (IInsertable goalTile : goalStretchTiles) {
             PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
             paintableGoalStretchTiles.add(paintableTile);
         }

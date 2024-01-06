@@ -377,10 +377,10 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * 
      * @return The method is returning a List of Tile objects.
      */
-    public List<IInsertable> getGoalTiles() {
+    public List<IInsertable> getGoalStretchTiles() {
         List<IInsertable> goalTiles = new ArrayList<>(GOAL_TILE_AMOUNT);
-        for (GoalStretch goal : goalStretches) {
-            goalTiles.addAll(Arrays.asList(goal.getTiles()));
+        for (GoalStretch goalStretch : goalStretches) {
+            goalTiles.addAll(Arrays.asList(goalStretch.getTiles()));
         }
         return goalTiles;
     }

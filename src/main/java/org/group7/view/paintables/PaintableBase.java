@@ -72,8 +72,8 @@ public class PaintableBase extends JButton {
 
     public void redrawPieces(){
         for (Component component : this.getComponents()) {
-            if (component instanceof JPanel) {
-                ((JPanel) component).removeAll();
+            if (component instanceof JPanel jPanel) {
+                jPanel.removeAll();
             }
         }
         drawPieces();
