@@ -1,0 +1,15 @@
+org.group7
+org.group7.controller
+org.group7.controller.listeners
+org.group7.controller.observe
+org.group7.model.board
+org.group7.model.entities
+org.group7.model.entities.piece
+org.group7.model.entities.powerups
+org.group7.model.entities.powerups.handlers
+org.group7.model.game
+org.group7.model.utilities
+org.group7.view
+org.group7.view.paintables
+org.group7.view.panels.game
+org.group7.view.panels.menu
