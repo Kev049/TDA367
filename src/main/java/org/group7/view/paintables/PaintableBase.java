@@ -39,6 +39,7 @@ public class PaintableBase extends JButton {
     }
 
     private void drawBoxes() {
+        int boxSize = 74;
         GridBagConstraints c = new GridBagConstraints();
         for (int y = 0; y < 2; y++) {
             c.fill = GridBagConstraints.BOTH;
@@ -48,7 +49,7 @@ public class PaintableBase extends JButton {
                 //This will create a 11x11 grid of boxes of equal size.
                 JPanel box = new JPanel();
                 box.setLayout(new GridBagLayout());
-                box.setPreferredSize(new Dimension(74, 74));
+                box.setPreferredSize(new Dimension(boxSize, boxSize));
                 box.setOpaque(false);
 
                 //Add to panel

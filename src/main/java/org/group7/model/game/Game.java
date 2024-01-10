@@ -27,7 +27,8 @@ public class Game implements StringObservable, Observable, Observer {
     private int lastDiceRollResult;
     private int turnNumber;
     private final int PIECE_PER_PLAYER = 4;
-    private final int Amount_OF_COLORS = 4;
+    private final int AMOUNT_OF_COLORS = 4;
+    private final int AMOUNT_OF_PLAYERS = 4;
     private final Set<StringObserver> stringObservers;
     private final Set<Observer> observers;
     private final HashMap<Color, Integer> finishedPieces;
@@ -38,7 +39,7 @@ public class Game implements StringObservable, Observable, Observer {
      */
     public Game() {
         this.dice = new Dice();
-        this.colorArray = new Color[Amount_OF_COLORS];
+        this.colorArray = new Color[AMOUNT_OF_COLORS];
         initColors();
         this.board = new Board(this.colorArray);
         this.board.addGoalObserver(this);
@@ -178,7 +179,7 @@ public class Game implements StringObservable, Observable, Observer {
      * Changes the current player to the next player and notifies observers.
      */
     protected void nextPlayer() {
-        this.currentColorIndex = (this.currentColorIndex + 1) % 4;
+        this.currentColorIndex = (this.currentColorIndex + 1) % AMOUNT_OF_PLAYERS;
         String playerColor = this.colorArray[this.currentColorIndex].toString();
         notifyObservers(playerColor);
     }
@@ -198,7 +199,7 @@ public class Game implements StringObservable, Observable, Observer {
     private boolean noPiecesLeft() {
         Color c = colorArray[currentColorIndex];
         int pieceAmount = board.getPieceAmount(c);
-        return ((this.finishedPieces.get(c) + pieceAmount) == 4);
+        return ((this.finishedPieces.get(c) + pieceAmount) == PIECE_PER_PLAYER);
     }
 
     /*
@@ -228,7 +229,8 @@ public class Game implements StringObservable, Observable, Observer {
      * Checks if power-ups should spawn and spawns it if it should.
      */
     public void tryForPowerupSpawn() {
-        if (turnNumber % 6 == 0) {
+        int turnsBetweenPowerupSpan = 6;
+        if (turnNumber % turnsBetweenPowerupSpan == 0) {
             spawnPowerups();
         }
     }
@@ -241,7 +243,7 @@ public class Game implements StringObservable, Observable, Observer {
         Color c = colorArray[currentColorIndex];
         int increasedFinishedPieces = this.finishedPieces.get(c) + 1;
         this.finishedPieces.replace(c, increasedFinishedPieces);
-        if (increasedFinishedPieces == 4) {
+        if (increasedFinishedPieces == PIECE_PER_PLAYER) {
             System.out.println(currentColorIndex + "won!");
         }
     }

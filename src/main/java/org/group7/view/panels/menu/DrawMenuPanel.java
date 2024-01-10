@@ -27,7 +27,6 @@ public class DrawMenuPanel extends JPanel {
         try {
             URL menuPath = DrawMenuPanel.class.getClassLoader().getResource("Menu.png");
             image = ImageIO.read(menuPath);
-            //this.image = ImageIO.read(new File("src/main/resources/Menu.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -38,11 +37,17 @@ public class DrawMenuPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(680, 0, 0, 0);
+        initPlayerButton(c);
+    }
+
+    private void initPlayerButton(GridBagConstraints c) {
+        int width = 400;
+        int height = 100;
         fourPlayerMenuButton.setFocusPainted(false);
         fourPlayerMenuButton.setContentAreaFilled(false);
         fourPlayerMenuButton.setBorderPainted(false);
-        fourPlayerMenuButton.setPreferredSize(new Dimension(400, 100));
-        fourPlayerMenuButton.setMaximumSize(new Dimension(400, 100));
+        fourPlayerMenuButton.setPreferredSize(new Dimension(width, height));
+        fourPlayerMenuButton.setMaximumSize(new Dimension(width, height));
         this.add(fourPlayerMenuButton, c);
     }
 

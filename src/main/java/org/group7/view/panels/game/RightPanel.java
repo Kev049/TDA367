@@ -14,15 +14,16 @@ public class RightPanel extends JPanel implements StringObserver {
     private final JLabel playerTurnOutput;
 
     public RightPanel(JButton rollDiceButton) {
+        String startPlayer = "Red";
         this.rollDiceButton = rollDiceButton;
-        this.playerTurnOutput = new JLabel("Red player's turn");
+        this.playerTurnOutput = new JLabel( startPlayer + " player's turn");
         this.setLayout(new GridBagLayout());
         initDiceComponents();
     }
 
     private void initDiceComponents() {
         initPlayerTurnOutputComponent();
-        initDiceComponent();
+        applyDiceComponentDesign();
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -46,7 +47,7 @@ public class RightPanel extends JPanel implements StringObserver {
         playerTurnOutput.setPreferredSize(size);
     }
 
-    private void initDiceComponent() {
+    private void applyDiceComponentDesign() {
         BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         try {
             URL dicePath = RightPanel.class.getClassLoader().getResource("Dices.png");
