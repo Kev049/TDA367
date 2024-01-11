@@ -17,6 +17,7 @@ public class RightPanel extends JPanel implements StringObserver {
         String startPlayer = "Red";
         this.rollDiceButton = rollDiceButton;
         this.playerTurnOutput = new JLabel(startPlayer + " player's turn");
+
         this.setLayout(new GridBagLayout());
         initDiceComponents();
     }
