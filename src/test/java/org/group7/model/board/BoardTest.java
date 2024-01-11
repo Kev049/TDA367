@@ -106,7 +106,7 @@ class BoardTest {
         assertEquals(board.getBaseFromColor(color).getPieceAmount(), piecesInBoards + 1);
     }
     @Test
-    void insertPiecesAndPowerUpsAndRemoveFromEightTilesInField() { //kolla med Liam hur denna ska funka
+    void insertPiecesAndPowerUpsAndRemoveFromEightTilesInField() {
         Tile[] field = board.getFieldTiles();
         Color color = Color.BLUE;
         Piece piece = board.extractPieceFromBase(color);
@@ -155,7 +155,7 @@ class BoardTest {
     }
 
     @Test
-    void pieceFromBaseToFieldAddsPieceToField() { //TODO: Kolla på denna och avgör om den är för "hårdkodad"
+    void pieceFromBaseToFieldAddsPieceToField() {
         Color color = Color.RED;
         Entity willBeNull = board.getFieldTiles()[0].getEntity();
         board.pieceFromBaseToField(color, 1);
@@ -260,7 +260,8 @@ class BoardTest {
         Tile[] field = board.getFieldTiles();
         int numberOfPowerUps = 0;
         for(Tile tile : field){
-            if(tile.getEntity() instanceof BasePowerUp || tile.getEntity() instanceof LightningPowerUp || tile.getEntity() instanceof LaserPowerUp){
+            Entity entity = tile.getEntity();
+            if(entity instanceof BasePowerUp || entity instanceof LightningPowerUp || entity instanceof LaserPowerUp){
                 numberOfPowerUps++;
             }
         }

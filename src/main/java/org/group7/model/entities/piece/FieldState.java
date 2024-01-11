@@ -25,7 +25,7 @@ public class FieldState implements PieceState {
      * The nextState function changes the state of the piece to GoalState.
      */
     public void nextState() {
-        this.piece.setState(new GoalState(piece));
+        this.piece.setState(new GoalStretchState(piece));
     }
 
     /**

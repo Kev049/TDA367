@@ -115,7 +115,7 @@ public class GoalStretch implements IMoveHandler {
 
     @Override
     public void returnPieceToBase(Piece p) {
-        //TODO future implementation
+        //TODO potential future implementation
     }
 
 

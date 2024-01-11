@@ -19,8 +19,6 @@ public class TileTest {
     Color[] colorArray = new Color[4];
     IMoveHandler handler;
 
-    //TODO: Check that InsertEntity can't insert an entity if tile already has entity
-
     @BeforeEach
     void setupBeforeEach(){
         colorArray[0] = Color.RED;

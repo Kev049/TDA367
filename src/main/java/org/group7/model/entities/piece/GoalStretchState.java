@@ -8,7 +8,7 @@ import org.group7.model.board.IMoveHandler;
  * 
  * @see PieceState
  */
-public class GoalState implements PieceState {
+public class GoalStretchState implements PieceState {
     private final Piece piece;
 
     /**
@@ -17,7 +17,7 @@ public class GoalState implements PieceState {
      * @param p The parameter "p" is of type "Piece". It represents the piece that has collided with
      * the piece in the GoalState.
      */
-    public GoalState(Piece p) {
+    public GoalStretchState(Piece p) {
         this.piece = p;
     }
 
@@ -40,5 +40,7 @@ public class GoalState implements PieceState {
     public void handleCollision(Piece p, IMoveHandler handler) {
         int fieldTileAmount = 40;
         handler.addPiece(p, (piece.getPos() + 1) % fieldTileAmount);
-    }   //TODO functionality to insert a piece in the correct direction, -1 for a "bounce"
+    }
+
+    //TODO Future functionality move piece backward (-1) if it has "bounced" in goalStretch
 }

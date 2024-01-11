@@ -28,9 +28,9 @@ public class Tile implements IInsertable {
      * @param p The parameter "p" is of type "Piece", which represents a game piece.
      */
     public void insertPiece(Piece p) {
-        if (this.entity != null) {     // if collision
+        if (this.entity != null) { // if there is a collision
             this.entity.handleCollision(p);
-        } else {                    // else
+        } else {
             this.entity = p;
             this.entity.setPos(index);
         }

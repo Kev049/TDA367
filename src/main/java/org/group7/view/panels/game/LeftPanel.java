@@ -101,7 +101,8 @@ public class LeftPanel extends JPanel {
     }
 
     private Image getImage(String path) {
-        BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+        int imageDimensions = 64;
+        BufferedImage image = new BufferedImage(imageDimensions, imageDimensions, BufferedImage.TYPE_INT_RGB);
         try {
             URL powerUpPath = LeftPanel.class.getClassLoader().getResource(path);
             image = ImageIO.read(powerUpPath);

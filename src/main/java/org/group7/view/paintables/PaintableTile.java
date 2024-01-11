@@ -11,11 +11,12 @@ import java.awt.GridBagLayout;
 public class PaintableTile extends JButton {
 
     private IInsertable tile;
+    private final int TILE_SIZE = 91;
 
     public PaintableTile(IInsertable tile) {
         this.tile = tile;
-        this.setPreferredSize(new Dimension(91, 91));
-        this.setMaximumSize(new Dimension(91, 91));
+        this.setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
+        this.setMaximumSize(new Dimension(TILE_SIZE, TILE_SIZE));
         this.setLayout(new GridBagLayout());
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);

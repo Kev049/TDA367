@@ -42,6 +42,7 @@ public class BoardPanel extends JPanel implements Observer{
                       List<PaintableBase> paintableBases,
                       List<PaintableTile> paintableGoalStretchTiles,
                       List<PaintablePiece> paintablePieces) {
+
         this.paintableFieldTiles = paintableFieldTiles;
         this.paintableBases = paintableBases;
         this.paintableGoalStretchTiles = paintableGoalStretchTiles;
@@ -77,15 +78,15 @@ public class BoardPanel extends JPanel implements Observer{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(this.image, 0, 0, null); // see javadoc for more info on the parameters
+        g.drawImage(this.image, 0, 0, null);
     }
 
     private void storeBoardTileIndex() {
         int tileIndex = 0;
         for (Component component : this.getComponents()) {
-            if (component instanceof Box) {
+            if (component instanceof Box box) {
                 //Put the tile in hashmap with matching index as key for later use
-                indexBoxHashMap.put(tileIndex, (Box) component);
+                indexBoxHashMap.put(tileIndex, box);
                 tileIndex++;
             }
         }
@@ -125,6 +126,7 @@ public class BoardPanel extends JPanel implements Observer{
     }
 
     private void addFieldBoxes() {
+        int boxSize = 91;
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         for (int y = 0; y < 11; y++) {
@@ -134,7 +136,7 @@ public class BoardPanel extends JPanel implements Observer{
                 c.gridwidth = 1;
                 c.gridheight = 1;
                 Box box = new Box(BoxLayout.LINE_AXIS);
-                box.setPreferredSize(new Dimension(91, 91));
+                box.setPreferredSize(new Dimension(boxSize, boxSize));
                 this.add(box, c);
             }
         }

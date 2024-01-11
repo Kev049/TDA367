@@ -2,7 +2,6 @@ package org.group7;
 
 import org.group7.controller.GameController;
 import org.group7.controller.WindowController;
-import org.group7.controller.observe.StringObserver;
 import org.group7.model.board.Base;
 import org.group7.model.board.Board;
 import org.group7.model.board.IInsertable;
@@ -67,8 +66,8 @@ public class Application {
             paintableBases.add(paintableBase);
         }
 
-        for (IInsertable goalTile : goalStretchTiles) {
-            PaintableTile paintableTile = PaintableTileFactory.createTile(goalTile);
+        for (IInsertable goalStretchTile : goalStretchTiles) {
+            PaintableTile paintableTile = PaintableTileFactory.createTile(goalStretchTile);
             paintableGoalStretchTiles.add(paintableTile);
         }
 
@@ -81,13 +80,13 @@ public class Application {
         JButton newGameButton = leftPanel.getNewGameButton();
 
         game.addObserver(boardPanel);
-        game.addObserver((StringObserver) rightPanel);
+        game.addObserver(rightPanel);
 
         DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 
         MenuWindow menuWindow = new MenuWindow(GAME_NAME, drawMenuPanel);
-        WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
+        new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
     }
 }

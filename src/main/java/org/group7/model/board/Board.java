@@ -50,7 +50,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     }
 
     private void initComponents() {
-        initColors();
         initBases();
         initStartTileIndices();
         initColorBaseMap();
@@ -70,16 +69,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
     }
 
     /**
-     * Initializes an array of colors with four specific values (for each player).
-     */
-    private void initColors() {
-        this.colors[0] = Color.RED;
-        this.colors[1] = Color.GREEN;
-        this.colors[2] = Color.BLUE;
-        this.colors[3] = Color.YELLOW;
-    }
-
-    /**
      * Initializes an array of Base objects with a fixed size of 4, assigning each Base a color.
      */
     private void initBases() {
@@ -95,8 +84,9 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes the start tile indices for each player based on their assigned color.
      */
     private void initStartTileIndices() {
+        int distanceBetweenStartTiles = 10;
         for (int i = 0; i < playerAmount; i++) {
-            this.playerStartTiles.put(this.colors[i], i * 10);
+            this.playerStartTiles.put(this.colors[i], i * distanceBetweenStartTiles);
         }
     }
 
@@ -124,7 +114,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      * Initializes a HashMap with color keys and corresponding goal stretch values.
      */
     private void initGoalStretchesHashMap() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < playerAmount; i++) {
             this.goalStretchesHashMap.put(this.colors[i], goalStretches[i]);
         }
     }
@@ -305,7 +295,7 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
         Color c = piece.getColor();
         int tileIndex = playerStartTiles.get(c);
         int to = (from + diceRoll) % FIELD_TILE_AMOUNT;
-        if (piece.isAtGoalStretch()) {        //TODO Refactor this if/else statement
+        if (piece.isAtGoalStretch()) {
             movePieceInGoalStretch(piece, diceRoll);
         } else {
             this.field[from].removeEntity();
@@ -336,7 +326,6 @@ public class Board implements IMoveHandler, PieceExtractor, IBasePowerUpHandler,
      */
     private List<PowerUp> getGeneratedPowerUps(){
         return powerUpGenerator.generatePowerUps();
-        //return powerUpGenerator.getPowerUps();
     }
 
     //Getters
