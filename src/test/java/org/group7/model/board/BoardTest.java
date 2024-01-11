@@ -260,7 +260,8 @@ class BoardTest {
         Tile[] field = board.getFieldTiles();
         int numberOfPowerUps = 0;
         for(Tile tile : field){
-            if(tile.getEntity() instanceof BasePowerUp || tile.getEntity() instanceof LightningPowerUp || tile.getEntity() instanceof LaserPowerUp){
+            Entity entity = tile.getEntity();
+            if(entity instanceof BasePowerUp || entity instanceof LightningPowerUp || entity instanceof LaserPowerUp){
                 numberOfPowerUps++;
             }
         }

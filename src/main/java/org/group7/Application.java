@@ -81,13 +81,13 @@ public class Application {
         JButton newGameButton = leftPanel.getNewGameButton();
 
         game.addObserver(boardPanel);
-        game.addObserver((StringObserver) rightPanel);
+        game.addObserver(rightPanel);
 
         DrawGamePanel drawGamePanel = new DrawGamePanel(boardPanel, leftPanel, rightPanel);
         DrawMenuPanel drawMenuPanel = new DrawMenuPanel();
         JButton fourPlayerMenuButton = drawMenuPanel.getFourPlayerMenuButton();
 
         MenuWindow menuWindow = new MenuWindow(GAME_NAME, drawMenuPanel);
-        WindowController windowController = new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
+        new WindowController(menuWindow, drawGamePanel, drawMenuPanel, fourPlayerMenuButton, newGameButton);
     }
 }

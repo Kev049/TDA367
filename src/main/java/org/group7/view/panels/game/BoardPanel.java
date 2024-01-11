@@ -84,9 +84,9 @@ public class BoardPanel extends JPanel implements Observer{
     private void storeBoardTileIndex() {
         int tileIndex = 0;
         for (Component component : this.getComponents()) {
-            if (component instanceof Box) {
+            if (component instanceof Box box) {
                 //Put the tile in hashmap with matching index as key for later use
-                indexBoxHashMap.put(tileIndex, (Box) component);
+                indexBoxHashMap.put(tileIndex, box);
                 tileIndex++;
             }
         }
