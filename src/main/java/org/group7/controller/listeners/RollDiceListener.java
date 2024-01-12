@@ -63,6 +63,7 @@ public class RollDiceListener implements ActionListener {
         rollDiceButton.setEnabled(true);
     }
 
+    //Dice Animation
     @Override
     public void actionPerformed(ActionEvent e) {
         int totalAmountFrames = 6;
